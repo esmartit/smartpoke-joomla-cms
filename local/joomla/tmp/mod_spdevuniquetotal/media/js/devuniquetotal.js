@@ -5,11 +5,11 @@ $(document).ready( function() {
 
     sourceEvt.onmessage = function (event) {
         uniquetotal = JSON.parse(event.data).count;
-
         if (uniquetotal > currentMax) {
             document.getElementById("devuniquetotal").innerHTML = Intl.NumberFormat().format(uniquetotal);
             currentMax = uniquetotal;
         }
-        // console.log(uniquetotal, currentMax);
+
+        // console.log('Total', uniquetotal, currentMax);
     }
 });

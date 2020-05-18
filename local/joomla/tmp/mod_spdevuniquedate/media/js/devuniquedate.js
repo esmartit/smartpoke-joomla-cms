@@ -11,7 +11,6 @@ $(document).ready( function() {
             document.getElementById("devuniquedate").innerHTML = Intl.NumberFormat().format(uniquedate);
             currentMax = uniquedate
         }
-        // console.log(uniquedate, currentMax);
+        // console.log('Date', uniquedate, currentMax);
     }
 });
-

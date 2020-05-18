@@ -8,7 +8,7 @@ $(document).ready( function() {
         ActualDateTime = new Date()
         Actualsecond = ActualDateTime.getSeconds()
 
-        unit = Math.floor((Math.random() * 10) + 1);
+        unit = Math.floor((Math.random() * 2) + 1);
         checksec = (Actualsecond / 30);
         if (checksec % 1 == 0) {
             registerednow = unit;

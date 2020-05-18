@@ -1,16 +1,24 @@
 $(document).ready( function() {
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/daily-unique-devices-detected-count");
-    const today = new Date();
-    let uniquedate = 0;
-    let currentMax = 0;
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/hourly-device-presence-count");
+    let inCount = 0;
+    let limitCount = 0;
+    let outCount = 0;
+    let devicenow = 0;
+    let deviceant = 0;
 
     sourceEvt.onmessage = function (event) {
-        uniquedate = JSON.parse(event.data).count;
+        inCount = JSON.parse(event.data).inCount;
+        limitCount = JSON.parse(event.data).limitCount;
+        outCount = JSON.parse(event.data).outCount;
+        devicenow = inCount + limitCount + outCount;
 
-        if (uniquedate > currentMax) {
-            document.getElementById("devuniquedate").innerHTML = Intl.NumberFormat().format(uniquedate);
-            currentMax = uniquedate
+        if (devicenow !== deviceant) {
+            devicetotal = Math.abs(devicenow - deviceant);
+            deviceant = devicenow;
+        } else {
+            devicetotal = devicenow;
         }
-        // console.log(uniquedate, currentMax);
+        document.getElementById("devuniquenow").innerHTML = Intl.NumberFormat().format(Math.abs(devicetotal));
+        // console.log(devicenow, deviceant);
     }
 });

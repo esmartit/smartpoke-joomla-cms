@@ -15,8 +15,6 @@ $(document).ready( function() {
             strokeWidth: 0.042,
             color: '#1D212A'
         },
-        maxValue: 6000,
-        minValue: 0,
         limitMax: 'true',
         colorStart: '#3498db',
         colorStop: '#3498db',
@@ -30,17 +28,18 @@ $(document).ready( function() {
     }
     dailygoal = 0;
     if ($('#gauge-text').length) {
-        chart_gauge_dailygoal.maxValue = 6000;
-        chart_gauge_dailygoal.animationSpeed = 32; // set animation speed (32 is default value)
-        chart_gauge_dailygoal.set(dailygoal);
         chart_gauge_dailygoal.setTextField(document.getElementById("gauge-text"));
+        chart_gauge_dailygoal.animationSpeed = 32; // set animation speed (32 is default value)
+        chart_gauge_dailygoal.maxValue = 6000;
+        chart_gauge_dailygoal.set(dailygoal);
     }
 
     setInterval(function () {
         if ($('#gauge-text').length) {
             dailygoal += (Math.random() * 10).toFixed(2) - 0;
-            chart_gauge_dailygoal.set(dailygoal);
             chart_gauge_dailygoal.setTextField(document.getElementById("gauge-text"));
+            chart_gauge_dailygoal.maxValue = 6000;
+            chart_gauge_dailygoal.set(dailygoal);
         }
     },3500);
 

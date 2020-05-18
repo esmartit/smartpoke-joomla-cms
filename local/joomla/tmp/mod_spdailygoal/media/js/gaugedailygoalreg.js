@@ -11,8 +11,6 @@ $(document).ready( function() {
             strokeWidth: 0.042,
             color: '#1D212A'
         },
-        maxValue: 4500,
-        minValue: 0,
         limitMax: 'true',
         colorStart: '#1ABC9C',
         colorStop: '#1ABC9C',
@@ -26,17 +24,18 @@ $(document).ready( function() {
     }
     dailygoal_reg = 0;
     if ($('#gauge-text-reg').length) {
-        chart_gauge_dailygoal_reg.maxValue = 6000;
-        chart_gauge_dailygoal_reg.animationSpeed = 32; // set animation speed (32 is default value)
-        chart_gauge_dailygoal_reg.set(dailygoal_reg);
         chart_gauge_dailygoal_reg.setTextField(document.getElementById("gauge-text-reg"));
+        chart_gauge_dailygoal_reg.animationSpeed = 32; // set animation speed (32 is default value)
+        chart_gauge_dailygoal_reg.maxValue = 4500;
+        chart_gauge_dailygoal_reg.set(dailygoal_reg);
     }
 
     setInterval(function () {
         if ($('#gauge-text-reg').length) {
             dailygoal_reg += (Math.random() * 5).toFixed(2) - 0;
-            chart_gauge_dailygoal_reg.set(dailygoal_reg);
             chart_gauge_dailygoal_reg.setTextField(document.getElementById("gauge-text-reg"));
+            chart_gauge_dailygoal_reg.maxValue = 4500;
+            chart_gauge_dailygoal_reg.set(dailygoal_reg);
         }
     },4500);
 

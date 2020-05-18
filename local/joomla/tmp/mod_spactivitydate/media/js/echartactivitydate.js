@@ -211,6 +211,13 @@ $(document).ready( function() {
         }
     };
 
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/hourly-device-presence-count");
+    let inAct = 0;
+    let limitAct = 0;
+    let outAct = 0;
+    let deviceAct = 0;
+    let hourAnt = 0;
+
     var spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
 
     var option = {
@@ -242,10 +249,10 @@ $(document).ready( function() {
                 data: (function (){
                     var now = new Date();
                     var res = [];
-                    var len = 10;
+                    var len = 60;
                     while (len--) {
                         res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
-                        now = new Date(now - 2000);
+                        now = new Date(now - 600000);
                     }
                     return res;
                 })()
@@ -255,9 +262,9 @@ $(document).ready( function() {
                 boundaryGap: true,
                 data: (function (){
                     var res = [];
-                    var len = 10;
+                    var len = 60;
                     while (len--) {
-                        res.push(10 - len - 1);
+                        res.push(60 - len - 1);
                     }
                     return res;
                 })()
@@ -267,16 +274,14 @@ $(document).ready( function() {
             {
                 type: 'value',
                 scale: true,
-                name: 'Past',
-                max: 30,
+                name: 'Devices',
                 min: 0,
                 boundaryGap: [0.2, 0.2]
             },
             {
                 type: 'value',
                 scale: true,
-                name: 'Now',
-                max: 1200,
+                name: 'Total',
                 min: 0,
                 boundaryGap: [0.2, 0.2]
             }
@@ -289,9 +294,9 @@ $(document).ready( function() {
                 yAxisIndex: 1,
                 data: (function (){
                     var res = [];
-                    var len = 10;
+                    var len = 60;
                     while (len--) {
-                        res.push(Math.round(Math.random() * 1000));
+                        res.push(deviceAct);
                     }
                     return res;
                 })()
@@ -303,8 +308,8 @@ $(document).ready( function() {
                 data: (function (){
                     var res = [];
                     var len = 0;
-                    while (len < 10) {
-                        res.push((Math.random()*10 + 1).toFixed(1) - 0);
+                    while (len < 60) {
+                        res.push(inAct);
                         len++;
                     }
                     return res;
@@ -317,8 +322,8 @@ $(document).ready( function() {
                 data: (function (){
                     var res = [];
                     var len = 0;
-                    while (len < 10) {
-                        res.push((Math.random()*10 + 1).toFixed(1) - 0);
+                    while (len < 60) {
+                        res.push(limitAct);
                         len++;
                     }
                     return res;
@@ -331,8 +336,8 @@ $(document).ready( function() {
                 data: (function (){
                     var res = [];
                     var len = 0;
-                    while (len < 10) {
-                        res.push((Math.random()*10 + 1).toFixed(1) - 0);
+                    while (len < 60) {
+                        res.push(outAct);
                         len++;
                     }
                     return res;
@@ -342,30 +347,34 @@ $(document).ready( function() {
         ]
     };
 
-    c = 11;
-    setInterval(function (){
+    let count = 61;
+
+    sourceEvt.onmessage = function (event) {
         var axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+        inAct = JSON.parse(event.data).inCount;
+        limitAct = JSON.parse(event.data).limitCount;
+        outAct = JSON.parse(event.data).outCount;
+        hourAnt = JSON.parse(event.data).time;
+        deviceAct = inAct + limitAct + outAct;
 
         var data0 = option.series[0].data;
         var data1 = option.series[1].data;
         var data2 = option.series[2].data;
         var data3 = option.series[3].data;
         data0.shift();
-        data0.push(Math.round(Math.random() * 1000));
+        data0.push(deviceAct);
         data1.shift();
-        data1.push((Math.random() * 10 + 1).toFixed(1) - 0);
+        data1.push(inAct);
         data2.shift();
-        data2.push((Math.random() * 10 + 1).toFixed(1) - 0);
+        data2.push(limitAct);
         data3.shift();
-        data3.push((Math.random() * 10 + 1).toFixed(1) - 0);
-
-        count = c++;
-
+        data3.push(outAct);
         option.xAxis[0].data.shift();
         option.xAxis[0].data.push(axisData);
         option.xAxis[1].data.shift();
-        option.xAxis[1].data.push(count);
+        // option.xAxis[1].data.push(count++);
 
         spChart.setOption(option);
-    }, 2100)
+    }
+
 })
