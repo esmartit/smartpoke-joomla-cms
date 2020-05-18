@@ -1,0 +1,22 @@
+$(document).ready( function() {
+    function showDevRegisteredTotal(value) {
+        document.getElementById("devregisteredtotal").innerHTML = Intl.NumberFormat().format(value);;
+    }
+
+    function objTimer() {
+
+        ActualDateTime = new Date()
+        Actualsecond = ActualDateTime.getSeconds()
+
+        unit = Math.floor((Math.random() * 5) + 1);
+        checksec = (Actualsecond / 30);
+        if (checksec % 1 == 0) {
+            registeredtotal += unit;
+            showDevRegisteredTotal(registeredtotal)
+        }
+
+    }
+    registeredtotal = 248;
+    setInterval(objTimer, 1000)
+    objTimer()
+});
