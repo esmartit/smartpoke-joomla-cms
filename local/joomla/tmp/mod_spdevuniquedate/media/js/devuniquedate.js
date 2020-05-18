@@ -1,6 +1,5 @@
 $(document).ready( function() {
     const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/daily-unique-devices-detected-count");
-    const today = new Date();
     let uniquedate = 0;
     let currentMax = 0;
 
@@ -9,7 +8,7 @@ $(document).ready( function() {
 
         if (uniquedate > currentMax) {
             document.getElementById("devuniquedate").innerHTML = Intl.NumberFormat().format(uniquedate);
-            currentMax = uniquedate
+            currentMax = uniquedate;
         }
         // console.log('Date', uniquedate, currentMax);
     }
