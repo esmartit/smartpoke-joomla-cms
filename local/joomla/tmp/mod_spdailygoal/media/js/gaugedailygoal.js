@@ -25,19 +25,19 @@ $(document).ready( function() {
     let currentMax = 0;
     let dailyGoal = 0;
     let currentDate = new Date();
-    let dailygoalMaxValue = document.getElementById('dailygoalMaxValue');
+    let dailygoalMaxValue = document.getElementById('dailygoalMaxValue').innerText;
 
     if ($('#chart_gauge_dailygoal').length) {
         var chart_gauge = document.getElementById('chart_gauge_dailygoal'); // your canvas element
         var chart_gauge_dailygoal = new Gauge(chart_gauge).setOptions(option); // create sexy gauge!
     }
 
-    // if ($('#gauge-text').length) {
-    //     chart_gauge_dailygoal.setTextField(document.getElementById("gauge-text"));
-    //     chart_gauge_dailygoal.animationSpeed = 32; // set animation speed (32 is default value)
-    //     chart_gauge_dailygoal.maxValue = dailygoalMaxValue;
-    //     chart_gauge_dailygoal.set(dailyGoal);
-    // }
+    if ($('#gauge-text').length) {
+        chart_gauge_dailygoal.setTextField(document.getElementById("gauge-text"));
+        chart_gauge_dailygoal.animationSpeed = 32; // set animation speed (32 is default value)
+        chart_gauge_dailygoal.maxValue = dailygoalMaxValue;
+        chart_gauge_dailygoal.set(dailyGoal);
+    }
 
     sourceEvt.onmessage = function (event) {
         dailyGoal = JSON.parse(event.data).count;

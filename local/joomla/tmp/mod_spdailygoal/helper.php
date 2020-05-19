@@ -27,7 +27,20 @@ class ModSPDailyGoalHelper
 
         $db->setQuery($query);
         $value = $db->loadResult();
+        return $value;
+    }
 
-        return number_format($value);
+    public static function getValueReg($params)
+    {
+        $db    = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query
+            ->select($db->quoteName('value'))
+            ->from($db->quoteName('#__spvalue_value'))
+            ->where($db->quoteName('code_value') . ' = ' . $db->quote('daily_goal_registered'));
+
+        $db->setQuery($query);
+        $value = $db->loadResult();
+        return $value;
     }
 }

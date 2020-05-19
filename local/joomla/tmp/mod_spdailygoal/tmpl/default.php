@@ -40,6 +40,8 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
                 <div class="sidebar-widget">
                     <h4>Registered</h4>
                     <canvas width="150" height="80" id="chart_gauge_dailygoal_reg" class="" style="width: 160px; height: 100px;"></canvas>
+                    <div id="dailygoalRegMaxValue" class="goal-value pull-right" style="display:none"><b><?php echo $dailygoalregistered; ?></b></div>
+                    <div class="goal-value pull-right"><b><?php echo number_format($dailygoalregistered); ?></b></div>
                     <div class="goal-wrapper">
                         <span id="gauge-text-reg" class="gauge-value pull-center">0</span>
                         <span class="gauge-value pull-left">0%</span>
@@ -49,7 +51,8 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
                 <div class="sidebar-widget">
                     <h4>Devices</h4>
                     <canvas width="150" height="80" id="chart_gauge_dailygoal" class="" style="width: 160px; height: 100px;"></canvas>
-                    <div id="dailygoalMaxValue"><b><?php echo $dailygoaldevice; ?></b></div>
+                    <div id="dailygoalMaxValue" class="goal-value pull-right" style="display:none"><b><?php echo $dailygoaldevice; ?></b></div>
+                    <div class="goal-value pull-right"><b><?php echo number_format($dailygoaldevice); ?></b></div>
                     <div class="goal-wrapper">
                         <span id="gauge-text" class="gauge-value pull-center">0</span>
                         <span class="gauge-value pull-left">0%</span>
@@ -59,5 +62,4 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
             </div>
         </div>
     </div>
-</div>
 </div>
