@@ -23,7 +23,8 @@ $(document).ready( function() {
 
     const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/daily-unique-devices-detected-count");
     let currentMax = 0;
-    let dailygoal = 0;
+    let dailyGoal = 0;
+    let currentDate = new Date();
 
     if ($('#chart_gauge_dailygoal').length) {
         var chart_gauge = document.getElementById('chart_gauge_dailygoal'); // your canvas element
@@ -33,27 +34,27 @@ $(document).ready( function() {
     if ($('#gauge-text').length) {
         chart_gauge_dailygoal.setTextField(document.getElementById("gauge-text"));
         chart_gauge_dailygoal.animationSpeed = 32; // set animation speed (32 is default value)
-        chart_gauge_dailygoal.maxValue = 6000;
-        chart_gauge_dailygoal.set(dailygoal);
+        chart_gauge_dailygoal.maxValue = 10000;
+        chart_gauge_dailygoal.set(dailyGoal);
     }
 
     sourceEvt.onmessage = function (event) {
-        dailygoal = JSON.parse(event.data).count;
+        dailyGoal = JSON.parse(event.data).count;
+        let today = new Date(JSON.parse(event.data).time);
+        let sameDate = (currentDate.getDate() === today.getUTCDate());
 
         if ($('#gauge-text').length) {
             chart_gauge_dailygoal.setTextField(document.getElementById("gauge-text"));
             chart_gauge_dailygoal.animationSpeed = 32; // set animation speed (32 is default value)
-            chart_gauge_dailygoal.maxValue = 6000;
+            chart_gauge_dailygoal.maxValue = 10000;
 
-            if (dailygoal > currentMax) {
-                chart_gauge_dailygoal.set(dailygoal);
-                currentMax = dailygoal;
+            if (sameDate) {
+                if (dailyGoal > currentMax) {
+                    chart_gauge_dailygoal.set(dailyGoal);
+                    currentMax = dailyGoal;
+                }
             }
         }
         // console.log('Date', dailygoal, currentMax);
     }
-
-
-
-
 });

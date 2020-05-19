@@ -1,15 +1,20 @@
 $(document).ready( function() {
     const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/daily-unique-devices-detected-count");
-    let uniquedate = 0;
+    let uniqueDate = 0;
     let currentMax = 0;
+    let currentDate = new Date();
 
     sourceEvt.onmessage = function (event) {
-        uniquedate = JSON.parse(event.data).count;
+        uniqueDate = JSON.parse(event.data).count;
+        let today = new Date(JSON.parse(event.data).time);
+        let sameDate = (currentDate.getDate() === today.getUTCDate());
 
-        if (uniquedate > currentMax) {
-            document.getElementById("devuniquedate").innerHTML = Intl.NumberFormat().format(uniquedate);
-            currentMax = uniquedate;
+        if (sameDate) {
+            if (uniqueDate > currentMax) {
+                document.getElementById("devuniquedate").innerHTML = Intl.NumberFormat().format(uniqueDate);
+                currentMax = uniqueDate;
+            }
         }
-        // console.log('Date', uniquedate, currentMax);
+        // console.log(currentDate.getDate(), today.getDate(), uniqueDate, currentMax);
     }
 });
