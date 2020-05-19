@@ -11,6 +11,7 @@
     <description>MOD_SPDAILYGOAL_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_spdailygoal">mod_spdailygoal.php</filename>
+        <filename>helper.php</filename>
         <folder>tmpl</folder>
     </files>
     <media folder="media" destination="mod_spdailygoal">

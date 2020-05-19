@@ -175,7 +175,11 @@ else
         <!-- page content -->
         <div class="right_col <?php echo $span; ?>" role="main">
             <!-- Begin Content -->
-            <jdoc:include type="modules" name="topcenter" style="none" />
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <jdoc:include type="modules" name="topcenter" style="none" />
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12 col-sm-12 ">
                     <div class="x_title">

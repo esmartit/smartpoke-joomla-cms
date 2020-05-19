@@ -49,13 +49,14 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
                 <div class="sidebar-widget">
                     <h4>Devices</h4>
                     <canvas width="150" height="80" id="chart_gauge_dailygoal" class="" style="width: 160px; height: 100px;"></canvas>
-                    <div class="goal-wrapper">
-                        <span id="gauge-text" class="gauge-value pull-center">0</span>
-                        <span class="gauge-value pull-left">0%</span>
-                        <span id="goal-text" class="goal-value pull-right">100%</span>
-                    </div>
+                    <div id="dailygoalMaxValue"></div><b><?php echo $dailygoaldevice; ?></b></div>
+                <div class="goal-wrapper">
+                    <span id="gauge-text" class="gauge-value pull-center">0</span>
+                    <span class="gauge-value pull-left">0%</span>
+                    <span id="goal-text" class="goal-value pull-right">100%</span>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

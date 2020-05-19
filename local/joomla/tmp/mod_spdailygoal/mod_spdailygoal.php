@@ -9,4 +9,7 @@
 
 defined('_JEXEC') or die;
 
+require_once dirname(__FILE__) . '/helper.php';
+
+$dailygoaldevices = ModSPDailyGoalHelper::getValue($params);
 require JModuleHelper::getLayoutPath('mod_spdailygoal', $params->get('layout', 'default'));
