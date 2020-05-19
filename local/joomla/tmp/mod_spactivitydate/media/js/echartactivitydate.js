@@ -211,7 +211,7 @@ $(document).ready( function() {
         }
     };
 
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/hourly-device-presence-count");
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/hourly-device-presence-delta");
     let inAct = 0;
     let limitAct = 0;
     let outAct = 0;
@@ -222,7 +222,7 @@ $(document).ready( function() {
 
     var option = {
         title: {
-            text: 'ACTIVITY',
+            text: '',
             subtext: ''
         },
         tooltip: {
@@ -252,7 +252,7 @@ $(document).ready( function() {
                     var len = 60;
                     while (len--) {
                         res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
-                        now = new Date(now - 600000);
+                        now = new Date(now - 60000);
                     }
                     return res;
                 })()
@@ -348,33 +348,38 @@ $(document).ready( function() {
     };
 
     let count = 61;
+    let axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
 
     sourceEvt.onmessage = function (event) {
-        var axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+        let dataTime = (new Date(JSON.parse(event.data).time)).toLocaleTimeString();
         inAct = JSON.parse(event.data).inCount;
         limitAct = JSON.parse(event.data).limitCount;
         outAct = JSON.parse(event.data).outCount;
-        hourAnt = JSON.parse(event.data).time;
         deviceAct = inAct + limitAct + outAct;
 
-        var data0 = option.series[0].data;
-        var data1 = option.series[1].data;
-        var data2 = option.series[2].data;
-        var data3 = option.series[3].data;
-        data0.shift();
-        data0.push(deviceAct);
-        data1.shift();
-        data1.push(inAct);
-        data2.shift();
-        data2.push(limitAct);
-        data3.shift();
-        data3.push(outAct);
-        option.xAxis[0].data.shift();
-        option.xAxis[0].data.push(axisData);
-        option.xAxis[1].data.shift();
-        // option.xAxis[1].data.push(count++);
+        if (axisData !== dataTime) {
+            var data0 = option.series[0].data;
+            var data1 = option.series[1].data;
+            var data2 = option.series[2].data;
+            var data3 = option.series[3].data;
+            data0.shift();
+            data0.push(deviceAct);
+            data1.shift();
+            data1.push(inAct);
+            data2.shift();
+            data2.push(limitAct);
+            data3.shift();
+            data3.push(outAct);
+            option.xAxis[0].data.shift();
+            option.xAxis[0].data.push(dataTime);
+            option.xAxis[1].data.shift();
+            option.xAxis[1].data.push(count++);
 
-        spChart.setOption(option);
+            spChart.setOption(option);
+            console.log(axisData, dataTime);
+            axisData = dataTime;
+        }
+
     }
 
 })
