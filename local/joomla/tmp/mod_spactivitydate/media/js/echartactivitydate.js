@@ -216,7 +216,6 @@ $(document).ready( function() {
     let limitAct = 0;
     let outAct = 0;
     let deviceAct = 0;
-    let hourAnt = 0;
 
     var spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
 
@@ -249,22 +248,10 @@ $(document).ready( function() {
                 data: (function (){
                     var now = new Date();
                     var res = [];
-                    var len = 60;
+                    var len = 30;
                     while (len--) {
                         res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
                         now = new Date(now - 60000);
-                    }
-                    return res;
-                })()
-            },
-            {
-                type: 'category',
-                boundaryGap: true,
-                data: (function (){
-                    var res = [];
-                    var len = 60;
-                    while (len--) {
-                        res.push(60 - len - 1);
                     }
                     return res;
                 })()
@@ -276,25 +263,18 @@ $(document).ready( function() {
                 scale: true,
                 name: 'Devices',
                 min: 0,
-                boundaryGap: [0.2, 0.2]
-            },
-            {
-                type: 'value',
-                scale: true,
-                name: 'Total',
-                min: 0,
-                boundaryGap: [0.2, 0.2]
+                boundaryGap: [1, 1]
             }
         ],
         series: [
             {
                 name: 'TOTAL',
-                type: 'bar',
-                xAxisIndex: 1,
-                yAxisIndex: 1,
+                type: 'line',
+                // xAxisIndex: 1,
+                smooth: true,
                 data: (function (){
                     var res = [];
-                    var len = 60;
+                    var len = 30;
                     while (len--) {
                         res.push(deviceAct);
                     }
@@ -308,7 +288,7 @@ $(document).ready( function() {
                 data: (function (){
                     var res = [];
                     var len = 0;
-                    while (len < 60) {
+                    while (len < 30) {
                         res.push(inAct);
                         len++;
                     }
@@ -322,7 +302,7 @@ $(document).ready( function() {
                 data: (function (){
                     var res = [];
                     var len = 0;
-                    while (len < 60) {
+                    while (len < 30) {
                         res.push(limitAct);
                         len++;
                     }
@@ -336,7 +316,7 @@ $(document).ready( function() {
                 data: (function (){
                     var res = [];
                     var len = 0;
-                    while (len < 60) {
+                    while (len < 30) {
                         res.push(outAct);
                         len++;
                     }
@@ -347,17 +327,17 @@ $(document).ready( function() {
         ]
     };
 
-    let count = 61;
-    let axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+    let count = 31;
+    let deviceAnt = 0;
 
     sourceEvt.onmessage = function (event) {
-        let dataTime = (new Date(JSON.parse(event.data).time)).toLocaleTimeString();
+        let axisTime = (new Date(JSON.parse(event.data).time)).toLocaleTimeString();
         inAct = JSON.parse(event.data).inCount;
         limitAct = JSON.parse(event.data).limitCount;
         outAct = JSON.parse(event.data).outCount;
         deviceAct = inAct + limitAct + outAct;
 
-        if (axisData !== dataTime) {
+        if (deviceAnt !== deviceAct) {
             var data0 = option.series[0].data;
             var data1 = option.series[1].data;
             var data2 = option.series[2].data;
@@ -371,13 +351,12 @@ $(document).ready( function() {
             data3.shift();
             data3.push(outAct);
             option.xAxis[0].data.shift();
-            option.xAxis[0].data.push(dataTime);
-            option.xAxis[1].data.shift();
-            option.xAxis[1].data.push(count++);
+            option.xAxis[0].data.push(axisTime);
+            // option.xAxis[1].data.shift();
+            // option.xAxis[1].data.push(count++);
 
             spChart.setOption(option);
-            console.log(axisData, dataTime);
-            axisData = dataTime;
+            deviceAnt = deviceAct;
         }
 
     }
