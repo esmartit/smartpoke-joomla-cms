@@ -104,7 +104,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
                                         </label>
                                         <?php if ($field->fieldname === 'password1') : ?>
                                             <?php // Disables autocomplete ?>
-                                            <input type="password" style="display:none">
+                                            <input class="form-control" type="password" style="display:none">
                                         <?php endif; ?>
                                         <?php echo $field->input; ?>
                                     </div>
@@ -158,7 +158,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
                 <div class="ln_solid"></div>
                 <div class="item form-group">
                     <div class="col-md-6 col-sm-6 offset-md-3">
-                        <a class="btn" href="<?php echo JRoute::_('index.php'); ?>" title="<?php echo JText::_('JCANCEL'); ?>">
+                        <a class="btn btn-secondary" href="<?php echo JRoute::_('index.php'); ?>" title="<?php echo JText::_('JCANCEL'); ?>">
                             <?php echo JText::_('JCANCEL'); ?>
                         </a>
                         <button type="submit" class="btn btn-success validate">

@@ -112,7 +112,7 @@ else
                     <div class="menu_section">
                         <h3>Dashboard</h3>
                         <ul class="nav side-menu">
-                            <li><a href="index.html"><i class="fa fa-plug"></i> OnLine </a></li>
+                            <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnLine </a></li>
                             <li><a href="index.html"><i class="fa fa-database"></i> BigData </a></li>
                             <li><a href="index.html"><i class="fa fa-wifi"></i> HotSpot </a></li>
                             <li><a href="index.html"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
@@ -175,13 +175,9 @@ else
         <!-- page content -->
         <div class="right_col <?php echo $span; ?>" role="main">
             <!-- Begin Content -->
-            <div class="row-fluid">
-                <div class="col-md-12 col-sm-12 ">
-                    <jdoc:include type="modules" name="topcenter" style="none" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12 ">
+            <jdoc:include type="modules" name="topcenter" style="none" />
+            <div class="row col-md-12 col-sm-12">
+                <div class="col-md-12 col-sm-12">
                     <div class="x_title">
                         <h2></h2>
                         <ul class="nav navbar-right panel_toolbox">
@@ -199,9 +195,9 @@ else
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="x_content">
-                        <jdoc:include type="component" />
-                    </div>
+                </div>
+                <div class="x_content">
+                    <jdoc:include type="component" />
                 </div>
             </div>
             <jdoc:include type="modules" name="breadcrumbs" style="none" />

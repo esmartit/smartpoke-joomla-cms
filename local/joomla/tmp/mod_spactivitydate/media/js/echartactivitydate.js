@@ -236,6 +236,27 @@ $(document).ready( function() {
         legend: {
             data:['TOTAL', 'IN', 'LIMIT', 'OUT']
         },
+        toolbox: {
+            show: true,
+            feature: {
+                magicType: {
+                    show: true,
+                    title: {
+                        line: 'Line',
+                        bar: 'Bar'
+                    },
+                    type: ['line', 'bar']
+                },
+                restore: {
+                    show: true,
+                    title: 'Restore'
+                },
+                saveAsImage: {
+                    show: true,
+                    title: 'Save Image'
+                }
+            }
+        },
         dataZoom: {
             show: false,
             start: 0,
@@ -270,8 +291,14 @@ $(document).ready( function() {
             {
                 name: 'TOTAL',
                 type: 'line',
-                // xAxisIndex: 1,
                 smooth: true,
+                itemStyle: {
+                    normal: {
+                        areaStyle: {
+                            type: 'default'
+                        }
+                    }
+                },
                 data: (function (){
                     var res = [];
                     var len = 30;
@@ -285,6 +312,13 @@ $(document).ready( function() {
                 name: 'IN',
                 type: 'line',
                 smooth: true,
+                itemStyle: {
+                    normal: {
+                        areaStyle: {
+                            type: 'default'
+                        }
+                    }
+                },
                 data: (function (){
                     var res = [];
                     var len = 0;
@@ -299,6 +333,13 @@ $(document).ready( function() {
                 name: 'LIMIT',
                 type: 'line',
                 smooth: true,
+                itemStyle: {
+                    normal: {
+                        areaStyle: {
+                            type: 'default'
+                        }
+                    }
+                },
                 data: (function (){
                     var res = [];
                     var len = 0;
@@ -313,6 +354,13 @@ $(document).ready( function() {
                 name: 'OUT',
                 type: 'line',
                 smooth: true,
+                itemStyle: {
+                    normal: {
+                        areaStyle: {
+                            type: 'default'
+                        }
+                    }
+                },
                 data: (function (){
                     var res = [];
                     var len = 0;
@@ -323,11 +371,9 @@ $(document).ready( function() {
                     return res;
                 })()
             }
-
         ]
     };
 
-    let count = 31;
     let deviceAnt = 0;
 
     sourceEvt.onmessage = function (event) {
@@ -352,13 +398,9 @@ $(document).ready( function() {
             data3.push(outAct);
             option.xAxis[0].data.shift();
             option.xAxis[0].data.push(axisTime);
-            // option.xAxis[1].data.shift();
-            // option.xAxis[1].data.push(count++);
 
             spChart.setOption(option);
             deviceAnt = deviceAct;
         }
-
     }
-
 })
