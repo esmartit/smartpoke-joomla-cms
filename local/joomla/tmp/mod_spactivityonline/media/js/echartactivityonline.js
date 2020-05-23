@@ -296,7 +296,12 @@ $(document).ready( function() {
                         deviceAct[6],deviceAct[7],deviceAct[8],deviceAct[9],deviceAct[10],deviceAct[11],
                         deviceAct[12],deviceAct[13],deviceAct[14],deviceAct[15],deviceAct[16],deviceAct[17],
                         deviceAct[18],deviceAct[19],deviceAct[20],deviceAct[21],deviceAct[22],deviceAct[23]
-                    ]
+                    ],
+                    markLine : {
+                        data : [
+                            {type : 'average', name: 'Avg'}
+                        ]
+                    }
                 },
                 {
                     name: 'IN',
@@ -369,6 +374,7 @@ $(document).ready( function() {
         limitArr[x] = 0;
         outArr[x] = 0;
         deviceArr[x] = 0;
+        hoursArr[x] = x;
     }
 
     let deviceAnt = 0;

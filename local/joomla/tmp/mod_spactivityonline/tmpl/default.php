@@ -23,7 +23,7 @@ $document->addScript('/media/mod_spactivityonline/js/echartactivityonline.js');
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <div id="echart_activity_online" class="demo-placeholder"></div>
+            <div id="echart_activity_online" class="demo-placeholder" style="height:350px;"></div>
         </div>
     </div>
 </div>
