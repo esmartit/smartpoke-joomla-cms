@@ -9,15 +9,21 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.keepalive');
-JHtml::_('behavior.formvalidator');
-JHtml::_('formbehavior.chosen', 'select');
-JHtml::_('bootstrap.tooltip');
+//JHtml::_('behavior.keepalive');
+//JHtml::_('behavior.formvalidator');
+//JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('bootstrap.tooltip');
 
 
 // Load user_profile plugin language
 $lang = JFactory::getLanguage();
 $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
+
+$document = JFactory::getDocument();
+
+$document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
+$document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
+
 
 ?>
 <div class="col-md-12 col-sm-12 ">
@@ -97,9 +103,9 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
                                         <label class="col-form-label col-md-3 col-sm-3 label-align">
                                             <?php echo $field->label; ?>
                                             <?php if (!$field->required && $field->type !== 'Spacer') : ?>
-                                                <span class="optional">
-                                                    <?php echo JText::_('COM_USERS_OPTIONAL'); ?>
-                                                </span>
+<!--                                                <span class="optional">-->
+<!--                                                    --><?php //echo JText::_('COM_USERS_OPTIONAL'); ?>
+<!--                                                </span>-->
                                             <?php endif; ?>
                                         </label>
                                         <?php if ($field->fieldname === 'password1') : ?>
@@ -156,9 +162,9 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
                     </fieldset>
                 <?php endif; ?>
                 <div class="ln_solid"></div>
-                <div class="item form-group">
+                <div class="form-group">
                     <div class="col-md-6 col-sm-6 offset-md-3">
-                        <a class="btn btn-secondary" href="<?php echo JRoute::_('index.php'); ?>" title="<?php echo JText::_('JCANCEL'); ?>">
+                        <a class="btn btn-secondary" href="<?php echo JRoute::_('/index.php'); ?>" title="<?php echo JText::_('JCANCEL'); ?>">
                             <?php echo JText::_('JCANCEL'); ?>
                         </a>
                         <button type="submit" class="btn btn-success validate">
