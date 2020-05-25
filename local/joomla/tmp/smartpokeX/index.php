@@ -234,7 +234,7 @@ else
 <!--<script src="--><?php //echo $tpath;?><!--/vendors/nprogress/nprogress.js"></script>-->
 
 <!-- Custom Theme Scripts -->
-<script src="<?php echo $tpath;?>/build/js/custom.min.js"></script>
+<script src="<?php echo $tpath;?>/build/js/custom.js"></script>
 
 <input type="hidden" name="option" value="com_users" />
 <input type="hidden" name="task" value="user.logout" />
