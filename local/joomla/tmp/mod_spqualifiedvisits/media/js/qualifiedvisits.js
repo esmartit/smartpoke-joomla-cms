@@ -1,0 +1,43 @@
+$(document).ready( function() {
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/today-hourly-device-presence");
+    let visitTotal = 0;
+    let visitIn = 0;
+    let visitLimit = 0;
+    let visitOut = 0;
+    let visitHour = 0;
+    let visitHourNew = (new Date()).getHours();
+    let inDataAnt = 0;
+    let limitDataAnt = 0;
+    let outDataAnt = 0;
+
+    sourceEvt.onmessage = function (event) {
+        visitHour = (new Date(JSON.parse(event.data).time)).getHours();
+        let inData = JSON.parse(event.data).inCount;
+        let limitData = JSON.parse(event.data).limitCount;
+        let outData = JSON.parse(event.data).outCount;
+        if (visitHour != visitHourNew) {
+            visitIn += inData;
+            visitLimit += limitData;
+            visitOut += outData;
+            visitHourNew = visitHour
+        } else {
+            if (inData != inDataAnt || limitData != limitDataAnt || outData != outDataAnt) {
+                visitIn = (visitIn + inData) - inDataAnt;
+                visitLimit = (visitLimit + limitData) - limitDataAnt;
+                visitOut = (visitOut + outData) - outDataAnt;
+                inDataAnt = inData;
+                limitDataAnt = limitData;
+                outDataAnt = outData;
+            } else {
+                visitIn += 0;
+                visitLimit += 0;
+                visitOut += 0;
+            }
+        }
+        visitTotal = visitIn + visitLimit + visitOut;
+        document.getElementById("totalVisits").innerHTML = Intl.NumberFormat().format(visitTotal);
+        document.getElementById("inVisits").innerHTML = Intl.NumberFormat().format(visitIn);
+        document.getElementById("limitVisits").innerHTML = Intl.NumberFormat().format(visitLimit);
+        document.getElementById("outVisits").innerHTML = Intl.NumberFormat().format(visitOut);
+    }
+});

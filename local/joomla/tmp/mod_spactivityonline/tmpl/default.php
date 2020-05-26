@@ -16,7 +16,7 @@ $document->addScript('/templates/smartpokex/vendors/echarts/dist/echarts.min.js'
 $document->addScript('/media/mod_spactivityonline/js/echartactivityonline.js');
 
 ?>
-<div class="col-md-9 col-sm-9">
+<div class="col-md-12 col-sm-12">
     <div class="dashboard_graph">
         <div class="x_title">
             <h2><?php echo JText::_('MOD_SPACTIVITYONLINE');?> <small></small></h2>
