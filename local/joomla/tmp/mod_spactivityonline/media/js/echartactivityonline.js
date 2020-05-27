@@ -266,7 +266,7 @@ $(document).ready( function() {
                         hoursAct[0], hoursAct[1], hoursAct[2], hoursAct[3], hoursAct[4], hoursAct[5],
                         hoursAct[6], hoursAct[7], hoursAct[8], hoursAct[9], hoursAct[10], hoursAct[11],
                         hoursAct[12], hoursAct[13], hoursAct[14], hoursAct[15], hoursAct[16], hoursAct[17],
-                        hoursAct[18], hoursAct[19], hoursAct[20], hoursAct[21], hoursAct[22], hoursAct[23],
+                        hoursAct[18], hoursAct[19], hoursAct[20], hoursAct[21], hoursAct[22], hoursAct[23]
                     ]
                 }
             ],

@@ -211,7 +211,7 @@ $(document).ready( function() {
         }
     };
 
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/hourly-device-presence-delta");
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=https://testlanding.cluster.smartpoke.es/index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/minute-device-presence-count");
     let inAct = 0;
     let limitAct = 0;
     let outAct = 0;
@@ -259,7 +259,7 @@ $(document).ready( function() {
         },
         dataZoom: {
             show: false,
-            start: 0,
+            start: 10,
             end: 100
         },
         xAxis: [
@@ -378,29 +378,31 @@ $(document).ready( function() {
 
     sourceEvt.onmessage = function (event) {
         let axisTime = (new Date(JSON.parse(event.data).time)).toLocaleTimeString();
+        let xTime = axisTime.substring(0,5);
         inAct = JSON.parse(event.data).inCount;
         limitAct = JSON.parse(event.data).limitCount;
         outAct = JSON.parse(event.data).outCount;
         deviceAct = inAct + limitAct + outAct;
 
-        if (deviceAnt !== deviceAct) {
-            var data0 = option.series[0].data;
-            var data1 = option.series[1].data;
-            var data2 = option.series[2].data;
-            var data3 = option.series[3].data;
-            data0.shift();
-            data0.push(deviceAct);
-            data1.shift();
-            data1.push(inAct);
-            data2.shift();
-            data2.push(limitAct);
-            data3.shift();
-            data3.push(outAct);
-            option.xAxis[0].data.shift();
-            option.xAxis[0].data.push(axisTime);
+        var data0 = option.series[0].data;
+        var data1 = option.series[1].data;
+        var data2 = option.series[2].data;
+        var data3 = option.series[3].data;
 
-            spChart.setOption(option);
+        if (deviceAct != deviceAnt) {
+            data0.shift();
+            data1.shift();
+            data2.shift();
+            data3.shift();
+            option.xAxis[0].data.shift();
+            data0.push(deviceAct);
+            data1.push(inAct);
+            data2.push(limitAct);
+            data3.push(outAct);
+            option.xAxis[0].data.push(xTime);
+
             deviceAnt = deviceAct;
         }
+        spChart.setOption(option);
     }
 })
