@@ -211,7 +211,8 @@ $(document).ready( function() {
         }
     };
 
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/today-hourly-device-presence");
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
     var spChart = echarts.init(document.getElementById('echart_activity_online'), theme);
 
     function echartActivity(hoursAct, deviceAct, inAct, limitAct, outAct) {
@@ -380,10 +381,11 @@ $(document).ready( function() {
     let deviceAnt = 0;
 
     sourceEvt.onmessage = function (event) {
-        let dataHours = (new Date(JSON.parse(event.data).time)).getHours();
-        let in_x = JSON.parse(event.data).inCount;
-        let limit_x = JSON.parse(event.data).limitCount;
-        let out_x = JSON.parse(event.data).outCount;
+        let eventData = JSON.parse(event.data);
+        let dataHours = (new Date(eventData.time)).getHours();
+        let in_x = eventData.inCount;
+        let limit_x = eventData.limitCount;
+        let out_x = eventData.outCount;
         let device_x = in_x + limit_x + out_x;
 
         inArr[dataHours] = in_x;

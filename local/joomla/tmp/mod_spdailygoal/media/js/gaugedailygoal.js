@@ -40,8 +40,9 @@ $(document).ready( function() {
     }
 
     sourceEvt.onmessage = function (event) {
-        dailyGoal = JSON.parse(event.data).count;
-        let today = new Date(JSON.parse(event.data).time);
+        let eventData = JSON.parse(event.data);
+        dailyGoal = eventData.count;
+        let today = new Date(eventData.time);
         let sameDate = (currentDate.getDate() === today.getUTCDate());
 
         if ($('#gauge-text').length) {

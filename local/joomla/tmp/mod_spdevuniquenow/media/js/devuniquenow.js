@@ -6,9 +6,10 @@ $(document).ready( function() {
     let deviceNow = 0;
 
     sourceEvt.onmessage = function (event) {
-        inCount = JSON.parse(event.data).inCount;
-        limitCount = JSON.parse(event.data).limitCount;
-        outCount = JSON.parse(event.data).outCount;
+        let eventData = JSON.parse(event.data);
+        inCount = eventData.inCount;
+        limitCount = eventData.limitCount;
+        outCount = eventData.outCount;
         deviceNow = inCount + limitCount + outCount;
         document.getElementById("devuniquenow").innerHTML = Intl.NumberFormat().format(deviceNow);
     }

@@ -11,6 +11,6 @@ defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$dailygoaldevice = ModSPDailyGoalHelper::getValue($params);
+$dailygoaldevice = ModSPDailyGoalHelper::getValueDev($params);
 $dailygoalregistered = ModSPDailyGoalHelper::getValueReg($params);
 require JModuleHelper::getLayoutPath('mod_spdailygoal', $params->get('layout', 'default'));

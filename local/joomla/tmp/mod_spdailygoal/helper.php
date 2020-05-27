@@ -10,13 +10,10 @@
 class ModSPDailyGoalHelper
 {
     /**
-     * Retrieves the hello message
-     *
-     * @param   array  $params An object containing the module parameters
-     *
-     * @access public
+     * Returns the dailyGoal and dailyGoalReg from each cust
+     * @return mixed
      */
-    public static function getValue($params)
+    public static function getValueDev($params)
     {
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);

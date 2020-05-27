@@ -211,7 +211,7 @@ $(document).ready( function() {
         }
     };
 
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=https://testlanding.cluster.smartpoke.es/index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/minute-device-presence-count");
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/minute-device-presence-count");
     let inAct = 0;
     let limitAct = 0;
     let outAct = 0;
@@ -377,11 +377,12 @@ $(document).ready( function() {
     let deviceAnt = 0;
 
     sourceEvt.onmessage = function (event) {
-        let axisTime = (new Date(JSON.parse(event.data).time)).toLocaleTimeString();
+        let eventData = JSON.parse(event.data);
+        let axisTime = (new Date(eventData.time)).toLocaleTimeString();
         let xTime = axisTime.substring(0,5);
-        inAct = JSON.parse(event.data).inCount;
-        limitAct = JSON.parse(event.data).limitCount;
-        outAct = JSON.parse(event.data).outCount;
+        inAct = eventData.inCount;
+        limitAct = eventData.limitCount;
+        outAct = eventData.outCount;
         deviceAct = inAct + limitAct + outAct;
 
         var data0 = option.series[0].data;

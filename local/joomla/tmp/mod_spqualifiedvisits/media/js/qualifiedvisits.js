@@ -11,10 +11,11 @@ $(document).ready( function() {
     let outDataAnt = 0;
 
     sourceEvt.onmessage = function (event) {
-        visitHour = (new Date(JSON.parse(event.data).time)).getHours();
-        let inData = JSON.parse(event.data).inCount;
-        let limitData = JSON.parse(event.data).limitCount;
-        let outData = JSON.parse(event.data).outCount;
+        let eventData = JSON.parse(event.data);
+        visitHour = (new Date(eventData.time)).getHours();
+        let inData = eventData.inCount;
+        let limitData = eventData.limitCount;
+        let outData = eventData.outCount;
         if (visitHour != visitHourNew) {
             visitIn += inData;
             visitLimit += limitData;
