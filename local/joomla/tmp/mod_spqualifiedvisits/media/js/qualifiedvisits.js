@@ -1,5 +1,7 @@
 $(document).ready( function() {
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/today-hourly-device-presence");
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
+
     let visitTotal = 0;
     let visitIn = 0;
     let visitLimit = 0;

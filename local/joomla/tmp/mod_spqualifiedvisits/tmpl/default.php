@@ -27,6 +27,7 @@ $document->addScript('/media/mod_spqualifiedvisits/js/qualifiedvisits.js');
             </div>
 
             <div class="row tile_count">
+                <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                 <div class="col-md-9 col-sm-9 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-bar-chart"></i> TOTAL</span>
                     <div id="totalVisits" class="count">0</div>

@@ -11,6 +11,7 @@
     <description>MOD_SPQUALIFIEDVISITS_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_spqualifiedvisits">mod_spqualifiedvisits.php</filename>
+        <filename>helper.php</filename>
         <folder>tmpl</folder>
     </files>
     <media folder="media" destination="mod_spqualifiedvisits">

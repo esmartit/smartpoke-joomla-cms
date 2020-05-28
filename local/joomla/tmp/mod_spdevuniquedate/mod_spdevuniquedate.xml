@@ -11,6 +11,7 @@
 	<description>MOD_SPDEVUNIQUEDATE_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_spdevuniquedate">mod_spdevuniquedate.php</filename>
+		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 	</files>
 	<media folder="media" destination="mod_spdevuniquedate">
