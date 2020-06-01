@@ -36,6 +36,7 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
+            <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
             <div class="dashboard-widget-content">
                 <div class="sidebar-widget">
                     <h4>Registered</h4>

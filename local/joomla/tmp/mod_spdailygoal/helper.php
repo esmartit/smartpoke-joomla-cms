@@ -40,4 +40,14 @@ class ModSPDailyGoalHelper
         $value = $db->loadResult();
         return $value;
     }
+
+    public static function getTimeZone($params) {
+        $userTz = JFactory::getUser()->getParam('timezone');
+        $timeZone = JFactory::getConfig()->get('offset');
+        if($userTz) {
+            $timeZone = $userTz;
+        }
+        return $timeZone;
+    }
+
 }
