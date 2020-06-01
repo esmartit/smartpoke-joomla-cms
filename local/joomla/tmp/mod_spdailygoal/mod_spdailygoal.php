@@ -13,6 +13,6 @@ require_once dirname(__FILE__) . '/helper.php';
 
 $dailygoaldevice = ModSPDailyGoalHelper::getValueDev($params);
 $dailygoalregistered = ModSPDailyGoalHelper::getValueReg($params);
-$usertimezone = ModSPActivityOnlineHelper::getTimeZone($params);
+$usertimezone = ModSPDailyGoalHelper::getTimeZone($params);
 
 require JModuleHelper::getLayoutPath('mod_spdailygoal', $params->get('layout', 'default'));
