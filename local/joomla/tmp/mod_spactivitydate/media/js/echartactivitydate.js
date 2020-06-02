@@ -211,7 +211,7 @@ $(document).ready( function() {
         }
     };
 
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&resource_path=/sensor-activity/minute-device-presence-count");
+    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/minute-device-presence-count");
     let inAct = 0;
     let limitAct = 0;
     let outAct = 0;
