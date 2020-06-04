@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.2" method="upgrade">
+	<name>COM_SPNAS</name>
+	<creationDate>3rd June, 2020</creationDate>
+	<author>Adolfo Zignago</author>
+	<authorEmail>adolfo.zignago@esmartit.es</authorEmail>
+	<authorUrl>https://www.esmartit.es</authorUrl>
+	<copyright>Copyright (C) 2020. All Rights Reserved</copyright>
+	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
+	<version>1.0.0</version>
+	<description><![CDATA[
+		<h1>SP Nas (v.1.0.0)</h1>
+		<div style="clear: both;"></div>
+		<p>SmartPoke HotSpot Settings Nas</p>
+		<p>Created by <a href="https://www.esmartit.es" target="_blank">Adolfo Zignago</a><br /><small>Development started 7th April, 2020</small></p>
+	]]></description>
+
+	<media destination="com_spnas" folder="media">
+		<filename>index.html</filename>
+		<folder>js</folder>
+		<folder>css</folder>
+		<folder>images</folder>
+	</media>
+
+	<!-- Update Schema; New in Joomla 2.5 -->
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql/</schemapath>
+		</schemas>
+	</update>
+
+	<files folder="site">
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<filename>spnas.php</filename>
+		<folder>assets</folder>
+		<folder>helpers</folder>
+		<folder>controllers</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+		<folder>layouts</folder>
+	</files>
+
+	<languages folder="site">
+		<language tag="en-GB">language/en-GB/en-GB.com_spnas.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_spnas.sys.ini</language>
+	</languages>
+
+	<administration>
+		<menu>COM_SPNAS_MENU</menu>
+		<submenu>
+			<!-- Instead of link you can specify individual link attributes -->
+			<menu option="com_spnas" view="nases">COM_SPNAS_MENU_NASES</menu>
+		</submenu>
+		<files folder="admin">
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>index.html</filename>
+			<filename>spnas.php</filename>
+			<folder>assets</folder>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>views</folder>
+		</files>
+
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB/en-GB.com_spnas.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_spnas.sys.ini</language>
+		</languages>
+
+	</administration>
+</extension>
