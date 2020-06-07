@@ -204,17 +204,18 @@ class SpcustomerViewCustomer extends JViewLegacy
 		// you can override this in the global component options
 		// just add a (radio yes/no field) with a name called add_isis_template
 		// to your components config area
-		if ($this->params->get('add_isis_template', 1))
-		{
-			// we need this to fix the form display (TODO)
-			$this->document->addStyleSheet(JURI::root() . "administrator/templates/isis/css/template.css", (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/css');
-			$this->document->addScript(JURI::root() . "administrator/templates/isis/js/template.js", (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/javascript');
-		}
+//		if ($this->params->get('add_isis_template', 1))
+//		{
+//			// we need this to fix the form display (TODO)
+//			$this->document->addStyleSheet(JURI::root() . "administrator/templates/isis/css/template.css", (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/css');
+//			$this->document->addScript(JURI::root() . "administrator/templates/isis/js/template.js", (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/javascript');
+//		}
 		// the default style of this view
 		$this->document->addStyleSheet(JURI::root()."components/com_spcustomer/assets/css/customer.css", (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/css');
 		// default javascript of this view
 		$this->document->addScript(JURI::root(). $this->script, (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/javascript');
-		$this->document->addScript(JURI::root(). "components/com_spcustomer/views/customer/submitbutton.js", (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/javascript'); 
+        $this->document->addScript(JURI::root(). 'media/system/js/core.js');
+		$this->document->addScript(JURI::root(). "components/com_spcustomer/views/customer/submitbutton.js", (SpcustomerHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/javascript');
 		JText::script('view not acceptable. Error');
 	}
 }

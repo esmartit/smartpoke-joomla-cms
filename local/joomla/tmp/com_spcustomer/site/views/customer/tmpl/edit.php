@@ -22,73 +22,73 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-JHtml::_('behavior.tooltip');
+//JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
-JHtml::_('formbehavior.chosen', 'select');
+//JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('behavior.keepalive');
-JHtml::_('behavior.tabstate');
+//JHtml::_('behavior.tabstate');
 JHtml::_('behavior.calendar');
 $componentParams = $this->params; // will be removed just use $this->params instead
+
+$document = JFactory::getDocument();
+
+$document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
+$document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
+
 ?>
-<?php echo $this->toolbar->render(); ?>
+<?php //echo $this->toolbar->render(); ?>
 <form action="<?php echo JRoute::_('index.php?option=com_spcustomer&layout=edit&id='. (int) $this->item->id . $this->referral); ?>" method="post" name="adminForm" id="adminForm" class="form-validate" enctype="multipart/form-data">
-
-<div class="form-horizontal">
-
-	<?php echo JHtml::_('bootstrap.startTabSet', 'customerTab', array('active' => 'details')); ?>
-
-	<?php echo JHtml::_('bootstrap.addTab', 'customerTab', 'details', JText::_('COM_SPCUSTOMER_CUSTOMER_DETAILS', true)); ?>
-		<div class="row-fluid form-horizontal-desktop">
-			<div class="span6">
-				<?php echo JLayoutHelper::render('customer.details_left', $this); ?>
-			</div>
-			<div class="span6">
-				<?php echo JLayoutHelper::render('customer.details_right', $this); ?>
-			</div>
-		</div>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>
-
-	<?php $this->ignore_fieldsets = array('details','metadata','vdmmetadata','accesscontrol'); ?>
-	<?php $this->tab_name = 'customerTab'; ?>
-	<?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>
-
-	<?php if ($this->canDo->get('core.delete') || $this->canDo->get('core.edit.created_by') || $this->canDo->get('core.edit.state') || $this->canDo->get('core.edit.created')) : ?>
-	<?php echo JHtml::_('bootstrap.addTab', 'customerTab', 'publishing', JText::_('COM_SPCUSTOMER_CUSTOMER_PUBLISHING', true)); ?>
-		<div class="row-fluid form-horizontal-desktop">
-			<div class="span6">
-				<?php echo JLayoutHelper::render('customer.publishing', $this); ?>
-			</div>
-			<div class="span6">
-				<?php echo JLayoutHelper::render('customer.publlshing', $this); ?>
-			</div>
-		</div>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>
-	<?php endif; ?>
-
-	<?php if ($this->canDo->get('core.admin')) : ?>
-	<?php echo JHtml::_('bootstrap.addTab', 'customerTab', 'permissions', JText::_('COM_SPCUSTOMER_CUSTOMER_PERMISSION', true)); ?>
-		<div class="row-fluid form-horizontal-desktop">
-			<div class="span12">
-				<fieldset class="adminform">
-					<div class="adminformlist">
-					<?php foreach ($this->form->getFieldset('accesscontrol') as $field): ?>
-						<div>
-							<?php echo $field->label; echo $field->input;?>
-						</div>
-						<div class="clearfix"></div>
-					<?php endforeach; ?>
-					</div>
-				</fieldset>
-			</div>
-		</div>
-	<?php echo JHtml::_('bootstrap.endTab'); ?>
-	<?php endif; ?>
-
-	<?php echo JHtml::_('bootstrap.endTabSet'); ?>
-
-	<div>
-		<input type="hidden" name="task" value="customer.edit" />
-		<?php echo JHtml::_('form.token'); ?>
-	</div>
-</div>
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <?php if ($this->item->id == 0): ?>
+                    <h2><?php echo JText::_('New Customer'); ?><small></small></h2>
+                <?php else: ?>
+                    <h2><?php echo JText::_('Edit Customer'); ?><small></small></h2>
+                <?php endif; ?>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a class="dropdown-item" href="#">Settings 1</a></li>
+                            <li><a class="dropdown-item" href="#">Settings 2</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <div class="item form-group">
+                    <div class="col-md-3 col-sm-6"></div>
+                    <div class="col-md-3 col-sm-6">
+                        <?php echo JLayoutHelper::render('customer.details_left', $this); ?>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <?php echo JLayoutHelper::render('customer.details_right', $this); ?>
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <div class="col-md-3 col-sm-6">
+                        <?php if ($this->canDo->get('core.delete') || $this->canDo->get('core.edit.created_by') || $this->canDo->get('core.edit.state') || $this->canDo->get('core.edit.created')) : ?>
+                            <?php echo JLayoutHelper::render('customer.publishing', $this); ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="item form-group">
+                    <div class="col-md-6 col-sm-6 offset-md-3">
+                        <a href="index.php?option=com_spcustomer&view=listcustomer" class="btn btn-secondary"><?php echo JText::_('Cancel'); ?></a>
+                        <button onclick="Joomla.submitbutton('customer.save');" class="btn btn-success"><?php echo JText::_('Save'); ?></button>
+                    </div>
+                </div>
+                <div>
+                    <input type="hidden" name="task" value="customer.save" />
+                    <?php echo JHtml::_('form.token'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
