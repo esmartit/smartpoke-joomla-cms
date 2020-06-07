@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPZONE_MENU_LISTZONE_TITLE" option="COM_SPZONE_MENU_LISTZONE_OPTION">
+		<message>
+			<![CDATA[COM_SPZONE_MENU_LISTZONE_DESC]]>
+		</message>
+	</layout>
+</metadata>

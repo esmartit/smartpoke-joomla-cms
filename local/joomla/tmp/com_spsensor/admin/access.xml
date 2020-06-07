@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_spsensor">
+	<section name="component">
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.options" title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.export" title="COM_SPSENSOR_EXPORT_DATA" description="COM_SPSENSOR_EXPORT_DATA_DESC" />
+		<action name="core.import" title="COM_SPSENSOR_IMPORT_DATA" description="COM_SPSENSOR_IMPORT_DATA_DESC" />
+		<action name="core.batch" title="COM_SPSENSOR_USE_BATCH" description="COM_SPSENSOR_USE_BATCH_DESC" />
+		<action name="core.version" title="COM_SPSENSOR_EDIT_VERSIONS" description="COM_SPSENSOR_EDIT_VERSIONS_DESC" />
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.created_by" title="COM_SPSENSOR_EDIT_CREATED_BY" description="COM_SPSENSOR_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPSENSOR_EDIT_CREATED_DATE" description="COM_SPSENSOR_EDIT_CREATED_DATE_DESC" />
+		<action name="site.itemsensor.access" title="COM_SPSENSOR_ITEMSENSOR_ACCESS_SITE" description="COM_SPSENSOR_ITEMSENSOR_ACCESS_SITE_DESC" />
+		<action name="site.listsensor.access" title="COM_SPSENSOR_LISTSENSOR_ACCESS_SITE" description="COM_SPSENSOR_LISTSENSOR_ACCESS_SITE_DESC" />
+		<action name="sensor.access" title="COM_SPSENSOR_SENSORS_ACCESS" description="COM_SPSENSOR_SENSORS_ACCESS_DESC" />
+		<action name="sensor.batch" title="COM_SPSENSOR_SENSORS_BATCH_USE" description="COM_SPSENSOR_SENSORS_BATCH_USE_DESC" />
+		<action name="sensor.dashboard_add" title="COM_SPSENSOR_SENSORS_DASHBOARD_ADD" description="COM_SPSENSOR_SENSORS_DASHBOARD_ADD_DESC" />
+		<action name="sensor.dashboard_list" title="COM_SPSENSOR_SENSORS_DASHBOARD_LIST" description="COM_SPSENSOR_SENSORS_DASHBOARD_LIST_DESC" />
+		<action name="sensor.version" title="COM_SPSENSOR_SENSORS_EDIT_VERSION" description="COM_SPSENSOR_SENSORS_EDIT_VERSION_DESC" />
+		<action name="sensor.export" title="COM_SPSENSOR_SENSORS_EXPORT" description="COM_SPSENSOR_SENSORS_EXPORT_DESC" />
+		<action name="sensor.import" title="COM_SPSENSOR_SENSORS_IMPORT" description="COM_SPSENSOR_SENSORS_IMPORT_DESC" />
+	</section>
+	<section name="sensor">
+		<action name="core.edit" title="COM_SPSENSOR_SENSORS_EDIT" description="COM_SPSENSOR_SENSORS_EDIT_DESC" />
+		<action name="core.edit.own" title="COM_SPSENSOR_SENSORS_EDIT_OWN" description="COM_SPSENSOR_SENSORS_EDIT_OWN_DESC" />
+		<action name="core.edit.state" title="COM_SPSENSOR_SENSORS_EDIT_STATE" description="COM_SPSENSOR_SENSORS_EDIT_STATE_DESC" />
+		<action name="core.edit.created_by" title="COM_SPSENSOR_SENSORS_EDIT_CREATED_BY" description="COM_SPSENSOR_SENSORS_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPSENSOR_SENSORS_EDIT_CREATED_DATE" description="COM_SPSENSOR_SENSORS_EDIT_CREATED_DATE_DESC" />
+		<action name="core.create" title="COM_SPSENSOR_SENSORS_CREATE" description="COM_SPSENSOR_SENSORS_CREATE_DESC" />
+		<action name="core.delete" title="COM_SPSENSOR_SENSORS_DELETE" description="COM_SPSENSOR_SENSORS_DELETE_DESC" />
+		<action name="sensor.version" title="COM_SPSENSOR_SENSORS_EDIT_VERSION" description="COM_SPSENSOR_SENSORS_EDIT_VERSION_DESC" />
+	</section>
+</access>

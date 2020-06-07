@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPDEVICE_MENU_LISTDEVICE_TITLE" option="COM_SPDEVICE_MENU_LISTDEVICE_OPTION">
+		<message>
+			<![CDATA[COM_SPDEVICE_MENU_LISTDEVICE_DESC]]>
+		</message>
+	</layout>
+</metadata>

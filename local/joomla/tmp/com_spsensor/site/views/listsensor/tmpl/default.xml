@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPSENSOR_MENU_LISTSENSOR_TITLE" option="COM_SPSENSOR_MENU_LISTSENSOR_OPTION">
+		<message>
+			<![CDATA[COM_SPSENSOR_MENU_LISTSENSOR_DESC]]>
+		</message>
+	</layout>
+</metadata>

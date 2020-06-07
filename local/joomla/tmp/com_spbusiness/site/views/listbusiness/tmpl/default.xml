@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPBUSINESS_MENU_LISTBUSINESS_TITLE" option="COM_SPBUSINESS_MENU_LISTBUSINESS_OPTION">
+		<message>
+			<![CDATA[COM_SPBUSINESS_MENU_LISTBUSINESS_DESC]]>
+		</message>
+	</layout>
+</metadata>

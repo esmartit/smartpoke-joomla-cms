@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_spvalue">
+	<section name="component">
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.options" title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.export" title="COM_SPVALUE_EXPORT_DATA" description="COM_SPVALUE_EXPORT_DATA_DESC" />
+		<action name="core.import" title="COM_SPVALUE_IMPORT_DATA" description="COM_SPVALUE_IMPORT_DATA_DESC" />
+		<action name="core.batch" title="COM_SPVALUE_USE_BATCH" description="COM_SPVALUE_USE_BATCH_DESC" />
+		<action name="core.version" title="COM_SPVALUE_EDIT_VERSIONS" description="COM_SPVALUE_EDIT_VERSIONS_DESC" />
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.created_by" title="COM_SPVALUE_EDIT_CREATED_BY" description="COM_SPVALUE_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPVALUE_EDIT_CREATED_DATE" description="COM_SPVALUE_EDIT_CREATED_DATE_DESC" />
+		<action name="site.itemvalue.access" title="COM_SPVALUE_ITEMVALUE_ACCESS_SITE" description="COM_SPVALUE_ITEMVALUE_ACCESS_SITE_DESC" />
+		<action name="site.listvalue.access" title="COM_SPVALUE_LISTVALUE_ACCESS_SITE" description="COM_SPVALUE_LISTVALUE_ACCESS_SITE_DESC" />
+		<action name="value.access" title="COM_SPVALUE_VALUES_ACCESS" description="COM_SPVALUE_VALUES_ACCESS_DESC" />
+		<action name="value.batch" title="COM_SPVALUE_VALUES_BATCH_USE" description="COM_SPVALUE_VALUES_BATCH_USE_DESC" />
+		<action name="value.dashboard_add" title="COM_SPVALUE_VALUES_DASHBOARD_ADD" description="COM_SPVALUE_VALUES_DASHBOARD_ADD_DESC" />
+		<action name="value.dashboard_list" title="COM_SPVALUE_VALUES_DASHBOARD_LIST" description="COM_SPVALUE_VALUES_DASHBOARD_LIST_DESC" />
+		<action name="value.version" title="COM_SPVALUE_VALUES_EDIT_VERSION" description="COM_SPVALUE_VALUES_EDIT_VERSION_DESC" />
+		<action name="value.export" title="COM_SPVALUE_VALUES_EXPORT" description="COM_SPVALUE_VALUES_EXPORT_DESC" />
+		<action name="value.import" title="COM_SPVALUE_VALUES_IMPORT" description="COM_SPVALUE_VALUES_IMPORT_DESC" />
+	</section>
+	<section name="value">
+		<action name="core.edit" title="COM_SPVALUE_VALUES_EDIT" description="COM_SPVALUE_VALUES_EDIT_DESC" />
+		<action name="core.edit.own" title="COM_SPVALUE_VALUES_EDIT_OWN" description="COM_SPVALUE_VALUES_EDIT_OWN_DESC" />
+		<action name="core.edit.state" title="COM_SPVALUE_VALUES_EDIT_STATE" description="COM_SPVALUE_VALUES_EDIT_STATE_DESC" />
+		<action name="core.edit.created_by" title="COM_SPVALUE_VALUES_EDIT_CREATED_BY" description="COM_SPVALUE_VALUES_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created_by" title="COM_SPVALUE_VALUES_EDIT_CREATED_BY" description="COM_SPVALUE_VALUES_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPVALUE_VALUES_EDIT_CREATED_DATE" description="COM_SPVALUE_VALUES_EDIT_CREATED_DATE_DESC" />
+		<action name="core.create" title="COM_SPVALUE_VALUES_CREATE" description="COM_SPVALUE_VALUES_CREATE_DESC" />
+		<action name="core.delete" title="COM_SPVALUE_VALUES_DELETE" description="COM_SPVALUE_VALUES_DELETE_DESC" />
+		<action name="value.version" title="COM_SPVALUE_VALUES_EDIT_VERSION" description="COM_SPVALUE_VALUES_EDIT_VERSION_DESC" />
+	</section>
+</access>

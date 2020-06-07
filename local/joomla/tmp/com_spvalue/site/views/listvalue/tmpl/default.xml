@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPVALUE_MENU_LISTVALUE_TITLE" option="COM_SPVALUE_MENU_LISTVALUE_OPTION">
+		<message>
+			<![CDATA[COM_SPVALUE_MENU_LISTVALUE_DESC]]>
+		</message>
+	</layout>
+</metadata>

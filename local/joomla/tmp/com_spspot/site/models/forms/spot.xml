@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addrulepath="/administrator/components/com_spspot/models/rules"
+	addfieldpath="/administrator/components/com_spspot/models/fields"
+>
+	<fieldset name="details">
+        <!-- Default Fields.-->
+        <!-- Id Field. Type: Text (joomla)-->
+        <field name="id"
+               type="hidden"
+               class="readonly"
+               readonly="true"
+               label="JGLOBAL_FIELD_ID_LABEL"
+               description="JGLOBAL_FIELD_ID_DESC"
+               size="10"
+               default="0" />
+        <!-- Published Field. Type: List (joomla)-->
+        <field name="published"
+               type="hidden"
+               class="form-control"
+               readonly="true"
+               default="1"
+               label="JSTATUS" >
+                <option value="1">JPUBLISHED</option>
+                <option value="0">JUNPUBLISHED</option>
+                <option value="2">JARCHIVED</option>
+                <option value="-2">JTRASHED</option>
+        </field>
+        <!-- Dynamic Fields.-->
+        <!-- Spot_id Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="spot_id"
+               label="COM_SPSPOT_SPOT_SPOT_ID_LABEL"
+               size="40"
+               maxlength="50"
+               class="text_area form-control"
+               readonly="false"
+               disabled="false"
+               required="true"
+               filter="STRING"
+               message="COM_SPSPOT_SPOT_SPOT_ID_MESSAGE"
+               hint="COM_SPSPOT_SPOT_SPOT_ID_HINT" />
+        <!-- Name Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="name"
+               label="COM_SPSPOT_SPOT"
+               size="40"
+               maxlength="150"
+               class="text_area form-control"
+               readonly="false"
+               disabled="false"
+               required="true"
+               filter="STRING"
+               message="COM_SPSPOT_SPOT_NAME_MESSAGE"
+               hint="COM_SPSPOT_SPOT_NAME_HINT" />
+        <!-- Business Field. Type: Sql. (joomla)-->
+        <field type="sql"
+               name="business"
+               label="COM_SPSPOT_SPOT_BUSINESS_LABEL"
+               query="SELECT id, name AS business FROM #__spbusiness_businesstype
+ WHERE published = 1"
+               default=""
+               class="form-control"
+               key_field="id"
+               value_field="business"
+               translate="true" />
+        <!-- Latitude Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="latitude"
+               label="COM_SPSPOT_SPOT_LATITUDE_LABEL"
+               size="40"
+               maxlength="20"
+               class="text_area form-control"
+               readonly="false"
+               disabled="false"
+               required="false"
+               filter="STRING"
+               message="COM_SPSPOT_SPOT_LATITUDE_MESSAGE"
+               hint="COM_SPSPOT_SPOT_LATITUDE_HINT" />
+        <!-- Longitude Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="longitude"
+               label="COM_SPSPOT_SPOT_LONGITUDE_LABEL"
+               size="40"
+               maxlength="20"
+               class="text_area form-control"
+               readonly="false"
+               disabled="false"
+               required="false"
+               filter="STRING"
+               message="COM_SPSPOT_SPOT_LONGITUDE_MESSAGE"
+               hint="COM_SPSPOT_SPOT_LONGITUDE_HINT" />
+        <!-- Alias Field. Type: Text. (joomla)-->
+        <field type="hidden"
+               name="alias"
+               label="COM_SPSPOT_SPOT_ALIAS_LABEL"
+               description="JFIELD_ALIAS_DESC"
+               filter="STRING"
+               hint="COM_SPSPOT_SPOT_ALIAS_HINT" />
+   </fieldset>
+</form>

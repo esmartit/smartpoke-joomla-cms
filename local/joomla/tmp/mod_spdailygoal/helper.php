@@ -16,28 +16,38 @@ class ModSPDailyGoalHelper
     public static function getValueDev($params)
     {
         $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query
-            ->select($db->quoteName('value'))
-            ->from($db->quoteName('#__spvalue_value'))
-            ->where($db->quoteName('code_value') . ' = ' . $db->quote('daily_goal_device'));
+        $tables = $db->getTableList();
 
-        $db->setQuery($query);
-        $value = $db->loadResult();
+        $value = 0;
+        if (in_array('jos_spvalue_value', $tables)) {
+            $query = $db->getQuery(true);
+            $query
+                ->select($db->quoteName('value'))
+                ->from($db->quoteName('#__spvalue_value'))
+                ->where($db->quoteName('code_value') . ' = ' . $db->quote('daily_goal_device'));
+
+            $db->setQuery($query);
+            $value = $db->loadResult();
+        }
         return $value;
     }
 
     public static function getValueReg($params)
     {
         $db    = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query
-            ->select($db->quoteName('value'))
-            ->from($db->quoteName('#__spvalue_value'))
-            ->where($db->quoteName('code_value') . ' = ' . $db->quote('daily_goal_registered'));
+        $tables = $db->getTableList();
 
-        $db->setQuery($query);
-        $value = $db->loadResult();
+        $value = 0;
+        if (in_array('jos_spvalue_value', $tables)) {
+            $query = $db->getQuery(true);
+            $query
+                ->select($db->quoteName('value'))
+                ->from($db->quoteName('#__spvalue_value'))
+                ->where($db->quoteName('code_value') . ' = ' . $db->quote('daily_goal_registered'));
+
+            $db->setQuery($query);
+            $value = $db->loadResult();
+        }
         return $value;
     }
 

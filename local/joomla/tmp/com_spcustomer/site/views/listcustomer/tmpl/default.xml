@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPCUSTOMER_MENU_LISTCUSTOMER_TITLE" option="COM_SPCUSTOMER_MENU_LISTCUSTOMER_OPTION">
+		<message>
+			<![CDATA[COM_SPCUSTOMER_MENU_LISTCUSTOMER_DESC]]>
+		</message>
+	</layout>
+</metadata>
