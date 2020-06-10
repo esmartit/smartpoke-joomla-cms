@@ -7,7 +7,7 @@
 	@build			3rd June, 2020
 	@created		7th April, 2020
 	@package		SP Nas
-	@subpackage		spnas.php
+	@subpackage		import.php
 	@author			Adolfo Zignago <https://www.esmartit.es>	
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,22 +20,45 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-JHtml::_('behavior.tabstate');
 
-// Set the component css/js
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_spnas/assets/css/site.css');
-$document->addScript('components/com_spnas/assets/js/site.js');
+use Joomla\Utilities\ArrayHelper;
 
-// Require helper files
-JLoader::register('SpnasHelper', __DIR__ . '/helpers/spnas.php'); 
-JLoader::register('SpnasHelperRoute', __DIR__ . '/helpers/route.php'); 
+/**
+ * Spnas Import Controller
+ */
+class SpnasControllerImport extends JControllerLegacy
+{
+	/**
+	 * Import an spreadsheet.
+	 *
+	 * @return  void
+	 */
+	public function import()
+	{
+		// Check for request forgeries
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-// Get an instance of the controller prefixed by Spnas
-$controller = JControllerLegacy::getInstance('Spnas');
+		$model = $this->getModel('import');
+		if ($model->import())
+		{
+			$cache = JFactory::getCache('mod_menu');
+			$cache->clean();
+			// TODO: Reset the users acl here as well to kill off any missing bits
+		}
 
-// Perform the request task
-$controller->execute(JFactory::getApplication()->input->get('task'));
-
-// Redirect if set by the controller
-$controller->redirect();
+		$app = JFactory::getApplication();
+		$redirect_url = $app->getUserState('com_spnas.redirect_url');
+		if (empty($redirect_url))
+		{
+			$redirect_url = JRoute::_('index.php?option=com_spnas&view=import', false);
+		}
+		else
+		{
+			// wipe out the user state when we're going to redirect
+			$app->setUserState('com_spnas.redirect_url', '');
+			$app->setUserState('com_spnas.message', '');
+			$app->setUserState('com_spnas.extension_message', '');
+		}
+		$this->setRedirect($redirect_url);
+	}
+}

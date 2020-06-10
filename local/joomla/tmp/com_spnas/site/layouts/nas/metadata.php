@@ -4,10 +4,10 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			3rd June, 2020
+	@build			5th June, 2020
 	@created		7th April, 2020
 	@package		SP Nas
-	@subpackage		spnas.php
+	@subpackage		metadata.php
 	@author			Adolfo Zignago <https://www.esmartit.es>	
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,22 +20,31 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
-JHtml::_('behavior.tabstate');
 
-// Set the component css/js
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_spnas/assets/css/site.css');
-$document->addScript('components/com_spnas/assets/js/site.js');
+$form = $displayData->getForm();
 
-// Require helper files
-JLoader::register('SpnasHelper', __DIR__ . '/helpers/spnas.php'); 
-JLoader::register('SpnasHelperRoute', __DIR__ . '/helpers/route.php'); 
+// JLayout for standard handling of metadata fields in the administrator content edit screens.
+$fieldSets = $form->getFieldsets('metadata');
+?>
 
-// Get an instance of the controller prefixed by Spnas
-$controller = JControllerLegacy::getInstance('Spnas');
+<?php foreach ($fieldSets as $name => $fieldSet) : ?>
+	<?php if (isset($fieldSet->description) && trim($fieldSet->description)) : ?>
+		<p class="alert alert-info"><?php echo $this->escape(JText::_($fieldSet->description)); ?></p>
+	<?php endif; ?>
 
-// Perform the request task
-$controller->execute(JFactory::getApplication()->input->get('task'));
+	<?php
+	// Include the real fields in this panel.
+	if ($name == 'vdmmetadata')
+	{
+		echo $form->renderField('metadesc');
+		echo $form->renderField('metakey');
+	}
 
-// Redirect if set by the controller
-$controller->redirect();
+	foreach ($form->getFieldset($name) as $field)
+	{
+		if ($field->name != 'jform[metadata][tags][]')
+		{
+			echo $field->renderField();
+		}
+	} ?>
+<?php endforeach; ?>

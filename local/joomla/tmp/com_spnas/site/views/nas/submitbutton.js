@@ -1,13 +1,12 @@
-<?php
 /*----------------------------------------------------------------------------------|  www.vdm.io  |----/
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			3rd June, 2020
+	@build			5th June, 2020
 	@created		7th April, 2020
 	@package		SP Nas
-	@subpackage		spnas.php
+	@subpackage		submitbutton.js
 	@author			Adolfo Zignago <https://www.esmartit.es>	
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -18,24 +17,18 @@
 
 /------------------------------------------------------------------------------------------------------*/
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-JHtml::_('behavior.tabstate');
-
-// Set the component css/js
-$document = JFactory::getDocument();
-$document->addStyleSheet('components/com_spnas/assets/css/site.css');
-$document->addScript('components/com_spnas/assets/js/site.js');
-
-// Require helper files
-JLoader::register('SpnasHelper', __DIR__ . '/helpers/spnas.php'); 
-JLoader::register('SpnasHelperRoute', __DIR__ . '/helpers/route.php'); 
-
-// Get an instance of the controller prefixed by Spnas
-$controller = JControllerLegacy::getInstance('Spnas');
-
-// Perform the request task
-$controller->execute(JFactory::getApplication()->input->get('task'));
-
-// Redirect if set by the controller
-$controller->redirect();
+Joomla.submitbutton = function(task)
+{
+	if (task == ''){
+		return false;
+	} else { 
+		var action = task.split('.');
+		if (action[1] == 'cancel' || action[1] == 'close' || document.formvalidator.isValid(document.getElementById("adminForm"))){
+			Joomla.submitform(task, document.getElementById("adminForm"));
+			return true;
+		} else {
+			alert(Joomla.JText._('nas, some values are not acceptable.','Some values are unacceptable'));
+			return false;
+		}
+	}
+}
