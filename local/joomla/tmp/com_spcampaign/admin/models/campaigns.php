@@ -147,7 +147,7 @@ class SpcampaignModelCampaigns extends JModelList
 		{
 			$typeArray = array(
 				'LOGIN' => 'COM_SPCAMPAIGN_CAMPAIGN_LOGIN',
-				'REGISTER' => 'COM_SPCAMPAIGN_CAMPAIGN_REGISTERI',
+				'REGISTER' => 'COM_SPCAMPAIGN_CAMPAIGN_REGISTER',
 				'CAMPAIGN' => 'COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN'
 			);
 			// Now check if value is found in this array

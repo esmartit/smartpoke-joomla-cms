@@ -141,7 +141,7 @@
                        default="0">
                         <!-- Option Set.-->
                         <option value="LOGIN">COM_SPCAMPAIGN_CAMPAIGN_LOGIN</option>
-                        <option value="REGISTER">COM_SPCAMPAIGN_CAMPAIGN_REGISTERI</option>
+                        <option value="REGISTER">COM_SPCAMPAIGN_CAMPAIGN_REGISTER</option>
                         <option value="CAMPAIGN">COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN</option>
                 </field>
                 <!-- Alias Field. Type: Text. (joomla)-->
