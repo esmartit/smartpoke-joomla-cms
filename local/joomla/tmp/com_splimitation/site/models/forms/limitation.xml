@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addrulepath="/administrator/components/com_splimitation/models/rules"
+	addfieldpath="/administrator/components/com_splimitation/models/fields"
+>
+	<fieldset name="details">
+        <!-- Default Fields.-->
+        <!-- Id Field. Type: Text (joomla)-->
+        <field name="id"
+               type="text"
+               class="readonly"
+               readonly="true"
+               label="JGLOBAL_FIELD_ID_LABEL"
+               description="JGLOBAL_FIELD_ID_DESC"
+               size="10"
+               default="0" />
+        <!-- Dynamic Fields.-->
+        <!-- Name Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="name"
+               label="COM_SPLIMITATION_LIMITATION_NAME_LABEL"
+               size="40"
+               maxlength="150"
+               description="COM_SPLIMITATION_LIMITATION_NAME_DESCRIPTION"
+               class="text_area"
+               readonly="false"
+               disabled="false"
+               required="true"
+               filter="STRING"
+               message="COM_SPLIMITATION_LIMITATION_NAME_MESSAGE"
+               hint="COM_SPLIMITATION_LIMITATION_NAME_HINT" />
+        <!-- Maxupload Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="maxupload"
+               label="COM_SPLIMITATION_LIMITATION_MAXUPLOAD_LABEL"
+               size="40"
+               maxlength="20"
+               class="text_area"
+               readonly="false"
+               disabled="false"
+               required="false"
+               filter="STRING"
+               message="COM_SPLIMITATION_LIMITATION_MAXUPLOAD_MESSAGE"
+               hint="COM_SPLIMITATION_LIMITATION_MAXUPLOAD_HINT" />
+        <!-- Maxdownload Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="maxdownload"
+               label="COM_SPLIMITATION_LIMITATION_MAXDOWNLOAD_LABEL"
+               size="40"
+               maxlength="20"
+               class="text_area"
+               readonly="false"
+               disabled="false"
+               required="false"
+               filter="STRING"
+               message="COM_SPLIMITATION_LIMITATION_MAXDOWNLOAD_MESSAGE"
+               hint="COM_SPLIMITATION_LIMITATION_MAXDOWNLOAD_HINT" />
+        <!-- Maxtraffic Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="maxtraffic"
+               label="COM_SPLIMITATION_LIMITATION_MAXTRAFFIC_LABEL"
+               size="40"
+               maxlength="20"
+               class="text_area"
+               readonly="false"
+               disabled="false"
+               required="false"
+               filter="STRING"
+               message="COM_SPLIMITATION_LIMITATION_MAXTRAFFIC_MESSAGE"
+               hint="COM_SPLIMITATION_LIMITATION_MAXTRAFFIC_HINT" />
+        <!-- Urlredirect Field. Type: Url. (joomla)-->
+        <field type="url"
+               name="urlredirect"
+               label="COM_SPLIMITATION_LIMITATION_URLREDIRECT_LABEL"
+               size="60"
+               maxlength="150"
+               description="COM_SPLIMITATION_LIMITATION_URLREDIRECT_DESCRIPTION"
+               class="text_area"
+               filter="url"
+               validated="url"
+               scheme="http,https"
+               message="COM_SPLIMITATION_LIMITATION_URLREDIRECT_MESSAGE"
+               hint="COM_SPLIMITATION_LIMITATION_URLREDIRECT_HINT" />
+        <!-- Accessperiod Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="accessperiod"
+               label="COM_SPLIMITATION_LIMITATION_ACCESSPERIOD_LABEL"
+               size="40"
+               maxlength="20"
+               class="text_area"
+               readonly="false"
+               disabled="false"
+               required="false"
+               filter="STRING"
+               message="COM_SPLIMITATION_LIMITATION_ACCESSPERIOD_MESSAGE"
+               hint="COM_SPLIMITATION_LIMITATION_ACCESSPERIOD_HINT" />
+        <!-- Dailysession Field. Type: Text. (joomla)-->
+        <field type="text"
+               name="dailysession"
+               label="COM_SPLIMITATION_LIMITATION_DAILYSESSION_LABEL"
+               size="40"
+               maxlength="20"
+               class="text_area"
+               readonly="false"
+               disabled="false"
+               required="false"
+               filter="STRING"
+               message="COM_SPLIMITATION_LIMITATION_DAILYSESSION_MESSAGE"
+               hint="COM_SPLIMITATION_LIMITATION_DAILYSESSION_HINT" />
+    </fieldset>
+</form>

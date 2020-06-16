@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPNAS_MENU_LISTNAS_TITLE" option="COM_SPNAS_MENU_LISTNAS_OPTION">
+		<message>
+			<![CDATA[COM_SPNAS_MENU_LISTNAS_DESC]]>
+		</message>
+	</layout>
+</metadata>
