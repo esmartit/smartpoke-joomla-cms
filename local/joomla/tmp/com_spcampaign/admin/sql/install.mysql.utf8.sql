@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `#__spcampaign_campaign` (
 	`message_sms` VARCHAR(160) NOT NULL DEFAULT '',
 	`name` VARCHAR(255) NOT NULL DEFAULT '',
 	`smsemail` TINYINT(1) NOT NULL DEFAULT 0,
+	`type` VARCHAR(255) NOT NULL DEFAULT '',
 	`validdate` DATE NOT NULL DEFAULT '0000-00-00',
 	`params` text NOT NULL,
 	`published` TINYINT(3) NOT NULL DEFAULT 1,

@@ -46,6 +46,7 @@
                label="COM_SPCAMPAIGN_CAMPAIGN_VALIDDATE_LABEL"
                default="NOW"
                format="%Y-%m-%d"
+               class="form-control col-md-6"
                filter="STRING"
                required="true"
                todaybutton="false"
@@ -61,6 +62,19 @@
             <!-- Option Set.-->
             <option value="1">COM_SPCAMPAIGN_CAMPAIGN_SMS</option>
             <option value="0">COM_SPCAMPAIGN_CAMPAIGN_EMAIL</option>
+        </field>
+        <!-- Type Field. Type: List. (joomla)-->
+        <field type="list"
+               name="type"
+               label="COM_SPCAMPAIGN_CAMPAIGN_TYPE_LABEL"
+               class="list_class form-control"
+               multiple="false"
+               useglobal="false"
+               default="0">
+            <!-- Option Set.-->
+            <option value="LOGIN">COM_SPCAMPAIGN_CAMPAIGN_LOGIN</option>
+            <option value="REGISTER">COM_SPCAMPAIGN_CAMPAIGN_REGISTER</option>
+            <option value="CAMPAIGN">COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN</option>
         </field>
         <!-- Alias Field. Type: Text. (joomla)-->
         <field type="hidden"
@@ -82,6 +96,7 @@
                name="deferreddate"
                label="COM_SPCAMPAIGN_CAMPAIGN_DEFERREDDATE_LABEL"
                default="NOW"
+               class="form-control col-md-9"
                format="%Y-%m-%d %H:%M:%S"
                filter="STRING"
                required="true"
@@ -103,7 +118,7 @@
         <field type="textarea"
                name="message_sms"
                label="COM_SPCAMPAIGN_CAMPAIGN_MESSAGE_SMS_LABEL"
-               rows="11"
+               rows="5"
                cols="10"
                class="text_area span12 form-control"
                filter="HTML"

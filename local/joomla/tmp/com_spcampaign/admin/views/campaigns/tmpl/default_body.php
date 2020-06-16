@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			16th June, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		default_body.php
@@ -86,6 +86,9 @@ $edit = "index.php?option=com_spcampaign&view=campaigns&task=campaign.edit";
 		</td>
 		<td class="hidden-phone">
 			<?php echo JText::_($item->smsemail); ?>
+		</td>
+		<td class="hidden-phone">
+			<?php echo JText::_($item->type); ?>
 		</td>
 		<td class="center">
 		<?php if ($canDo->get('core.edit.state')) : ?>

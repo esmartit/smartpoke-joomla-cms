@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			16th June, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		default.php
@@ -71,7 +71,7 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.
                     </div>
                 </div>
                 <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?> <span class="required">*</span></label>
+                    <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?> <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 ">
                         <?php if ($this->item->smsemail == 0)
                             {
@@ -96,6 +96,12 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.
                                 <input type="radio" name="type" value="<?php echo $value_e; ?>" <?php echo $checked_e; ?> class="join-btn"> <?php echo JText::_('COM_SPCAMPAIGN_EMAIL'); ?>
                             </label>                        
                         </div>
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="campaign"><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?> <span class="required">*</span></label>
+                    <div class="col-md-3 col-sm-6 ">
+                        <input type="text" id="type" disabled class="form-control " value="<?php echo $this->item->type; ?>">
                     </div>
                 </div>
                 <div class="item form-group">

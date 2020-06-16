@@ -131,6 +131,19 @@
                         <option value="1">COM_SPCAMPAIGN_CAMPAIGN_SMS</option>
                         <option value="0">COM_SPCAMPAIGN_CAMPAIGN_EMAIL</option>
                 </field>
+                <!-- Type Field. Type: List. (joomla)-->
+                <field type="list"
+                       name="type"
+                       label="COM_SPCAMPAIGN_CAMPAIGN_TYPE_LABEL"
+                       class="list_class"
+                       multiple="false"
+                       useglobal="false"
+                       default="0">
+                        <!-- Option Set.-->
+                        <option value="LOGIN">COM_SPCAMPAIGN_CAMPAIGN_LOGIN</option>
+                        <option value="REGISTER">COM_SPCAMPAIGN_CAMPAIGN_REGISTERI</option>
+                        <option value="CAMPAIGN">COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN</option>
+                </field>
                 <!-- Alias Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="alias"

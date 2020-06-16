@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			16th June, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		campaigns.php
@@ -112,6 +112,8 @@ class SpcampaignModelCampaigns extends JModelList
 			{
 				// convert smsemail
 				$item->smsemail = $this->selectionTranslation($item->smsemail, 'smsemail');
+				// convert type
+				$item->type = $this->selectionTranslation($item->type, 'type');
 			}
 		}
 
@@ -138,6 +140,20 @@ class SpcampaignModelCampaigns extends JModelList
 			if (isset($smsemailArray[$value]) && SpcampaignHelper::checkString($smsemailArray[$value]))
 			{
 				return $smsemailArray[$value];
+			}
+		}
+		// Array of type language strings
+		if ($name === 'type')
+		{
+			$typeArray = array(
+				'LOGIN' => 'COM_SPCAMPAIGN_CAMPAIGN_LOGIN',
+				'REGISTER' => 'COM_SPCAMPAIGN_CAMPAIGN_REGISTERI',
+				'CAMPAIGN' => 'COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN'
+			);
+			// Now check if value is found in this array
+			if (isset($typeArray[$value]) && SpcampaignHelper::checkString($typeArray[$value]))
+			{
+				return $typeArray[$value];
 			}
 		}
 		return $value;
@@ -198,7 +214,7 @@ class SpcampaignModelCampaigns extends JModelList
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search) . '%');
-				$query->where('(a.name LIKE '.$search.' OR a.validdate LIKE '.$search.' OR a.smsemail LIKE '.$search.' OR a.alias LIKE '.$search.' OR a.deferred LIKE '.$search.')');
+				$query->where('(a.name LIKE '.$search.' OR a.validdate LIKE '.$search.' OR a.smsemail LIKE '.$search.' OR a.type LIKE '.$search.' OR a.alias LIKE '.$search.' OR a.deferred LIKE '.$search.')');
 			}
 		}
 

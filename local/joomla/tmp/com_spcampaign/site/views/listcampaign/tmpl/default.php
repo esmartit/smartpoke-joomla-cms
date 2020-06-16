@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			16th June, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		default.php
@@ -72,8 +72,9 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_ID'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_VALID_DATE'); ?></th>
+                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?></th>
+<!--                                    <th class='column-title'>--><?php //echo JText::_('COM_SPCAMPAIGN_MESSAGE'); ?><!--</th>-->
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_MESSAGE'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED_DATE'); ?></th>
                                     <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPCAMPAIGN_ACTION'); ?></span></th>
@@ -92,11 +93,12 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         <td class="a-right a-right "><?php echo $item->validdate; ?></td>
                                         <?php if ($item->smsemail == 0): ?>
                                             <td class=""><?php echo JText::_('COM_SPCAMPAIGN_EMAIL'); ?></td>
-                                            <td class=""><?php echo $item->message_email; ?></td>
+<!--                                            <td class="">--><?php //echo $item->message_email; ?><!--</td>-->
                                         <?php else : ?>
                                             <td class=""><?php echo JText::_('SMS'); ?></td>
-                                            <td class=""><?php echo $item->message_sms; ?></td>
+<!--                                            <td class="">--><?php //echo $item->message_sms; ?><!--</td>-->
                                         <?php endif; ?>
+                                        <td class="a-right a-right "><?php echo $item->type; ?></td>
                                         <?php if ($item->deferred == 0): ?>
                                             <td><input type="checkbox" id="check-all" disabled></td>
                                             <td class=""></td>

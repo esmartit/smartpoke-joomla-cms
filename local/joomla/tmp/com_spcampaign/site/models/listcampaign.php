@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			16th June, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		listcampaign.php
@@ -67,8 +67,8 @@ class SpcampaignModelListcampaign extends JModelList
 
 		// Get from #__spcampaign_campaign as a
 		$query->select($db->quoteName(
-			array('a.id','a.smsemail','a.message_sms','a.deferred','a.deferreddate','a.message_email','a.name','a.alias','a.validdate','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
-			array('id','smsemail','message_sms','deferred','deferreddate','message_email','name','alias','validdate','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
+			array('a.id','a.smsemail','a.message_sms','a.deferred','a.deferreddate','a.message_email','a.type','a.name','a.alias','a.validdate','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
+			array('id','smsemail','message_sms','deferred','deferreddate','message_email','type','name','alias','validdate','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
 		$query->from($db->quoteName('#__spcampaign_campaign', 'a'));
 		// Get where a.published is 1
 		$query->where('a.published = 1');
