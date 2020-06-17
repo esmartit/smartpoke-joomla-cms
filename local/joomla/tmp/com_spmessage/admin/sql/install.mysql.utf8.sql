@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS `#__spmessage_message` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`asset_id` INT(10) unsigned NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
-	`alias` CHAR(64) NOT NULL DEFAULT '',
 	`description` TEXT NOT NULL,
 	`device_sms` VARCHAR(50) NOT NULL DEFAULT '',
 	`name` VARCHAR(50) NOT NULL DEFAULT '',
@@ -24,8 +23,8 @@ CREATE TABLE IF NOT EXISTS `#__spmessage_message` (
 	`metadesc` TEXT NOT NULL,
 	`metadata` TEXT NOT NULL,
 	PRIMARY KEY  (`id`),
-	UNIQUE KEY `idx_username` (`username`),
 	KEY `idx_name` (`name`),
+	KEY `idx_username` (`username`),
 	KEY `idx_status` (`status`),
 	KEY `idx_access` (`access`),
 	KEY `idx_checkout` (`checked_out`),

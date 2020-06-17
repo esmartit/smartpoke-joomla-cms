@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
+	@version		1.0.2
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -39,7 +39,6 @@ class SpmessageModelMessage extends JModelAdmin
 		'details' => array(
 			'left' => array(
 				'name',
-				'alias',
 				'device_sms',
 				'username',
 				'senddate',
@@ -400,7 +399,7 @@ class SpmessageModelMessage extends JModelAdmin
 	 */
 	protected function getUniqueFields()
 	{
-		return array('username');
+		return false;
 	}
 	
 	/**

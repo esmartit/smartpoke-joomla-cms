@@ -166,12 +166,6 @@
                        class="text_area span12"
                        filter="HTML"
                        hint="COM_SPMESSAGE_MESSAGE_DESCRIPTION_HINT" />
-                <!-- Alias Field. Type: Text. (joomla)-->
-                <field type="text"
-                       name="alias"
-                       label="COM_SPMESSAGE_MESSAGE_ALIAS_LABEL"
-                       filter="STRING"
-                       hint="COM_SPMESSAGE_MESSAGE_ALIAS_HINT" />
                 <!-- Metadata Fields-->
                 <fields name="metadata"
                         label="JGLOBAL_FIELDSET_METADATA_OPTIONS">

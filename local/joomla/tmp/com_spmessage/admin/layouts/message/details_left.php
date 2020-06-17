@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
+	@version		1.0.2
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -36,7 +36,6 @@ $fields_tab_layout = 'fields_' . $layout_path_array[1];
 // get the fields
 $fields = $displayData->get($fields_tab_layout) ?: array(
 	'name',
-	'alias',
 	'device_sms',
 	'username',
 	'senddate',
