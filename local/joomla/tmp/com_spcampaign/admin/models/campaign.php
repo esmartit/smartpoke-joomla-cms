@@ -39,10 +39,10 @@ class SpcampaignModelCampaign extends JModelAdmin
 		'details' => array(
 			'left' => array(
 				'smsemail',
-				'message_sms',
-				'type'
+				'message_sms'
 			),
 			'right' => array(
+                'type',
 				'deferred',
 				'deferreddate'
 			),
