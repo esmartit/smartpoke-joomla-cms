@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_spmessage">
+	<section name="component">
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.options" title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.export" title="COM_SPMESSAGE_EXPORT_DATA" description="COM_SPMESSAGE_EXPORT_DATA_DESC" />
+		<action name="core.import" title="COM_SPMESSAGE_IMPORT_DATA" description="COM_SPMESSAGE_IMPORT_DATA_DESC" />
+		<action name="core.batch" title="COM_SPMESSAGE_USE_BATCH" description="COM_SPMESSAGE_USE_BATCH_DESC" />
+		<action name="core.version" title="COM_SPMESSAGE_EDIT_VERSIONS" description="COM_SPMESSAGE_EDIT_VERSIONS_DESC" />
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.created_by" title="COM_SPMESSAGE_EDIT_CREATED_BY" description="COM_SPMESSAGE_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPMESSAGE_EDIT_CREATED_DATE" description="COM_SPMESSAGE_EDIT_CREATED_DATE_DESC" />
+		<action name="site.listmessage.access" title="COM_SPMESSAGE_LISTMESSAGE_ACCESS_SITE" description="COM_SPMESSAGE_LISTMESSAGE_ACCESS_SITE_DESC" />
+		<action name="message.access" title="COM_SPMESSAGE_MESSAGES_ACCESS" description="COM_SPMESSAGE_MESSAGES_ACCESS_DESC" />
+		<action name="message.batch" title="COM_SPMESSAGE_MESSAGES_BATCH_USE" description="COM_SPMESSAGE_MESSAGES_BATCH_USE_DESC" />
+		<action name="message.dashboard_add" title="COM_SPMESSAGE_MESSAGES_DASHBOARD_ADD" description="COM_SPMESSAGE_MESSAGES_DASHBOARD_ADD_DESC" />
+		<action name="message.dashboard_list" title="COM_SPMESSAGE_MESSAGES_DASHBOARD_LIST" description="COM_SPMESSAGE_MESSAGES_DASHBOARD_LIST_DESC" />
+		<action name="message.version" title="COM_SPMESSAGE_MESSAGES_EDIT_VERSION" description="COM_SPMESSAGE_MESSAGES_EDIT_VERSION_DESC" />
+		<action name="message.export" title="COM_SPMESSAGE_MESSAGES_EXPORT" description="COM_SPMESSAGE_MESSAGES_EXPORT_DESC" />
+		<action name="message.import" title="COM_SPMESSAGE_MESSAGES_IMPORT" description="COM_SPMESSAGE_MESSAGES_IMPORT_DESC" />
+	</section>
+	<section name="message">
+		<action name="core.edit" title="COM_SPMESSAGE_MESSAGES_EDIT" description="COM_SPMESSAGE_MESSAGES_EDIT_DESC" />
+		<action name="core.edit.own" title="COM_SPMESSAGE_MESSAGES_EDIT_OWN" description="COM_SPMESSAGE_MESSAGES_EDIT_OWN_DESC" />
+		<action name="core.edit.state" title="COM_SPMESSAGE_MESSAGES_EDIT_STATE" description="COM_SPMESSAGE_MESSAGES_EDIT_STATE_DESC" />
+		<action name="core.edit.created_by" title="COM_SPMESSAGE_MESSAGES_EDIT_CREATED_BY" description="COM_SPMESSAGE_MESSAGES_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPMESSAGE_MESSAGES_EDIT_CREATED_DATE" description="COM_SPMESSAGE_MESSAGES_EDIT_CREATED_DATE_DESC" />
+		<action name="core.create" title="COM_SPMESSAGE_MESSAGES_CREATE" description="COM_SPMESSAGE_MESSAGES_CREATE_DESC" />
+		<action name="core.delete" title="COM_SPMESSAGE_MESSAGES_DELETE" description="COM_SPMESSAGE_MESSAGES_DELETE_DESC" />
+		<action name="message.version" title="COM_SPMESSAGE_MESSAGES_EDIT_VERSION" description="COM_SPMESSAGE_MESSAGES_EDIT_VERSION_DESC" />
+	</section>
+</access>

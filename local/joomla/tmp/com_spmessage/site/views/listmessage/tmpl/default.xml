@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPMESSAGE_MENU_LISTMESSAGE_TITLE" option="COM_SPMESSAGE_MENU_LISTMESSAGE_OPTION">
+		<message>
+			<![CDATA[COM_SPMESSAGE_MENU_LISTMESSAGE_DESC]]>
+		</message>
+	</layout>
+</metadata>
