@@ -121,13 +121,13 @@ else
                     <div class="menu_section">
                         <h3>Configuration</h3>
                         <ul class="nav side-menu">
-                            <li><a href="index.html"><i class="fa fa-send"></i> Campaign </a></li>
+                            <li><a href="index.php?option=com_spcampaign&view=listcampaign"><i class="fa fa-send"></i> Campaign </a></li>
                         </ul>
                     </div>
                     <div class="menu_section">
                         <h3>Communication</h3>
                         <ul class="nav side-menu">
-                            <li><a href="index.html"><i class="fa fa-list-alt"></i> Campaign Detail </a></li>
+                            <li><a href="index.php?option=com_spmessage&view=listmessage"><i class="fa fa-list-alt"></i> Campaign Detail </a></li>
                             <li><a href="index.html"><i class="fa fa-check-circle-o"></i> Campaign Effectiveness </a></li>
                         </ul>
                     </div>
@@ -212,16 +212,16 @@ else
         <?php endif; ?>
         <!-- /page content -->
 
-        <!-- footer content -->
-        <footer class="footer" role="contentinfo">
-            <div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
-                <hr />
-                <jdoc:include type="modules" name="footer" style="none" />
-            </div>
-        </footer>
-        <jdoc:include type="modules" name="debug" style="none" />
-        <!-- /footer content -->
     </div>
+    <!-- footer content -->
+    <footer class="footer" role="contentinfo">
+        <div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
+            <hr />
+            <jdoc:include type="modules" name="footer" style="none" />
+        </div>
+    </footer>
+    <jdoc:include type="modules" name="debug" style="none" />
+    <!-- /footer content -->
 </div>
 
 <!-- jQuery -->

@@ -39,4 +39,5 @@ $doc->addStyleSheet($tpath.'/vendors/bootstrap/dist/css/bootstrap.min.css');
 $doc->addStyleSheet($tpath.'/vendors/font-awesome/css/font-awesome.min.css');
 $doc->addStyleSheet($tpath.'/vendors/nprogress/nprogress.css');
 $doc->addStyleSheet($tpath.'/vendors/iCheck/skins/flat/green.css');
+
 $doc->addStyleSheet($tpath.'/build/css/custom.min.css');
