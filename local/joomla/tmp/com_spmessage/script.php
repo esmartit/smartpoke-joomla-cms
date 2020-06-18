@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
+	@version		1.0.3
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -248,7 +248,7 @@ class com_spmessageInstallerScript
 			$message->type_title = 'Spmessage Message';
 			$message->type_alias = 'com_spmessage.message';
 			$message->table = '{"special": {"dbtable": "#__spmessage_message","key": "id","type": "Message","prefix": "spmessageTable","config": "array()"},"common": {"dbtable": "#__ucm_content","key": "ucm_id","type": "Corecontent","prefix": "JTable","config": "array()"}}';
-			$message->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "name","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"name":"name","device_sms":"device_sms","username":"username","senddate":"senddate","status":"status","description":"description"}}';
+			$message->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "campaign_id","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"campaign_id":"campaign_id","device_sms":"device_sms","username":"username","senddate":"senddate","status":"status","description":"description"}}';
 			$message->router = 'SpmessageHelperRoute::getMessageRoute';
 			$message->content_history_options = '{"formFile": "administrator/components/com_spmessage/models/forms/message.xml","hideFields": ["asset_id","checked_out","checked_out_time","version"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","status"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"}]}';
 
@@ -300,7 +300,7 @@ class com_spmessageInstallerScript
 			$message->type_title = 'Spmessage Message';
 			$message->type_alias = 'com_spmessage.message';
 			$message->table = '{"special": {"dbtable": "#__spmessage_message","key": "id","type": "Message","prefix": "spmessageTable","config": "array()"},"common": {"dbtable": "#__ucm_content","key": "ucm_id","type": "Corecontent","prefix": "JTable","config": "array()"}}';
-			$message->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "name","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"name":"name","device_sms":"device_sms","username":"username","senddate":"senddate","status":"status","description":"description"}}';
+			$message->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "campaign_id","core_state": "published","core_alias": "null","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"campaign_id":"campaign_id","device_sms":"device_sms","username":"username","senddate":"senddate","status":"status","description":"description"}}';
 			$message->router = 'SpmessageHelperRoute::getMessageRoute';
 			$message->content_history_options = '{"formFile": "administrator/components/com_spmessage/models/forms/message.xml","hideFields": ["asset_id","checked_out","checked_out_time","version"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","status"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"}]}';
 
@@ -328,7 +328,7 @@ class com_spmessageInstallerScript
 			echo '<a target="_blank" href="https://www.esmartit.es" title="SP Message">
 				<img src="components/com_spmessage/assets/images/vdm-component.png"/>
 				</a>
-				<h3>Upgrade to Version 1.0.2 Was Successful! Let us know if anything is not working as expected.</h3>';
+				<h3>Upgrade to Version 1.0.3 Was Successful! Let us know if anything is not working as expected.</h3>';
 		}
 		return true;
 	}

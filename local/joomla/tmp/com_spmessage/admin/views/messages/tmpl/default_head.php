@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
+	@version		1.0.3
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -39,7 +39,7 @@ defined('_JEXEC') or die('Restricted access');
 		</th>
 	<?php endif; ?>
 	<th class="nowrap hidden-phone" >
-			<?php echo JHtml::_('grid.sort', 'COM_SPMESSAGE_MESSAGE_NAME_LABEL', 'a.name', $this->listDirn, $this->listOrder); ?>
+			<?php echo JHtml::_('grid.sort', 'COM_SPMESSAGE_MESSAGE_CAMPAIGN_ID_LABEL', 'a.campaign_id', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<th class="nowrap hidden-phone" >
 			<?php echo JHtml::_('grid.sort', 'COM_SPMESSAGE_MESSAGE_DEVICE_SMS_LABEL', 'a.device_sms', $this->listDirn, $this->listOrder); ?>

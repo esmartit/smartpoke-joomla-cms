@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
+	@version		1.0.3
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -38,7 +38,7 @@ class SpmessageModelMessages extends JModelList
 				'a.ordering','ordering',
 				'a.created_by','created_by',
 				'a.modified_by','modified_by',
-				'a.name','name',
+				'a.campaign_id','campaign_id',
 				'a.device_sms','device_sms',
 				'a.username','username',
 				'a.senddate','senddate',
@@ -63,8 +63,8 @@ class SpmessageModelMessages extends JModelList
 		{
 			$this->context .= '.' . $layout;
 		}
-		$name = $this->getUserStateFromRequest($this->context . '.filter.name', 'filter_name');
-		$this->setState('filter.name', $name);
+		$campaign_id = $this->getUserStateFromRequest($this->context . '.filter.campaign_id', 'filter_campaign_id');
+		$this->setState('filter.campaign_id', $campaign_id);
 
 		$device_sms = $this->getUserStateFromRequest($this->context . '.filter.device_sms', 'filter_device_sms');
 		$this->setState('filter.device_sms', $device_sms);
@@ -210,10 +210,10 @@ class SpmessageModelMessages extends JModelList
 			}
 		}
 
-		// Filter by Name.
-		if ($name = $this->getState('filter.name'))
+		// Filter by Campaign_id.
+		if ($campaign_id = $this->getState('filter.campaign_id'))
 		{
-			$query->where('a.name = ' . $db->quote($db->escape($name)));
+			$query->where('a.campaign_id = ' . $db->quote($db->escape($campaign_id)));
 		}
 		// Filter by Device_sms.
 		if ($device_sms = $this->getState('filter.device_sms'))
@@ -354,7 +354,7 @@ class SpmessageModelMessages extends JModelList
 		$id .= ':' . $this->getState('filter.ordering');
 		$id .= ':' . $this->getState('filter.created_by');
 		$id .= ':' . $this->getState('filter.modified_by');
-		$id .= ':' . $this->getState('filter.name');
+		$id .= ':' . $this->getState('filter.campaign_id');
 		$id .= ':' . $this->getState('filter.device_sms');
 		$id .= ':' . $this->getState('filter.username');
 		$id .= ':' . $this->getState('filter.senddate');

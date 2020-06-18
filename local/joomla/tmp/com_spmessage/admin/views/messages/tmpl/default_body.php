@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
+	@version		1.0.3
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -70,7 +70,7 @@ $edit = "index.php?option=com_spmessage&view=messages&task=message.edit";
 		<?php endif; ?>
 		</td>
 		<td class="hidden-phone">
-			<?php echo $this->escape($item->name); ?>
+			<?php echo $this->escape($item->campaign_id); ?>
 		</td>
 		<td class="hidden-phone">
 			<?php echo $this->escape($item->device_sms); ?>

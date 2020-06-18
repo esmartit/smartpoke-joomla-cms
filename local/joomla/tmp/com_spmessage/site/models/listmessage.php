@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
+	@version		1.0.3
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -67,18 +67,18 @@ class SpmessageModelListmessage extends JModelList
 
 		// Get from #__spmessage_message as a
 		$query->select($db->quoteName(
-			array('a.id','a.asset_id','a.name','a.alias','a.device_sms','a.username','a.senddate','a.status','a.description','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
-			array('id','asset_id','name','alias','device_sms','username','senddate','status','description','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
+			array('a.id','a.asset_id','a.campaign_id','a.device_sms','a.username','a.senddate','a.status','a.description','a.published','a.created_by','a.created','a.version','a.hits','a.ordering'),
+			array('id','asset_id','campaign_id','device_sms','username','senddate','status','description','published','created_by','created','version','hits','ordering')));
 		$query->from($db->quoteName('#__spmessage_message', 'a'));
 
 		// Get from #__spcampaign_campaign as b
 		$query->select($db->quoteName(
 			array('b.name'),
 			array('campaign')));
-		$query->join('LEFT', ($db->quoteName('#__spcampaign_campaign', 'b')) . ' ON (' . $db->quoteName('a.name') . ' = ' . $db->quoteName('b.id') . ')');
+		$query->join('LEFT', ($db->quoteName('#__spcampaign_campaign', 'b')) . ' ON (' . $db->quoteName('a.campaign_id') . ' = ' . $db->quoteName('b.id') . ')');
 		// Get where a.published is 1
 		$query->where('a.published = 1');
-		$query->order('a.name ASC');
+		$query->order('a.senddate ASC');
 
 		// return the query object
 		return $query;

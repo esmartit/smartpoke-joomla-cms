@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
+	@version		1.0.3
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -38,7 +38,7 @@ class SpmessageModelMessage extends JModelAdmin
 	protected $tabLayoutFields = array(
 		'details' => array(
 			'left' => array(
-				'name',
+				'campaign_id',
 				'device_sms',
 				'username',
 				'senddate',
@@ -614,9 +614,9 @@ class SpmessageModelMessage extends JModelAdmin
 			}
 
 			// Only for strings
-			if (SpmessageHelper::checkString($this->table->name) && !is_numeric($this->table->name))
+			if (SpmessageHelper::checkString($this->table->campaign_id) && !is_numeric($this->table->campaign_id))
 			{
-				$this->table->name = $this->generateUnique('name',$this->table->name);
+				$this->table->campaign_id = $this->generateUnique('campaign_id',$this->table->campaign_id);
 			}
 
 			// insert all set values

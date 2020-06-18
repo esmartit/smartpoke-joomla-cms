@@ -94,10 +94,10 @@
                        rows="3"
                        cols="30" />
                 <!-- Dynamic Fields.-->
-                <!-- Name Field. Type: Sql. (joomla)-->
+                <!-- Campaign_id Field. Type: Sql. (joomla)-->
                 <field type="sql"
-                       name="name"
-                       label="COM_SPMESSAGE_MESSAGE_NAME_LABEL"
+                       name="campaign_id"
+                       label="COM_SPMESSAGE_MESSAGE_CAMPAIGN_ID_LABEL"
                        query="SELECT id, name AS name FROM #__spcampaign_campaign WHERE published = 1"
                        default=""
                        required="true"

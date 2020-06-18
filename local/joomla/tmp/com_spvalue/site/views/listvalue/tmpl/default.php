@@ -110,14 +110,14 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 </div><!--[/JCBGUI$$$$]-->
 
 
-<?php if (isset($this->items) && isset($this->pagination) && isset($this->pagination->pagesTotal) && $this->pagination->pagesTotal > 1): ?>
-	<div class="pagination">
-		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-			<p class="counter pull-right"> <?php echo $this->pagination->getPagesCounter(); ?> <?php echo $this->pagination->getLimitBox(); ?></p>
-		<?php endif; ?>
-		<?php echo $this->pagination->getPagesLinks(); ?>
-	</div>
-<?php endif; ?>
+<?php //if (isset($this->items) && isset($this->pagination) && isset($this->pagination->pagesTotal) && $this->pagination->pagesTotal > 1): ?>
+<!--	<div class="pagination">-->
+<!--		--><?php //if ($this->params->def('show_pagination_results', 1)) : ?>
+<!--			<p class="counter pull-right"> --><?php //echo $this->pagination->getPagesCounter(); ?><!-- --><?php //echo $this->pagination->getLimitBox(); ?><!--</p>-->
+<!--		--><?php //endif; ?>
+<!--		--><?php //echo $this->pagination->getPagesLinks(); ?>
+<!--	</div>-->
+<?php //endif; ?>
 <input type="hidden" name="task" value="" />
 <?php echo JHtml::_('form.token'); ?>
 </form>

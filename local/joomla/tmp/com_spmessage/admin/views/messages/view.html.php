@@ -3,7 +3,7 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
+	@version		1.0.3
 	@build			17th June, 2020
 	@created		16th June, 2020
 	@package		SP Message
@@ -196,32 +196,32 @@ class SpmessageViewMessages extends JViewLegacy
 			);
 		}
 
-		// Set Name Selection
-		$this->nameOptions = $this->getTheNameSelections();
-		// We do some sanitation for Name filter
-		if (SpmessageHelper::checkArray($this->nameOptions) &&
-			isset($this->nameOptions[0]->value) &&
-			!SpmessageHelper::checkString($this->nameOptions[0]->value))
+		// Set Campaign Id Selection
+		$this->campaign_idOptions = $this->getTheCampaign_idSelections();
+		// We do some sanitation for Campaign Id filter
+		if (SpmessageHelper::checkArray($this->campaign_idOptions) &&
+			isset($this->campaign_idOptions[0]->value) &&
+			!SpmessageHelper::checkString($this->campaign_idOptions[0]->value))
 		{
-			unset($this->nameOptions[0]);
+			unset($this->campaign_idOptions[0]);
 		}
-		// Only load Name filter if it has values
-		if (SpmessageHelper::checkArray($this->nameOptions))
+		// Only load Campaign Id filter if it has values
+		if (SpmessageHelper::checkArray($this->campaign_idOptions))
 		{
-			// Name Filter
+			// Campaign Id Filter
 			JHtmlSidebar::addFilter(
-				'- Select '.JText::_('COM_SPMESSAGE_MESSAGE_NAME_LABEL').' -',
-				'filter_name',
-				JHtml::_('select.options', $this->nameOptions, 'value', 'text', $this->state->get('filter.name'))
+				'- Select '.JText::_('COM_SPMESSAGE_MESSAGE_CAMPAIGN_ID_LABEL').' -',
+				'filter_campaign_id',
+				JHtml::_('select.options', $this->campaign_idOptions, 'value', 'text', $this->state->get('filter.campaign_id'))
 			);
 
 			if ($this->canBatch && $this->canCreate && $this->canEdit)
 			{
-				// Name Batch Selection
+				// Campaign Id Batch Selection
 				JHtmlBatch_::addListSelection(
-					'- Keep Original '.JText::_('COM_SPMESSAGE_MESSAGE_NAME_LABEL').' -',
-					'batch[name]',
-					JHtml::_('select.options', $this->nameOptions, 'value', 'text')
+					'- Keep Original '.JText::_('COM_SPMESSAGE_MESSAGE_CAMPAIGN_ID_LABEL').' -',
+					'batch[campaign_id]',
+					JHtml::_('select.options', $this->campaign_idOptions, 'value', 'text')
 				);
 			}
 		}
@@ -360,7 +360,7 @@ class SpmessageViewMessages extends JViewLegacy
 		return array(
 			'ordering' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.published' => JText::_('JSTATUS'),
-			'a.name' => JText::_('COM_SPMESSAGE_MESSAGE_NAME_LABEL'),
+			'a.campaign_id' => JText::_('COM_SPMESSAGE_MESSAGE_CAMPAIGN_ID_LABEL'),
 			'a.device_sms' => JText::_('COM_SPMESSAGE_MESSAGE_DEVICE_SMS_LABEL'),
 			'a.username' => JText::_('COM_SPMESSAGE_MESSAGE_USERNAME_LABEL'),
 			'a.senddate' => JText::_('COM_SPMESSAGE_MESSAGE_SENDDATE_LABEL'),
@@ -369,7 +369,7 @@ class SpmessageViewMessages extends JViewLegacy
 		);
 	}
 
-	protected function getTheNameSelections()
+	protected function getTheCampaign_idSelections()
 	{
 		// Get a db connection.
 		$db = JFactory::getDbo();
@@ -378,9 +378,9 @@ class SpmessageViewMessages extends JViewLegacy
 		$query = $db->getQuery(true);
 
 		// Select the text.
-		$query->select($db->quoteName('name'));
+		$query->select($db->quoteName('campaign_id'));
 		$query->from($db->quoteName('#__spmessage_message'));
-		$query->order($db->quoteName('name') . ' ASC');
+		$query->order($db->quoteName('campaign_id') . ' ASC');
 
 		// Reset the query using our newly populated query object.
 		$db->setQuery($query);
@@ -391,10 +391,10 @@ class SpmessageViewMessages extends JViewLegacy
 		{
 			$results = array_unique($results);
 			$_filter = array();
-			foreach ($results as $name)
+			foreach ($results as $campaign_id)
 			{
-				// Now add the name and its text to the options array
-				$_filter[] = JHtml::_('select.option', $name, $name);
+				// Now add the campaign_id and its text to the options array
+				$_filter[] = JHtml::_('select.option', $campaign_id, $campaign_id);
 			}
 			return $_filter;
 		}
