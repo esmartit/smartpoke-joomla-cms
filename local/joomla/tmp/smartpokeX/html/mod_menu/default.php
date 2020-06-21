@@ -94,12 +94,13 @@ if ($tagId = $params->get('tag_id', ''))
 	elseif ($item->shallower)
 	{
 //		echo '</li>';
-		echo str_repeat('</div></li>', $item->level_diff);
+//		echo str_repeat('</div></li>', $item->level_diff);
 	}
 	// The next item is on the same level.
 	else
 	{
-		echo '</li>';
+//		echo '</li>';
+        echo str_repeat('</div></li>', $item->level_diff);
 	}
 }
 ?></ul>

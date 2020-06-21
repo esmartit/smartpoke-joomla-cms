@@ -19,6 +19,7 @@ unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery-noconflict.js']);
 unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery-migrate.min.js']);
 unset($doc->_scripts[$this->baseurl.'/media/system/js/caption.js']);
 unset($doc->_scripts[$this->baseurl .'/media/system/js/core.js']);
+unset($doc->_scripts[$this->baseurl .'/media/system/js/core.js']);
 unset($doc->_scripts[$this->baseurl .'/media/system/js/tabs-state.js']);
 unset($doc->_scripts[$this->baseurl .'/media/system/js/validate.js']);
 unset($doc->_scripts[$this->baseurl .'/media/system/js/keepalive.js']);

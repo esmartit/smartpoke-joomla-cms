@@ -67,11 +67,11 @@ else
             <br/>
             <label for="password" class="sr-only"><?php echo JText::_('JGLOBAL_PASSWORD'); ?></label>
             <input type="password" name="password" id="password" class="form-control" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" required="" />
-            <?php if (count($twofactormethods) > 1) : ?>
-                <br/>
-                <label for="secretkey" class="sr-only"><?php echo JText::_('JGLOBAL_SECRETKEY'); ?></label>
-                <input type="text" name="secretkey" autocomplete="one-time-code" id="secretkey" class="form-control" placeholder="<?php echo JText::_('JGLOBAL_SECRETKEY'); ?>" />
-            <?php endif; ?>
+<!--            --><?php //if (count($twofactormethods) > 1) : ?>
+<!--                <br/>-->
+<!--                <label for="secretkey" class="sr-only">--><?php //echo JText::_('JGLOBAL_SECRETKEY'); ?><!--</label>-->
+<!--                <input type="text" name="secretkey" autocomplete="one-time-code" id="secretkey" class="form-control" placeholder="--><?php //echo JText::_('JGLOBAL_SECRETKEY'); ?><!--" />-->
+<!--            --><?php //endif; ?>
             <br/>
             <input type="submit" name="Submit" class="btn btn-lg btn-primary btn-block" value="<?php echo JText::_('JLOGIN'); ?>" />
             <p><br />Copyright &copy; <?php echo date('Y'); ?> -

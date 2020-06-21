@@ -33,6 +33,7 @@
 		<folder>vendors</folder>
 	</files>
 	<positions>
+		<position>banner</position>
 		<position>debug</position>
 		<position>search</position>
 		<position>navbar</position>
