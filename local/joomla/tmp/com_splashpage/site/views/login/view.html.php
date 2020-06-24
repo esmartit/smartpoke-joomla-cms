@@ -36,7 +36,6 @@ class SplashpageViewLogin extends HtmlView
         $this->ap_tags = $jinput->get('ap_tags');
         $this->client_mac = $jinput->get('client_mac');
         $this->client_ip = $jinput->get('client_ip');
-        $this->username = $jinput->get('username');
 
         $document = JFactory::getDocument();
         // everything's dependent upon JQuery

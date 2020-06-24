@@ -11,7 +11,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\MVC\View\HtmlView;
-//require_once JPATH_ADMINISTRATOR . '/components/com_splashpage/models/login.php';
 
 class SplashpageViewRegister extends JViewLegacy
 {
@@ -37,10 +36,11 @@ class SplashpageViewRegister extends JViewLegacy
 
         $communication = '1';
         $bdate = $input->get('bdate', '0000-00-00');
-        $email = $input->get('email',  '', 'STRING');
+        $email_cli = $input->get('email_cli',  '', 'STRING');
         $firstname = $input->get('firstname');
         $lastname = $input->get('lastname');
         $sex = $input->get('sex');
+        $membership = $input->get('membership');
         $zipcode = $input->get('zipcode');
 
         $spot_id = $input->get('spot_id');
@@ -52,11 +52,21 @@ class SplashpageViewRegister extends JViewLegacy
         $model = $this->getModel();
 
         // Call Insert into Customer Table
-        $values = array($communication, $bdate, $email, $firstname, $lastname, $mobilephone, $sex, $spot_id, $username, $zipcode, $countrycode, $mobile);
+        $values = array($communication, $bdate, $email_cli, $firstname, $lastname, $mobilephone, $sex, $spot_id, $username, $zipcode, $countrycode, $mobile, $membership);
         $model->saveCustomer($values);
 
         // Call API SignUp to insert in radcheck and radusergroup on freeradius
-        $data = array("username" => $username, "password"=>$password, "groupName" => $groupname, "clientMac" => $clientMac);
+        $data = array("username" => $username,
+            "password"=>$password,
+            "groupName" => $groupname,
+            "clientMac" => $clientMac,
+            "bDate" => $bdate,
+            "Sex" => $sex,
+            "zipCode" => $zipcode,
+            "memberShip" => $membership,
+            "spotId" => $spot_id,
+            "hotspotName" => $hotspot_name
+            );
         $model->signUp($data);
 
         $campaign = $model->getCampaign($smsemail = 1, $type = "REGISTER");
@@ -78,11 +88,11 @@ class SplashpageViewRegister extends JViewLegacy
             if (substr($resultSMS, 0, 2) == 'OK') $status = 1;
 
             // Call a method to Insert the success message sent
-            $values = array($campaign_id, $user_mac, $username, $currDate, $status, $resultSMS);
+            $values = array($campaign_id, $clientMac, $username, $currDate, $status, $resultSMS);
             $model->saveMessage($values);
         }
         if ($status == 1) {
-            $arr_result[] = array("section" => "ok", "data" => $password);
+            $arr_result[] = array("section" => "go", "data" => $password);
         } else {
             $arr_result[] = array("section" => "error", "data" => Jtext::_('COM_SPLASPAGE_ERROR_PHONE'));
         }

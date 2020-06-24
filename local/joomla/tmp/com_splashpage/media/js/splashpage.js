@@ -1,5 +1,4 @@
 jQuery(document).ready(function() {
-
 });
 
 function show(){
@@ -7,8 +6,13 @@ function show(){
     document.getElementById("mobilephone").disabled = true;
     document.getElementById("register").style.display = 'block';
     document.getElementById("pin").disabled = false;
-    document.getElementById("email").disabled = false;
+    document.getElementById("email_cli").disabled = false;
     document.getElementById("firstname").disabled = false;
+    document.getElementById("lastname").disabled = false;
+    document.getElementById("bdate").disabled = false;
+    document.getElementById("sex").disabled = false;
+    document.getElementById("zipcode").disabled = false;
+    document.getElementById("membership").disabled = false;
     document.getElementById("checkbox1").disabled = false;
     document.getElementById("btnlogin").style.display = 'none';
     document.getElementById("btnregister").style.display = 'block';
@@ -19,8 +23,13 @@ function hide(){
     document.getElementById("mobilephone").disabled = false;
     document.getElementById("register").style.display = 'none';
     document.getElementById("pin").disabled = true;
-    document.getElementById("email").disabled = true;
+    document.getElementById("email_cli").disabled = true;
     document.getElementById("firstname").disabled = true;
+    document.getElementById("lastname").disabled = true;
+    document.getElementById("bdate").disabled = true;
+    document.getElementById("sex").disabled = true;
+    document.getElementById("zipcode").disabled = true;
+    document.getElementById("membership").disabled = true;
     document.getElementById("checkbox1").disabled = true;
     document.getElementById("btnlogin").style.display = 'block';
     document.getElementById("btnregister").style.display = 'none';
@@ -56,12 +65,14 @@ function userLogin() {
                     document.getElementById("login_form").submit();
                 } else {
                     document.getElementById("errorPhone").style.display = 'none';
-                    alert('This is your PIN'+': '+data);
+                    alert('This is your PIN NUMBER'+': '+data);
                     show();
                 }
             }
         },
-        error: function() { console.log('ajax call failed'); },
+        error: function() {
+            console.log('ajax call failed');
+            },
     });
 }
 
@@ -76,11 +87,12 @@ function userRegister() {
             client_mac: jQuery('#client_mac').val(),
             username: jQuery('#username').val(),
             password: jQuery('#password').val(),
-            email: jQuery('#email').val(),
+            email_cli: jQuery('#email_cli').val(),
             firstname: jQuery('#firstname').val(),
             lastname: jQuery('#lastname').val(),
             bdate: jQuery('#bdate').val(),
             sex: jQuery('#sex').val(),
+            membership: jQuery('#membership').val(),
             zipcode: jQuery('#zipcode').val(),
             spot_id: jQuery('#spot_id').val(),
             hotspot_name: jQuery('#hotspot_name').val(),
@@ -106,9 +118,12 @@ function userRegister() {
                 }
             }
         },
-        error: function() { console.log('ajax call failed'); },
+        error: function() {
+            console.log('ajax call failed');
+            },
     });
 }
+
 function validPin(){
     let vpin = jQuery("#pin").val();
     let vpass = jQuery("#password").val();
@@ -131,14 +146,14 @@ function validateEmail(email) {
 
 function validate() {
     let result = jQuery("#resultEmail");
-    let email = jQuery("#email").val();
+    let email = jQuery("#email_cli").val();
     result.text("");
 
     document.getElementById("resultEmail").style.display = 'none';
     if (!validateEmail(email)) {
         result.text("Invalid email format");
         document.getElementById("resultEmail").style.display = 'block';
-        document.getElementById("email").focus();
+        document.getElementById("email_cli").focus();
         return false;
     }
 }
@@ -147,3 +162,6 @@ function setUser(username, password) {
     jQuery('input[name=username]').val(username);
     jQuery('input[name=password]').val(password);
 }
+
+
+

@@ -32,7 +32,7 @@ class SplashpageViewLogin extends JViewLegacy
 
         $mobilephone = $phonecode.$mobile;
 
-        $spot_id = $input->get('spt_id');
+        $spot_id = $input->get('spot_id');
         $hotspot_name = $input->get('hotspot_name');
         $groupname = $input->get('groupname');
         $currDate = date('Y-m-d H:i:s');
@@ -82,7 +82,7 @@ class SplashpageViewLogin extends JViewLegacy
                     if (substr($resultSMS, 0, 2) == 'OK') $status = 1;
 
                     // Call a method to Insert the success message sent
-                    $values = array($campaign_id, $user_mac, $username, $currDate, $status, $resultSMS);
+                    $values = array($campaign_id, $clientMac, $username, $currDate, $status, $resultSMS);
                     $model->saveMessage($values);
                 }
 
