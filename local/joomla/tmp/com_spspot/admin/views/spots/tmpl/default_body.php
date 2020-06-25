@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default_body.php
@@ -101,6 +101,9 @@ $edit = "index.php?option=com_spspot&view=spots&task=spot.edit";
 		</td>
 		<td class="hidden-phone">
 			<?php echo $this->escape($item->longitude); ?>
+		</td>
+		<td class="hidden-phone">
+			<?php echo $this->escape($item->city); ?>
 		</td>
 		<td class="center">
 		<?php if ($canDo->get('core.edit.state')) : ?>

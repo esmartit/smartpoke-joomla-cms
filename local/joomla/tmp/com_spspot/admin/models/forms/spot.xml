@@ -160,6 +160,20 @@
                        filter="STRING"
                        message="COM_SPSPOT_SPOT_LONGITUDE_MESSAGE"
                        hint="COM_SPSPOT_SPOT_LONGITUDE_HINT" />
+                <!-- City Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="city"
+                       label="COM_SPSPOT_SPOT_CITY_LABEL"
+                       size="40"
+                       maxlength="150"
+                       default=""
+                       description="COM_SPSPOT_SPOT_CITY_DESCRIPTION"
+                       class="text_area"
+                       readonly="false"
+                       disabled="false"
+                       filter="STRING"
+                       message="COM_SPSPOT_SPOT_CITY_MESSAGE"
+                       hint="COM_SPSPOT_SPOT_CITY_HINT" />
                 <!-- Alias Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="alias"

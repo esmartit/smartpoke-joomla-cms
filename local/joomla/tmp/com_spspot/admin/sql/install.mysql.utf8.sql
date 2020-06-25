@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `#__spspot_spot` (
 	`asset_id` INT(10) unsigned NOT NULL DEFAULT 0 COMMENT 'FK to the #__assets table.',
 	`alias` CHAR(64) NOT NULL DEFAULT '',
 	`business` TINYINT(11) NOT NULL DEFAULT 0,
+	`city` VARCHAR(255) NULL DEFAULT '',
 	`latitude` VARCHAR(50) NOT NULL DEFAULT '',
 	`longitude` VARCHAR(50) NOT NULL DEFAULT '',
 	`name` VARCHAR(255) NOT NULL DEFAULT '',

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		view.html.php
@@ -272,6 +272,7 @@ class SpspotViewSpots extends JViewLegacy
 			'a.published' => JText::_('JSTATUS'),
 			'a.spot_id' => JText::_('COM_SPSPOT_SPOT_SPOT_ID_LABEL'),
 			'a.name' => JText::_('COM_SPSPOT_SPOT_NAME_LABEL'),
+			'a.city' => JText::_('COM_SPSPOT_SPOT_CITY_LABEL'),
 			'a.id' => JText::_('JGRID_HEADING_ID')
 		);
 	}

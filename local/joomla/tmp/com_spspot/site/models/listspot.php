@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		listspot.php
@@ -67,8 +67,8 @@ class SpspotModelListspot extends JModelList
 
 		// Get from #__spspot_spot as a
 		$query->select($db->quoteName(
-			array('a.id','a.spot_id','a.alias','a.name','a.business','a.latitude','a.longitude','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
-			array('id','spot_id','alias','name','business','latitude','longitude','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
+			array('a.id','a.spot_id','a.alias','a.city','a.name','a.business','a.latitude','a.longitude','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
+			array('id','spot_id','alias','city','name','business','latitude','longitude','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
 		$query->from($db->quoteName('#__spspot_spot', 'a'));
 
 		// Get from #__spbusiness_businesstype as b

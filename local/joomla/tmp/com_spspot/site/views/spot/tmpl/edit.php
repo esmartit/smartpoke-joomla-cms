@@ -1,6 +1,6 @@
 <?php
 /*----------------------------------------------------------------------------------|  www.vdm.io  |----/
-				eSmartIT 
+				eSmartIT
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
@@ -8,13 +8,13 @@
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		edit.php
-	@author			Adolfo Zignago <https://www.esmartit.es>	
+	@author			Adolfo Zignago <https://www.esmartit.es>
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
-  ____  _____  _____  __  __  __      __       ___  _____  __  __  ____  _____  _  _  ____  _  _  ____ 
+  ____  _____  _____  __  __  __      __       ___  _____  __  __  ____  _____  _  _  ____  _  _  ____
  (_  _)(  _  )(  _  )(  \/  )(  )    /__\     / __)(  _  )(  \/  )(  _ \(  _  )( \( )( ___)( \( )(_  _)
-.-_)(   )(_)(  )(_)(  )    (  )(__  /(__)\   ( (__  )(_)(  )    (  )___/ )(_)(  )  (  )__)  )  (   )(  
-\____) (_____)(_____)(_/\/\_)(____)(__)(__)   \___)(_____)(_/\/\_)(__)  (_____)(_)\_)(____)(_)\_) (__) 
+.-_)(   )(_)(  )(_)(  )    (  )(__  /(__)\   ( (__  )(_)(  )    (  )___/ )(_)(  )  (  )__)  )  (   )(
+\____) (_____)(_____)(_/\/\_)(____)(__)(__)   \___)(_____)(_/\/\_)(__)  (_____)(_)\_)(____)(_)\_) (__)
 
 /------------------------------------------------------------------------------------------------------*/
 
@@ -31,6 +31,9 @@ JHtml::_('behavior.keepalive');
 $componentParams = $this->params; // will be removed just use $this->params instead
 
 $document = JFactory::getDocument();
+
+$document->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+$document->addScript('//geodata.solutions/includes/countrystatecity.js');
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
@@ -62,12 +65,43 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.
             <div class="x_content">
                 <br />
                 <div class="item form-group">
-                    <label class="col-form-label col-md-3 col-sm-3 label-align"></label>
                     <div class="col-md-3 col-sm-6">
                         <?php echo JLayoutHelper::render('spot.details_left', $this); ?>
                     </div>
                     <div class="col-md-3 col-sm-6">
                         <?php echo JLayoutHelper::render('spot.details_right', $this); ?>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="control-group control-wrapper-country">
+                            <div class="control-label">
+                                <label><?php echo JText::_('Countries');?></label>
+                            </div>
+                            <div class="controls">
+                                <select name="country" class="countries order-alpha form-control" id="countryId">
+                                    <option value="">Select Country</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group control-wrapper-state">
+                            <div class="control-label">
+                                <label><?php echo JText::_('States');?></label>
+                            </div>
+                            <div class="controls">
+                                <select name="state" class="states order-alpha form-control" id="stateId">
+                                    <option value="">Select State</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group control-wrapper-city">
+                            <div class="control-label">
+                                <label><?php echo JText::_('Cities');?></label>
+                            </div>
+                            <div class="controls">
+                                <select name="city" class="cities order-alpha form-control" id="cityId">
+                                    <option value="">Select City</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="item form-group">

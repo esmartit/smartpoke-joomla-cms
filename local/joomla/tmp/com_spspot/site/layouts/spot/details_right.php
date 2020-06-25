@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		details_right.php
@@ -35,7 +35,11 @@ $fields_tab_layout = 'fields_' . $layout_path_array[1];
 
 // get the fields
 $fields = $displayData->get($fields_tab_layout) ?: array(
-	'business'
+	'name',
+	'business',
+	'latitude',
+	'longitude',
+	'city'
 );
 
 $hiddenFields = $displayData->get('hidden_fields') ?: array();

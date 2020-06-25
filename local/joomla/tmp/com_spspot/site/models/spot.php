@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		spot.php
@@ -45,7 +45,8 @@ class SpspotModelSpot extends JModelAdmin
 				'name',
 				'business',
 				'latitude',
-				'longitude'
+				'longitude',
+				'city'
 			)
 		)
 	);
@@ -798,7 +799,8 @@ class SpspotModelSpot extends JModelAdmin
 	{
 		$input	= JFactory::getApplication()->input;
 		$filter	= JFilterInput::getInstance();
-        
+
+        $data['city'] = $input->get('city');
 		// set the metadata to the Item Data
 		if (isset($data['metadata']) && isset($data['metadata']['author']))
 		{

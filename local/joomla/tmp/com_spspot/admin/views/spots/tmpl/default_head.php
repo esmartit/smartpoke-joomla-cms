@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default_head.php
@@ -52,6 +52,9 @@ defined('_JEXEC') or die('Restricted access');
 	</th>
 	<th class="nowrap hidden-phone" >
 			<?php echo JText::_('COM_SPSPOT_SPOT_LONGITUDE_LABEL'); ?>
+	</th>
+	<th class="nowrap hidden-phone" >
+			<?php echo JHtml::_('grid.sort', 'COM_SPSPOT_SPOT_CITY_LABEL', 'a.city', $this->listDirn, $this->listOrder); ?>
 	</th>
 	<?php if ($this->canState): ?>
 		<th width="10" class="nowrap center" >

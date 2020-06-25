@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default_foot.php
@@ -23,5 +23,5 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <tr>
-	<td colspan="9"><?php echo $this->pagination->getListFooter(); ?></td>
+	<td colspan="10"><?php echo $this->pagination->getListFooter(); ?></td>
 </tr>

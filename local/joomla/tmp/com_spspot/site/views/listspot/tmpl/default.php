@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default.php
@@ -75,6 +75,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <th class='column-title'><?php echo JText::_('COM_SPSPOT_BUSINESS_TYPE'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPSPOT_LATITUDE'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPSPOT_LONGITUDE'); ?></th>
+                                    <th class='column-title'><?php echo JText::_('COM_SPSPOT_CITY'); ?></th>
                                     <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPSPOT_ACTION'); ?></span></th>
                                 </tr>
                                 </thead>
@@ -86,12 +87,13 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         $canDo = SpspotHelper::getActions('spot',$item,'spots');
                                     ?>
                                     <tr>
-                                        <td class="a-right a-right "><?php echo $item->id; ?></td>
-                                        <td class=""><?php echo $item->spot_id; ?></td>
-                                        <td class=""><?php echo $item->name; ?></td>
-                                        <td class=""><?php echo $item->businesstype; ?></td>
-                                        <td class=""><?php echo $item->latitude; ?></td>
-                                        <td class=""><?php echo $item->longitude; ?></td>
+                                        <td class="a-right a-right"><?php echo $item->id; ?></td>
+                                        <td class="a-right a-right"><?php echo $item->spot_id; ?></td>
+                                        <td class="a-right a-right"><?php echo $item->name; ?></td>
+                                        <td class="a-right a-right"><?php echo $item->businesstype; ?></td>
+                                        <td class="a-right a-right"><?php echo $item->latitude; ?></td>
+                                        <td class="a-right a-right"><?php echo $item->longitude; ?></td>
+                                        <td class="a-right a-right"><?php echo $item->city; ?></td>
                                         <td class=" last">
                                            <a href="<?php echo JRoute::_(SpspotHelperRoute::getItemspotRoute($item->slug)); ?>" class="btn-sm btn-outline-secondary"><i class="fa fa-eye"></i></a>
                                             <?php if ($canDo->get('core.edit')): ?>
@@ -115,14 +117,14 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 </div><!--[/JCBGUI$$$$]-->
 
 
-<?php //if (isset($this->items) && isset($this->pagination) && isset($this->pagination->pagesTotal) && $this->pagination->pagesTotal > 1): ?>
-<!--	<div class="pagination">-->
-<!--		--><?php //if ($this->params->def('show_pagination_results', 1)) : ?>
-<!--			<p class="counter pull-right"> --><?php //echo $this->pagination->getPagesCounter(); ?><!-- --><?php //echo $this->pagination->getLimitBox(); ?><!--</p>-->
-<!--		--><?php //endif; ?>
-<!--		--><?php //echo $this->pagination->getPagesLinks(); ?>
-<!--	</div>-->
-<?php //endif; ?>
+<?php if (isset($this->items) && isset($this->pagination) && isset($this->pagination->pagesTotal) && $this->pagination->pagesTotal > 1): ?>
+	<div class="pagination">
+		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
+			<p class="counter pull-right"> <?php echo $this->pagination->getPagesCounter(); ?> <?php echo $this->pagination->getLimitBox(); ?></p>
+		<?php endif; ?>
+		<?php echo $this->pagination->getPagesLinks(); ?>
+	</div>
+<?php endif; ?>
 <input type="hidden" name="task" value="" />
 <?php echo JHtml::_('form.token'); ?>
 </form>

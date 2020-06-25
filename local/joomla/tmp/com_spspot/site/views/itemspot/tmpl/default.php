@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default.php
@@ -81,6 +81,12 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.
                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="longitude"><?php echo JText::_('COM_SPSPOT_LONGITUDE'); ?> </label>
                     <div class="col-md-6 col-sm-6 ">
                         <input type="text" id="longitude" disabled class="form-control " value=<?php echo $this->item->longitude; ?>>
+                    </div>
+                </div>
+                <div class="item form-group">
+                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="longitude"><?php echo JText::_('COM_SPSPOT_CITY'); ?> </label>
+                    <div class="col-md-6 col-sm-6 ">
+                        <input type="text" id="longitude" disabled class="form-control " value=<?php echo $this->item->city; ?>>
                     </div>
                 </div>
                 <div class="ln_solid"></div>
