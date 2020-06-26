@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     SmartPoke.Site
- * @subpackage  mod_spselectonline
+ * @subpackage  mod_spselectsmartpoke
  *
  * @copyright   Copyright (C) 2020 eSmartIT. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -32,13 +32,26 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/da
 $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
 // Ion.RangeSlider
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
-$document->addScript('/media/mod_spselectonline/js/spselectonline.js');
+$document->addScript('/media/mod_spselectsmartpoke/js/spselectsmartpoke.js');
+
+$currDate = date('Y-m-d H:i:s');
+$datestart = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
+$datestartspan = date("d M Y", strtotime($datestart));
+
+$dateend = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
+$dateendspan = date("d M Y", strtotime($dateend));
+
+$datestart2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
+$datestartspan2 = date("d M Y", strtotime($datestart2));
+
+$dateend2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
+$dateendspan2 = date("d M Y", strtotime($dateend2));
 
 ?>
 <div class="col-md-12 col-sm-12 ">
     <div class="x_panel">
         <div class="x_title">
-            <h2><?php echo JText::_('MOD_SPSELECTONLINE');?> <small></small></h2>
+            <h2><?php echo JText::_('MOD_SPSELECTSMARTPOKE');?> <small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -55,19 +68,46 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <form id="online_select_form" class="form-horizontal form-label-left" method="POST">
+            <form id="smartpoke_select_form" class="form-horizontal form-label-left" method="POST">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div id="selRadioSP" class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" value="0" id="spOnline" name="radioSmartpoke"> <?php echo JText::_('Online'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="1" id="spOffline" name="radioSmartpoke"> <?php echo JText::_('OffLine'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="2" id="spDataBase" name="radioSmartpoke"> <?php echo JText::_('Data Base'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="3" id="spFile" name="radioSmartpoke"> <?php echo JText::_('.File'); ?>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div id="hourstart" class="col-md-4 col-sm-4 col-xs-12" style="display: block;">
                             <input id="timestart" type="text" name="timestart" class="form-control"/>
                         </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div id="hourend" class="col-md-4 col-sm-4 col-xs-12" style="display: block;">
                             <input id="timeend" type="text" name="timeend" disabled class="form-control"/>
                         </div>
                     </div>
+                    <div id="daterange" class="col-md-4 col-sm-4 col-xs-12" style="display: none;">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <label><?php echo JText::_('Range');?></label>
+                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span><?php echo $datestartspan.' - '.$dateendspan;?></span> <b class="caret"></b>
+                            </div>
+                        </div>
+                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart;?>'/>
+                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend;?>'/>
+                    </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="selcountry" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select name="country" class="countries order-alpha form-control" id="countryId">
@@ -75,7 +115,7 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="selstate" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select name="state" class="states order-alpha form-control" id="stateId">
@@ -83,7 +123,7 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="selcity" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select name="city" class="cities order-alpha form-control" id="cityId" onblur="getSpotCity()">
@@ -91,15 +131,15 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="selspots" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select id="selSpot" class="form-control" name="spot" onblur="getSensorSpot()">
-                                <option value=""><?php echo JText::_('All Spots'); ?></option>
+                                <option value=""><?php echo JText::_('All Data Lakes'); ?></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="selsensors" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select id="selSensor" class="form-control" name="sensor">
@@ -109,9 +149,8 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="selbrands" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <!--                            <label>--><?php //echo JText::_('Brands');?><!--</label>-->
                             <br/>
                             <select id="selBrand" class="form-control" name="brand" multiple="multiple">
                                 <option value=""><?php echo JText::_('All Brands'); ?></option>
@@ -121,9 +160,8 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="selposition" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <!--                            <label>--><?php //echo JText::_('Status');?><!--</label>-->
                             <br/>
                             <select id="selStatus" class="form-control" name="status">
                                 <option value=""><?php echo JText::_('All Status'); ?></option>
@@ -133,10 +171,31 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             </select>
                         </div>
                     </div>
+                    <div id="selpresence" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <br/>
+                            <label class="col-md-6 col-sm-6 col-xs-12"><?php echo JText::_('Presence');?></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="presence" type="text" name="presence" class="form-control" value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="datepresence" class="col-md-3 col-sm-3 col-xs-12" style="display: block;">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <br/>
+                            <label><?php echo JText::_('Days');?></label>
+                            <div id="reportrange_right" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span><?php echo $datestartspan2.' - '.$dateendspan2;?></span> <b class="caret"></b>
+                            </div>
+                        </div>
+                        <input type="hidden" name="datestart2" id="datestart2" value='<?php echo $datestart2;?>'/>
+                        <input type="hidden" name="dateend2" id="dateend2" value='<?php echo $dateend2;?>'/>
+                    </div>
                 </div>
                 <!-- / select -->
                 <!-- filters -->
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="filters" class="col-md-12 col-sm-12 col-xs-12" style="display: block;">
                     <div class="ln_solid"></div>
                     <h2><?php echo JText::_('Filters');?> <small></small></h2>
                     <div class="col-md-4 col-sm-4 col-xs-12">
@@ -173,6 +232,34 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                                 <option value=""><?php echo JText::_('Both'); ?></option>
                                 <option value="0"><?php echo JText::_('No'); ?></option>
                                 <option value="1"><?php echo JText::_('Yes'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div id="selfile" class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
+                    <div class="ln_solid"></div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12"><?php echo JText::_('Import File');?><span class="required">*</span></label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input id="selFile" type="file" class="btn btn-primary" name="file_upload">
+                        </div>
+                    </div>
+                </div>
+                <div id="selcampaigns" class="col-md-12 col-sm-12 col-xs-12" style="display: block;">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div id="selsmsemail" class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" value="1" id="radioSMS" name="radioCampaign"> <?php echo JText::_('SMS'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="0" id="radioEmail" name="radioCampaign"> <?php echo JText::_('Email'); ?>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <select id="selCampaign" class="form-control" name="campaign">
+                                <option value=""><?php echo JText::_('Select Campaing'); ?></option>
                             </select>
                         </div>
                     </div>

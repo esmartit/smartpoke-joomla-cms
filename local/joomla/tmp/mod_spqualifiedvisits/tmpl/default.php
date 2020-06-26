@@ -28,21 +28,19 @@ $document->addScript('/media/mod_spqualifiedvisits/js/qualifiedvisits.js');
 
             <div class="row tile_count">
                 <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
-                <div class="col-md-9 col-sm-9 col-xs-12 tile_stats_count">
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-bar-chart"></i> TOTAL</span>
                     <div id="totalVisits" class="count">0</div>
                 </div>
-            </div>
-            <div class="row tile_count">
-                <div class="col-md-4 col-sm-6 col-xs-12 tile_stats_count">
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-download"></i> IN</span>
                     <div id="inVisits" class="count green">0</div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 tile_stats_count">
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-minus"></i> LIMIT</span>
                     <div id="limitVisits" class="count blue">0</div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 tile_stats_count">
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-upload"></i> OUT</span>
                     <div id="outVisits" class="count red">0</div>
                 </div>

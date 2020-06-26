@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     SmartPoke.Site
- * @subpackage  mod_spselectonline
+ * @subpackage  mod_spselectbigdata
  *
  * @copyright   Copyright (C) 2020 eSmartIT. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -32,13 +32,26 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/da
 $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
 // Ion.RangeSlider
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
-$document->addScript('/media/mod_spselectonline/js/spselectonline.js');
+$document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
+
+$currDate = date('Y-m-d H:i:s');
+$datestart = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
+$datestartspan = date("d M Y", strtotime($datestart));
+
+$dateend = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
+$dateendspan = date("d M Y", strtotime($dateend));
+
+$datestart2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
+$datestartspan2 = date("d M Y", strtotime($datestart2));
+
+$dateend2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
+$dateendspan2 = date("d M Y", strtotime($dateend2));
 
 ?>
 <div class="col-md-12 col-sm-12 ">
     <div class="x_panel">
         <div class="x_title">
-            <h2><?php echo JText::_('MOD_SPSELECTONLINE');?> <small></small></h2>
+            <h2><?php echo JText::_('MOD_SPSELECTBIGDATA');?> <small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -55,15 +68,47 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <form id="online_select_form" class="form-horizontal form-label-left" method="POST">
+            <form id="bigdata_select_form" class="form-horizontal form-label-left" method="POST">
                 <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div id="selRadio" class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" value="0" id="radioRange" name="rangeCompare"> <?php echo JText::_('Range'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="1" id="radioCompare" name="rangeCompare"> <?php echo JText::_('Compare'); ?>
+                            </label>
+                        </div>
+                    </div>
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <input id="timestart" type="text" name="timestart" class="form-control"/>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            <input id="timeend" type="text" name="timeend" disabled class="form-control"/>
+                            <input id="timeend" type="text" name="timeend" class="form-control"/>
                         </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label><?php echo JText::_('Range');?></label>
+                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span><?php echo $datestartspan.' - '.$dateendspan;?></span> <b class="caret"></b>
+                            </div>
+                        </div>
+                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart;?>'/>
+                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend;?>'/>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12" id="daterange" style="display: none;">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label><?php echo JText::_('Range2');?></label>
+                            <div id="reportrange_right" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                <span><?php echo $datestartspan2.' - '.$dateendspan2;?></span> <b class="caret"></b>
+                            </div>
+                        </div>
+                        <input type="hidden" name="datestart2" id="datestart2" value='<?php echo $datestart2;?>'/>
+                        <input type="hidden" name="dateend2" id="dateend2" value='<?php echo $dateend2;?>'/>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -111,7 +156,6 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <!--                            <label>--><?php //echo JText::_('Brands');?><!--</label>-->
                             <br/>
                             <select id="selBrand" class="form-control" name="brand" multiple="multiple">
                                 <option value=""><?php echo JText::_('All Brands'); ?></option>
@@ -123,7 +167,6 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <!--                            <label>--><?php //echo JText::_('Status');?><!--</label>-->
                             <br/>
                             <select id="selStatus" class="form-control" name="status">
                                 <option value=""><?php echo JText::_('All Status'); ?></option>
@@ -131,6 +174,15 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                                 <option value="LIMIT"><?php echo JText::_('LIMIT'); ?></option>
                                 <option value="OUT"><?php echo JText::_('OUT'); ?></option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <br/>
+                            <label class="col-md-6 col-sm-6 col-xs-12"><?php echo JText::_('Presence');?></label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input id="presence" type="text" name="presence" class="form-control" value="1">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -178,6 +230,24 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                     </div>
                 </div>
                 <!-- /filters -->
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div id="selRadioGraph" class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" value="0" id="radioDay" name="radioGraph"> <?php echo JText::_('By Day'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="1" id="radioWeek" name="radioGraph"> <?php echo JText::_('By Week'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="2" id="radioMonth" name="radioGraph"> <?php echo JText::_('By Month'); ?>
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" value="3" id="radioYear" name="radioGraph"> <?php echo JText::_('By Year'); ?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="ln_solid"></div>
                     <div class="item form-group">
