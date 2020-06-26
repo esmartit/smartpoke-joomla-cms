@@ -100,13 +100,13 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         <td class="a-right a-right "><?php echo $item->mobile_phone; ?></td>
                                         <td class="a-right a-right "><?php echo $item->email; ?></td>
                                         <td class="a-right a-right "><?php echo $item->dateofbirth; ?></td>
-                                        <?php if ($item-> sex == 0): ?>
+                                        <?php if ($item->sex == 0): ?>
                                             <td class=""><?php echo JText::_('M'); ?></td>
                                         <?php else : ?>
                                             <td class=""><?php echo JText::_('F'); ?></td>
                                         <?php endif; ?>
                                         <td class="a-right a-right "><?php echo $item->zipcode; ?></td>
-                                        <?php if ($item-> membership == 0): ?>
+                                        <?php if ($item->membership == 0): ?>
                                             <td><input type="checkbox" id="check-all" disabled></td>
                                         <?php else : ?>
                                             <td><input type="checkbox" id="check-all" checked disabled></td>
