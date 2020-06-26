@@ -12,17 +12,17 @@ $tpath = $this->baseurl.'/templates/'.$this->template;
 // generator tag
 $this->setGenerator(null);
 
+JHtml::_('bootstrap.framework');
 // unset
-unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery.min.js']);
-unset($doc->_scripts[$this->baseurl.'/media/jui/js/bootstrap.min.js']);
-unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery-noconflict.js']);
-unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery-migrate.min.js']);
-unset($doc->_scripts[$this->baseurl.'/media/system/js/caption.js']);
-unset($doc->_scripts[$this->baseurl .'/media/system/js/core.js']);
-unset($doc->_scripts[$this->baseurl .'/media/system/js/core.js']);
-unset($doc->_scripts[$this->baseurl .'/media/system/js/tabs-state.js']);
-unset($doc->_scripts[$this->baseurl .'/media/system/js/validate.js']);
-unset($doc->_scripts[$this->baseurl .'/media/system/js/keepalive.js']);
+//unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery.min.js']);
+//unset($doc->_scripts[$this->baseurl.'/media/jui/js/bootstrap.min.js']);
+//unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery-noconflict.js']);
+//unset($doc->_scripts[$this->baseurl.'/media/jui/js/jquery-migrate.min.js']);
+//unset($doc->_scripts[$this->baseurl.'/media/system/js/caption.js']);
+//unset($doc->_scripts[$this->baseurl .'/media/system/js/core.js']);
+//unset($doc->_scripts[$this->baseurl .'/media/system/js/tabs-state.js']);
+//unset($doc->_scripts[$this->baseurl .'/media/system/js/validate.js']);
+//unset($doc->_scripts[$this->baseurl .'/media/system/js/keepalive.js']);
 //unset($doc->_scripts[$tpath.'/build/js/custom.min.js']);
 
 if (isset($doc->_script['text/javascript']))

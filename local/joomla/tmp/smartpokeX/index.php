@@ -114,9 +114,9 @@ else
                                 <h3>Dashboard</h3>
                                 <ul class="nav side-menu">
                                     <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnLine </a></li>
-                                    <li><a href="index.html"><i class="fa fa-database"></i> BigData </a></li>
+                                    <li><a href="/index.php/dashboard/bigdata"><i class="fa fa-database"></i> BigData </a></li>
                                     <li><a href="index.html"><i class="fa fa-wifi"></i> HotSpot </a></li>
-                                    <li><a href="index.html"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
+                                    <li><a href="/index.php/dashboard/smartpoke"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
                                 </ul>
                             </div>
                             <div class="menu_section">
@@ -225,6 +225,10 @@ else
         <?php else: ?>
             <div class="x_content">
                 <jdoc:include type="component" />
+                <div align="center">
+                    <p><br />Copyright &copy; <?php echo date('Y'); ?> -
+                        <?php echo $app->get('sitename'); ?></p>
+                </div>
             </div>
         <?php endif; ?>
 
