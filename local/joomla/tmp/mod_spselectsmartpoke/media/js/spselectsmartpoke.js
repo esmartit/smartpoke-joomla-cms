@@ -19,35 +19,9 @@ $(document).ready( function() {
     });
 
     document.getElementById("timestart").value = '00:00:00';
+    document.getElementById("timeend").value = '23:59:59';
     getSpotCity();
     getCampaigns();
-
-    function showTimeEnd(time) {
-        document.getElementById("timeend").value = time;
-    }
-
-    function objTimer() {
-
-        ActualDateTime = new Date()
-        Actualhour = ActualDateTime.getHours()
-        Actualminute = ActualDateTime.getMinutes()
-        Actualsecond = ActualDateTime.getSeconds()
-
-        var strTime = "";
-        h = '0' + Actualhour;
-        m = '0' + Actualminute;
-        s = '0' + Actualsecond;
-        strTime += h.substring(h.length - 2, h.length) + ':' + m.substring(m.length - 2, m.length) + ':'+ s.substring(s.length - 2, s.length);
-
-        var checksec = (Actualsecond / 30)
-        if (checksec % 1 == 0) {
-            showTimeEnd(strTime);
-            console.log(strTime);
-        }
-    }
-
-    setInterval(objTimer, 1000);
-    objTimer();
 });
 
 function getSpotCity() {
@@ -167,6 +141,7 @@ $(document).ready(function () {
 function showOnlineOpt(){
     document.getElementById("hourstart").style.display = 'block';
     document.getElementById("hourend").style.display = 'block';
+    $('#timeend').prop('disabled', true);
     document.getElementById("daterange").style.display = 'none';
     document.getElementById("selcountry").style.display = 'block';
     document.getElementById("selstate").style.display = 'block';
@@ -185,6 +160,7 @@ function showOnlineOpt(){
 function showOfflineOpt(){
     document.getElementById("hourstart").style.display = 'block';
     document.getElementById("hourend").style.display = 'block';
+    $('#timeend').prop('disabled', false);
     document.getElementById("daterange").style.display = 'block';
     document.getElementById("selcountry").style.display = 'block';
     document.getElementById("selstate").style.display = 'block';

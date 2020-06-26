@@ -21,15 +21,15 @@ $(document).ready( function() {
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
     getSpotCity();
-    getCampaigns();
+
 });
 
 function getSpotCity() {
     let cityid = $('#cityId').val();
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectsmartpoke',  // to target: spselectsmartpoke
-        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectSmartPokeHelper
+        module       : 'spselectbigdata',  // to target: mod_spselectbigdata
+        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectBigDataHelper
         format       : 'json',
         data         : cityid
     };
@@ -42,7 +42,7 @@ function getSpotCity() {
             let len = object.length;
 
             $("#selSpot").empty();
-            $("#selSpot").append("<option value=''>All Data Lakes</option>");
+            $("#selSpot").append("<option value=''>All Spots</option>");
             for (let i = 0; i<len; i++) {
                 let id = object[i][0];
                 let name = object[i][1];
@@ -56,8 +56,8 @@ function getSensorSpot() {
     let spotid = $('#selSpot').val();
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
-        method       : 'getSensors',  // to target: function getSensorsAjax in class ModSPSelectSmartPokeHelper
+        module       : 'spselectbigdat',  // to target: mod_spselectbigdata
+        method       : 'getSensors',  // to target: function getSensorsAjax in class ModSPSelectBigDataHelper
         format       : 'json',
         data         : spotid
     };
@@ -81,136 +81,22 @@ function getSensorSpot() {
 }
 
 $(document).ready(function () {
-    $('#radioSMS').on('change', function () {
-        let sms = $('#radioSMS').val();
-        getCampaigns(sms)
+    $('#radioRange').on('change', function () {
+        hideDaterange()
     });
 
-    $('#radioEmail').on('change', function () {
-        let email = $('#radioEmail').val();
-        getCampaigns(email)
+    $('#radioCompare').on('change', function () {
+        showDaterange()
     });
 });
 
-function getCampaigns(smsemail = '1'){
-    let request = {
-        option       : 'com_ajax',
-        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
-        method       : 'getCampaigns',  // to target: function getCampaignsAjax in class ModSPSelectSmartPokeHelper
-        format       : 'json',
-        data         : smsemail
-    };
-    $.ajax({
-        method: 'GET',
-        data: request
-    })
-        .success(function(response){
-            let object = response.data;
-            let len = object.length;
 
-            $("#selCampaign").empty();
-            $("#selCampaign").append("<option value=''>Select Campaing</option>");
-            for (let i = 0; i<len; i++) {
-                let id = object[i][0];
-                let name = object[i][1];
-
-                $("#selCampaign").append("<option value='"+id+"'>"+name+"</option>");
-            }
-        });
-}
-
-
-$(document).ready(function () {
-    $('#spOnline').on('change', function () {
-        showOnlineOpt()
-    });
-
-    $('#spOffline').on('change', function () {
-        showOfflineOpt()
-    });
-
-    $('#spDataBase').on('change', function () {
-        showDataBaseOpt()
-    });
-
-    $('#spFile').on('change', function () {
-        showFileOpt()
-    });
-});
-
-function showOnlineOpt(){
-    document.getElementById("hourstart").style.display = 'block';
-    document.getElementById("hourend").style.display = 'block';
-    $('#timeend').prop('disabled', true);
-    document.getElementById("daterange").style.display = 'none';
-    document.getElementById("selcountry").style.display = 'block';
-    document.getElementById("selstate").style.display = 'block';
-    document.getElementById("selcity").style.display = 'block';
-    document.getElementById("selspots").style.display = 'block';
-    document.getElementById("selsensors").style.display = 'block';
-    document.getElementById("selbrands").style.display = 'block';
-    document.getElementById("selposition").style.display = 'block';
-    document.getElementById("selpresence").style.display = 'block';
-    document.getElementById("datepresence").style.display = 'block';
-    document.getElementById("filters").style.display = 'block';
-    document.getElementById("selfile").style.display = 'none';
-    document.getElementById("selcampaigns").style.display = 'block';
-}
-
-function showOfflineOpt(){
-    document.getElementById("hourstart").style.display = 'block';
-    document.getElementById("hourend").style.display = 'block';
-    $('#timeend').prop('disabled', false);
+function showDaterange(){
     document.getElementById("daterange").style.display = 'block';
-    document.getElementById("selcountry").style.display = 'block';
-    document.getElementById("selstate").style.display = 'block';
-    document.getElementById("selcity").style.display = 'block';
-    document.getElementById("selspots").style.display = 'block';
-    document.getElementById("selsensors").style.display = 'block';
-    document.getElementById("selbrands").style.display = 'block';
-    document.getElementById("selposition").style.display = 'block';
-    document.getElementById("selpresence").style.display = 'block';
-    document.getElementById("datepresence").style.display = 'block';
-    document.getElementById("filters").style.display = 'block';
-    document.getElementById("selfile").style.display = 'none';
-    document.getElementById("selcampaigns").style.display = 'block';
 }
-
-function showDataBaseOpt(){
-    document.getElementById("hourstart").style.display = 'none';
-    document.getElementById("hourend").style.display = 'none';
+function hideDaterange(){
     document.getElementById("daterange").style.display = 'none';
-    document.getElementById("selcountry").style.display = 'block';
-    document.getElementById("selstate").style.display = 'block';
-    document.getElementById("selcity").style.display = 'block';
-    document.getElementById("selspots").style.display = 'block';
-    document.getElementById("selsensors").style.display = 'none';
-    document.getElementById("selbrands").style.display = 'none';
-    document.getElementById("selposition").style.display = 'none';
-    document.getElementById("selpresence").style.display = 'none';
-    document.getElementById("datepresence").style.display = 'none';
-    document.getElementById("filters").style.display = 'block';
-    document.getElementById("selfile").style.display = 'none';
-    document.getElementById("selcampaigns").style.display = 'block';
-}
-
-function showFileOpt() {
-    document.getElementById("hourstart").style.display = 'none';
-    document.getElementById("hourend").style.display = 'none';
-    document.getElementById("daterange").style.display = 'none';
-    document.getElementById("selcountry").style.display = 'none';
-    document.getElementById("selstate").style.display = 'none';
-    document.getElementById("selcity").style.display = 'none';
-    document.getElementById("selspots").style.display = 'none';
-    document.getElementById("selsensors").style.display = 'none';
-    document.getElementById("selbrands").style.display = 'none';
-    document.getElementById("selposition").style.display = 'none';
-    document.getElementById("selpresence").style.display = 'none';
-    document.getElementById("datepresence").style.display = 'none';
-    document.getElementById("filters").style.display = 'none';
-    document.getElementById("selfile").style.display = 'block';
-    document.getElementById("selcampaigns").style.display = 'block';
-}
+};
 
 $(document).ready(function() {
 
