@@ -116,7 +116,7 @@ class SplashpageViewLogin extends JViewLegacy
                 }
                 break;
             case "DNK":
-                if (preg_match("/^[4]{1}[0]{1}[0-9]{6}$/", $number)) {
+                if (preg_match("/^[23456789]{1}[0-9]{1}[0-9]{6}$/", $number)) {
                     $res = 1;
                 }
                 break;
@@ -142,6 +142,11 @@ class SplashpageViewLogin extends JViewLegacy
                 break;
             case "ITA":
                 if (preg_match("/^[3]{1}[0-9]{2}[0-9]{7}$/", $number)) {
+                    $res = 1;
+                }
+                break;
+            case "MEX":
+                if (preg_match("/^[5]{1}[2]{1}[1]{1}[0-9]{8}$/", $number)) {
                     $res = 1;
                 }
                 break;
