@@ -18,6 +18,7 @@ $document->addScript('/media/mod_spdevregistereddate/js/devregistereddate.js');
 <div class="tile_count">
     <div class="col-md-2 col-sm-4  tile_stats_count">
         <span class="count_top"><i class="fa fa-users"></i> <?php echo JText::_('MOD_SPDEVREGISTEREDDATE'); ?></span>
+        <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
         <div id="devregistereddate" class="count green">0</div>
     </div>
 </div>
