@@ -10,5 +10,8 @@
 
 defined('_JEXEC') or die;
 
+require_once dirname(__FILE__) . '/helper.php';
+
+$usertimezone = ModSPDevRegisteredNowHelper::getTimeZone();
 require JModuleHelper::getLayoutPath('mod_spdevregisterednow', $params->get('layout', 'default'));
 

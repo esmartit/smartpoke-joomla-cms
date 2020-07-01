@@ -11,6 +11,7 @@
 	<description>MOD_SPDEVREGISTEREDNOW_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_spdevregisterednow">mod_spdevregisterednow.php</filename>
+		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 	</files>
 	<media folder="media" destination="mod_spdevregisterednow">
