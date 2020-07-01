@@ -61,7 +61,7 @@ class SplashpageViewRegister extends JViewLegacy
             "groupName" => $groupname,
             "clientMac" => $clientMac,
             "bDate" => $bdate,
-            "Sex" => $sex,
+            "gender" => $sex,
             "zipCode" => $zipcode,
             "memberShip" => $membership,
             "spotId" => $spot_id,
