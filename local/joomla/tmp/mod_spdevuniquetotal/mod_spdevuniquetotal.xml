@@ -11,6 +11,7 @@
 	<description>MOD_SPDEVUNIQUETOTAL_XML_DESCRIPTION</description>
 	<files>
 		<filename module="mod_spdevuniquetotal">mod_spdevuniquetotal.php</filename>
+		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 	</files>
 	<media folder="media" destination="mod_spdevuniquetotal">

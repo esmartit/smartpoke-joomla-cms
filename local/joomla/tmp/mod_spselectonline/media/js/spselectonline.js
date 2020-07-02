@@ -106,3 +106,23 @@ function getSensorSpot() {
             }
         });
 }
+
+$(document).ready(function () {
+    $('#checkFilter').on('change', function () {
+        filters();
+    });
+
+});
+
+function filters() {
+    document.getElementById("filterAge").style.display = 'none';
+    document.getElementById("filterSex").style.display = 'none';
+    document.getElementById("filterZipCode").style.display = 'none';
+    document.getElementById("filterMember").style.display = 'none';
+    if (document.getElementById("checkFilter").checked) {
+        document.getElementById("filterAge").style.display = 'block';
+        document.getElementById("filterSex").style.display = 'block';
+        document.getElementById("filterZipCode").style.display = 'block';
+        document.getElementById("filterMember").style.display = 'block';
+    }
+}

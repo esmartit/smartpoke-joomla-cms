@@ -56,7 +56,7 @@ function getSensorSpot() {
     let spotid = $('#selSpot').val();
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectbigdat',  // to target: mod_spselectbigdata
+        module       : 'spselectbigdata',  // to target: mod_spselectbigdata
         method       : 'getSensors',  // to target: function getSensorsAjax in class ModSPSelectBigDataHelper
         format       : 'json',
         data         : spotid
@@ -90,7 +90,6 @@ $(document).ready(function () {
     });
 });
 
-
 function showDaterange(){
     document.getElementById("daterange").style.display = 'block';
 }
@@ -100,12 +99,12 @@ function hideDaterange(){
 
 $(document).ready(function() {
 
-    var datestart;
-    var dateend;
-    var datestart2;
-    var dateend2;
+    let datestart;
+    let dateend;
+    let datestart2;
+    let dateend2;
 
-    var cb = function(start, end, label) {
+    let cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         datestart = start.format('YYYY-MM-DD');
@@ -114,7 +113,7 @@ $(document).ready(function() {
         $('#dateend').val(dateend);
     };
 
-    var cb2 = function(start, end, label) {
+    let cb2 = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
         $('#reportrange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         datestart2 = start.format('YYYY-MM-DD');
@@ -124,7 +123,7 @@ $(document).ready(function() {
 
     };
 
-    var optionSet1 = {
+    let optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
         minDate: '01/01/2012',
@@ -218,3 +217,61 @@ $(document).ready(function() {
 
 });
 
+$(document).ready(function () {
+    $('#radioDay').on('change', function () {
+        showGraph($('#radioDay').val())
+    });
+
+    $('#radioWeek').on('change', function () {
+        showGraph($('#radioWeek').val())
+    });
+
+    $('#radioMonth').on('change', function () {
+        showGraph($('#radioMonth').val())
+    });
+
+    $('#radioYear').on('change', function () {
+        showGraph($('#radioYear').val())
+    });
+});
+
+function showGraph(type) {
+    let graphType = type;
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spactivitybigdata',  // to target: mod_spactivitybigdata
+        method       : 'showGraphBigData',  // to target: function showGraphBigDataAjax in class ModSPActivityBigDataHelper
+        format       : 'json',
+        data         : graphType
+    };
+    $.ajax({
+        method: 'POST',
+        data: request
+    })
+        .success(function(response) {
+            console.log('call success '+graphType);
+        })
+        .error(function() {
+            console.log('ajax call failed');
+        });
+}
+
+$(document).ready(function () {
+    $('#checkFilter').on('change', function () {
+        filters();
+    });
+
+});
+
+function filters() {
+    document.getElementById("filterAge").style.display = 'none';
+    document.getElementById("filterSex").style.display = 'none';
+    document.getElementById("filterZipCode").style.display = 'none';
+    document.getElementById("filterMember").style.display = 'none';
+    if (document.getElementById("checkFilter").checked) {
+        document.getElementById("filterAge").style.display = 'block';
+        document.getElementById("filterSex").style.display = 'block';
+        document.getElementById("filterZipCode").style.display = 'block';
+        document.getElementById("filterMember").style.display = 'block';
+    }
+}

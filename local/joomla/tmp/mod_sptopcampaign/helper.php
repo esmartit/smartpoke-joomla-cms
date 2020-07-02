@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  */
 class ModSPTopCampaignHelper
 {
-    public static function getTopCampaign($params)
+    public static function getTopCampaign()
     {
         $date = array();
         $data[0] = 87;

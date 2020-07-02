@@ -9,4 +9,7 @@
 
 defined('_JEXEC') or die;
 
+require_once dirname(__FILE__) . '/helper.php';
+
+$usertimezone = ModSPActivityDateHelper::getTimeZone();
 require JModuleHelper::getLayoutPath('mod_spactivitydate', $params->get('layout', 'default'));

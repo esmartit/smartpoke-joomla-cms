@@ -1,4 +1,5 @@
 $(document).ready( function() {
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
     function showDevRegisteredTotal(value) {
         document.getElementById("devregisteredtotal").innerHTML = Intl.NumberFormat().format(value);;
     }

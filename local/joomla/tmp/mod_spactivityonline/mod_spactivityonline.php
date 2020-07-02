@@ -11,5 +11,5 @@ defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$usertimezone = ModSPActivityOnlineHelper::getTimeZone($params);
+$usertimezone = ModSPActivityOnlineHelper::getTimeZone();
 require JModuleHelper::getLayoutPath('mod_spactivityonline', $params->get('layout', 'default'));

@@ -1,5 +1,5 @@
 $(document).ready( function() {
-    var theme = {
+    let theme = {
         color: [
             '#26B99A', '#34495E', '#bdc3c7', '#3498DB',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
@@ -213,10 +213,10 @@ $(document).ready( function() {
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
     const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
-    var spChart = echarts.init(document.getElementById('echart_activity_online'), theme);
+    let spChart = echarts.init(document.getElementById('echart_activity_online'), theme);
 
     function echartActivity(hoursAct, deviceAct, inAct, limitAct, outAct) {
-        var option = {
+        let option = {
             title: {
                 text: '',
                 subtext: ''
@@ -370,7 +370,7 @@ $(document).ready( function() {
     let deviceArr = [];
     let hoursArr = [];
 
-    for (var x = 0; x < 24; x++) {
+    for (let x = 0; x < 24; x++) {
         inArr[x] = 0;
         limitArr[x] = 0;
         outArr[x] = 0;

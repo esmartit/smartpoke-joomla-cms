@@ -11,5 +11,5 @@ defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$usertimezone = ModSPQualifiedVisitsHelper::getTimeZone($params);
+$usertimezone = ModSPQualifiedVisitsHelper::getTimeZone();
 require JModuleHelper::getLayoutPath('mod_spqualifiedvisits', $params->get('layout', 'default'));

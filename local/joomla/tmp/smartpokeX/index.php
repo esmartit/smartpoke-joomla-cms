@@ -115,7 +115,7 @@ else
                                 <ul class="nav side-menu">
                                     <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnLine </a></li>
                                     <li><a href="/index.php/dashboard/bigdata"><i class="fa fa-database"></i> BigData </a></li>
-                                    <li><a href="index.html"><i class="fa fa-wifi"></i> HotSpot </a></li>
+                                    <li><a href="/index.php/dashboard/hotspot"><i class="fa fa-wifi"></i> HotSpot </a></li>
                                     <li><a href="/index.php/dashboard/smartpoke"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
                                 </ul>
                             </div>
@@ -216,7 +216,6 @@ else
             <!-- footer content -->
             <footer class="footer" role="contentinfo">
                 <div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
-                    <hr />
                     <jdoc:include type="modules" name="footer" style="none" />
                 </div>
             </footer>

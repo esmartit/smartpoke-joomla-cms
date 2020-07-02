@@ -11,6 +11,8 @@ defined('_JEXEC') or die;
 
 $document = JFactory::getDocument();
 
+// Switchery
+$document->addStyleSheet('/templates/smartpokex/vendors/switchery/dist/switchery.min.css');
 // bootstrap-daterangepicker
 $document->addStyleSheet('/templates/smartpokex/vendors/bootstrap-daterangepicker/daterangepicker.css');
 // bootstrap-datetimepicker
@@ -25,6 +27,9 @@ $document->addScript('//geodata.solutions/includes/countrystatecity.js');
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
+
+// Switchery
+$document->addScript('/templates/smartpokex/vendors/switchery/dist/switchery.min.js');
 // bootstrap-daterangepicker
 $document->addScript('/templates/smartpokex/vendors/moment/min/moment.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/daterangepicker.js');
@@ -33,19 +38,6 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/bui
 // Ion.RangeSlider
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
 $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
-
-$currDate = date('Y-m-d H:i:s');
-$datestart = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
-$datestartspan = date("d M Y", strtotime($datestart));
-
-$dateend = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
-$dateendspan = date("d M Y", strtotime($dateend));
-
-$datestart2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
-$datestartspan2 = date("d M Y", strtotime($datestart2));
-
-$dateend2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
-$dateendspan2 = date("d M Y", strtotime($dateend2));
 
 ?>
 <div class="col-md-12 col-sm-12 ">
@@ -90,8 +82,8 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <label><?php echo JText::_('Range');?></label>
-                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+<!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
+                            <div id="reportrange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                 <span><?php echo $datestartspan.' - '.$dateendspan;?></span> <b class="caret"></b>
                             </div>
@@ -101,8 +93,8 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-12" id="daterange" style="display: none;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <label><?php echo JText::_('Range2');?></label>
-                            <div id="reportrange_right" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+<!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
+                            <div id="reportrange_right" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                 <span><?php echo $datestartspan2.' - '.$dateendspan2;?></span> <b class="caret"></b>
                             </div>
@@ -116,7 +108,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select name="country" class="countries order-alpha form-control" id="countryId">
-                                <option value="">Select Country</option>
+                                <option value="" selected>Select Country</option>
                             </select>
                         </div>
                     </div>
@@ -124,7 +116,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select name="state" class="states order-alpha form-control" id="stateId">
-                                <option value="">Select State</option>
+                                <option value="" selected>Select State</option>
                             </select>
                         </div>
                     </div>
@@ -132,7 +124,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select name="city" class="cities order-alpha form-control" id="cityId" onblur="getSpotCity()">
-                                <option value="">Select City</option>
+                                <option value="" selected>Select City</option>
                             </select>
                         </div>
                     </div>
@@ -140,7 +132,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select id="selSpot" class="form-control" name="spot" onblur="getSensorSpot()">
-                                <option value=""><?php echo JText::_('All Spots'); ?></option>
+                                <option value="" selected><?php echo JText::_('All Spots'); ?></option>
                             </select>
                         </div>
                     </div>
@@ -148,7 +140,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select id="selSensor" class="form-control" name="sensor">
-                                <option value=""><?php echo JText::_('All Sensors'); ?></option>
+                                <option value="" selected><?php echo JText::_('All Sensors'); ?></option>
                             </select>
                         </div>
                     </div>
@@ -158,7 +150,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select id="selBrand" class="form-control" name="brand" multiple="multiple">
-                                <option value=""><?php echo JText::_('All Brands'); ?></option>
+                                <option value="" selected><?php echo JText::_('All Brands'); ?></option>
                                 <?php foreach ($brands as $item): ?>
                                     <option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
                                 <?php endforeach; ?>
@@ -169,7 +161,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <select id="selStatus" class="form-control" name="status">
-                                <option value=""><?php echo JText::_('All Status'); ?></option>
+                                <option value="" selected><?php echo JText::_('All Status'); ?></option>
                                 <option value="IN"><?php echo JText::_('IN'); ?></option>
                                 <option value="LIMIT"><?php echo JText::_('LIMIT'); ?></option>
                                 <option value="OUT"><?php echo JText::_('OUT'); ?></option>
@@ -190,39 +182,40 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                 <!-- filters -->
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="ln_solid"></div>
-                    <h2><?php echo JText::_('Filters');?> <small></small></h2>
-                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    <h2><?php echo JText::_('Filters');?>
+                        <input id="checkFilter" type="checkbox" class="js-switch" /></h2>
+                    <div id="filterAge" class="col-md-4 col-sm-4 col-xs-12" style="display: none">
                         <label><?php echo JText::_('Range Age'); ?></label>
                         <input type="text" id="range_age" value="" name="range" />
                         <input type="hidden" id="from_value" value="" name="from_value" />
                         <input type="hidden" id="to_value" value="" name="to_value" />
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="filterSex" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <label><?php echo JText::_('Sex'); ?></label>
                             <select id="selSex" class="form-control" name="sex">
-                                <option value=""><?php echo JText::_('Both'); ?></option>
+                                <option value="" selected><?php echo JText::_('Both'); ?></option>
                                 <option value="0"><?php echo JText::_('Man'); ?></option>
                                 <option value="1"><?php echo JText::_('Woman'); ?></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="filterZipCode" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <label><?php echo JText::_('ZipCodes');?></label>
                             <select id="selZipCode" class="form-control" name="zipcode" multiple="multiple">
-                                <option value=""><?php echo JText::_('All'); ?></option>
+                                <option value="" selected><?php echo JText::_('All'); ?></option>
                                 <?php foreach ($zipcodes as $item): ?>
                                     <option value="<?php echo $item->zipcode; ?>"><?php echo $item->zipcode; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div id="filterMember" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <label><?php echo JText::_('Membership');?></label>
                             <select id="selMembership" class="form-control" name="membership">
-                                <option value=""><?php echo JText::_('Both'); ?></option>
+                                <option value="" selected><?php echo JText::_('Both'); ?></option>
                                 <option value="0"><?php echo JText::_('No'); ?></option>
                                 <option value="1"><?php echo JText::_('Yes'); ?></option>
                             </select>
@@ -253,7 +246,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
                             <button class="btn btn-primary" type="button"><?php echo JText::_('Cancel'); ?></button>
-                            <button type="submit" class="btn btn-success"><?php echo JText::_('Submit'); ?></button>
+                            <button class="btn btn-success" type="submit"><?php echo JText::_('Submit'); ?></button>
                         </div>
                     </div>
                 </div>

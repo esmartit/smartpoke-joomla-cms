@@ -12,6 +12,6 @@ defined('_JEXEC') or die;
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$usertimezone = ModSPDevUniqueDateHelper::getTimeZone($params);
+$usertimezone = ModSPDevUniqueDateHelper::getTimeZone();
 require JModuleHelper::getLayoutPath('mod_spdevuniquedate', $params->get('layout', 'default'));
 

@@ -13,7 +13,7 @@ class ModSPDailyGoalHelper
      * Returns the dailyGoal and dailyGoalReg from each cust
      * @return mixed
      */
-    public static function getValueDev($params)
+    public static function getValueDev()
     {
         $db    = JFactory::getDbo();
         $tables = $db->getTableList();
@@ -32,7 +32,7 @@ class ModSPDailyGoalHelper
         return $value;
     }
 
-    public static function getValueReg($params)
+    public static function getValueReg()
     {
         $db    = JFactory::getDbo();
         $tables = $db->getTableList();
@@ -51,7 +51,7 @@ class ModSPDailyGoalHelper
         return $value;
     }
 
-    public static function getTimeZone($params) {
+    public static function getTimeZone() {
         $userTz = JFactory::getUser()->getParam('timezone');
         $timeZone = JFactory::getConfig()->get('offset');
         if($userTz) {

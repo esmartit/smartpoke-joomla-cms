@@ -22,6 +22,7 @@ $document->addScript('/media/mod_spactivitydate/js/echartactivitydate.js');
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
+            <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
             <div id="echart_activity_date" class="demo-placeholder" style="height:350px;"></div>
         </div>
     </div>
