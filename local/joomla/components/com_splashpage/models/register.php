@@ -102,7 +102,7 @@ class SplashpageModelRegister extends JModelItem
         $customer->email = $values[2];
         $customer->firstname = $values[3];
         $customer->lastname = $values[4];
-        $customer->membership = 0;
+        $customer->membership = $values[12];
         $customer->mobile_phone = $values[5];
         $customer->sex = $values[6];
         $customer->spot = $values[7];
