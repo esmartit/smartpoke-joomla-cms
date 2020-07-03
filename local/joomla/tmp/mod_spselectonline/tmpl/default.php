@@ -188,8 +188,8 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                            <button class="btn btn-primary" type="button"><?php echo JText::_('Cancel'); ?></button>
-                            <button type="submit" class="btn btn-success"><?php echo JText::_('Submit'); ?></button>
+                            <button class="btn btn-primary" type="submit"><?php echo JText::_('Cancel'); ?></button>
+                            <button class="btn btn-success" type="button" onclick="sendForm()"><?php echo JText::_('Submit'); ?></button>
                         </div>
                     </div>
                 </div>
