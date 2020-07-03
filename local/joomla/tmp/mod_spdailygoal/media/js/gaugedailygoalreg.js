@@ -18,7 +18,12 @@ $(document).ready( function() {
         generateGradient: true
     };
 
-    let dailygoalRegMaxValue = document.getElementById('dailygoalRegMaxValue').innerText;
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    const seDailyGoalReg = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/daily-registered-count?timezone="+userTimeZone);
+    let currentMax = 0;
+    let dailyGoalReg = 0;
+    let currentDate = new Date();
+    let dailyGoalRegMaxValue = document.getElementById('dailygoalRegMaxValue').innerText;
 
     if ($('#chart_gauge_dailygoal_reg').length) {
         var chart_gauge_reg = document.getElementById('chart_gauge_dailygoal_reg'); // your canvas element
@@ -28,17 +33,29 @@ $(document).ready( function() {
     if ($('#gauge-text-reg').length) {
         chart_gauge_dailygoal_reg.setTextField(document.getElementById("gauge-text-reg"));
         chart_gauge_dailygoal_reg.animationSpeed = 32; // set animation speed (32 is default value)
-        chart_gauge_dailygoal_reg.maxValue = dailygoalRegMaxValue;
+        chart_gauge_dailygoal_reg.maxValue = dailyGoalRegMaxValue;
         chart_gauge_dailygoal_reg.set(dailygoal_reg);
     }
 
-    setInterval(function () {
-        if ($('#gauge-text-reg').length) {
-            dailygoal_reg += (Math.random() * 5).toFixed(2) - 0;
-            chart_gauge_dailygoal_reg.setTextField(document.getElementById("gauge-text-reg"));
-            chart_gauge_dailygoal_reg.maxValue = dailygoalRegMaxValue;
-            chart_gauge_dailygoal_reg.set(dailygoal_reg);
+    seDailyGoalReg.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        dailyGoalReg = eventData.count;
+        let today = new Date(eventData.time);
+        let sameDate = (currentDate.getDate() === today.getUTCDate());
+
+        if ($('#gauge-text').length) {
+            chart_gauge_dailygoal_reg.setTextField(document.getElementById("gauge-text"));
+            chart_gauge_dailygoal_reg.animationSpeed = 32; // set animation speed (32 is default value)
+            chart_gauge_dailygoal_reg.maxValue = dailygoalMaxValue;
+
+            if (sameDate) {
+                if (dailyGoalReg > currentMax) {
+                    chart_gauge_dailygoal_reg.set(dailyGoalReg);
+                    currentMax = dailyGoalReg;
+                }
+            }
         }
-    },4500);
+        // console.log('Date', dailygoal, currentMax);
+    }
 
 });

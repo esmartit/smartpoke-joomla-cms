@@ -212,7 +212,7 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    // const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
+    // const seTimeConnectHotSpot = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
     let spChart = echarts.init(document.getElementById('echart_timeconnect_hotspot'), theme);
 
     function echartTimeConnect() {
@@ -267,7 +267,7 @@ $(document).ready( function() {
     //
     // let totalAnt = 0;
     echartTimeConnect();
-    // sourceEvt.onmessage = function (event) {
+    // seTimeConnectHotSpot.onmessage = function (event) {
     //     let eventData = JSON.parse(event.data);
     //     let dataHours = (new Date(eventData.time)).getHours();
     //     let new_x = eventData.inCount;
