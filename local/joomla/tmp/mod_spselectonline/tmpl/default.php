@@ -121,7 +121,7 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             <select id="selBrand" class="form-control" name="brand" multiple="multiple">
                                 <option value="" selected><?php echo JText::_('All Brands'); ?></option>
                                 <?php foreach ($brands as $item): ?>
-                                    <option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
+                                    <option value="<?php echo $item->name; ?>"><?php echo $item->name; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -148,8 +148,8 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                     <div id="filterAge" class="col-md-4 col-sm-4 col-xs-12" style="display: none">
                         <label><?php echo JText::_('Range Age'); ?></label>
                         <input type="text" id="range_age" value="" name="range" />
-                        <input type="hidden" id="from_value" value="" name="from_value" />
-                        <input type="hidden" id="to_value" value="" name="to_value" />
+                        <input type="hidden" id="from_value" value="18" name="from_value" />
+                        <input type="hidden" id="to_value" value="85" name="to_value" />
                     </div>
                     <div id="filterSex" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                         <div class="col-md-12 col-sm-12 col-xs-12">
