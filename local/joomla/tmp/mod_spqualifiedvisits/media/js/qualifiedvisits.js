@@ -1,6 +1,6 @@
 $(document).ready( function() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const sourceEvt = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
+    const seQualifiedVisits = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?timezone="+userTimeZone);
 
     let visitTotal = 0;
     let visitIn = 0;
@@ -12,7 +12,7 @@ $(document).ready( function() {
     let limitDataAnt = 0;
     let outDataAnt = 0;
 
-    sourceEvt.onmessage = function (event) {
+    seQualifiedVisits.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         visitHour = (new Date(eventData.time)).getHours();
         let inData = eventData.inCount;
