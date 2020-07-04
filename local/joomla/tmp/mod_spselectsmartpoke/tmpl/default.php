@@ -39,17 +39,11 @@ $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.range
 $document->addScript('/media/mod_spselectsmartpoke/js/spselectsmartpoke.js');
 
 $currDate = date('Y-m-d H:i:s');
-$datestart = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
-$datestartspan = date("d M Y", strtotime($datestart));
+$datestart = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
+$dateend = date("Y-m-d", strtotime($currDate));
 
-$dateend = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
-$dateendspan = date("d M Y", strtotime($dateend));
-
-$datestart2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
-$datestartspan2 = date("d M Y", strtotime($datestart2));
-
-$dateend2 = date("Y-m-d", strtotime("-8 day", strtotime($currDate)));
-$dateendspan2 = date("d M Y", strtotime($dateend2));
+$datestart2 = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
+$dateend2 = date("Y-m-d", strtotime($currDate));
 
 ?>
 <div class="col-md-12 col-sm-12 ">
@@ -98,16 +92,16 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                             <input id="timeend" type="text" name="timeend" disabled class="form-control"/>
                         </div>
                     </div>
-                    <div id="daterange" class="col-md-4 col-sm-4 col-xs-12" style="display: none;">
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <label><?php echo JText::_('Range');?></label>
-                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                    <div id="rangeDate" class="col-md-3 col-sm-3 col-xs-12" style="display: none;">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
+                            <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                <span><?php echo $datestartspan.' - '.$dateendspan;?></span> <b class="caret"></b>
+                                <span>October 24, 1971 - October 24, 1971</span><b class="caret"></b>
                             </div>
                         </div>
-                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart;?>'/>
-                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend;?>'/>
+                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -159,7 +153,7 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                             <select id="selBrand" class="form-control" name="brand" multiple="multiple">
                                 <option value="" selected><?php echo JText::_('All Brands'); ?></option>
                                 <?php foreach ($brands as $item): ?>
-                                    <option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
+                                    <option value="<?php echo $item->name; ?>"><?php echo $item->name; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -188,9 +182,9 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
                             <label><?php echo JText::_('Days');?></label>
-                            <div id="reportrange_right" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                            <div id="daterange_right" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                <span><?php echo $datestartspan2.' - '.$dateendspan2;?></span> <b class="caret"></b>
+                                <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                             </div>
                         </div>
                         <input type="hidden" name="datestart2" id="datestart2" value='<?php echo $datestart2;?>'/>
@@ -206,8 +200,8 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                     <div id="filterAge" class="col-md-4 col-sm-4 col-xs-12" style="display: none">
                         <label><?php echo JText::_('Range Age'); ?></label>
                         <input type="text" id="range_age" value="" name="range" />
-                        <input type="hidden" id="from_value" value="" name="from_value" />
-                        <input type="hidden" id="to_value" value="" name="to_value" />
+                        <input type="hidden" id="from_value" value="18" name="from_value" />
+                        <input type="hidden" id="to_value" value="85" name="to_value" />
                     </div>
                     <div id="filterSex" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -274,8 +268,8 @@ $dateendspan2 = date("d M Y", strtotime($dateend2));
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                            <button class="btn btn-primary" type="button"><?php echo JText::_('Cancel'); ?></button>
-                            <button type="submit" class="btn btn-success"><?php echo JText::_('Submit'); ?></button>
+                            <button class="btn btn-primary" type="submit"><?php echo JText::_('Cancel'); ?></button>
+                            <button class="btn btn-success" type="button" onclick="sendForm()"><?php echo JText::_('Submit'); ?></button>
                         </div>
                     </div>
                 </div>
