@@ -149,5 +149,5 @@ function sendForm() {
         "status": t_status, "ageS": t_ageS, "ageE": t_ageE, "gender": t_sex,
         "zipcode": t_zipcodes, "membership": t_member }
 
-    document.getElementById("echart_activity_online").innerHTML = Intl.NumberFormat().format(1232);
+    console.log(dataForm);
 }

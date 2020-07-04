@@ -91,10 +91,10 @@ $(document).ready(function () {
 });
 
 function showDaterange(){
-    document.getElementById("daterange").style.display = 'block';
+    document.getElementById("rangeDate").style.display = 'block';
 }
 function hideDaterange(){
-    document.getElementById("daterange").style.display = 'none';
+    document.getElementById("rangeDate").style.display = 'none';
 };
 
 $(document).ready(function() {
@@ -106,7 +106,7 @@ $(document).ready(function() {
 
     let cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#daterange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         datestart = start.format('YYYY-MM-DD');
         dateend = end.format('YYYY-MM-DD');
         $('#datestart').val(datestart);
@@ -115,7 +115,7 @@ $(document).ready(function() {
 
     let cb2 = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        $('#reportrange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#daterange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         datestart2 = start.format('YYYY-MM-DD');
         dateend2 = end.format('YYYY-MM-DD');
         $('#datestart2').val(datestart2);
@@ -124,8 +124,8 @@ $(document).ready(function() {
     };
 
     let optionSet1 = {
-        startDate: moment().subtract(29, 'days'),
-        endDate: moment(),
+        startDate: moment().subtract(1, 'days'),
+        endDate: moment().subtract(1, 'days'),
         minDate: '01/01/2012',
         maxDate: '12/31/2050',
         dateLimit: {
@@ -162,57 +162,57 @@ $(document).ready(function() {
         }
     };
 
-    $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-    $('#reportrange').daterangepicker(optionSet1, cb);
-    $('#reportrange').on('show.daterangepicker', function () {
+    $('#daterange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#daterange').daterangepicker(optionSet1, cb);
+    $('#daterange').on('show.daterangepicker', function () {
         console.log("show event fired");
     });
-    $('#reportrange').on('hide.daterangepicker', function () {
+    $('#daterange').on('hide.daterangepicker', function () {
         console.log("hide event fired");
     });
-    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+    $('#daterange').on('apply.daterangepicker', function (ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
     });
-    $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
+    $('#daterange').on('cancel.daterangepicker', function (ev, picker) {
         console.log("cancel event fired");
     });
     $('#options1').click(function () {
-        $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+        $('#daterange').data('daterangepicker').setOptions(optionSet1, cb);
     });
     $('#options2').click(function () {
-        $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+        $('#daterange').data('daterangepicker').setOptions(optionSet2, cb);
     });
     $('#destroy').click(function () {
-        $('#reportrange').data('daterangepicker').remove();
+        $('#daterange').data('daterangepicker').remove();
     });
 
-    $('#reportrange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#daterange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
-    $('#reportrange_right').daterangepicker(optionSet1, cb2);
+    $('#daterange_right').daterangepicker(optionSet1, cb2);
 
-    $('#reportrange_right').on('show.daterangepicker', function () {
+    $('#daterange_right').on('show.daterangepicker', function () {
         console.log("show event fired");
     });
-    $('#reportrange_right').on('hide.daterangepicker', function () {
+    $('#daterange_right').on('hide.daterangepicker', function () {
         console.log("hide event fired");
     });
-    $('#reportrange_right').on('apply.daterangepicker', function (ev, picker) {
+    $('#daterange_right').on('apply.daterangepicker', function (ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
     });
-    $('#reportrange_right').on('cancel.daterangepicker', function (ev, picker) {
+    $('#daterange_right').on('cancel.daterangepicker', function (ev, picker) {
         console.log("cancel event fired");
     });
 
     $('#options1').click(function () {
-        $('#reportrange_right').data('daterangepicker').setOptions(optionSet1, cb2);
+        $('#daterange_right').data('daterangepicker').setOptions(optionSet1, cb2);
     });
 
     $('#options2').click(function () {
-        $('#reportrange_right').data('daterangepicker').setOptions(optionSet2, cb2);
+        $('#daterange_right').data('daterangepicker').setOptions(optionSet2, cb2);
     });
 
     $('#destroy').click(function () {
-        $('#reportrange_right').data('daterangepicker').remove();
+        $('#daterange_right').data('daterangepicker').remove();
     });
 
 });
@@ -274,4 +274,39 @@ function filters() {
         document.getElementById("filterZipCode").style.display = 'block';
         document.getElementById("filterMember").style.display = 'block';
     }
+}
+
+function sendForm() {
+    let t_dateS = $('#datestart').val();
+    let t_dateE = $('#dateend').val();
+    let t_timeS = $('#timestart').val();
+    let t_timeE = $('#timeend').val();
+    let t_dateS2 = $('#datestart2').val();
+    let t_dateE2 = $('#dateend2').val();
+    let t_city = $('#cityId').val();
+    let t_spot = $('#selSpot').val();
+    let t_sensor = $('#selSensor').val();
+    let t_brands = $('#selBrand').val();
+    let t_status = $('#selStatus').val();
+    let t_presence = $('#presence').val();
+    let t_ageS = '';
+    let t_ageE = '';
+    let t_sex = '';
+    let t_zipcodes = '';
+    let t_member = '';
+    if (document.getElementById("checkFilter").checked) {
+        t_ageS = $('#from_value').val();
+        t_ageE = $('#to_value').val();
+        t_sex = $('#selSex').val();
+        t_zipcodes = $('#selZipCode').val();
+        t_member = $('#selMembership').val();
+    }
+
+    let dataForm = { "datestart": t_dateS, "dateend": t_dateE, "starttime": t_timeS, "endtime": t_timeE,
+        "datestart2": t_dateS2, "dateend2": t_dateE2, "city": t_city,
+        "spot": t_spot, "sensor": t_sensor, "brands": t_brands,
+        "status": t_status, "presence": t_presence,
+        "ageS": t_ageS, "ageE": t_ageE, "gender": t_sex,
+        "zipcode": t_zipcodes, "membership": t_member }
+    console.log(dataForm);
 }
