@@ -124,8 +124,8 @@ $(document).ready(function() {
     };
 
     let optionSet1 = {
-        startDate: moment().subtract(1, 'days'),
-        endDate: moment().subtract(1, 'days'),
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment(),
         minDate: '01/01/2012',
         maxDate: '12/31/2050',
         dateLimit: {
@@ -302,11 +302,11 @@ function sendForm() {
         t_member = $('#selMembership').val();
     }
 
-    let dataForm = { "datestart": t_dateS, "dateend": t_dateE, "starttime": t_timeS, "endtime": t_timeE,
-        "datestart2": t_dateS2, "dateend2": t_dateE2, "city": t_city,
-        "spot": t_spot, "sensor": t_sensor, "brands": t_brands,
+    let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
+        "dateStart2": t_dateS2, "dateEnd2": t_dateE2, "cityId": t_city,
+        "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
         "status": t_status, "presence": t_presence,
-        "ageS": t_ageS, "ageE": t_ageE, "gender": t_sex,
-        "zipcode": t_zipcodes, "membership": t_member }
+        "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
+        "zipCode": t_zipcodes, "memberShip": t_member }
     console.log(dataForm);
 }

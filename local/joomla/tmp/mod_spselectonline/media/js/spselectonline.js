@@ -144,10 +144,10 @@ function sendForm() {
         t_member = $('#selMembership').val();
     }
 
-    let dataForm = { "starttime": t_dateS, "endtime": t_dateE, "city": t_city,
-        "spot": t_spot, "sensor": t_sensor, "brands": t_brands,
-        "status": t_status, "ageS": t_ageS, "ageE": t_ageE, "gender": t_sex,
-        "zipcode": t_zipcodes, "membership": t_member }
+    let dataForm = { "startTime": t_dateS, "endTime": t_dateE, "cityId": t_city,
+        "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
+        "status": t_status, "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
+        "zipCode": t_zipcodes, "memberShip": t_member }
 
     console.log(dataForm);
 }
