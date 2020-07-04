@@ -82,25 +82,25 @@ $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-<!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
-                            <div id="reportrange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                            <!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
+                            <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                <span><?php echo $datestartspan.' - '.$dateendspan;?></span> <b class="caret"></b>
+                                <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                             </div>
                         </div>
-                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart;?>'/>
-                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend;?>'/>
+                        <input type="hidden" name="datestart" id="datestart"/>
+                        <input type="hidden" name="dateend" id="dateend"/>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12" id="daterange" style="display: none;">
+                    <div class="col-md-3 col-sm-3 col-xs-12" id="rangeDate" style="display: none;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-<!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
-                            <div id="reportrange_right" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                            <!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
+                            <div id="daterange_right" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                <span><?php echo $datestartspan2.' - '.$dateendspan2;?></span> <b class="caret"></b>
+                                <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                             </div>
                         </div>
-                        <input type="hidden" name="datestart2" id="datestart2" value='<?php echo $datestart2;?>'/>
-                        <input type="hidden" name="dateend2" id="dateend2" value='<?php echo $dateend2;?>'/>
+                        <input type="hidden" name="datestart2" id="datestart2">
+                        <input type="hidden" name="dateend2" id="dateend2">
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -152,7 +152,7 @@ $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
                             <select id="selBrand" class="form-control" name="brand" multiple="multiple">
                                 <option value="" selected><?php echo JText::_('All Brands'); ?></option>
                                 <?php foreach ($brands as $item): ?>
-                                    <option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option>
+                                    <option value="<?php echo $item->name; ?>"><?php echo $item->name; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -245,8 +245,8 @@ $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                            <button class="btn btn-primary" type="button"><?php echo JText::_('Cancel'); ?></button>
-                            <button class="btn btn-success" type="submit"><?php echo JText::_('Submit'); ?></button>
+                            <button class="btn btn-primary" type="submit"><?php echo JText::_('Cancel'); ?></button>
+                            <button class="btn btn-success" type="button" onclick="sendForm()"><?php echo JText::_('Submit'); ?></button>
                         </div>
                     </div>
                 </div>
