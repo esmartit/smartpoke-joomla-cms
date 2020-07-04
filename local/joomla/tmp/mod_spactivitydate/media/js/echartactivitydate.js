@@ -212,7 +212,7 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seActivityDate = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/now-detected?timezone="+userTimeZone);
+    const seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/now-detected?timezone="+userTimeZone);
     let inAct = 0;
     let limitAct = 0;
     let outAct = 0;

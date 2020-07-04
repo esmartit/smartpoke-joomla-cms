@@ -212,7 +212,7 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seConnectOnline = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
+    const seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
     var spChart = echarts.init(document.getElementById('echart_connect_online'), theme);
 
     function echartConnect(hoursCon, deviceCon, inCon, limitCon, outCon) {

@@ -1,6 +1,6 @@
 $(document).ready( function() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seRegisteredNow = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/now-registered-count?timezone="+userTimeZone);
+    const seRegisteredNow = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/now-registered-count?timezone="+userTimeZone);
     let registerednow = 0;
 
     seRegisteredNow.onmessage = function (event) {
