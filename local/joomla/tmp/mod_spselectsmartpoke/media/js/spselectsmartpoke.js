@@ -1,3 +1,5 @@
+let smartpokeOpt = '1';
+
 $(document).ready( function() {
 
     if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
@@ -142,7 +144,7 @@ function showOnlineOpt(){
     document.getElementById("hourstart").style.display = 'block';
     document.getElementById("hourend").style.display = 'block';
     $('#timeend').prop('disabled', true);
-    document.getElementById("daterange").style.display = 'none';
+    document.getElementById("rangeDate").style.display = 'none';
     document.getElementById("selcountry").style.display = 'block';
     document.getElementById("selstate").style.display = 'block';
     document.getElementById("selcity").style.display = 'block';
@@ -155,13 +157,14 @@ function showOnlineOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
+    smartpokeOpt = '1';
 }
 
 function showOfflineOpt(){
     document.getElementById("hourstart").style.display = 'block';
     document.getElementById("hourend").style.display = 'block';
     $('#timeend').prop('disabled', false);
-    document.getElementById("daterange").style.display = 'block';
+    document.getElementById("rangeDate").style.display = 'block';
     document.getElementById("selcountry").style.display = 'block';
     document.getElementById("selstate").style.display = 'block';
     document.getElementById("selcity").style.display = 'block';
@@ -174,12 +177,13 @@ function showOfflineOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
+    smartpokeOpt = '2';
 }
 
 function showDataBaseOpt(){
     document.getElementById("hourstart").style.display = 'none';
     document.getElementById("hourend").style.display = 'none';
-    document.getElementById("daterange").style.display = 'none';
+    document.getElementById("rangeDate").style.display = 'none';
     document.getElementById("selcountry").style.display = 'block';
     document.getElementById("selstate").style.display = 'block';
     document.getElementById("selcity").style.display = 'block';
@@ -192,12 +196,13 @@ function showDataBaseOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
+    smartpokeOpt = '3';
 }
 
 function showFileOpt() {
     document.getElementById("hourstart").style.display = 'none';
     document.getElementById("hourend").style.display = 'none';
-    document.getElementById("daterange").style.display = 'none';
+    document.getElementById("rangeDate").style.display = 'none';
     document.getElementById("selcountry").style.display = 'none';
     document.getElementById("selstate").style.display = 'none';
     document.getElementById("selcity").style.display = 'none';
@@ -210,27 +215,28 @@ function showFileOpt() {
     document.getElementById("filters").style.display = 'none';
     document.getElementById("selfile").style.display = 'block';
     document.getElementById("selcampaigns").style.display = 'block';
+    smartpokeOpt = '4';
 }
 
 $(document).ready(function() {
 
-    var datestart;
-    var dateend;
-    var datestart2;
-    var dateend2;
+    let datestart;
+    let dateend;
+    let datestart2;
+    let dateend2;
 
-    var cb = function(start, end, label) {
+    let cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#daterange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         datestart = start.format('YYYY-MM-DD');
         dateend = end.format('YYYY-MM-DD');
         $('#datestart').val(datestart);
         $('#dateend').val(dateend);
     };
 
-    var cb2 = function(start, end, label) {
+    let cb2 = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
-        $('#reportrange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#daterange_right span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         datestart2 = start.format('YYYY-MM-DD');
         dateend2 = end.format('YYYY-MM-DD');
         $('#datestart2').val(datestart2);
@@ -238,7 +244,7 @@ $(document).ready(function() {
 
     };
 
-    var optionSet1 = {
+    let optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
         minDate: '01/01/2012',
@@ -277,57 +283,57 @@ $(document).ready(function() {
         }
     };
 
-    $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-    $('#reportrange').daterangepicker(optionSet1, cb);
-    $('#reportrange').on('show.daterangepicker', function () {
+    $('#daterange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#daterange').daterangepicker(optionSet1, cb);
+    $('#daterange').on('show.daterangepicker', function () {
         console.log("show event fired");
     });
-    $('#reportrange').on('hide.daterangepicker', function () {
+    $('#daterange').on('hide.daterangepicker', function () {
         console.log("hide event fired");
     });
-    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+    $('#daterange').on('apply.daterangepicker', function (ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
     });
-    $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
+    $('#daterange').on('cancel.daterangepicker', function (ev, picker) {
         console.log("cancel event fired");
     });
     $('#options1').click(function () {
-        $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+        $('#daterange').data('daterangepicker').setOptions(optionSet1, cb);
     });
     $('#options2').click(function () {
-        $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+        $('#daterange').data('daterangepicker').setOptions(optionSet2, cb);
     });
     $('#destroy').click(function () {
-        $('#reportrange').data('daterangepicker').remove();
+        $('#daterange').data('daterangepicker').remove();
     });
 
-    $('#reportrange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#daterange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
-    $('#reportrange_right').daterangepicker(optionSet1, cb2);
+    $('#daterange_right').daterangepicker(optionSet1, cb2);
 
-    $('#reportrange_right').on('show.daterangepicker', function () {
+    $('#daterange_right').on('show.daterangepicker', function () {
         console.log("show event fired");
     });
-    $('#reportrange_right').on('hide.daterangepicker', function () {
+    $('#daterange_right').on('hide.daterangepicker', function () {
         console.log("hide event fired");
     });
-    $('#reportrange_right').on('apply.daterangepicker', function (ev, picker) {
+    $('#daterange_right').on('apply.daterangepicker', function (ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
     });
-    $('#reportrange_right').on('cancel.daterangepicker', function (ev, picker) {
+    $('#daterange_right').on('cancel.daterangepicker', function (ev, picker) {
         console.log("cancel event fired");
     });
 
     $('#options1').click(function () {
-        $('#reportrange_right').data('daterangepicker').setOptions(optionSet1, cb2);
+        $('#daterange_right').data('daterangepicker').setOptions(optionSet1, cb2);
     });
 
     $('#options2').click(function () {
-        $('#reportrange_right').data('daterangepicker').setOptions(optionSet2, cb2);
+        $('#daterange_right').data('daterangepicker').setOptions(optionSet2, cb2);
     });
 
     $('#destroy').click(function () {
-        $('#reportrange_right').data('daterangepicker').remove();
+        $('#daterange_right').data('daterangepicker').remove();
     });
 
 });
@@ -350,4 +356,67 @@ function filters() {
         document.getElementById("filterZipCode").style.display = 'block';
         document.getElementById("filterMember").style.display = 'block';
     }
+}
+
+function sendForm() {
+
+    let t_timeS = '';
+    let t_timeE = '';
+    let t_dateS = '';
+    let t_dateE = '';
+    let t_city = '';
+    let t_spot = '';
+    let t_sensor = '';
+    let t_brands = '';
+    let t_status = '';
+    let t_presence = '';
+    let t_dateS2 = '';
+    let t_dateE2 = '';
+
+    let t_ageS = '';
+    let t_ageE = '';
+    let t_sex = '';
+    let t_zipcodes = '';
+    let t_member = '';
+
+    let formFile = '';
+    let formFileJson = '';
+
+    if (smartpokeOpt == '1' || smartpokeOpt == '2') {  // Online and Offline option
+        t_timeS = $('#timestart').val();
+        t_timeE = $('#timeend').val();
+        t_city = $('#cityId').val();
+        t_spot = $('#selSpot').val();
+        t_sensor = $('#selSensor').val();
+        t_brands = $('#selBrand').val();
+        t_status = $('#selStatus').val();
+        t_presence = $('#presence').val();
+        t_dateS2 = $('#datestart2').val();
+        t_dateE2 = $('#dateend2').val();
+        if (smartpokeOpt == '2') {          // Only Offline option
+            t_dateS = $('#datestart').val();
+            t_dateE = $('#dateend').val();
+        }
+    }
+    if (smartpokeOpt != '4') {  // Not File option
+        if (document.getElementById("checkFilter").checked) {
+            t_ageS = $('#from_value').val();
+            t_ageE = $('#to_value').val();
+            t_sex = $('#selSex').val();
+            t_zipcodes = $('#selZipCode').val();
+            t_member = $('#selMembership').val();
+        }
+    }
+    if (smartpokeOpt == '4') { // Only File option
+        formFile = document.getElementById('selFile');
+        formFileJson = formFile.files[0];
+    }
+
+    let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
+        "dateStart2": t_dateS2, "dateEnd2": t_dateE2, "cityId": t_city,
+        "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
+        "status": t_status, "presence": t_presence,
+        "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
+        "zipCode": t_zipcodes, "memberShip": t_member, "file": formFileJson }
+    console.log(dataForm);
 }
