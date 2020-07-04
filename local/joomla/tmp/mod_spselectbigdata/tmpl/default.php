@@ -39,6 +39,13 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/bui
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
 $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
 
+$currDate = date('Y-m-d H:i:s');
+$datestart = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
+$dateend = date("Y-m-d", strtotime($currDate));
+
+$datestart2 = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
+$dateend2 = date("Y-m-d", strtotime($currDate));
+
 ?>
 <div class="col-md-12 col-sm-12 ">
     <div class="x_panel">
@@ -88,8 +95,8 @@ $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
                                 <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                             </div>
                         </div>
-                        <input type="hidden" name="datestart" id="datestart"/>
-                        <input type="hidden" name="dateend" id="dateend"/>
+                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-12" id="rangeDate" style="display: none;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -99,8 +106,8 @@ $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
                                 <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                             </div>
                         </div>
-                        <input type="hidden" name="datestart2" id="datestart2">
-                        <input type="hidden" name="dateend2" id="dateend2">
+                        <input type="hidden" name="datestart2" id="datestart2" value='<?php echo $datestart2; ?>'/>
+                        <input type="hidden" name="dateend2" id="dateend2" value='<?php echo $dateend2; ?>'/>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -187,8 +194,8 @@ $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
                     <div id="filterAge" class="col-md-4 col-sm-4 col-xs-12" style="display: none">
                         <label><?php echo JText::_('Range Age'); ?></label>
                         <input type="text" id="range_age" value="" name="range" />
-                        <input type="hidden" id="from_value" value="" name="from_value" />
-                        <input type="hidden" id="to_value" value="" name="to_value" />
+                        <input type="hidden" id="from_value" value="18" name="from_value" />
+                        <input type="hidden" id="to_value" value="85" name="to_value" />
                     </div>
                     <div id="filterSex" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                         <div class="col-md-12 col-sm-12 col-xs-12">

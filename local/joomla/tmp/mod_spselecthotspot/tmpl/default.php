@@ -35,11 +35,8 @@ $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.range
 $document->addScript('/media/mod_spselecthotspot/js/spselecthotspot.js');
 
 $currDate = date('Y-m-d H:i:s');
-$datestart = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
-$datestartspan = date("d M Y", strtotime($datestart));
-
-$dateend = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
-$dateendspan = date("d M Y", strtotime($dateend));
+$datestart = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
+$dateend = date("Y-m-d", strtotime($currDate));
 
 ?>
 <div class="col-md-12 col-sm-12 ">
@@ -67,13 +64,13 @@ $dateendspan = date("d M Y", strtotime($dateend));
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <label><?php echo JText::_('Dates Range');?></label>
-                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                            <div id="daterange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                <span><?php echo $datestartspan.' - '.$dateendspan;?></span> <b class="caret"></b>
+                                <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                             </div>
                         </div>
-                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart;?>'/>
-                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend;?>'/>
+                        <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+                        <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -118,8 +115,8 @@ $dateendspan = date("d M Y", strtotime($dateend));
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <label><?php echo JText::_('Range Age'); ?></label>
                         <input type="text" id="range_age" value="" name="range" />
-                        <input type="hidden" id="from_value" value="" name="from_value" />
-                        <input type="hidden" id="to_value" value="" name="to_value" />
+                        <input type="hidden" id="from_value" value="18" name="from_value" />
+                        <input type="hidden" id="to_value" value="85" name="to_value" />
                     </div>
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -158,8 +155,8 @@ $dateendspan = date("d M Y", strtotime($dateend));
                     <div class="ln_solid"></div>
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6 offset-md-3">
-                            <button class="btn btn-primary" type="button"><?php echo JText::_('Cancel'); ?></button>
-                            <button class="btn btn-success" type="submit"><?php echo JText::_('Submit'); ?></button>
+                            <button class="btn btn-primary" type="submit"><?php echo JText::_('Cancel'); ?></button>
+                            <button class="btn btn-success" type="button" onclick="sendForm()"><?php echo JText::_('Submit'); ?></button>
                         </div>
                     </div>
                 </div>
