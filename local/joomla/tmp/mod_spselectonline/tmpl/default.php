@@ -69,6 +69,7 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <input id="timeend" type="text" name="timeend" disabled class="form-control"/>
                         </div>
+                        <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">

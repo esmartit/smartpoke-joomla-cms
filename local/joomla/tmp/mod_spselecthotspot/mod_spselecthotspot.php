@@ -12,5 +12,6 @@ defined('_JEXEC') or die;
 require_once dirname(__FILE__) . '/helper.php';
 
 $zipcodes = ModSPSelectHotSpotHelper::getZipCodes();
+$usertimezone = ModSPSelectHotSpotHelper::getTimeZone();
 
 require JModuleHelper::getLayoutPath('mod_spselecthotspot', $params->get('layout', 'default'));

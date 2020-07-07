@@ -381,6 +381,7 @@ function sendForm() {
 
     let formFile = '';
     let formFileJson = '';
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
 
     if (smartpokeOpt == '1' || smartpokeOpt == '2') {  // Online and Offline option
         t_timeS = $('#timestart').val();
@@ -393,6 +394,7 @@ function sendForm() {
         t_presence = $('#presence').val();
         t_dateS2 = $('#datestart2').val();
         t_dateE2 = $('#dateend2').val();
+
         if (smartpokeOpt == '2') {          // Only Offline option
             t_dateS = $('#datestart').val();
             t_dateE = $('#dateend').val();
@@ -417,6 +419,6 @@ function sendForm() {
         "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
         "status": t_status, "presence": t_presence,
         "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
-        "zipCode": t_zipcodes, "memberShip": t_member, "file": formFileJson }
+        "zipCode": t_zipcodes, "memberShip": t_member, "file": formFileJson, "timeZone": userTimeZone }
     console.log(dataForm);
 }
