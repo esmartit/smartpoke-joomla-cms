@@ -189,6 +189,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         </div>
                         <input type="hidden" name="datestart2" id="datestart2" value='<?php echo $datestart2;?>'/>
                         <input type="hidden" name="dateend2" id="dateend2" value='<?php echo $dateend2;?>'/>
+                        <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                     </div>
                 </div>
                 <!-- / select -->

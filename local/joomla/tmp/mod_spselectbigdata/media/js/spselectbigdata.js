@@ -294,6 +294,8 @@ function sendForm() {
     let t_sex = '';
     let t_zipcodes = '';
     let t_member = '';
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+
     if (document.getElementById("checkFilter").checked) {
         t_ageS = $('#from_value').val();
         t_ageE = $('#to_value').val();
@@ -307,6 +309,6 @@ function sendForm() {
         "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
         "status": t_status, "presence": t_presence,
         "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
-        "zipCode": t_zipcodes, "memberShip": t_member }
+        "zipCode": t_zipcodes, "memberShip": t_member, "timeZone": userTimeZone }
     console.log(dataForm);
 }

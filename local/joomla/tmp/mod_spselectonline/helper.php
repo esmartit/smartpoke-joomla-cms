@@ -96,4 +96,13 @@ class ModSPSelectOnlineHelper
         return $zipcodeList;
     }
 
+    public static function getTimeZone() {
+        $userTz = JFactory::getUser()->getParam('timezone');
+        $timeZone = JFactory::getConfig()->get('offset');
+        if($userTz) {
+            $timeZone = $userTz;
+        }
+        return $timeZone;
+    }
+
 }

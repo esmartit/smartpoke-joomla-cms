@@ -13,5 +13,7 @@ require_once dirname(__FILE__) . '/helper.php';
 
 $brands = ModSPSelectBigDataHelper::getBrands();
 $zipcodes = ModSPSelectBigDataHelper::getZipCodes();
+$usertimezone = ModSPSelectBigDataHelper::getTimeZone();
+
 
 require JModuleHelper::getLayoutPath('mod_spselectbigdata', $params->get('layout', 'default'));

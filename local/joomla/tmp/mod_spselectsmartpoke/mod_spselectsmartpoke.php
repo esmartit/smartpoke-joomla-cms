@@ -13,5 +13,6 @@ require_once dirname(__FILE__) . '/helper.php';
 
 $brands = ModSPSelectSmartPokeHelper::getBrands();
 $zipcodes = ModSPSelectSmartPokeHelper::getZipCodes();
+$usertimezone = ModSPSelectSmartPokeHelper::getTimeZone();
 
 require JModuleHelper::getLayoutPath('mod_spselectsmartpoke', $params->get('layout', 'default'));

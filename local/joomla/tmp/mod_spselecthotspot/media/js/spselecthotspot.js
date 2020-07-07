@@ -139,10 +139,11 @@ function sendForm() {
     let t_sex = $('#selSex').val();
     let t_zipcodes = $('#selZipCode').val();
     let t_member = $('#selMembership').val();
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
 
     let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE,
         "cityId": t_city, "spotId": t_spot, "ageStart": t_ageS, "ageEnd": t_ageE,
-        "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member }
+        "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member, "timeZone": userTimeZone }
     console.log(dataForm);
 }
 
