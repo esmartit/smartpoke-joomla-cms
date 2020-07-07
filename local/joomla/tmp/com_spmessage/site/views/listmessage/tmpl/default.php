@@ -26,16 +26,27 @@ defined('_JEXEC') or die('Restricted access');
 $document = JFactory::getDocument();
 
 $document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css');
+$document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css');
+$document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet');
 $document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css');
+$document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css');
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dataTables.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/dataTables.buttons.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/buttons.flash.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/buttons.html5.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/buttons.print.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive/js/dataTables.responsive.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-scroller/js/dataTables.scroller.min.js');
+$document->addScript('/templates/smartpokex/vendors/jszip/dist/jszip.min.js');
+$document->addScript('/templates/smartpokex/vendors/pdfmake/build/pdfmake.min.js');
+$document->addScript('/templates/smartpokex/vendors/pdfmake/build/vfs_fonts.js');
 /***[/JCBGUI$$$$]***/
-
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_spmessage'); ?>" method="post" name="adminForm" id="adminForm">
@@ -62,7 +73,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
-                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                 <tr class="headings">
                                     <th class='column-title'><?php echo JText::_('COM_SPMESSAGE_ID'); ?></th>

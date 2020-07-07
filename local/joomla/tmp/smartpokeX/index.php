@@ -128,7 +128,7 @@ else
                             <div class="menu_section">
                                 <h3>Communication</h3>
                                 <ul class="nav side-menu">
-                                    <li><a href="index.php?option=com_spmessage&view=listmessage"><i class="fa fa-list-alt"></i> Campaign Detail </a></li>
+                                    <li><a href="/index.php/configurations/campaign-detail"><i class="fa fa-list-alt"></i> Campaign Detail </a></li>
                                     <li><a href="index.html"><i class="fa fa-check-circle-o"></i> Campaign Effectiveness </a></li>
                                 </ul>
                             </div>
