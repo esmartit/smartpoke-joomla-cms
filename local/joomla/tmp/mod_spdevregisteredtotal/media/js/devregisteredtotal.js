@@ -1,23 +1,11 @@
 $(document).ready( function() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    function showDevRegisteredTotal(value) {
-        document.getElementById("devregisteredtotal").innerHTML = Intl.NumberFormat().format(value);;
+    const seRegisteredTotal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/total-registered-count?timezone="+userTimeZone);
+    let registeredtotal = 0;
+
+    seRegisteredTotal.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        registeredtotal = eventData.count;
+        document.getElementById("devregisteredtotal").innerHTML = Intl.NumberFormat().format(registeredtotal);
     }
-
-    function objTimer() {
-
-        ActualDateTime = new Date()
-        Actualsecond = ActualDateTime.getSeconds()
-
-        unit = Math.floor((Math.random() * 2) + 1);
-        checksec = (Actualsecond / 30);
-        if (checksec % 1 == 0) {
-            registeredtotal += unit;
-            showDevRegisteredTotal(registeredtotal)
-        }
-
-    }
-    registeredtotal = 0;
-    setInterval(objTimer, 1000)
-    objTimer()
 });
