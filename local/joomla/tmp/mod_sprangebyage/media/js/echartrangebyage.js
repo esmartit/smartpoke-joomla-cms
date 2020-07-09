@@ -1,6 +1,7 @@
 $(document).ready( function() {
 
-    var theme = {
+    getRanges();
+    let theme = {
         color: [
             '#26b99a', '#34495e', '#BDC3C7', '#3498db',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
@@ -212,43 +213,95 @@ $(document).ready( function() {
         }
     };
 
-    var spChart = echarts.init(document.getElementById('echart_rangeby_age'), theme);
+    let spChart = echarts.init(document.getElementById('echart_rangeby_age'), theme);
 
-    var option = {
-        title: {
-            text: '',
-            subtext: ''
-        },
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        legend: {
-            data: ['AGE']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
-        },
-        yAxis: {
-            type: 'category',
-            data: ['0-25', '26-35', '36-45', '46-55', '56-65', '66+']
-        },
-        series: [
-            {
-                name: 'AGE',
-                type: 'bar',
-                data: [258, 2438, 1329, 789, 432, 156]
+    function echartRangeByAge(age) {
+        let option = {
+            title: {
+                text: '',
+                subtext: ''
             },
-        ]
-    };
-    spChart.setOption(option);
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: ['AGE']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                boundaryGap: [0, 0.01]
+            },
+            yAxis: {
+                type: 'category',
+                data: ['0-25', '26-35', '36-45', '46-55', '56-65', '66+']
+            },
+            series: [
+                {
+                    name: 'AGE',
+                    type: 'bar',
+                    data: [age[1], age[2],age[3], age[4], age[5], age[6]]
+                },
+            ]
+        };
+        spChart.setOption(option);
+    }
+
+    let ageArr = [];
+    for (let x = 1; x <= 6; x++) {
+        ageArr[x] = 0;
+    }
+
+    function getRanges(){
+        let request = {
+            option       : 'com_ajax',
+            module       : 'sprangebyage',  // to target: mod_sprangebyage
+            method       : 'getRangeByAge',  // to target: function getRangeByAgeAjax in class ModSPRangeByAgeHelper
+            format       : 'json'
+        };
+        $.ajax({
+            method: 'GET',
+            data: request
+        })
+            .success(function(response){
+                let object = response.data;
+                let len = object.length;
+                for (let i = 0; i<len; i++) {
+                    let age = object[i][0];
+                    let count = object[i][1];
+
+                    switch (true) {
+                        case (age <= 25):
+                            ageArr[1] += parseInt(count);
+                            break;
+                        case (age <= 35):
+                            ageArr[2] += parseInt(count);
+                            break;
+                        case (age <= 45):
+                            ageArr[3] += parseInt(count);
+                            break;
+                        case (age <= 55):
+                            ageArr[4] += parseInt(count);
+                            break;
+                        case (age <= 65):
+                            ageArr[5] += parseInt(count);
+                            break;
+                        case (age >= 66):
+                            ageArr[6] += parseInt(count);
+                            break;
+                    }
+
+                }
+                echartRangeByAge(ageArr);
+            });
+    }
 })
+
