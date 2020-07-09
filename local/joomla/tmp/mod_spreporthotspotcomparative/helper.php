@@ -1,15 +1,14 @@
 <?php
 /**
  * @package     SmartPoke.Site
- * @subpackage  mod_spselecthotspot
+ * @subpackage  mod_spreporthotspotcomparative
  *
  * @copyright   Copyright (C) 2020 eSmartIT. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-class ModSPSelectHotSpotHelper
+class ModSPReportHotSpotComparativeHelper
 {
-
     /**
      * Returns the HotSpotList
      * @return mixed
@@ -29,31 +28,15 @@ class ModSPSelectHotSpotHelper
         }
 
         $db->setQuery($query);
-        $spotList = $db->loadRowList();
+        $hotspotList = $db->loadRowList();
 
-        return $spotList;
+        return $hotspotList;
     }
 
     /**
-     * Returns the ZipcodeList
+     * Returns the userTime zone if the user has set one, or the global config one
      * @return mixed
      */
-    public static function getZipCodes()
-    {
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query
-            ->select($db->quoteName(array('zipcode')))
-            ->from($db->quoteName('#__spcustomer_customer'))
-            ->where($db->quoteName('zipcode'). '!=' .$db->quote(''))
-            ->group($db->quoteName('zipcode'));
-        $db->setQuery($query);
-        $zipcodeList = $db->loadObjectList();
-
-        return $zipcodeList;
-    }
-
     public static function getTimeZone() {
         $userTz = JFactory::getUser()->getParam('timezone');
         $timeZone = JFactory::getConfig()->get('offset');

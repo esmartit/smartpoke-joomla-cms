@@ -85,151 +85,151 @@ else
 <body class="nav-md">
 <div class="container body">
 
-        <?php if ($user->id != 0): ?>
-            <div class="main_container">
-                <div class="col-md-3 left_col">
-                    <div class="left_col scroll-view">
-                        <div class="navbar nav_title" style="border: 0;">
-                            <a href="index.php" class="site_title"><i class="fa fa-hand-o-right"></i> <span><?php echo $sitename; ?></span></a>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <!-- menu profile quick info -->
-                        <div class="profile clearfix">
-                            <div class="profile_pic">
-                                <img src="images/esmartit.jpg" alt="..." class="img-circle profile_img">
-                            </div>
-                            <div class="profile_info">
-                                <span>Welcome,</span>
-                                <h2><?php echo $user->name ;?></h2>
-                            </div>
-                        </div>
-                        <!-- /menu profile quick info -->
-                        <br />
-
-                        <!-- sidebar menu -->
-                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                            <div class="menu_section">
-                                <h3>Dashboard</h3>
-                                <ul class="nav side-menu">
-                                    <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnLine </a></li>
-                                    <li><a href="/index.php/dashboard/bigdata"><i class="fa fa-database"></i> BigData </a></li>
-                                    <li><a href="/index.php/dashboard/hotspot"><i class="fa fa-wifi"></i> HotSpot </a></li>
-                                    <li><a href="/index.php/dashboard/smartpoke"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
-                                </ul>
-                            </div>
-                            <div class="menu_section">
-                                <h3>Configuration</h3>
-                                <ul class="nav side-menu">
-                                    <li><a href="index.php?option=com_spcampaign&view=listcampaign"><i class="fa fa-send"></i> Campaign </a></li>
-                                </ul>
-                            </div>
-                            <div class="menu_section">
-                                <h3>Communication</h3>
-                                <ul class="nav side-menu">
-                                    <li><a href="/index.php/configurations/campaign-detail"><i class="fa fa-list-alt"></i> Campaign Detail </a></li>
-                                    <li><a href="/index.php/configurations/campaign-effectiveness"><i class="fa fa-check-circle-o"></i> Campaign Effectiveness </a></li>
-                                </ul>
-                            </div>
-                            <div class="menu_section">
-                                <h3>BigData Reports</h3>
-                                <ul class="nav side-menu">
-                                    <li><a href="index.html"><i class="fa fa-list-ol"></i> Detailed </a></li>
-                                    <li><a href="index.html"><i class="fa fa-clock-o"></i> Detailed by Time </a></li>
-                                </ul>
-                            </div>
-                            <div class="menu_section">
-                                <h3>HotSpot Reports</h3>
-                                <ul class="nav side-menu">
-                                    <li><a href="index.html"><i class="fa fa-list-ol"></i> Detailed </a></li>
-                                    <li><a href="index.html"><i class="fa fa-list"></i> Comparative </a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-                        <!-- /sidebar menu -->
-                        </div>
+    <?php if ($user->id != 0): ?>
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.php" class="site_title"><i class="fa fa-hand-o-right"></i> <span><?php echo $sitename; ?></span></a>
                     </div>
 
-                    <!-- top navigation -->
-                    <div class="top_nav">
-                    <jdoc:include type="message" />
-                    <div class="nav_menu">
-                        <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                        </div>
-                        <?php if ($this->countModules('navbar')) : ?>
-                            <nav class="navbar navbar-expand-lg navbar-light col-md-9" role="navigation">
-                                <div class="nav-collapse">
-                                    <jdoc:include type="modules" name="navbar" style="xhtml" />
-                                </div>
-                            </nav>
-                        <?php endif; ?>
-                        <div class="header-search pull-right">
-                            <jdoc:include type="modules" name="search" style="none" />
-                        </div>
-                    </div>
-                </div>
-                <!-- /top navigation -->
+                    <div class="clearfix"></div>
 
-                <!-- page content -->
-                <div class="right_col <?php echo $span; ?>" role="main">
-                    <!-- Begin Content -->
-                    <jdoc:include type="modules" name="topcenter" style="none" />
-                    <div class="row col-md-12 col-sm-12">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="x_title">
-                                <h2></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Settings 1</a>
-                                            <a class="dropdown-item" href="#">Settings 2</a>
-                                        </div>
-                                    </li>
-                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="images/esmartit.jpg" alt="..." class="img-circle profile_img">
                         </div>
-                        <div class="x_content">
-                            <jdoc:include type="component" />
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2><?php echo $user->name ;?></h2>
                         </div>
                     </div>
-                    <jdoc:include type="modules" name="breadcrumbs" style="none" />
-                    <!-- End Content -->
-                </div>
-                <?php if ($rightModuleCount) : ?>
-                    <div id="aside" class="span3">
-                        <!-- Begin Right Sidebar -->
-                        <jdoc:include type="modules" name="right" style="well" />
-                        <!-- End Right Sidebar -->
+                    <!-- /menu profile quick info -->
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Dashboard</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnLine </a></li>
+                                <li><a href="/index.php/dashboard/bigdata"><i class="fa fa-database"></i> BigData </a></li>
+                                <li><a href="/index.php/dashboard/hotspot"><i class="fa fa-wifi"></i> HotSpot </a></li>
+                                <li><a href="/index.php/dashboard/smartpoke"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Configuration</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="index.php?option=com_spcampaign&view=listcampaign"><i class="fa fa-send"></i> Campaign </a></li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>Communication</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="/index.php/communication/campaign-detailed"><i class="fa fa-list-alt"></i> Campaign Detail </a></li>
+                                <li><a href="/index.php/communication/campaign-effectiveness"><i class="fa fa-check-circle-o"></i> Campaign Effectiveness </a></li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>BigData Reports</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="/index.php/bigdata-reports/report-bigdata-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>
+                                <li><a href="/index.php/bigdata-reports/report-bigdata-detailed-by-time"><i class="fa fa-clock-o"></i> Detailed by Time </a></li>
+                            </ul>
+                        </div>
+                        <div class="menu_section">
+                            <h3>HotSpot Reports</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="/index.php/hotspot-reports/report-hotspot-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>
+                                <li><a href="/index.php/hotspot-reports/report-hotspot-comparative"><i class="fa fa-list"></i> Comparative </a></li>
+                            </ul>
+                        </div>
+
                     </div>
-                <?php endif; ?>
-                <!-- /page content -->
-            </div>
-            <!-- footer content -->
-            <footer class="footer" role="contentinfo">
-                <div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
-                    <jdoc:include type="modules" name="footer" style="none" />
-                </div>
-            </footer>
-            <jdoc:include type="modules" name="debug" style="none" />
-            <!-- /footer content -->
-        <?php else: ?>
-            <div class="x_content">
-                <jdoc:include type="component" />
-                <div align="center">
-                    <p><br />Copyright &copy; <?php echo date('Y'); ?> -
-                        <?php echo $app->get('sitename'); ?></p>
+                    <!-- /sidebar menu -->
                 </div>
             </div>
-        <?php endif; ?>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <jdoc:include type="message" />
+                <div class="nav_menu">
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+                    <?php if ($this->countModules('navbar')) : ?>
+                        <nav class="navbar navbar-expand-lg navbar-light col-md-9" role="navigation">
+                            <div class="nav-collapse">
+                                <jdoc:include type="modules" name="navbar" style="xhtml" />
+                            </div>
+                        </nav>
+                    <?php endif; ?>
+                    <div class="header-search pull-right">
+                        <jdoc:include type="modules" name="search" style="none" />
+                    </div>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col <?php echo $span; ?>" role="main">
+                <!-- Begin Content -->
+                <jdoc:include type="modules" name="topcenter" style="none" />
+                <div class="row col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="x_title">
+                            <h2></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                        <a class="dropdown-item" href="#">Settings 2</a>
+                                    </div>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="x_content">
+                        <jdoc:include type="component" />
+                    </div>
+                </div>
+                <jdoc:include type="modules" name="breadcrumbs" style="none" />
+                <!-- End Content -->
+            </div>
+            <?php if ($rightModuleCount) : ?>
+                <div id="aside" class="span3">
+                    <!-- Begin Right Sidebar -->
+                    <jdoc:include type="modules" name="right" style="well" />
+                    <!-- End Right Sidebar -->
+                </div>
+            <?php endif; ?>
+            <!-- /page content -->
+        </div>
+        <!-- footer content -->
+        <footer class="footer" role="contentinfo">
+            <div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
+                <jdoc:include type="modules" name="footer" style="none" />
+            </div>
+        </footer>
+        <jdoc:include type="modules" name="debug" style="none" />
+        <!-- /footer content -->
+    <?php else: ?>
+        <div class="x_content">
+            <jdoc:include type="component" />
+            <div align="center">
+                <p><br />Copyright &copy; <?php echo date('Y'); ?> -
+                    <?php echo $app->get('sitename'); ?></p>
+            </div>
+        </div>
+    <?php endif; ?>
 
 </div>
 

@@ -1,33 +1,13 @@
 $(document).ready( function() {
-
-    if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
-    console.log('init_IonRangeSlider');
-
-    $("#range_age").ionRangeSlider({
-        type: "double",
-        min: 0,
-        max: 100,
-        from: 18,
-        to: 85,
-        grid: true,
-        grid_num: 10,
-        grid_snap: false,
-        onChange: function(data) {
-            $('#from_value').val(data.from);
-            $('#to_value').val(data.to);
-        }
-    });
-
     getHotSpotCity();
-
 });
 
 function getHotSpotCity() {
     let cityid = $('#cityId').val();
     let request = {
         option       : 'com_ajax',
-        module       : 'spselecthotspot',  // to target: mod_spselecthotspot
-        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectHotSpotHelper
+        module       : 'spreporthotspotdetail',  // to target: mod_spreporthotspotdetail
+        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPReportHotSpotDetailHelper
         format       : 'json',
         data         : cityid
     };
@@ -50,10 +30,28 @@ function getHotSpotCity() {
         });
 }
 
+function getHotSpotDetail(dstart, dend, city, hotspot){
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spreporthotspotdetail',  // to target: mod_spreporthotspotdetail
+        method       : 'getHotSpotDetail',  // to target: function getHotSpotDetail in class ModSPReportHotSpotDetailHelper
+        format       : 'json',
+        data         : { "dateStart": dstart, "dateEnd": dend, "cityId": city, "hotspotId": hotspot }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data
+            console.log(object);
+        });
+}
+
 $(document).ready(function() {
 
-    let datestart;
-    let dateend;
+    let datestart = moment().startOf('month');
+    let dateend = moment();
 
     let cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
@@ -65,7 +63,7 @@ $(document).ready(function() {
     };
 
     let optionSet1 = {
-        startDate: moment().subtract(29, 'days'),
+        startDate: moment().startOf('month'),
         endDate: moment(),
         minDate: '01/01/2012',
         maxDate: '12/31/2050',
@@ -133,17 +131,5 @@ function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
     let t_city = $('#cityId').val();
-    let t_spot = $('#selSpot').val();
-    let t_ageS = $('#from_value').val();
-    let t_ageE = $('#to_value').val();
-    let t_sex = $('#selSex').val();
-    let t_zipcodes = $('#selZipCode').val();
-    let t_member = $('#selMembership').val();
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-
-    let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE,
-        "cityId": t_city, "spotId": t_spot, "ageStart": t_ageS, "ageEnd": t_ageE,
-        "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member, "timeZone": userTimeZone }
-    console.log(dataForm);
+    let t_hotspot = $('#selHotSpot').val();
 }
-
