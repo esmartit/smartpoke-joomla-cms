@@ -1,20 +1,20 @@
 <?php
 /**
  * @package     SmartPoke.Site
- * @subpackage  mod_spselecthotspot
+ * @subpackage  mod_spreportbigdatadetailbytime
  *
  * @copyright   Copyright (C) 2020 eSmartIT. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-class ModSPSelectHotSpotHelper
+class ModSPReportBigDataDetailByTimeHelper
 {
 
     /**
-     * Returns the HotSpotList
+     * Returns the SpotList
      * @return mixed
      */
-    public static function getHotSpotsAjax()
+    public static function getSpotsAjax()
     {
         $city = $_REQUEST['data'];
 
@@ -35,25 +35,33 @@ class ModSPSelectHotSpotHelper
     }
 
     /**
-     * Returns the ZipcodeList
+     * Returns the SensorList
      * @return mixed
      */
-    public static function getZipCodes()
+    public static function getSensorsAjax()
     {
+        $spotId = $_REQUEST['data'];
+
         $db = JFactory::getDbo();
 
         $query = $db->getQuery(true);
-        $query
-            ->select($db->quoteName(array('zipcode')))
-            ->from($db->quoteName('#__spcustomer_customer'))
-            ->where($db->quoteName('zipcode'). '!=' .$db->quote(''))
-            ->group($db->quoteName('zipcode'));
-        $db->setQuery($query);
-        $zipcodeList = $db->loadObjectList();
+        $query->select($db->quoteName(array('sensor_id', 'location')));
+        $query->from($db->quoteName('#__spsensor_sensor'));
 
-        return $zipcodeList;
+        if (!empty($spotId)) {
+            $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
+        }
+
+        $db->setQuery($query);
+        $sensorList = $db->loadRowList();
+
+        return $sensorList;
     }
 
+    /**
+     * Returns the userTime zone if the user has set one, or the global config one
+     * @return mixed
+     */
     public static function getTimeZone() {
         $userTz = JFactory::getUser()->getParam('timezone');
         $timeZone = JFactory::getConfig()->get('offset');
@@ -62,5 +70,4 @@ class ModSPSelectHotSpotHelper
         }
         return $timeZone;
     }
-
 }

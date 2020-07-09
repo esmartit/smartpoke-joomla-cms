@@ -1,33 +1,15 @@
-$(document).ready( function() {
-
-    if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
-    console.log('init_IonRangeSlider');
-
-    $("#range_age").ionRangeSlider({
-        type: "double",
-        min: 0,
-        max: 100,
-        from: 18,
-        to: 85,
-        grid: true,
-        grid_num: 10,
-        grid_snap: false,
-        onChange: function(data) {
-            $('#from_value').val(data.from);
-            $('#to_value').val(data.to);
-        }
-    });
-
-    getHotSpotCity();
-
+$(document).ready(function() {
+    document.getElementById("timestart").value = '00:00:00';
+    document.getElementById("timeend").value = '23:59:59';
+    getSpotCity();
 });
 
-function getHotSpotCity() {
+function getSpotCity() {
     let cityid = $('#cityId').val();
     let request = {
         option       : 'com_ajax',
-        module       : 'spselecthotspot',  // to target: mod_spselecthotspot
-        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectHotSpotHelper
+        module       : 'spreportbigdatadetailbytime',  // to target: mod_spreportbigdatadetailbytime
+        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPReportBigDataDetailByTimeHelper
         format       : 'json',
         data         : cityid
     };
@@ -39,21 +21,85 @@ function getHotSpotCity() {
             let object = response.data;
             let len = object.length;
 
-            $("#selHotSpot").empty();
-            $("#selHotSpot").append("<option value=''>All HotSpots</option>");
+            $("#selSpot").empty();
+            $("#selSpot").append("<option value=''>All Spots</option>");
             for (let i = 0; i<len; i++) {
                 let id = object[i][0];
                 let name = object[i][1];
 
-                $("#selHotSpot").append("<option value='"+id+"'>"+name+"</option>");
+                $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
+        });
+}
+
+function getSensorSpot() {
+    let spotid = $('#selSpot').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spreportbigdatadetailbytime',  // to target: mod_spreportbigdatadetailbytime
+        method       : 'getSensors',  // to target: function getSensorsAjax in class ModSPReportBigDataDetailByTimeHelper
+        format       : 'json',
+        data         : spotid
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selSensor").empty();
+            $("#selSensor").append("<option value=''>All Sensors</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selSensor").append("<option value='"+id+"'>"+name+"</option>");
+            }
+        });
+}
+
+$(document).ready(function () {
+    $('#radio15m').on('change', function () {
+        showGroup($('#radio15m').val())
+    });
+
+    $('#radio30m').on('change', function () {
+        showGroup($('#radio15m').val())
+    });
+
+    $('#radio15m').on('change', function () {
+        showGroup($('#radio60m').val())
+    });
+
+});
+
+function showGroup(type) {
+    let groupType = type;
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spreportbigdatadetailbytime',  // to target: mod_spreportbigdatadetailbytime
+        method       : 'showGroupBigData',  // to target: function showGroupBigDataAjax in class ModSPReportBigDataDetailByTimeHelper
+        format       : 'json',
+        data         : groupType
+    };
+    $.ajax({
+        method: 'POST',
+        data: request
+    })
+        .success(function(response) {
+            console.log('call success '+groupType);
+        })
+        .error(function() {
+            console.log('ajax call failed');
         });
 }
 
 $(document).ready(function() {
 
-    let datestart;
-    let dateend;
+    let datestart = moment().startOf('month');
+    let dateend = moment();
 
     let cb = function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
@@ -65,7 +111,7 @@ $(document).ready(function() {
     };
 
     let optionSet1 = {
-        startDate: moment().subtract(29, 'days'),
+        startDate: moment().startOf('month'),
         endDate: moment(),
         minDate: '01/01/2012',
         maxDate: '12/31/2050',
@@ -132,18 +178,15 @@ $(document).ready(function() {
 function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
+    let t_timeS = $('#timestart').val();
+    let t_timeE = $('#timeend').val();
     let t_city = $('#cityId').val();
     let t_spot = $('#selSpot').val();
-    let t_ageS = $('#from_value').val();
-    let t_ageE = $('#to_value').val();
-    let t_sex = $('#selSex').val();
-    let t_zipcodes = $('#selZipCode').val();
-    let t_member = $('#selMembership').val();
+    let t_group = $('#selGroup').val();
+    let t_sensor = $('#selSensor').val();
     let userTimeZone = document.getElementById('userTimeZone').innerText;
 
-    let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE,
-        "cityId": t_city, "spotId": t_spot, "ageStart": t_ageS, "ageEnd": t_ageE,
-        "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member, "timeZone": userTimeZone }
+    let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
+        "cityId": t_city, "spotId": t_spot, "sensorId": t_sensor, "group": t_group, "timeZone": userTimeZone }
     console.log(dataForm);
 }
-
