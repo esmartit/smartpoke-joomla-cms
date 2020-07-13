@@ -19,7 +19,6 @@ $(document).ready( function() {
     });
 
     document.getElementById("timestart").value = '00:00:00';
-    getSpotCity();
 
     function showTimeEnd(time) {
         document.getElementById("timeend").value = time;
@@ -48,6 +47,11 @@ $(document).ready( function() {
     objTimer();
 });
 
+function setSpotCity() {
+    $('#cityId').val('');
+    getSpotCity();
+}
+
 function getSpotCity() {
     let cityid = $('#cityId').val();
     let request = {
@@ -73,6 +77,7 @@ function getSpotCity() {
 
                 $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
+            getSensorSpot();
         });
 }
 
@@ -126,7 +131,18 @@ function filters() {
 function sendForm() {
     let t_dateS = $('#timestart').val();
     let t_dateE = $('#timeend').val();
-    let t_city = $('#cityId').val();
+
+    let selCountry = document.getElementById('countryId');
+    let selectedCountry = selCountry.options[selCountry.selectedIndex];
+    let t_country = selectedCountry.getAttribute('countryid');
+
+    let selState = document.getElementById('stateId');
+    let selectedState = selState.options[selState.selectedIndex];
+    let t_state = selectedState.getAttribute('stateid');
+
+    let t_city= $('#cityId').val();
+    t_city = t_city.replace(/ /g,"_");
+
     let t_spot = $('#selSpot').val();
     let t_sensor = $('#selSensor').val();
     let t_brands = $('#selBrand').val();
@@ -146,10 +162,12 @@ function sendForm() {
         t_member = $('#selMembership').val();
     }
 
-    let dataForm = { "startTime": t_dateS, "endTime": t_dateE, "cityId": t_city,
-        "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
-        "status": t_status, "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
-        "zipCode": t_zipcodes, "memberShip": t_member, "timeZone": userTimeZone }
+    evtSourceActivityOnline(t_dateS, t_dateE, t_country, t_state, t_city, t_spot,
+        t_sensor, t_brands, t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
 
-    console.log(dataForm);
+    evtSourceConnectOnline(t_dateS, t_dateE, t_country, t_state, t_city, t_spot,
+        t_sensor, t_brands, t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
+
+    evtSourceQualifiedVisits(t_dateS, t_dateE, t_country, t_state, t_city, t_spot,
+        t_sensor, t_brands, t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
 }

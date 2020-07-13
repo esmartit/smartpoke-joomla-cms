@@ -1,6 +1,11 @@
 $(document).ready( function() {
-    getHotSpotCity();
+    setHotSpotCity();
 });
+
+function setHotSpotCity() {
+    $('#cityId').val('');
+    getHotSpotCity();
+}
 
 function getHotSpotCity() {
     let cityid = $('#cityId').val();

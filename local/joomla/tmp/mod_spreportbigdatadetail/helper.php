@@ -23,10 +23,7 @@ class ModSPReportBigDataDetailHelper
         $query = $db->getQuery(true);
         $query->select($db->quoteName(array('spot_id', 'name')));
         $query->from($db->quoteName('#__spspot_spot'));
-
-        if (!empty($city)) {
-            $query->where($db->quoteName('city'). " = " .$db->quote($city));
-        }
+        $query->where($db->quoteName('city'). " = " .$db->quote($city));
 
         $db->setQuery($query);
         $spotList = $db->loadRowList();
@@ -47,10 +44,7 @@ class ModSPReportBigDataDetailHelper
         $query = $db->getQuery(true);
         $query->select($db->quoteName(array('sensor_id', 'location')));
         $query->from($db->quoteName('#__spsensor_sensor'));
-
-        if (!empty($spotId)) {
-            $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
-        }
+        $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
 
         $db->setQuery($query);
         $sensorList = $db->loadRowList();

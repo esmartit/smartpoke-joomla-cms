@@ -22,6 +22,10 @@ $document->addStyleSheet('/templates/smartpokex/vendors/normalize-css/normalize.
 $document->addStyleSheet('/templates/smartpokex/vendors/ion.rangeSlider/css/ion.rangeSlider.css');
 $document->addStyleSheet('/templates/smartpokex/vendors/ion.rangeSlider/css/ion.rangeSlider.skinNice.css');
 
+$document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css');
+$document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css');
+
+
 $document->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 $document->addScript('//geodata.solutions/includes/countrystatecity.js');
 
@@ -36,6 +40,13 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/da
 $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
 // Ion.RangeSlider
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
+
+// DataTables
+$document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dataTables.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-responsive/js/dataTables.responsive.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js');
+
 $document->addScript('/media/mod_spselectsmartpoke/js/spselectsmartpoke.js');
 
 $currDate = date('Y-m-d H:i:s');
@@ -108,7 +119,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                     <div id="selcountry" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
-                            <select name="country" class="countries order-alpha form-control" id="countryId">
+                            <select name="country" class="countries order-alpha form-control" id="countryId" onchange="setSpotCity()">
                                 <option value="" selected>Select Country</option>
                             </select>
                         </div>
@@ -116,7 +127,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                     <div id="selstate" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
-                            <select name="state" class="states order-alpha form-control" id="stateId">
+                            <select name="state" class="states order-alpha form-control" id="stateId" onchange="setSpotCity()">
                                 <option value="" selected>Select State</option>
                             </select>
                         </div>
@@ -275,6 +286,60 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                     </div>
                 </div>
             </form>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <form id="smartpoke_form" method="POST">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><?php echo JText::_('MOD_SPSELECTSMARTPOKE_USERS');?><small></small></h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div id="oline" class="table-responsive" style="display:block;">
+                                    <table id="datatable-smartpoke" class="table table-striped table-bordered bulk_action">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="3"></th>
+                                            <th colspan ='1'><center>Spot</center></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type='checkbox' name= 'select_all_o' id='smartpoke_select_all_o' value='1' /></th>
+                                            <th>Device</th>
+                                            <th>Username</th>
+                                            <th><center>Sensor Name</center></th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div id="dbfile" class="table-responsive" style="display:none;">
+                                    <table id="datatable-dbfile" class="table table-striped table-bordered bulk_action">
+                                        <thead>
+                                        <tr>
+                                            <th><input type='checkbox' name= 'select_all_d' id='smartpoke_select_all_d' value='1' /></th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Mobile Phone</th>
+                                            <th>Email</th>
+                                            <th>Username</th>
+                                            <th>Age</th>
+                                            <th>Sex</th>
+                                            <th>ZipCode</th>
+                                            <th>Member</th>
+                                            <th>Spot</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="btnSmartpoke"  name="btnSmartpoke" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-hand-right" aria-hidden="true"></button>
+                    <pre id="example-console" style="display:none"></pre>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,7 @@
 let smartpokeOpt = '1';
+let tableO = '';
+let tableD = '';
+let campaignId = '';
 
 $(document).ready( function() {
 
@@ -20,11 +23,18 @@ $(document).ready( function() {
         }
     });
 
+    $('#datatable-smartpoke').DataTable();
+    $('#datatable-dbfile').DataTable();
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
-    getSpotCity();
+    showTableColumns();
     getCampaigns();
 });
+
+function setSpotCity() {
+    $('#cityId').val('');
+    getSpotCity();
+}
 
 function getSpotCity() {
     let cityid = $('#cityId').val();
@@ -51,7 +61,10 @@ function getSpotCity() {
 
                 $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
+            getSensorSpot();
+            showTableColumns();
         });
+
 }
 
 function getSensorSpot() {
@@ -79,6 +92,7 @@ function getSensorSpot() {
 
                 $("#selSensor").append("<option value='"+id+"'>"+name+"</option>");
             }
+            showTableColumns();
         });
 }
 
@@ -121,22 +135,48 @@ function getCampaigns(smsemail = '1'){
         });
 }
 
+function showTableColumns(){
+    let city = $('#cityId').val();
+    let spot = $('#selSpot').val();
+    let sensor = $('#selSensor').val();
+
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method       : 'getSpotSensors',  // to target: function getSpotSensorsAjax in class ModSPSelectSmartPokeHelper
+        format       : 'json',
+        data         : {"city": city, "spot": spot, "sensor": sensor}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            for (let i = 0; i<len; i++) {
+                let spot = object[i][0];
+                let sensor = object[i][1];
+            }
+        });
+}
 
 $(document).ready(function () {
     $('#spOnline').on('change', function () {
-        showOnlineOpt()
+        showOnlineOpt();
     });
 
     $('#spOffline').on('change', function () {
-        showOfflineOpt()
+        showOfflineOpt();
     });
 
     $('#spDataBase').on('change', function () {
-        showDataBaseOpt()
+        showDataBaseOpt();
     });
 
     $('#spFile').on('change', function () {
-        showFileOpt()
+        showFileOpt();
     });
 });
 
@@ -157,6 +197,8 @@ function showOnlineOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
+    document.getElementById("oline").style.display = 'block';
+    document.getElementById("dbfile").style.display = 'none';
     smartpokeOpt = '1';
 }
 
@@ -177,6 +219,8 @@ function showOfflineOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
+    document.getElementById("oline").style.display = 'block';
+    document.getElementById("dbfile").style.display = 'none';
     smartpokeOpt = '2';
 }
 
@@ -196,6 +240,8 @@ function showDataBaseOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
+    document.getElementById("oline").style.display = 'none';
+    document.getElementById("dbfile").style.display = 'block';
     smartpokeOpt = '3';
 }
 
@@ -215,6 +261,8 @@ function showFileOpt() {
     document.getElementById("filters").style.display = 'none';
     document.getElementById("selfile").style.display = 'block';
     document.getElementById("selcampaigns").style.display = 'block';
+    document.getElementById("oline").style.display = 'none';
+    document.getElementById("dbfile").style.display = 'block';
     smartpokeOpt = '4';
 }
 
@@ -364,6 +412,8 @@ function sendForm() {
     let t_timeE = '';
     let t_dateS = '';
     let t_dateE = '';
+    let t_country = '';
+    let t_state = '';
     let t_city = '';
     let t_spot = '';
     let t_sensor = '';
@@ -382,12 +432,11 @@ function sendForm() {
     let formFile = '';
     let formFileJson = '';
     let userTimeZone = document.getElementById('userTimeZone').innerText;
+    campaignId = $('#selCampaign').val();
 
     if (smartpokeOpt == '1' || smartpokeOpt == '2') {  // Online and Offline option
         t_timeS = $('#timestart').val();
         t_timeE = $('#timeend').val();
-        t_city = $('#cityId').val();
-        t_spot = $('#selSpot').val();
         t_sensor = $('#selSensor').val();
         t_brands = $('#selBrand').val();
         t_status = $('#selStatus').val();
@@ -401,6 +450,10 @@ function sendForm() {
         }
     }
     if (smartpokeOpt != '4') {  // Not File option
+        t_country = $('#countryId').val();
+        t_state = $('#stateId').val();
+        t_city = $('#cityId').val();
+        t_spot = $('#selSpot').val();
         if (document.getElementById("checkFilter").checked) {
             t_ageS = $('#from_value').val();
             t_ageE = $('#to_value').val();
@@ -414,11 +467,173 @@ function sendForm() {
         formFileJson = formFile.files[0];
     }
 
-    let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
-        "dateStart2": t_dateS2, "dateEnd2": t_dateE2, "cityId": t_city,
-        "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
-        "status": t_status, "presence": t_presence,
-        "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
-        "zipCode": t_zipcodes, "memberShip": t_member, "file": formFileJson, "timeZone": userTimeZone }
-    console.log(dataForm);
+    $("#system-message-container").empty();
+    if (campaignId != '') {
+        switch (smartpokeOpt) {
+            case '1':
+                smartpokeOnline(t_dateS, t_dateE, t_timeS, t_timeE, t_city, t_spot, t_sensor, t_brands,
+                    t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
+                break;
+            case '2':
+                smartpokeOffline(t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
+                    t_city, t_spot, t_sensor, t_brands, t_status, t_presence, t_ageS,
+                    t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
+                break;
+            case '3':
+                smartpokeDB(t_city, t_spot, t_ageS, t_ageE, t_sex, t_zipcodes, t_member);
+                break;
+            case '4':
+                smartpokeFile(formFileJson);
+                break;
+        }
+
+        let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
+            "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
+            "countryId": t_country, "stateId": t_state, "cityId": t_city,
+            "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
+            "status": t_status, "presence": t_presence,
+            "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
+            "zipCode": t_zipcodes, "memberShip": t_member, "file": formFileJson, "timeZone": userTimeZone }
+
+    } else {
+        Joomla.renderMessages({'warning': ['Select a campaign, please!']});
+    }
 }
+
+function smartpokeDB(city, spot, ageS, ageE, sex, zipcodes, member) {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method       : 'getUserList',  // to target: function getUserListAjax in class ModSPSelectSmartPokeHelper
+        format       : 'json',
+        data         : { "cityId": city, "spotId": spot, "ageStart": ageS, "ageEnd": ageE, "gender": sex,
+            "zipCode": zipcodes, "memberShip": member }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data
+            createTable(object);
+        });
+}
+
+function createTable(data) {
+    tableD = $('#datatable-dbfile').DataTable({
+        "destroy": true,
+        "aaData": data,
+        "columnDefs": [
+            {
+                "targets": 0,
+                "bSortable": false,
+                "searchable": false,
+                "orderable": false,
+                "className": 'dt-body-center',
+                "render": function (data, type, row, meta) {
+                    return '<input type="checkbox" name="id[]" value="' + row['mobile_phone'] + '-' + row['firstname'] + '/' + row['username'] + '">';
+                }
+            },
+            {"data": "firstname", "targets": 1},
+            {"data": "lastname", "targets": 2},
+            {"data": "mobile_phone", "targets": 3},
+            {"data": "email", "targets": 4},
+            {"data": "username", "targets": 5},
+            {"data": "age", "targets": 6},
+            {
+                "data": "sex", "targets": 7,
+                "render": function (data, type) {
+                    if (data == '0') {
+                        return "<div align='center'><span class='fa fa-male'> </span></div>";
+                    } else {
+                        return "<div align='center'><span class='fa fa-female'> </span></div>";
+                    }
+                }
+            },
+            {"data": "zipcode", "targets": 8},
+            {
+                "data": "membership", "targets": 9,
+                "render": function (data, type) {
+                    if (data == '0') {
+                        return "<div align='center'><span class='glyphicon glyphicon-remove' style='color:#FF0000'> </span></div>";
+                    } else {
+                        return "<div align='center'><span class='glyphicon glyphicon-ok' style='color:#00FF00'> </span></div>";
+                    }
+                }
+            },
+            {"data": "name", "targets": 10}
+        ],
+        "responsive": true
+    });
+}
+
+$(document).ready(function() {
+    // Handle click on "Select all" control
+    $('#smartpoke_select_all_d').on('click', function(){
+        // Check/uncheck all checkboxes in the table
+        let rows = tableD.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    });
+
+    // Handle click on checkbox to set state of "Select all" control
+    $('#datatable-dbfile tbody').on('change', 'input[type="checkbox"]', function(){
+        // If checkbox is not checked
+        if(!this.checked){
+            let el = $('#smartpoke_select_all_d').get(0);
+            // If "Select all" control is checked and has 'indeterminate' property
+            if(el && el.checked && ('indeterminate' in el)){
+                // Set visual state of "Select all" control
+                // as 'indeterminate'
+                el.indeterminate = true;
+            }
+        }
+    });
+
+    $('#smartpoke_form').on('submit', function(e){
+        let form = this;
+
+        // Iterate over all checkboxes in the table
+        tableD.$('input[type="checkbox"]').each(function(){
+            // If checkbox doesn't exist in DOM
+            if(!$.contains(document, this)){
+                // If checkbox is checked
+                if (this.checked) {
+                    // Create a hidden element
+                    $(form).append(
+                        $('<input>')
+                            .attr('type', 'hidden')
+                            .attr('name', this.name)
+                            .val(this.value)
+                    );
+                }
+            }
+        });
+
+        // Output form data to a console
+        // let str = JSON.stringify($(form).serialize());
+        let str = JSON.parse(JSON.stringify($(form).serializeArray()));
+
+        let request = {
+            option       : 'com_ajax',
+            module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+            method       : 'sendSMS',  // to target: function sendSMSAjax in class ModSPSelectSmartPokeHelper
+            format       : 'json',
+            data         : {str, 'campaign': campaignId }
+        };
+        $.ajax({
+            method: 'GET',
+            data: request
+        })
+            .success(function(response){
+                let object = response.data
+                Joomla.renderMessages({'success': [object]});
+            });
+
+        $('#example-console').text($(form).serialize());
+        console.log("Form submission", $(form).serialize());
+
+        // Prevent actual form submission
+        e.preventDefault();
+    });
+    document.getElementById("smartpoke_form").reset();
+});

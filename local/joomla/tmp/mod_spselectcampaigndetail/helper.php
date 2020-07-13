@@ -88,7 +88,7 @@ class ModSPSelectCampaignDetailHelper
         $data = $_REQUEST['data'];
         $dStart = $data['dateStart'].' 00:00:00';
         $dEnd = $data['dateEnd'].' 23:59:59';
-        $type = $data['smsEmail'];
+        $smsemail = $data['smsEmail'];
 
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
@@ -96,11 +96,11 @@ class ModSPSelectCampaignDetailHelper
         $query
             ->select(array('status', 'COUNT(*)'))
             ->from($db->quoteName('#__spmessage_message', 'a'))
-            ->join('INNER', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'))
+            ->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'))
             ->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'))
             ->where($db->quoteName('senddate'). " >= ". $db->quote($dStart))
             ->where($db->quoteName('senddate'). " <= ". $db->quote($dEnd))
-            ->where($db->quoteName('c.smsemail'). " = ". $db->quote($type))
+            ->where($db->quoteName('c.smsemail'). " = ". $db->quote($smsemail))
             ->group($db->quoteName('status'));
         $db->setQuery($query);
         $statusList = $db->loadRowList();
@@ -127,9 +127,9 @@ class ModSPSelectCampaignDetailHelper
 
         $query->select(array('status', 'COUNT(*)'));
         $query->from($db->quoteName('#__spmessage_message', 'a'));
-        $query->join('INNER', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'));
+        $query->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'));
         $query->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'));
-        $query->join('INNER', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
+        $query->join('LEFT', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
         $query->where($db->quoteName('senddate'). " >= ". $db->quote($dStart));
         $query->where($db->quoteName('senddate'). " <= ". $db->quote($dEnd));
 
@@ -171,9 +171,9 @@ class ModSPSelectCampaignDetailHelper
 
         $query->select(array('c.name', 'device_sms', 'a.username', 'senddate', 'status', 'description', 'spot'));
         $query->from($db->quoteName('#__spmessage_message', 'a'));
-        $query->join('INNER', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'));
+        $query->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'));
         $query->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'));
-        $query->join('INNER', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
+        $query->join('LEFT', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
         $query->where($db->quoteName('senddate'). " >= ". $db->quote($dStart));
         $query->where($db->quoteName('senddate'). " <= ". $db->quote($dEnd));
 

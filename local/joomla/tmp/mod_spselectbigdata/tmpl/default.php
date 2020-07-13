@@ -115,7 +115,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
-                            <select name="country" class="countries order-alpha form-control" id="countryId">
+                            <select name="country" class="countries order-alpha form-control" id="countryId" onchange="setSpotCity()">
                                 <option value="" selected>Select Country</option>
                             </select>
                         </div>
@@ -123,7 +123,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <br/>
-                            <select name="state" class="states order-alpha form-control" id="stateId">
+                            <select name="state" class="states order-alpha form-control" id="stateId" onchange="setSpotCity()">
                                 <option value="" selected>Select State</option>
                             </select>
                         </div>
