@@ -37,15 +37,15 @@ class SplashpageViewRegister extends JViewLegacy
         $communication = '1';
         $bdate = $input->get('bdate', '0000-00-00');
         $email_cli = $input->get('email_cli',  '', 'STRING');
-        $firstname = $input->get('firstname');
-        $lastname = $input->get('lastname');
+        $firstname = $input->get('firstname', 'STRING');
+        $lastname = $input->get('lastname', 'STRING');
         $sex = $input->get('sex');
         $membership = $input->get('membership');
-        $zipcode = $input->get('zipcode');
+        $zipcode = $input->get('zipcode', 'STRING');
 
         $spot_id = $input->get('spot_id');
-        $hotspot_name = $input->get('hotspot_name');
-        $groupname = $input->get('groupname');
+        $hotspot_name = $input->get('hotspot_name', 'STRING');
+        $groupname = $input->get('groupname', 'STRING');
         $currDate = date('Y-m-d H:i:s');
 
 //        $model = JModelLegacy::getInstance('login', 'SplashpageModelLogin');

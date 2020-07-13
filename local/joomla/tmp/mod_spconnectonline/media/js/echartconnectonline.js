@@ -1,5 +1,7 @@
+let seConnectOnline = '';
+
 $(document).ready( function() {
-    var theme = {
+    let theme = {
         color: [
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7',
             '#26B99A', '#34495E', '#bdc3c7', '#3498DB'
@@ -212,7 +214,7 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
+    seConnectOnline = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
     var spChart = echarts.init(document.getElementById('echart_connect_online'), theme);
 
     function echartConnect(hoursCon, deviceCon, inCon, limitCon, outCon) {
@@ -363,7 +365,6 @@ $(document).ready( function() {
         spChart.setOption(option);
     }
 
-
     let inArr = [];
     let limitArr = [];
     let outArr = [];
@@ -400,4 +401,16 @@ $(document).ready( function() {
         }
         // console.log(dataHours, device_x, in_x, limit_x, out_x);
     }
-})
+});
+
+function evtSourceConnectOnline(dateS, dateE, country, state, city, spot, sensor, brands, status, ageS, ageE, sex,
+                                zipcodes, member, userTZ) {
+    if (seConnectOnline.readyState != 2) {
+
+        seConnectOnline.close();
+        seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?"+
+            "timezone="+userTZ+"&startTime="+dateS+"&endTime="+dateE+"&countryId="+country+"&stateId="+state+"&cityId="+city+
+            "&spotId="+spot+"&sensorId="+sensor+"&brands="+brands+"&status="+status+"&ageStart="+ageS+"&ageEnd="+ageE+"&gender="+sex+
+            "&zipCode="+zipcodes+"&memberShip="+member);
+    }
+}

@@ -256,7 +256,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
         <div class="x_content">
             <div class="col-sm-12">
                 <div class="card-box table-responsive">
-                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <table id="datatable-cEffectivenes" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                         <thead>
                         <tr class="headings">
                             <th class='column-title'><?php echo JText::_('MOD_SPSELECTCAMPAIGNEFFECTIVENESS_CAMPAIGN'); ?></th>

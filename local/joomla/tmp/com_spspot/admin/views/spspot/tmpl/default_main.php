@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			24th June, 2020
+	@version		1.0.1
+	@build			13th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default_main.php

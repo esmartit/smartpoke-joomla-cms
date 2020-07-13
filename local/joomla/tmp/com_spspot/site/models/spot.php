@@ -800,6 +800,8 @@ class SpspotModelSpot extends JModelAdmin
 		$input	= JFactory::getApplication()->input;
 		$filter	= JFilterInput::getInstance();
 
+        $data['country'] = $input->get('country');
+        $data['state'] = $input->get('state');
         $data['city'] = $input->get('city');
 		// set the metadata to the Item Data
 		if (isset($data['metadata']) && isset($data['metadata']['author']))

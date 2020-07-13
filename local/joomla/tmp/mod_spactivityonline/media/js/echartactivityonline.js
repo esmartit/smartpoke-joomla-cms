@@ -1,3 +1,5 @@
+let seActivityOnline = '';
+
 $(document).ready( function() {
     let theme = {
         color: [
@@ -212,7 +214,7 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?timezone="+userTimeZone);
+    seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?timezone="+userTimeZone);
     let spChart = echarts.init(document.getElementById('echart_activity_online'), theme);
 
     function echartActivity(hoursAct, deviceAct, inAct, limitAct, outAct) {
@@ -401,3 +403,15 @@ $(document).ready( function() {
         // console.log(dataHours, device_x, in_x, limit_x, out_x);
     }
 })
+
+function evtSourceActivityOnline(dateS, dateE, country, state, city, spot, sensor, brands, status, ageS, ageE, sex,
+                                 zipcodes, member, userTZ) {
+    if (seActivityOnline.readyState != 2) {
+
+        seActivityOnline.close();
+        seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
+            "timezone="+userTZ+"&startTime="+dateS+"&endTime="+dateE+"&countryId="+country+"&stateId="+state+"&cityId="+city+
+            "&spotId="+spot+"&sensorId="+sensor+"&brands="+brands+"&status="+status+"&ageStart="+ageS+"&ageEnd="+ageE+"&gender="+sex+
+            "&zipCode="+zipcodes+"&memberShip="+member);
+    }
+}

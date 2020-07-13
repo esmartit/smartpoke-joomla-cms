@@ -22,10 +22,7 @@ class ModSPReportHotSpotDetailHelper
         $query = $db->getQuery(true);
         $query->select($db->quoteName(array('spot_id', 'name')));
         $query->from($db->quoteName('#__spspot_spot'));
-
-        if (!empty($city)) {
-            $query->where($db->quoteName('city'). " = " .$db->quote($city));
-        }
+        $query->where($db->quoteName('city'). " = " .$db->quote($city));
 
         $db->setQuery($query);
         $hotspotList = $db->loadRowList();

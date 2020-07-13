@@ -32,6 +32,7 @@ function getSpotCity() {
 
 $(document).ready(function () {
 
+    $('#datatable-cEffectivenes').DataTable();
     $('#radioSMS').on('change', function () {
         smsemail = $('#radioSMS').val();
         getCampaigns(smsemail);
@@ -105,52 +106,56 @@ function getCampaignDetail(dstart, dend, campaign, city, spot){
     })
         .success(function(response){
             let object = response.data
-            $('#datatable-buttons').dataTable( {
-                "destroy": true,
-                "aaData": object,
-                "columns": [
-                    { "data": "name" },
-                    { "data": "device_sms" },
-                    { "data": "username" },
-                    { "data": "senddate" },
-                    { "data": "status",
-                        "render": function(data, type) {
-                            if (data == '0') {
-                                return "<div align='center'><span class='glyphicon glyphicon-remove' style='color:#FF0000'> </span></div>";
-                            } else {
-                                return "<div align='center'><span class='glyphicon glyphicon-ok' style='color:#00FF00'> </span></div>";
-                            }
-                        }
-                    },
-                    { "data": "description" },
-                    { "data": "spot" }
-                ],
-                "dom": 'Bfrtip',
-                "buttons": [
-                    {
-                        "extend": 'copy',
-                        "className": 'btn-sm'
-                    },
-                    {
-                        "extend": 'csv',
-                        "className": 'btn-sm'
-                    },
-                    {
-                        "extend": 'excel',
-                        "className": 'btn-sm'
-                    },
-                    {
-                        "extend": 'pdfHtml5',
-                        "className": 'btn-sm'
-                    },
-                    {
-                        "extend": 'print',
-                        "className": 'btn-sm'
-                    },
-                ],
-                "responsive": true
-            })
+            createTable(object);
         });
+}
+
+function createTable(data) {
+    let table = $('#datatable-cEffectivenes').DataTable( {
+        "destroy": true,
+        "aaData": data,
+        "columns": [
+            { "data": "name" },
+            { "data": "device_sms" },
+            { "data": "username" },
+            { "data": "senddate" },
+            { "data": "status",
+                "render": function(data, type) {
+                    if (data == '0') {
+                        return "<div align='center'><span class='glyphicon glyphicon-remove' style='color:#FF0000'> </span></div>";
+                    } else {
+                        return "<div align='center'><span class='glyphicon glyphicon-ok' style='color:#00FF00'> </span></div>";
+                    }
+                }
+            },
+            { "data": "description" },
+            { "data": "spot" }
+        ],
+        "dom": 'Bfrtip',
+        "buttons": [
+            {
+                "extend": 'copy',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'csv',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'excel',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'pdfHtml5',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'print',
+                "className": 'btn-sm'
+            },
+        ],
+        "responsive": true
+    })
 }
 
 $(document).ready(function() {

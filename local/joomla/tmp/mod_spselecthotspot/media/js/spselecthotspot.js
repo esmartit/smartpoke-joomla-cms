@@ -18,9 +18,12 @@ $(document).ready( function() {
         }
     });
 
-    getHotSpotCity();
-
 });
+
+function setHotSpotCity() {
+    $('#cityId').val('');
+    getHotSpotCity();
+}
 
 function getHotSpotCity() {
     let cityid = $('#cityId').val();

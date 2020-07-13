@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			24th June, 2020
+	@version		1.0.1
+	@build			13th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		spots.php
@@ -40,7 +40,9 @@ class SpspotModelSpots extends JModelList
 				'a.modified_by','modified_by',
 				'a.spot_id','spot_id',
 				'a.name','name',
-				'a.city','city'
+				'a.city','city',
+				'a.country','country',
+				'a.state','state'
 			);
 		}
 
@@ -69,6 +71,12 @@ class SpspotModelSpots extends JModelList
 
 		$city = $this->getUserStateFromRequest($this->context . '.filter.city', 'filter_city');
 		$this->setState('filter.city', $city);
+
+		$country = $this->getUserStateFromRequest($this->context . '.filter.country', 'filter_country');
+		$this->setState('filter.country', $country);
+
+		$state = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state');
+		$this->setState('filter.state', $state);
         
 		$sorting = $this->getUserStateFromRequest($this->context . '.filter.sorting', 'filter_sorting', 0, 'int');
 		$this->setState('filter.sorting', $sorting);
@@ -164,7 +172,7 @@ class SpspotModelSpots extends JModelList
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search) . '%');
-				$query->where('(a.spot_id LIKE '.$search.' OR a.name LIKE '.$search.' OR a.city LIKE '.$search.' OR a.alias LIKE '.$search.')');
+				$query->where('(a.spot_id LIKE '.$search.' OR a.name LIKE '.$search.' OR a.city LIKE '.$search.' OR a.country LIKE '.$search.' OR a.state LIKE '.$search.' OR a.alias LIKE '.$search.')');
 			}
 		}
 
@@ -300,6 +308,8 @@ class SpspotModelSpots extends JModelList
 		$id .= ':' . $this->getState('filter.spot_id');
 		$id .= ':' . $this->getState('filter.name');
 		$id .= ':' . $this->getState('filter.city');
+		$id .= ':' . $this->getState('filter.country');
+		$id .= ':' . $this->getState('filter.state');
 
 		return parent::getStoreId($id);
 	}

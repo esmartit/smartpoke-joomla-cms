@@ -1,8 +1,12 @@
 $(document).ready(function() {
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
-    getSpotCity();
 });
+
+function setSpotCity() {
+    $('#cityId').val('');
+    getSpotCity();
+}
 
 function getSpotCity() {
     let cityid = $('#cityId').val();
@@ -29,6 +33,7 @@ function getSpotCity() {
 
                 $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
+            getSensorSpot();
         });
 }
 

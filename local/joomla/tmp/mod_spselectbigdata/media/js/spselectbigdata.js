@@ -20,9 +20,13 @@ $(document).ready( function() {
 
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
-    getSpotCity();
 
 });
+
+function setSpotCity() {
+    $('#cityId').val('');
+    getSpotCity();
+}
 
 function getSpotCity() {
     let cityid = $('#cityId').val();
@@ -49,6 +53,7 @@ function getSpotCity() {
 
                 $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
+            getSensorSpot();
         });
 }
 
@@ -283,6 +288,8 @@ function sendForm() {
     let t_timeE = $('#timeend').val();
     let t_dateS2 = $('#datestart2').val();
     let t_dateE2 = $('#dateend2').val();
+    let t_country = $('#countryId').val();
+    let t_state = $('#stateId').val();
     let t_city = $('#cityId').val();
     let t_spot = $('#selSpot').val();
     let t_sensor = $('#selSensor').val();
@@ -305,7 +312,8 @@ function sendForm() {
     }
 
     let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
-        "dateStart2": t_dateS2, "dateEnd2": t_dateE2, "cityId": t_city,
+        "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
+        "countryId": t_country, "stateId": t_state, "cityId": t_city,
         "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
         "status": t_status, "presence": t_presence,
         "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
