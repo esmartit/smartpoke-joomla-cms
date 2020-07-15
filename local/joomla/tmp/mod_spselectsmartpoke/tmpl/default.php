@@ -77,7 +77,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <form id="smartpoke_select_form" class="form-horizontal form-label-left" method="POST">
+            <form id="smartpoke_select_form" class="form-horizontal form-label-left" method="POST" enctype="multipart/form-data">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div id="selRadioSP" class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -298,15 +298,15 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <div id="oline" class="table-responsive" style="display:block;">
-                                    <table id="datatable-smartpoke" class="table table-striped table-bordered bulk_action">
+                                <div id="online" class="table-responsive" style="display:block;">
+                                    <table id="datatable-online" class="table table-striped table-bordered bulk_action">
                                         <thead>
                                         <tr>
                                             <th colspan="3"></th>
                                             <th colspan ='1'><center>Spot</center></th>
                                         </tr>
                                         <tr>
-                                            <th><input type='checkbox' name= 'select_all_o' id='smartpoke_select_all_o' value='1' /></th>
+                                            <th><input type='checkbox' name= 'select_all_on' id='smartpoke_select_all_on' value='1' /></th>
                                             <th>Device</th>
                                             <th>Username</th>
                                             <th><center>Sensor Name</center></th>
@@ -314,11 +314,27 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                         </thead>
                                     </table>
                                 </div>
-                                <div id="dbfile" class="table-responsive" style="display:none;">
-                                    <table id="datatable-dbfile" class="table table-striped table-bordered bulk_action">
+                                <div id="offline" class="table-responsive" style="display:none;">
+                                    <table id="datatable-offline" class="table table-striped table-bordered bulk_action">
                                         <thead>
                                         <tr>
-                                            <th><input type='checkbox' name= 'select_all_d' id='smartpoke_select_all_d' value='1' /></th>
+                                            <th colspan="3"></th>
+                                            <th colspan ='1'><center>Spot</center></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type='checkbox' name= 'select_all_off' id='smartpoke_select_all_off' value='1' /></th>
+                                            <th>Device</th>
+                                            <th>Username</th>
+                                            <th><center>Sensor Name</center></th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div id="database" class="table-responsive" style="display:none;">
+                                    <table id="datatable-database" class="table table-striped table-bordered bulk_action">
+                                        <thead>
+                                        <tr>
+                                            <th><input type='checkbox' name= 'select_all_db' id='smartpoke_select_all_db' value='1' /></th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>Mobile Phone</th>
@@ -329,6 +345,19 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                             <th>ZipCode</th>
                                             <th>Member</th>
                                             <th>Spot</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div id="file" class="table-responsive" style="display:none;">
+                                    <table id="datatable-file" class="table table-striped table-bordered bulk_action">
+                                        <thead>
+                                        <tr>
+                                            <th><input type='checkbox' name= 'select_all_fl' id='smartpoke_select_all_fl' value='1' /></th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Mobile Phone</th>
+                                            <th>Email</th>
                                         </tr>
                                         </thead>
                                     </table>
