@@ -1,6 +1,8 @@
 let smartpokeOpt = '1';
-let tableO = '';
-let tableD = '';
+let tableOn = '';
+let tableOff = '';
+let tableDB = '';
+let tableFile = '';
 let campaignId = '';
 
 $(document).ready( function() {
@@ -23,12 +25,15 @@ $(document).ready( function() {
         }
     });
 
-    $('#datatable-smartpoke').DataTable();
-    $('#datatable-dbfile').DataTable();
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
-    showTableColumns();
     getCampaigns();
+
+    $('#datatable-online').DataTable({responsive: true});
+    $('#datatable-offline').DataTable({responsive: true});
+    $('#datatable-database').DataTable({responsive: true});
+    $('#datatable-file').DataTable({responsive: true});
+    showTableColumns();
 });
 
 function setSpotCity() {
@@ -197,8 +202,10 @@ function showOnlineOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
-    document.getElementById("oline").style.display = 'block';
-    document.getElementById("dbfile").style.display = 'none';
+    document.getElementById("online").style.display = 'block';
+    document.getElementById("offline").style.display = 'none';
+    document.getElementById("database").style.display = 'none';
+    document.getElementById("file").style.display = 'none';
     smartpokeOpt = '1';
 }
 
@@ -219,8 +226,10 @@ function showOfflineOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
-    document.getElementById("oline").style.display = 'block';
-    document.getElementById("dbfile").style.display = 'none';
+    document.getElementById("online").style.display = 'none';
+    document.getElementById("offline").style.display = 'block';
+    document.getElementById("database").style.display = 'none';
+    document.getElementById("file").style.display = 'none';
     smartpokeOpt = '2';
 }
 
@@ -240,8 +249,10 @@ function showDataBaseOpt(){
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
-    document.getElementById("oline").style.display = 'none';
-    document.getElementById("dbfile").style.display = 'block';
+    document.getElementById("online").style.display = 'none';
+    document.getElementById("offline").style.display = 'none';
+    document.getElementById("database").style.display = 'block';
+    document.getElementById("file").style.display = 'none';
     smartpokeOpt = '3';
 }
 
@@ -261,8 +272,10 @@ function showFileOpt() {
     document.getElementById("filters").style.display = 'none';
     document.getElementById("selfile").style.display = 'block';
     document.getElementById("selcampaigns").style.display = 'block';
-    document.getElementById("oline").style.display = 'none';
-    document.getElementById("dbfile").style.display = 'block';
+    document.getElementById("online").style.display = 'none';
+    document.getElementById("offline").style.display = 'none';
+    document.getElementById("database").style.display = 'none';
+    document.getElementById("file").style.display = 'block';
     smartpokeOpt = '4';
 }
 
@@ -462,10 +475,10 @@ function sendForm() {
             t_member = $('#selMembership').val();
         }
     }
-    if (smartpokeOpt == '4') { // Only File option
-        formFile = document.getElementById('selFile');
-        formFileJson = formFile.files[0];
-    }
+    // if (smartpokeOpt == '4') { // Only File option
+    //     formFile = document.getElementById('selFile');
+    //     formFileJson = formFile.files[0];
+    // }
 
     $("#system-message-container").empty();
     if (campaignId != '') {
@@ -483,7 +496,7 @@ function sendForm() {
                 smartpokeDB(t_city, t_spot, t_ageS, t_ageE, t_sex, t_zipcodes, t_member);
                 break;
             case '4':
-                smartpokeFile(formFileJson);
+                smartpokeFile();
                 break;
         }
 
@@ -514,72 +527,140 @@ function smartpokeDB(city, spot, ageS, ageE, sex, zipcodes, member) {
         data: request
     })
         .success(function(response){
-            let object = response.data
-            createTable(object);
+            let data = response.data
+            tableDB = $('#datatable-database').DataTable({
+                "destroy": true,
+                "aaData": data,
+                "columnDefs": [
+                    {
+                        "targets": 0,
+                        "bSortable": false,
+                        "searchable": false,
+                        "orderable": false,
+                        "className": 'dt-body-center',
+                        "render": function (data, type, row, meta) {
+                            return '<input type="checkbox" name="id[]" value="' + row['mobile_phone'] + '-' + row['firstname'] + '/' + row['username'] + '">';
+                        }
+                    },
+                    {"data": "firstname", "targets": 1},
+                    {"data": "lastname", "targets": 2},
+                    {"data": "mobile_phone", "targets": 3},
+                    {"data": "email", "targets": 4},
+                    {"data": "username", "targets": 5},
+                    {"data": "age", "targets": 6},
+                    {
+                        "data": "sex", "targets": 7,
+                        "render": function (data, type) {
+                            if (data == '0') {
+                                return "<div align='center'><span class='fa fa-male'> </span></div>";
+                            } else {
+                                return "<div align='center'><span class='fa fa-female'> </span></div>";
+                            }
+                        }
+                    },
+                    {"data": "zipcode", "targets": 8},
+                    {
+                        "data": "membership", "targets": 9,
+                        "render": function (data, type) {
+                            if (data == '0') {
+                                return "<div align='center'><span class='glyphicon glyphicon-remove' style='color:#FF0000'> </span></div>";
+                            } else {
+                                return "<div align='center'><span class='glyphicon glyphicon-ok' style='color:#00FF00'> </span></div>";
+                            }
+                        }
+                    },
+                    {"data": "name", "targets": 10}
+                ],
+                "responsive": true
+            });
         });
 }
 
-function createTable(data) {
-    tableD = $('#datatable-dbfile').DataTable({
-        "destroy": true,
-        "aaData": data,
-        "columnDefs": [
-            {
-                "targets": 0,
-                "bSortable": false,
-                "searchable": false,
-                "orderable": false,
-                "className": 'dt-body-center',
-                "render": function (data, type, row, meta) {
-                    return '<input type="checkbox" name="id[]" value="' + row['mobile_phone'] + '-' + row['firstname'] + '/' + row['username'] + '">';
-                }
-            },
-            {"data": "firstname", "targets": 1},
-            {"data": "lastname", "targets": 2},
-            {"data": "mobile_phone", "targets": 3},
-            {"data": "email", "targets": 4},
-            {"data": "username", "targets": 5},
-            {"data": "age", "targets": 6},
-            {
-                "data": "sex", "targets": 7,
-                "render": function (data, type) {
-                    if (data == '0') {
-                        return "<div align='center'><span class='fa fa-male'> </span></div>";
-                    } else {
-                        return "<div align='center'><span class='fa fa-female'> </span></div>";
-                    }
-                }
-            },
-            {"data": "zipcode", "targets": 8},
-            {
-                "data": "membership", "targets": 9,
-                "render": function (data, type) {
-                    if (data == '0') {
-                        return "<div align='center'><span class='glyphicon glyphicon-remove' style='color:#FF0000'> </span></div>";
-                    } else {
-                        return "<div align='center'><span class='glyphicon glyphicon-ok' style='color:#00FF00'> </span></div>";
-                    }
-                }
-            },
-            {"data": "name", "targets": 10}
-        ],
-        "responsive": true
-    });
+function smartpokeFile() {
+    let formFile = document.getElementById('selFile');
+    let formFileJson = formFile.files[0];
+    let formData = new FormData();
+    formData.append('file', formFileJson);
+
+    // for (let pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]);
+    // }
+
+    // let xhr = new XMLHttpRequest;
+    // xhr.open('POST', '/index.php?option=com_ajax&module=spselectsmartpoke&format=json&method=saveFile', true);
+    // xhr.send(formData);
+
+    $.ajax({
+        url: "/index.php?option=com_ajax&module=spselectsmartpoke&format=json&method=saveFile", // point to server-side PHP script
+        type: "POST",
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false
+    })
+        .success(function(response){
+            let object = response.data;
+            let status = object.status;
+            let message = object.message;
+            let file = object.file;
+            if (status == 0) {
+                Joomla.renderMessages({'error': [message]});
+            } else {
+                Joomla.renderMessages({'success': [message]});
+                tableFile = $('#datatable-file').DataTable({
+                    "destroy": true,
+                    "ajax": '/tmpfiles/'+file,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "searchable": false,
+                            "orderable": false,
+                            "className": 'dt-body-center',
+                            "render": function (data, type, row, meta) {
+                                return '<input type="checkbox" name="id[]" value="' + row[0] + '/">';
+                            }
+                        }
+                    ],
+                    "responsive": true
+                });
+            }
+        });
 }
 
 $(document).ready(function() {
     // Handle click on "Select all" control
-    $('#smartpoke_select_all_d').on('click', function(){
+    $('#smartpoke_select_all_db').on('click', function(){
         // Check/uncheck all checkboxes in the table
-        let rows = tableD.rows({ 'search': 'applied' }).nodes();
+        let rows = tableDB.rows({ 'search': 'applied' }).nodes();
         $('input[type="checkbox"]', rows).prop('checked', this.checked);
     });
 
     // Handle click on checkbox to set state of "Select all" control
-    $('#datatable-dbfile tbody').on('change', 'input[type="checkbox"]', function(){
+    $('#datatable-database tbody').on('change', 'input[type="checkbox"]', function(){
         // If checkbox is not checked
         if(!this.checked){
-            let el = $('#smartpoke_select_all_d').get(0);
+            let el = $('#smartpoke_select_all_db').get(0);
+            // If "Select all" control is checked and has 'indeterminate' property
+            if(el && el.checked && ('indeterminate' in el)){
+                // Set visual state of "Select all" control
+                // as 'indeterminate'
+                el.indeterminate = true;
+            }
+        }
+    });
+
+    // Handle click on "Select all" control
+    $('#smartpoke_select_all_fl').on('click', function(){
+        // Check/uncheck all checkboxes in the table
+        let rows = tableFile.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    });
+
+    // Handle click on checkbox to set state of "Select all" control
+    $('#datatable-file tbody').on('change', 'input[type="checkbox"]', function(){
+        // If checkbox is not checked
+        if(!this.checked){
+            let el = $('#smartpoke_select_all_fl').get(0);
             // If "Select all" control is checked and has 'indeterminate' property
             if(el && el.checked && ('indeterminate' in el)){
                 // Set visual state of "Select all" control
@@ -592,25 +673,54 @@ $(document).ready(function() {
     $('#smartpoke_form').on('submit', function(e){
         let form = this;
 
-        // Iterate over all checkboxes in the table
-        tableD.$('input[type="checkbox"]').each(function(){
-            // If checkbox doesn't exist in DOM
-            if(!$.contains(document, this)){
-                // If checkbox is checked
-                if (this.checked) {
-                    // Create a hidden element
-                    $(form).append(
-                        $('<input>')
-                            .attr('type', 'hidden')
-                            .attr('name', this.name)
-                            .val(this.value)
-                    );
-                }
+        switch (smartpokeOpt) {
+            case "1": {
+                break;
             }
-        });
+            case "2": {
+                break;
+            }
+            case "3": {
+                // Iterate over all checkboxes in the table
+                tableDB.$('input[type="checkbox"]').each(function(){
+                    // If checkbox doesn't exist in DOM
+                    if(!$.contains(document, this)){
+                        // If checkbox is checked
+                        if (this.checked) {
+                            // Create a hidden element
+                            $(form).append(
+                                $('<input>')
+                                    .attr('type', 'hidden')
+                                    .attr('name', this.name)
+                                    .val(this.value)
+                            );
+                        }
+                    }
+                });
+                break;
+            }
+            case "4": {
+                // Iterate over all checkboxes in the table
+                tableFile.$('input[type="checkbox"]').each(function(){
+                    // If checkbox doesn't exist in DOM
+                    if(!$.contains(document, this)){
+                        // If checkbox is checked
+                        if (this.checked) {
+                            // Create a hidden element
+                            $(form).append(
+                                $('<input>')
+                                    .attr('type', 'hidden')
+                                    .attr('name', this.name)
+                                    .val(this.value)
+                            );
+                        }
+                    }
+                });
+                break;
+            }
+        }
 
         // Output form data to a console
-        // let str = JSON.stringify($(form).serialize());
         let str = JSON.parse(JSON.stringify($(form).serializeArray()));
 
         let request = {

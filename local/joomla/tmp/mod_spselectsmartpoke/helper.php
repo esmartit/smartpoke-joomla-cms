@@ -251,7 +251,7 @@ class ModSPSelectSmartPokeHelper
      * Returns the SendSMS
      * @return mixed
      */
-    public function sendSMSAjax() {
+    public static function sendSMSAjax() {
         $arrlist = $_REQUEST['data'];
         $list = ($arrlist['str']);
 
@@ -296,7 +296,7 @@ class ModSPSelectSmartPokeHelper
      * Returns the SaveMessage
      * @return mixed
      */
-    public function saveMessage($values = null)
+    public static function saveMessage($values = null)
     {
         $msg = new stdClass();
         $msg->id = null;
@@ -319,7 +319,7 @@ class ModSPSelectSmartPokeHelper
      * Returns the SendWorlLineSMS
      * @return mixed
      */
-    public function sendWorldLine($phone, $message, $sender) {
+    public static function sendWorldLine($phone, $message, $sender) {
 
         //  certificado pem extraido de un pkcs12 con la ruta completa absoluta
         $cert = '/bitnami/joomla/certs_sms/esmartit.pem';
@@ -364,5 +364,43 @@ class ModSPSelectSmartPokeHelper
         curl_close($ch);
 
         return $output;
+    }
+
+    public static function saveFileAjax() {
+
+        $uploadDir = '/bitnami/joomla/tmpfiles/';
+        $response = array();
+
+        $uploadStatus = 1;
+        $uploadedFile = '';
+        $token = time();
+
+        $file_name = $_FILES['file']['name'];
+        $file_temp = $_FILES["file"]["tmp_name"];
+
+        $response['status'] = 0;
+        $response['message'] = 'Upload failed, please try again.';
+        $response['file'] = $file_name;
+
+        if (!empty($_FILES['file']['name'])){
+
+            $fileName = "smartpokeFile-".$token.".json";
+            $targetFilePath = $uploadDir . $fileName;
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
+                $uploadedFile = $fileName;
+            } else {
+                $uploadStatus = 0;
+                $response['status'] = 0;
+                $response['message'] = 'Sorry, there was an error uploading your file.';
+                $response['file'] = $file_name;
+            }
+            if ($uploadStatus == 1){
+                $response['status'] = 1;
+                $response['message'] = 'Upload file successfully!';
+                $response['file'] = $uploadedFile;
+            }
+        }
+        return $response;
     }
 }
