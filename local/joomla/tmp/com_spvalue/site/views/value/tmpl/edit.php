@@ -76,7 +76,7 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.
                 <div class="item form-group">
                     <div class="col-md-6 col-sm-6 offset-md-3">
                         <a href="index.php?option=com_spvalue&view=listvalue" class="btn btn-secondary"><?php echo JText::_('Cancel'); ?></a>
-                        <button onclick="Joomla.submitbutton('brand.save');" class="btn btn-success"><?php echo JText::_('Save'); ?></button>
+                        <button onclick="Joomla.submitbutton('value.save');" class="btn btn-success"><?php echo JText::_('Save'); ?></button>
                     </div>
                 </div>
                 <div>
