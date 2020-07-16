@@ -43,10 +43,10 @@ $(document).ready( function() {
         let today = new Date(eventData.time);
         let sameDate = (currentDate.getDate() === today.getUTCDate());
 
-        if ($('#gauge-text').length) {
-            chart_gauge_dailygoal_reg.setTextField(document.getElementById("gauge-text"));
+        if ($('#goal-text-reg').length) {
+            chart_gauge_dailygoal_reg.setTextField(document.getElementById("goal-text-reg"));
             chart_gauge_dailygoal_reg.animationSpeed = 32; // set animation speed (32 is default value)
-            chart_gauge_dailygoal_reg.maxValue = dailygoalMaxValue;
+            chart_gauge_dailygoal_reg.maxValue = dailyGoalRegMaxValue;
 
             if (sameDate) {
                 if (dailyGoalReg > currentMax) {
