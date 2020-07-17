@@ -45,7 +45,7 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
                     <div class="goal-wrapper">
                         <span id="gauge-text-reg" class="gauge-value pull-center">0</span>
                         <span class="gauge-value pull-left">0%</span>
-                        <span id="goal-text-reg" class="goal-value pull-right">100%</span>
+                        <span id="goal-text2" class="goal-value pull-right">100%</span>
                     </div>
                     <div id="dailygoalRegMaxValue" class="goal-value pull-right" style="display:none"><b><?php echo $dailygoalregistered; ?></b></div>
                 </div>
