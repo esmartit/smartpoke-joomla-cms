@@ -85,6 +85,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         </div>
                         <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
                         <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
+                        <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                     </div>
                 </div>
                 <div class="col-md-12 col-sm-12 col-xs-12">
