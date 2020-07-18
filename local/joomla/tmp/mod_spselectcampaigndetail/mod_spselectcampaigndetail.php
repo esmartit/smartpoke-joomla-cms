@@ -9,9 +9,10 @@
 
 defined('_JEXEC') or die;
 
-//require_once dirname(__FILE__) . '/helper.php';
-//
+require_once dirname(__FILE__) . '/helper.php';
+
 //$brands = ModSPSelectCampaignDetailHelper::getBrands();
 //$zipcodes = ModSPSelectCampaignDetailHelper::getZipCodes();
+$usertimezone = ModSPSelectCampaignDetailHelper::getTimeZone();
 
 require JModuleHelper::getLayoutPath('mod_spselectcampaigndetail', $params->get('layout', 'default'));

@@ -135,10 +135,16 @@ function sendForm() {
     let selCountry = document.getElementById('countryId');
     let selectedCountry = selCountry.options[selCountry.selectedIndex];
     let t_country = selectedCountry.getAttribute('countryid');
+    if (t_country === null) {
+        t_country = '';
+    }
 
     let selState = document.getElementById('stateId');
     let selectedState = selState.options[selState.selectedIndex];
     let t_state = selectedState.getAttribute('stateid');
+    if (t_state === null) {
+        t_state = '';
+    }
 
     let t_city= $('#cityId').val();
     t_city = t_city.replace(/ /g,"_");

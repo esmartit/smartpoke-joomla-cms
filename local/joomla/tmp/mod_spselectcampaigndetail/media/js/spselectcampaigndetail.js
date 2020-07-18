@@ -3,6 +3,7 @@ getSpotCity();
 getCampaigns(smsemail);
 getSmsEmailMonthly();
 let monthly = '';
+let userTimeZone = '';
 
 function getSpotCity() {
     let cityid = $('#cityId').val();
@@ -133,13 +134,14 @@ function getSmsEmailSent(dstart, dend, type){
         });
 }
 
-function getCampaignSent(dstart, dend, campaign, city, spot){
+function getCampaignSent(dstart, dend, campaign, country, state, city, spot){
     let request = {
         option       : 'com_ajax',
         module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
         method       : 'getMessagesCampaign',  // to target: function getMessagesCampaignAjax in class ModSPSelectCampaignDetailHelper
         format       : 'json',
-        data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign, "cityId": city, "spotId": spot }
+        data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign,
+            "countryId": country, "stateId": state, "cityId": city, "spotId": spot }
     };
     $.ajax({
         method: 'GET',
@@ -169,13 +171,14 @@ function getCampaignSent(dstart, dend, campaign, city, spot){
         });
 }
 
-function getCampaignDetail(dstart, dend, campaign, city, spot){
+function getCampaignDetail(dstart, dend, campaign, country, state, city, spot){
     let request = {
         option       : 'com_ajax',
         module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
         method       : 'getCampaignDetail',  // to target: function getCampaignDetailAjax in class ModSPSelectCampaignDetailHelper
         format       : 'json',
-        data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign, "cityId": city, "spotId": spot }
+        data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign,
+            "countryId": country, "stateId": state, "cityId": city, "spotId": spot }
     };
     $.ajax({
         method: 'GET',
@@ -317,11 +320,28 @@ $(document).ready(function() {
 function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
+
+    let selCountry = document.getElementById('countryId');
+    let selectedCountry = selCountry.options[selCountry.selectedIndex];
+    let t_country = selectedCountry.getAttribute('countryid');
+    if (t_country === null) {
+        t_country = '';
+    }
+
+    let selState = document.getElementById('stateId');
+    let selectedState = selState.options[selState.selectedIndex];
+    let t_state = selectedState.getAttribute('stateid');
+    if (t_state === null) {
+        t_state = '';
+    } else {
+        t_state = t_state.substr(1, t_state.length-2)
+    }
+
     let t_city = $('#cityId').val();
     let t_spot = $('#selSpot').val();
     let t_campaign = $('#selCampaign').val();
 
     getSmsEmailSent(t_dateS, t_dateE, smsemail);
-    getCampaignSent(t_dateS, t_dateE, t_campaign, t_city, t_spot);
-    getCampaignDetail(t_dateS, t_dateE, t_campaign, t_city, t_spot);
+    getCampaignSent(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_spot);
+    getCampaignDetail(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_spot);
 }

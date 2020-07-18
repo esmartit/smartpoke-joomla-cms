@@ -90,6 +90,8 @@ class ModSPSelectCampaignDetailHelper
         $dEnd = $data['dateEnd'].' 23:59:59';
         $smsemail = $data['smsEmail'];
 
+        $timeOffset = timezone_offset_get(  timezone_open(self::getTimeZone()), new DateTime() );
+
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
@@ -98,8 +100,8 @@ class ModSPSelectCampaignDetailHelper
             ->from($db->quoteName('#__spmessage_message', 'a'))
             ->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'))
             ->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'))
-            ->where($db->quoteName('senddate'). " >= ". $db->quote($dStart))
-            ->where($db->quoteName('senddate'). " <= ". $db->quote($dEnd))
+            ->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart))
+            ->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd))
             ->where($db->quoteName('c.smsemail'). " = ". $db->quote($smsemail))
             ->group($db->quoteName('status'));
         $db->setQuery($query);
@@ -114,13 +116,16 @@ class ModSPSelectCampaignDetailHelper
      */
     public static function getMessagesCampaignAjax()
     {
-
         $data = $_REQUEST['data'];
         $dStart = $data['dateStart'].' 00:00:00';
         $dEnd = $data['dateEnd'].' 23:59:59';
         $campaignId = $data['campaignId'];
+        $countryId = $data['countryId'];
+        $stateId = $data['stateId'];
         $cityId = $data['cityId'];
         $spotId = $data['spotId'];
+
+        $timeOffset = timezone_offset_get(  timezone_open(self::getTimeZone()), new DateTime() );
 
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
@@ -130,11 +135,19 @@ class ModSPSelectCampaignDetailHelper
         $query->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'));
         $query->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'));
         $query->join('LEFT', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
-        $query->where($db->quoteName('senddate'). " >= ". $db->quote($dStart));
-        $query->where($db->quoteName('senddate'). " <= ". $db->quote($dEnd));
+        $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart));
+        $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd));
 
         if (!empty($campaignId)) {
             $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
+        }
+
+        if (!empty($countryId)) {
+            $query->where($db->quoteName('s.country'). " = ". $db->quote($countryId));
+        }
+
+        if (!empty($stateId)) {
+            $query->where($db->quoteName('s.state'). " = ". $db->quote($stateId));
         }
 
         if (!empty($cityId)) {
@@ -158,27 +171,38 @@ class ModSPSelectCampaignDetailHelper
      */
     public static function getCampaignDetailAjax()
     {
-
         $data = $_REQUEST['data'];
         $dStart = $data['dateStart'].' 00:00:00';
         $dEnd = $data['dateEnd'].' 23:59:59';
         $campaignId = $data['campaignId'];
+        $countryId = $data['countryId'];
+        $stateId = $data['stateId'];
         $cityId = $data['cityId'];
         $spotId = $data['spotId'];
+
+        $timeOffset = timezone_offset_get(  timezone_open(self::getTimeZone()), new DateTime() );
 
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select(array('c.name', 'device_sms', 'a.username', 'senddate', 'status', 'description', 'spot'));
+        $query->select(array('c.name', 'device_sms', 'a.username', 'TIMESTAMP(senddate + INTERVAL '.$timeOffset.' SECOND) AS senddate', 'status', 'description', 'spot'));
         $query->from($db->quoteName('#__spmessage_message', 'a'));
         $query->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'));
         $query->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'));
         $query->join('LEFT', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
-        $query->where($db->quoteName('senddate'). " >= ". $db->quote($dStart));
-        $query->where($db->quoteName('senddate'). " <= ". $db->quote($dEnd));
+        $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart));
+        $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd));
 
         if (!empty($campaignId)) {
             $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
+        }
+
+        if (!empty($countryId)) {
+            $query->where($db->quoteName('s.country'). " = ". $db->quote($countryId));
+        }
+
+        if (!empty($stateId)) {
+            $query->where($db->quoteName('s.state'). " = ". $db->quote($stateId));
         }
 
         if (!empty($cityId)) {
@@ -194,4 +218,18 @@ class ModSPSelectCampaignDetailHelper
 
         return $campaignList;
     }
+
+    /**
+     * Returns the userTime zone if the user has set one, or the global config one
+     * @return mixed
+     */
+    public static function getTimeZone() {
+        $userTz = JFactory::getUser()->getParam('timezone');
+        $timeZone = JFactory::getConfig()->get('offset');
+        if($userTz) {
+            $timeZone = $userTz;
+        }
+        return $timeZone;
+    }
+
 }

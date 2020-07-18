@@ -2,6 +2,18 @@ let smsemail = '1';
 getSpotCity();
 getCampaigns(smsemail);
 
+$(document).ready( function() {
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    const seRegisteredTotal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/total-registered-count?timezone="+userTimeZone);
+    let registeredtotal = 0;
+
+    seRegisteredTotal.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        registeredtotal = eventData.count;
+        document.getElementById("registeredUsers").innerHTML = Intl.NumberFormat().format(registeredtotal);
+    }
+});
+
 function getSpotCity() {
     let cityid = $('#cityId').val();
     let request = {
@@ -92,13 +104,14 @@ function getSmsEmailTotal(){
         });
 }
 
-function getCampaignDetail(dstart, dend, campaign, city, spot){
+function getCampaignDetail(dstart, dend, campaign, country, state, city, spot){
     let request = {
         option       : 'com_ajax',
         module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
         method       : 'getCampaignDetail',  // to target: function getCampaignDetailAjax in class ModSPSelectCampaignEffectivenessHelper
         format       : 'json',
-        data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign, "cityId": city, "spotId": spot }
+        data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign,
+            "countryId": country, "stateId": state, "cityId": city, "spotId": spot }
     };
     $.ajax({
         method: 'GET',
@@ -240,14 +253,26 @@ $(document).ready(function() {
 function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
+
+    let selCountry = document.getElementById('countryId');
+    let selectedCountry = selCountry.options[selCountry.selectedIndex];
+    let t_country = selectedCountry.getAttribute('countryid');
+    if (t_country === null) {
+        t_country = '';
+    }
+
+    let selState = document.getElementById('stateId');
+    let selectedState = selState.options[selState.selectedIndex];
+    let t_state = selectedState.getAttribute('stateid');
+    if (t_state === null) {
+        t_state = '';
+    } else {
+        t_state = t_state.substr(1, t_state.length-2)
+    }
+
     let t_city = $('#cityId').val();
     let t_spot = $('#selSpot').val();
     let t_campaign = $('#selCampaign').val();
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
 
-    let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "cityId": t_city,
-        "spotId": t_spot, "timeZone": userTimeZone }
-    console.log(dataForm);
-
-    getCampaignDetail(t_dateS, t_dateE, t_campaign, t_city, t_spot);
+    getCampaignDetail(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_spot);
 }
