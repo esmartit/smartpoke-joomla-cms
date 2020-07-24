@@ -170,18 +170,22 @@ function showTableColumns(){
 $(document).ready(function () {
     $('#spOnline').on('change', function () {
         showOnlineOpt();
+        document.getElementById("smartpoke_form").reset();
     });
 
     $('#spOffline').on('change', function () {
         showOfflineOpt();
+        document.getElementById("smartpoke_form").reset();
     });
 
     $('#spDataBase').on('change', function () {
         showDataBaseOpt();
+        document.getElementById("smartpoke_form").reset();
     });
 
     $('#spFile').on('change', function () {
         showFileOpt();
+        document.getElementById("smartpoke_form").reset();
     });
 });
 
@@ -475,12 +479,7 @@ function sendForm() {
             t_member = $('#selMembership').val();
         }
     }
-    // if (smartpokeOpt == '4') { // Only File option
-    //     formFile = document.getElementById('selFile');
-    //     formFileJson = formFile.files[0];
-    // }
 
-    $("#system-message-container").empty();
     if (campaignId != '') {
         switch (smartpokeOpt) {
             case '1':
@@ -744,6 +743,6 @@ $(document).ready(function() {
 
         // Prevent actual form submission
         e.preventDefault();
+        document.getElementById("smartpoke_form").reset();
     });
-    document.getElementById("smartpoke_form").reset();
 });
