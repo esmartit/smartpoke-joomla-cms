@@ -1,7 +1,16 @@
 $(document).ready( function() {
-    var theme = {
+
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    let seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/now-detected?timezone="+userTimeZone);
+    let inAct = 0;
+    let limitAct = 0;
+    let outAct = 0;
+    let deviceAct = 0;
+
+
+    let theme = {
         color: [
-            '#26B99A', '#34495E', '#bdc3c7', '#3498DB',
+            '#26b99a', '#34495e', '#bdc3c7', '#3498db',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
         ],
 
@@ -211,16 +220,9 @@ $(document).ready( function() {
         }
     };
 
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/now-detected?timezone="+userTimeZone);
-    let inAct = 0;
-    let limitAct = 0;
-    let outAct = 0;
-    let deviceAct = 0;
+    let spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
 
-    var spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
-
-    var option = {
+    let option = {
         title: {
             text: '',
             subtext: ''
@@ -266,17 +268,8 @@ $(document).ready( function() {
         xAxis: [
             {
                 type: 'category',
-                boundaryGap: true,
-                data: (function (){
-                    var now = new Date();
-                    var res = [];
-                    var len = 30;
-                    while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
-                        now = new Date(now - 60000);
-                    }
-                    return res;
-                })()
+                boundaryGap: [1, 1],
+                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
             }
         ],
         yAxis: [
@@ -285,7 +278,7 @@ $(document).ready( function() {
                 scale: true,
                 name: 'Devices',
                 min: 0,
-                boundaryGap: [1, 1]
+                boundaryGap: [0.5, 0.5]
             }
         ],
         series: [
@@ -300,14 +293,7 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: (function (){
-                    var res = [];
-                    var len = 30;
-                    while (len--) {
-                        res.push(deviceAct);
-                    }
-                    return res;
-                })()
+                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
             },
             {
                 name: 'IN',
@@ -320,15 +306,7 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: (function (){
-                    var res = [];
-                    var len = 0;
-                    while (len < 30) {
-                        res.push(inAct);
-                        len++;
-                    }
-                    return res;
-                })()
+                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
             },
             {
                 name: 'LIMIT',
@@ -341,15 +319,7 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: (function (){
-                    var res = [];
-                    var len = 0;
-                    while (len < 30) {
-                        res.push(limitAct);
-                        len++;
-                    }
-                    return res;
-                })()
+                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
             },
             {
                 name: 'OUT',
@@ -362,49 +332,42 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: (function (){
-                    var res = [];
-                    var len = 0;
-                    while (len < 30) {
-                        res.push(outAct);
-                        len++;
-                    }
-                    return res;
-                })()
+                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
             }
         ]
     };
 
-    let deviceAnt = 0;
+    let antTime = '';
 
     seActivityDate.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let axisTime = (new Date(eventData.time)).toLocaleTimeString();
-        let xTime = axisTime.substring(0,5);
+        let newTime = axisTime.substring(0,5);
         inAct = eventData.inCount;
         limitAct = eventData.limitCount;
         outAct = eventData.outCount;
         deviceAct = inAct + limitAct + outAct;
 
-        var data0 = option.series[0].data;
-        var data1 = option.series[1].data;
-        var data2 = option.series[2].data;
-        var data3 = option.series[3].data;
+        let data0 = option.series[0].data;
+        let data1 = option.series[1].data;
+        let data2 = option.series[2].data;
+        let data3 = option.series[3].data;
 
-        if (deviceAct != deviceAnt) {
-            data0.shift();
-            data1.shift();
-            data2.shift();
-            data3.shift();
-            option.xAxis[0].data.shift();
-            data0.push(deviceAct);
-            data1.push(inAct);
-            data2.push(limitAct);
-            data3.push(outAct);
-            option.xAxis[0].data.push(xTime);
+        // if (newTime != antTime) {
+        data0.shift();
+        data1.shift();
+        data2.shift();
+        data3.shift();
+        option.xAxis[0].data.shift();
+        data0.push(deviceAct);
+        data1.push(inAct);
+        data2.push(limitAct);
+        data3.push(outAct);
+        option.xAxis[0].data.push(newTime);
 
-            deviceAnt = deviceAct;
-        }
+        //     antTime = newTime;
+        // }
         spChart.setOption(option);
     }
-})
+
+});
