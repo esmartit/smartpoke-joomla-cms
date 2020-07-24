@@ -220,6 +220,8 @@ class ModSPSelectSmartPokeHelper
         $query->select(array('firstname', 'lastname', 'mobile_phone', 'email', 'username', 'TIMESTAMPDIFF(YEAR, dateofbirth, now()) as age', 'sex', 'zipcode', 'membership', 'name'));
         $query->from($db->quoteName('#__spcustomer_customer', 'c'));
         $query->join('INNER', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
+        $query->where($db->quoteName('communication') . " = 1");
+
 
         if (!empty($ageS) && !empty($ageE)) {
             $query->where('TIMESTAMPDIFF(YEAR, dateofbirth, now())  >= ' . $ageS);
@@ -231,13 +233,13 @@ class ModSPSelectSmartPokeHelper
         if (!empty($spotId)) {
             $query->where($db->quoteName('spot') . " = " . $db->quote($spotId));
         }
-        if (!empty($sex)) {
+        if ($sex != "") {
             $query->where($db->quoteName('sex') . " = " . $db->quote($sex));
         }
         if (!empty($zipCode[0])) {
             $query->where('zipcode' . " IN (" . $zipCode . ")");
         }
-        if (!empty($member)) {
+        if ($member != "") {
             $query->where($db->quoteName('membership') . " = " . $db->quote($member));
         }
 
