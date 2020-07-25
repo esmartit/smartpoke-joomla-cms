@@ -268,8 +268,17 @@ $(document).ready( function() {
         xAxis: [
             {
                 type: 'category',
-                boundaryGap: [1, 1],
-                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+                boundaryGap: true,
+                data: (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 30;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                        now = new Date(now - 1800000);
+                    }
+                    return res;
+                })()
             }
         ],
         yAxis: [
@@ -293,7 +302,15 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+                data: (function (){
+                    var res = [];
+                    var len = 0;
+                    while (len < 30) {
+                        res.push(deviceAct);
+                        len++;
+                    }
+                    return res;
+                })()
             },
             {
                 name: 'IN',
@@ -306,7 +323,15 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+                data: (function (){
+                    var res = [];
+                    var len = 0;
+                    while (len < 30) {
+                        res.push(inAct);
+                        len++;
+                    }
+                    return res;
+                })()
             },
             {
                 name: 'LIMIT',
@@ -319,7 +344,15 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+                data: (function (){
+                    var res = [];
+                    var len = 0;
+                    while (len < 30) {
+                        res.push(limitAct);
+                        len++;
+                    }
+                    return res;
+                })()
             },
             {
                 name: 'OUT',
@@ -332,17 +365,27 @@ $(document).ready( function() {
                         }
                     }
                 },
-                data: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+                data: (function (){
+                    var res = [];
+                    var len = 0;
+                    while (len < 30) {
+                        res.push(outAct);
+                        len++;
+                    }
+                    return res;
+                })()
             }
         ]
     };
 
-    let antTime = '';
+    let antTime = 0;
+    let deviceAnt = 0;
 
     seActivityDate.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let axisTime = (new Date(eventData.time)).toLocaleTimeString();
-        let newTime = axisTime.substring(0,5);
+        let newTime = (new Date(eventData.time)).getTime();
+        let xTime = axisTime.substring(0,5);
         inAct = eventData.inCount;
         limitAct = eventData.limitCount;
         outAct = eventData.outCount;
@@ -353,21 +396,24 @@ $(document).ready( function() {
         let data2 = option.series[2].data;
         let data3 = option.series[3].data;
 
-        // if (newTime != antTime) {
-        data0.shift();
-        data1.shift();
-        data2.shift();
-        data3.shift();
-        option.xAxis[0].data.shift();
-        data0.push(deviceAct);
-        data1.push(inAct);
-        data2.push(limitAct);
-        data3.push(outAct);
-        option.xAxis[0].data.push(newTime);
+        // console.log(deviceAct, inAct, limitAct, outAct, newTime, antTime, xTime);
+        if (newTime >= antTime) {
+            if (deviceAct != deviceAnt) {
+                data0.shift();
+                data1.shift();
+                data2.shift();
+                data3.shift();
+                option.xAxis[0].data.shift();
+                data0.push(deviceAct);
+                data1.push(inAct);
+                data2.push(limitAct);
+                data3.push(outAct);
+                option.xAxis[0].data.push(xTime);
 
-        //     antTime = newTime;
-        // }
-        spChart.setOption(option);
+                deviceAnt = deviceAct;
+            }
+            antTime = newTime;
+            spChart.setOption(option);
+        }
     }
-
 });
