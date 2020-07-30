@@ -1,16 +1,9 @@
+let seActivityDate = '';
+
 $(document).ready( function() {
-
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    let seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/now-detected?timezone="+userTimeZone);
-    let inAct = 0;
-    let limitAct = 0;
-    let outAct = 0;
-    let deviceAct = 0;
-
-
     let theme = {
         color: [
-            '#26b99a', '#34495e', '#bdc3c7', '#3498db',
+            '#26B99A', '#34495E', '#bdc3c7', '#3498DB',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
         ],
 
@@ -220,200 +213,200 @@ $(document).ready( function() {
         }
     };
 
-    let spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    seActivityDate = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/now-detected?timezone="+userTimeZone);
+    var spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
 
-    let option = {
-        title: {
-            text: '',
-            subtext: ''
-        },
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross',
-                label: {
-                    backgroundColor: '#283b56'
+    function echartActivity(hoursAct, deviceAct, inAct, limitAct, outAct) {
+        let option = {
+            title: {
+                text: '',
+                subtext: ''
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#283b56'
+                    }
                 }
-            }
-        },
-        legend: {
-            data:['TOTAL', 'IN', 'LIMIT', 'OUT']
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                magicType: {
-                    show: true,
-                    title: {
-                        line: 'Line',
-                        bar: 'Bar'
+            },
+            legend: {
+                data:['TOTAL', 'IN', 'LIMIT', 'OUT']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    magicType: {
+                        show: true,
+                        title: {
+                            line: 'Line',
+                            bar: 'Bar'
+                        },
+                        type: ['line', 'bar']
                     },
-                    type: ['line', 'bar']
-                },
-                restore: {
-                    show: true,
-                    title: 'Restore'
-                },
-                saveAsImage: {
-                    show: true,
-                    title: 'Save Image'
+                    restore: {
+                        show: true,
+                        title: 'Restore'
+                    },
+                    saveAsImage: {
+                        show: true,
+                        title: 'Save Image'
+                    }
                 }
-            }
-        },
-        dataZoom: {
-            show: false,
-            start: 10,
-            end: 100
-        },
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: true,
-                data: (function (){
-                    var now = new Date();
-                    var res = [];
-                    var len = 30;
-                    while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
-                        now = new Date(now - 1800000);
-                    }
-                    return res;
-                })()
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                scale: true,
-                name: 'Devices',
-                min: 0,
-                boundaryGap: [0.5, 0.5]
-            }
-        ],
-        series: [
-            {
-                name: 'TOTAL',
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        areaStyle: {
-                            type: 'default'
-                        }
-                    }
-                },
-                data: (function (){
-                    var res = [];
-                    var len = 0;
-                    while (len < 30) {
-                        res.push(deviceAct);
-                        len++;
-                    }
-                    return res;
-                })()
             },
-            {
-                name: 'IN',
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        areaStyle: {
-                            type: 'default'
-                        }
-                    }
-                },
-                data: (function (){
-                    var res = [];
-                    var len = 0;
-                    while (len < 30) {
-                        res.push(inAct);
-                        len++;
-                    }
-                    return res;
-                })()
+            dataZoom: {
+                show: false,
+                start: 0,
+                end: 100
             },
-            {
-                name: 'LIMIT',
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        areaStyle: {
-                            type: 'default'
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: true,
+                    data: [
+                        hoursAct[1], hoursAct[2], hoursAct[3], hoursAct[4], hoursAct[5],
+                        hoursAct[6], hoursAct[7], hoursAct[8], hoursAct[9], hoursAct[10],
+                        hoursAct[11], hoursAct[12], hoursAct[13], hoursAct[14], hoursAct[15],
+                        hoursAct[16], hoursAct[17], hoursAct[18], hoursAct[19], hoursAct[20],
+                        hoursAct[21], hoursAct[22], hoursAct[23], hoursAct[24], hoursAct[25],
+                        hoursAct[26], hoursAct[27], hoursAct[28], hoursAct[29], hoursAct[30]
+                    ]
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                    name: 'Devices',
+                    min: 0,
+                    boundaryGap: [1, 1]
+                }
+            ],
+            series: [
+                {
+                    name: 'TOTAL',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            areaStyle: {
+                                type: 'default'
+                            }
                         }
+                    },
+                    data: [
+                        deviceAct[0], deviceAct[1], deviceAct[2], deviceAct[3], deviceAct[4], deviceAct[5],
+                        deviceAct[6], deviceAct[7], deviceAct[8], deviceAct[9], deviceAct[10],
+                        deviceAct[11], deviceAct[12], deviceAct[13], deviceAct[14], deviceAct[15],
+                        deviceAct[16], deviceAct[17], deviceAct[18], deviceAct[19], deviceAct[20],
+                        deviceAct[21], deviceAct[22], deviceAct[23], deviceAct[24], deviceAct[25],
+                        deviceAct[26], deviceAct[27], deviceAct[28], deviceAct[29]
+                    ],
+                    markLine : {
+                        data : [
+                            {type : 'average', name: 'Avg'}
+                        ]
                     }
                 },
-                data: (function (){
-                    var res = [];
-                    var len = 0;
-                    while (len < 30) {
-                        res.push(limitAct);
-                        len++;
-                    }
-                    return res;
-                })()
-            },
-            {
-                name: 'OUT',
-                type: 'line',
-                smooth: true,
-                itemStyle: {
-                    normal: {
-                        areaStyle: {
-                            type: 'default'
+                {
+                    name: 'IN',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            areaStyle: {
+                                type: 'default'
+                            }
                         }
-                    }
+                    },
+                    data: [
+                        inAct[0], inAct[1], inAct[2], inAct[3], inAct[4], inAct[5],
+                        inAct[6], inAct[7], inAct[8], inAct[9], inAct[10],
+                        inAct[11], inAct[12], inAct[13], inAct[14], inAct[15],
+                        inAct[16], inAct[17], inAct[18], inAct[19], inAct[20],
+                        inAct[21], inAct[22], inAct[23], inAct[24], inAct[25],
+                        inAct[26], inAct[27], inAct[28], inAct[29]
+                    ]
                 },
-                data: (function (){
-                    var res = [];
-                    var len = 0;
-                    while (len < 30) {
-                        res.push(outAct);
-                        len++;
-                    }
-                    return res;
-                })()
-            }
-        ]
-    };
+                {
+                    name: 'LIMIT',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            areaStyle: {
+                                type: 'default'
+                            }
+                        }
+                    },
+                    data: [
+                        limitAct[0], limitAct[1], limitAct[2], limitAct[3], limitAct[4], limitAct[5],
+                        limitAct[6], limitAct[7], limitAct[8], limitAct[9], limitAct[10],
+                        limitAct[11], limitAct[12], limitAct[13], limitAct[14], limitAct[15],
+                        limitAct[16], limitAct[17], limitAct[18], limitAct[19], limitAct[20],
+                        limitAct[21], limitAct[22], limitAct[23], limitAct[24], limitAct[25],
+                        limitAct[26], limitAct[27], limitAct[28], limitAct[29]
+                    ]
+                },
+                {
+                    name: 'OUT',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            areaStyle: {
+                                type: 'default'
+                            }
+                        }
+                    },
+                    data: [
+                        outAct[0], outAct[1], outAct[2], outAct[3], outAct[4], outAct[5],
+                        outAct[6], outAct[7], outAct[8], outAct[9], outAct[10],
+                        outAct[11], outAct[12], outAct[13], outAct[14], outAct[15],
+                        outAct[16], outAct[17], outAct[18], outAct[19], outAct[20],
+                        outAct[21], outAct[22], outAct[23], outAct[24], outAct[25],
+                        outAct[26], outAct[27], outAct[28], outAct[29]
+                    ]
+                }
+            ]
+        };
+        spChart.setOption(option);
+    }
 
-    let antTime = 0;
-    let deviceAnt = 0;
+
+    let inArr = [];
+    let limitArr = [];
+    let outArr = [];
+    let deviceArr = [];
+    let hoursArr = [];
+
+    for (let x = 0; x < 29; x++) {
+        inArr[x] = 0;
+        limitArr[x] = 0;
+        outArr[x] = 0;
+        deviceArr[x] = 0;
+        hoursArr[x] = x;
+    }
 
     seActivityDate.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
-        let axisTime = (new Date(eventData.time)).toLocaleTimeString();
-        let newTime = (new Date(eventData.time)).getTime();
-        let xTime = axisTime.substring(0,5);
-        inAct = eventData.inCount;
-        limitAct = eventData.limitCount;
-        outAct = eventData.outCount;
-        deviceAct = inAct + limitAct + outAct;
+        let len = eventData.length;
+        console.log(eventData, len);
 
-        let data0 = option.series[0].data;
-        let data1 = option.series[1].data;
-        let data2 = option.series[2].data;
-        let data3 = option.series[3].data;
-
-        // console.log(deviceAct, inAct, limitAct, outAct, newTime, antTime, xTime);
-        if (newTime >= antTime) {
-            if (deviceAct != deviceAnt) {
-                data0.shift();
-                data1.shift();
-                data2.shift();
-                data3.shift();
-                option.xAxis[0].data.shift();
-                data0.push(deviceAct);
-                data1.push(inAct);
-                data2.push(limitAct);
-                data3.push(outAct);
-                option.xAxis[0].data.push(xTime);
-
-                deviceAnt = deviceAct;
-            }
-            antTime = newTime;
-            spChart.setOption(option);
+        for (let i=0; i < len; i++) {
+            let axisTime = (new Date(eventData[i]['time'])).toLocaleTimeString();
+            let xTime = axisTime.substring(0,5);
+            inArr[i] = eventData[i]['inCount'];
+            limitArr[i] = eventData[i]['limitCount'];
+            outArr[i] = eventData[i]['outCount'];
+            deviceArr[i] = inArr[i] + limitArr[i] + outArr[i];
+            hoursArr[i] = xTime;
         }
+
+        echartActivity(hoursArr, deviceArr, inArr, limitArr, outArr);
+        console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
     }
 });
+
