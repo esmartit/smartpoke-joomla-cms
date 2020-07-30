@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			26th July, 2020
+	@build			30th July, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		default.php
@@ -51,7 +51,6 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dat
 $document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive/js/dataTables.responsive.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js');
-
 /***[/JCBGUI$$$$]***/
 
 
@@ -153,8 +152,8 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
             <div class="item form-group">
                 <label for="spotId" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPSENSOR_SPOT'); ?><span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6">
-                    <select id="selSpot" class="form-control" name="spotId">
-                    <option value="" selected disabled><?php echo JText::_('Select Spot'); ?></option>
+                    <select id="selSpot" class="form-control" name="spotId"">
+                    <option value="" selected disabled><?php echo JText::_('COM_SPSENSOR_SELECT_SPOT'); ?></option>
                     <?php $selSpot = $this->getSpotList();
                     foreach ($selSpot as $item) {
                         echo "<option value=".$item[0].">".$item[1]."</option>";
@@ -179,7 +178,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 <label for="zoneId" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPSENSOR_ZONE'); ?><span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6">
                     <select id="selZone" class="form-control" name="zoneId"">
-                    <option value="" selected><?php echo JText::_('Select Zone'); ?></option>
+                    <option value="" selected disabled><?php echo JText::_('COM_SPSENSOR_SELECT_ZONE'); ?></option>
                     <?php $selZone = $this->getZoneList();
                     foreach ($selZone as $item) {
                         echo "<option value=".$item[0].">".$item[1]."</option>";

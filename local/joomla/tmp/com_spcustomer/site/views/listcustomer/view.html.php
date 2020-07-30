@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		view.html.php
@@ -52,6 +52,25 @@ class SpcustomerViewListcustomer extends JViewLegacy
 
 		parent::display($tpl);
 	}
+
+
+    /***[JCBGUI.site_view.php_jview.42.$$$$]***/
+    public function getSpotList() {
+
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('spot_id', 'name')));
+        $query->from($db->quoteName('#__spspot_spot'));
+
+        $db->setQuery($query);
+        $spotList = $db->loadRowList();
+
+        return $spotList;
+
+    }
+    /***[/JCBGUI$$$$]***/
+
 
 	/**
 	 * Prepares the document
@@ -117,20 +136,4 @@ class SpcustomerViewListcustomer extends JViewLegacy
 		// use the helper htmlEscape method instead.
 		return SpcustomerHelper::htmlEscape($var, $this->_charset, $sorten, $length);
 	}
-
-    public function getSpotList() {
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('spot_id', 'name')));
-        $query->from($db->quoteName('#__spspot_spot'));
-
-        $db->setQuery($query);
-        $spotList = $db->loadRowList();
-
-        return $spotList;
-
-    }
-
 }

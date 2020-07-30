@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			23rd July, 2020
+	@build			30th July, 2020
 	@created		14th April, 2020
 	@package		SP Value
 	@subpackage		listvalue.php
@@ -148,5 +148,4 @@ class SpvalueModelListvalue extends JModelList
         }
         return $result;
     }
-
 }

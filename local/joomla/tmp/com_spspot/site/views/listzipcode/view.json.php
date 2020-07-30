@@ -4,10 +4,10 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.2
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
-	@subpackage		listzipcode.php
+	@subpackage		view.json.php
 	@author			Adolfo Zignago <https://www.esmartit.es>
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,26 +21,21 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\Utilities\ArrayHelper;
-
 /**
- * Spspot Model for Listzipcode
+ * Spspot View class for the Listzipcode
  */
-class SpspotModelListzipcode extends JModelList
+class SpspotViewListzipcode extends JViewLegacy
 {
-    public function getZipCodeList($cityId = null) {
+    // Overwriting JView display method
+    function display($tpl = null)
+    {
+        $input = JFactory::getApplication()->input;
 
-        $db = JFactory::getDbo();
+        $cityId = $input->getString('cityId');
 
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('zipcode', 'location')));
-        $query->from($db->quoteName('#__spzipcode_zipcode'));
-        $query->where($db->quoteName('city_id') . ' = ' . $db->quote($cityId));
-
-        $db->setQuery($query);
-        $zipcodeList = $db->loadObjectList();
-
-        return $zipcodeList;
+        $model = $this->getModel();
+        $result = $model->getZipCodeList($cityId);
+        echo new JResponseJson($result);
 
     }
 }

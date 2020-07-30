@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.2
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default.php
@@ -44,7 +44,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2><?php echo JText::_('COM_SPSPOT_LIST_OF_SPOTS'); ?><small></small></h2>
+            <h2><?php echo JText::_('COM_SPSPOT_LIST_OF_SPOT'); ?><small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                 <li class="dropdown">
@@ -70,7 +70,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                             <thead>
                             <tr class="headings">
                                 <th class='column-title'><?php echo JText::_('COM_SPSPOT_SPOT_ID'); ?></th>
-                                <th class='column-title'><?php echo JText::_('COM_SPSPOT_SPOT'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPSPOT_NAME'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPSPOT_BUSINESS_TYPE'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPSPOT_COUNTRY'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPSPOT_STATE'); ?></th>
@@ -116,7 +116,6 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="modal fade" id="spotModal" tabindex="-1" role="dialog" aria-labelledby="spotModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">

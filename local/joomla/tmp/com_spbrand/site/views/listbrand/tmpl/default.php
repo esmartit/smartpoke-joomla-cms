@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			26th July, 2020
+	@build			30th July, 2020
 	@created		6th April, 2020
 	@package		SP Brand
 	@subpackage		default.php
@@ -34,6 +34,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dat
 $document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive/js/dataTables.responsive.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js');
+
 /***[/JCBGUI$$$$]***/
 
 

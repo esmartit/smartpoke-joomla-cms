@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		listcustomer.php
