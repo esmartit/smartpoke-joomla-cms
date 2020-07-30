@@ -85,7 +85,6 @@
                        name="spot"
                        label="COM_SPCUSTOMER_CUSTOMER_SPOT_LABEL"
                        query="SELECT spot_id, name AS spot FROM #__spspot_spot WHERE published = 1"
-                       default=""
                        required="true"
                        key_field="spot_id"
                        value_field="spot"
@@ -96,42 +95,27 @@
                        label="COM_SPCUSTOMER_CUSTOMER_USERNAME_LABEL"
                        size="40"
                        maxlength="150"
-                       description="COM_SPCUSTOMER_CUSTOMER_USERNAME_DESCRIPTION"
+                       description="JFIELD_TITLE_DESC"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
                        required="true"
-                       filter="STRING"
-                       message="COM_SPCUSTOMER_CUSTOMER_USERNAME_MESSAGE"
-                       hint="COM_SPCUSTOMER_CUSTOMER_USERNAME_HINT" />
+                       filter="STRING" />
                 <!-- Firstname Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="firstname"
                        label="COM_SPCUSTOMER_CUSTOMER_FIRSTNAME_LABEL"
                        size="40"
                        maxlength="150"
-                       description="COM_SPCUSTOMER_CUSTOMER_FIRSTNAME_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
                        required="true"
-                       filter="STRING"
-                       message="COM_SPCUSTOMER_CUSTOMER_FIRSTNAME_MESSAGE"
-                       hint="COM_SPCUSTOMER_CUSTOMER_FIRSTNAME_HINT" />
+                       filter="STRING" />
                 <!-- Lastname Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="lastname"
                        label="COM_SPCUSTOMER_CUSTOMER_LASTNAME_LABEL"
                        size="40"
                        maxlength="150"
-                       description="COM_SPCUSTOMER_CUSTOMER_LASTNAME_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
-                       filter="STRING"
-                       message="COM_SPCUSTOMER_CUSTOMER_LASTNAME_MESSAGE"
-                       hint="COM_SPCUSTOMER_CUSTOMER_LASTNAME_HINT" />
+                       filter="STRING" />
                 <!-- Mobile_phone Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="mobile_phone"
@@ -152,12 +136,10 @@
                        label="COM_SPCUSTOMER_CUSTOMER_EMAIL_LABEL"
                        size="10"
                        maxlength="50"
-                       description="COM_SPCUSTOMER_CUSTOMER_EMAIL_DESCRIPTION"
                        class="text_area"
                        required="true"
                        filter="STRING"
                        validate="email"
-                       message="COM_SPCUSTOMER_CUSTOMER_EMAIL_MESSAGE"
                        hint="COM_SPCUSTOMER_CUSTOMER_EMAIL_HINT" />
                 <!-- Dateofbirth Field. Type: Calendar. (joomla)-->
                 <field type="calendar"
@@ -176,8 +158,7 @@
                        name="sex"
                        label="COM_SPCUSTOMER_CUSTOMER_SEX_LABEL"
                        class="btn-group btn-group-yesno"
-                       default="0"
-                       required="false">
+                       default="0">
                         <!-- Option Set.-->
                         <option value="1">COM_SPCUSTOMER_CUSTOMER_FEMALE</option>
                         <option value="0">COM_SPCUSTOMER_CUSTOMER_MALE</option>
@@ -188,21 +169,14 @@
                        label="COM_SPCUSTOMER_CUSTOMER_ZIPCODE_LABEL"
                        size="40"
                        maxlength="20"
-                       description="COM_SPCUSTOMER_CUSTOMER_ZIPCODE_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
-                       filter="STRING"
-                       message="COM_SPCUSTOMER_CUSTOMER_ZIPCODE_MESSAGE"
-                       hint="COM_SPCUSTOMER_CUSTOMER_ZIPCODE_HINT" />
+                       filter="STRING" />
                 <!-- Membership Field. Type: Radio. (joomla)-->
                 <field type="radio"
                        name="membership"
                        label="COM_SPCUSTOMER_CUSTOMER_MEMBERSHIP_LABEL"
                        class="btn-group btn-group-yesno"
-                       default="0"
-                       required="false">
+                       default="0">
                         <!-- Option Set.-->
                         <option value="1">COM_SPCUSTOMER_CUSTOMER_YES</option>
                         <option value="0">COM_SPCUSTOMER_CUSTOMER_NO</option>
@@ -212,8 +186,7 @@
                        name="communication"
                        label="COM_SPCUSTOMER_CUSTOMER_COMMUNICATION_LABEL"
                        class="btn-group btn-group-yesno"
-                       default="1"
-                       required="false">
+                       default="1">
                         <!-- Option Set.-->
                         <option value="1">COM_SPCUSTOMER_CUSTOMER_YES</option>
                         <option value="0">COM_SPCUSTOMER_CUSTOMER_NO</option>

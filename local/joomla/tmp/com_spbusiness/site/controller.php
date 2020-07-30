@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			22nd July, 2020
 	@created		13th April, 2020
 	@package		SP Business
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpbusinessController extends JControllerLegacy
 		if (SpbusinessHelper::checkString($view))
 		{
 			$views = array(
-				'businesstype'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpbusinessController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function businessCRUD() {
+
+        parent::display();
+    }
+
 }

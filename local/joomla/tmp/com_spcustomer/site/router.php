@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			29th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		router.php
@@ -77,11 +77,11 @@ class SpcustomerRouter extends JComponentRouterBase
 			return $segments;
 		}
 
-		if (isset($view) && isset($query['id']) && ($view === 'customer' || $view === 'listcustomer' || $view === 'itemcustomer'))
+		if (isset($view) && isset($query['id']) && ($view === 'listcustomer'))
 		{
 			if ($mId != (int) $query['id'] || $mView != $view)
 			{
-				if (($view === 'customer' || $view === 'listcustomer' || $view === 'itemcustomer'))
+				if (($view === 'listcustomer'))
 				{
 					$segments[] = $view;
 					$id = explode(':', $query['id']);
@@ -126,30 +126,8 @@ class SpcustomerRouter extends JComponentRouterBase
 		//Handle View and Identifier
 		switch($segments[0])
 		{
-			case 'customer':
-				$vars['view'] = 'customer';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				break;
 			case 'listcustomer':
 				$vars['view'] = 'listcustomer';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				elseif ($segments[$count-1])
-				{
-					$id = $this->getVar('customer', $segments[$count-1], 'alias', 'id');
-					if($id)
-					{
-						$vars['id'] = $id;
-					}
-				}
-				break;
-			case 'itemcustomer':
-				$vars['view'] = 'itemcustomer';
 				if (is_numeric($segments[$count-1]))
 				{
 					$vars['id'] = (int) $segments[$count-1];

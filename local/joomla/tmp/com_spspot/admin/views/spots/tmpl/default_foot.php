@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default_foot.php
@@ -23,5 +23,5 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <tr>
-	<td colspan="12"><?php echo $this->pagination->getListFooter(); ?></td>
+	<td colspan="13"><?php echo $this->pagination->getListFooter(); ?></td>
 </tr>

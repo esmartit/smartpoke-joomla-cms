@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			16th June, 2020
+	@build			27th July, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		campaign.php
@@ -39,10 +39,10 @@ class SpcampaignModelCampaign extends JModelAdmin
 		'details' => array(
 			'left' => array(
 				'smsemail',
-				'message_sms'
+				'message_sms',
+				'type'
 			),
 			'right' => array(
-                'type',
 				'deferred',
 				'deferreddate'
 			),

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			29th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		view.html.php
@@ -37,7 +37,6 @@ class SpcustomerViewListcustomer extends JViewLegacy
 		$this->user = JFactory::getUser();
 		// Initialise variables.
 		$this->items = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
 
 		// Set the toolbar
 		$this->addToolBar();
@@ -66,6 +65,9 @@ class SpcustomerViewListcustomer extends JViewLegacy
 		require_once( JPATH_COMPONENT_SITE.'/helpers/headercheck.php' );
 		// Initialize the header checker.
 		$HeaderCheck = new spcustomerHeaderCheck;
+
+		// Add View JavaScript File
+		$this->document->addScript(JURI::root(true) . "/components/com_spcustomer/assets/js/listcustomer.js", (SpcustomerHelper::jVersion()->isCompatible("3.8.0")) ? array("version" => "auto") : "text/javascript");
 		// load the meta description
 		if ($this->params->get('menu-meta_description'))
 		{
@@ -115,4 +117,20 @@ class SpcustomerViewListcustomer extends JViewLegacy
 		// use the helper htmlEscape method instead.
 		return SpcustomerHelper::htmlEscape($var, $this->_charset, $sorten, $length);
 	}
+
+    public function getSpotList() {
+
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('spot_id', 'name')));
+        $query->from($db->quoteName('#__spspot_spot'));
+
+        $db->setQuery($query);
+        $spotList = $db->loadRowList();
+
+        return $spotList;
+
+    }
+
 }

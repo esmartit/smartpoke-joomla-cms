@@ -100,35 +100,24 @@
                        label="COM_SPSPOT_SPOT_SPOT_ID_LABEL"
                        size="40"
                        maxlength="50"
-                       description="COM_SPSPOT_SPOT_SPOT_ID_DESCRIPTION"
+                       description="JFIELD_TITLE_DESC"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
                        required="true"
-                       filter="STRING"
-                       message="COM_SPSPOT_SPOT_SPOT_ID_MESSAGE"
-                       hint="COM_SPSPOT_SPOT_SPOT_ID_HINT" />
+                       filter="STRING" />
                 <!-- Name Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="name"
                        label="COM_SPSPOT_SPOT_NAME_LABEL"
                        size="40"
                        maxlength="150"
-                       description="COM_SPSPOT_SPOT_NAME_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
                        required="true"
-                       filter="STRING"
-                       message="COM_SPSPOT_SPOT_NAME_MESSAGE"
-                       hint="COM_SPSPOT_SPOT_NAME_HINT" />
+                       filter="STRING" />
                 <!-- Business Field. Type: Sql. (joomla)-->
                 <field type="sql"
                        name="business"
                        label="COM_SPSPOT_SPOT_BUSINESS_LABEL"
                        query="SELECT id, name AS business FROM #__spbusiness_businesstype WHERE published = 1"
-                       default=""
-                       description="COM_SPSPOT_SPOT_BUSINESS_DESCRIPTION"
                        key_field="id"
                        value_field="business"
                        translate="true" />
@@ -138,13 +127,8 @@
                        label="COM_SPSPOT_SPOT_LATITUDE_LABEL"
                        size="40"
                        maxlength="20"
-                       description="COM_SPSPOT_SPOT_LATITUDE_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
                        filter="STRING"
-                       message="COM_SPSPOT_SPOT_LATITUDE_MESSAGE"
                        hint="COM_SPSPOT_SPOT_LATITUDE_HINT" />
                 <!-- Longitude Field. Type: Text. (joomla)-->
                 <field type="text"
@@ -152,13 +136,8 @@
                        label="COM_SPSPOT_SPOT_LONGITUDE_LABEL"
                        size="40"
                        maxlength="20"
-                       description="COM_SPSPOT_SPOT_LONGITUDE_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
                        filter="STRING"
-                       message="COM_SPSPOT_SPOT_LONGITUDE_MESSAGE"
                        hint="COM_SPSPOT_SPOT_LONGITUDE_HINT" />
                 <!-- City Field. Type: Text. (joomla)-->
                 <field type="text"
@@ -166,42 +145,32 @@
                        label="COM_SPSPOT_SPOT_CITY_LABEL"
                        size="40"
                        maxlength="150"
-                       default=""
-                       description="COM_SPSPOT_SPOT_CITY_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       filter="STRING"
-                       message="COM_SPSPOT_SPOT_CITY_MESSAGE"
-                       hint="COM_SPSPOT_SPOT_CITY_HINT" />
+                       filter="STRING" />
                 <!-- Country Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="country"
                        label="COM_SPSPOT_SPOT_COUNTRY_LABEL"
                        size="40"
                        maxlength="150"
-                       default=""
-                       description="COM_SPSPOT_SPOT_COUNTRY_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       filter="STRING"
-                       message="COM_SPSPOT_SPOT_COUNTRY_MESSAGE"
-                       hint="COM_SPSPOT_SPOT_COUNTRY_HINT" />
+                       filter="STRING" />
                 <!-- State Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="state"
                        label="COM_SPSPOT_SPOT_STATE_LABEL"
                        size="40"
                        maxlength="150"
-                       default=""
-                       description="COM_SPSPOT_SPOT_STATE_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       filter="STRING"
-                       message="COM_SPSPOT_SPOT_STATE_MESSAGE"
-                       hint="COM_SPSPOT_SPOT_STATE_HINT" />
+                       filter="STRING" />
+                <!-- Zipcode Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="zipcode"
+                       label="COM_SPSPOT_SPOT_ZIPCODE_LABEL"
+                       size="40"
+                       maxlength="20"
+                       class="text_area"
+                       filter="STRING" />
                 <!-- Alias Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="alias"

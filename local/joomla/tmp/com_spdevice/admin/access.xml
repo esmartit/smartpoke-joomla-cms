@@ -22,7 +22,6 @@
 		<action name="device.version" title="COM_SPDEVICE_DEVICES_EDIT_VERSION" description="COM_SPDEVICE_DEVICES_EDIT_VERSION_DESC" />
 		<action name="device.export" title="COM_SPDEVICE_DEVICES_EXPORT" description="COM_SPDEVICE_DEVICES_EXPORT_DESC" />
 		<action name="device.import" title="COM_SPDEVICE_DEVICES_IMPORT" description="COM_SPDEVICE_DEVICES_IMPORT_DESC" />
-		<action name="site.itemdevice.access" title="COM_SPDEVICE_ITEMDEVICE_ACCESS_SITE" description="COM_SPDEVICE_ITEMDEVICE_ACCESS_SITE_DESC" />
 		<action name="site.listdevice.access" title="COM_SPDEVICE_LISTDEVICE_ACCESS_SITE" description="COM_SPDEVICE_LISTDEVICE_ACCESS_SITE_DESC" />
 	</section>
 	<section name="device">

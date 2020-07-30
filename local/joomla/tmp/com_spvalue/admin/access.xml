@@ -15,7 +15,6 @@
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
 		<action name="core.edit.created_by" title="COM_SPVALUE_EDIT_CREATED_BY" description="COM_SPVALUE_EDIT_CREATED_BY_DESC" />
 		<action name="core.edit.created" title="COM_SPVALUE_EDIT_CREATED_DATE" description="COM_SPVALUE_EDIT_CREATED_DATE_DESC" />
-		<action name="site.itemvalue.access" title="COM_SPVALUE_ITEMVALUE_ACCESS_SITE" description="COM_SPVALUE_ITEMVALUE_ACCESS_SITE_DESC" />
 		<action name="site.listvalue.access" title="COM_SPVALUE_LISTVALUE_ACCESS_SITE" description="COM_SPVALUE_LISTVALUE_ACCESS_SITE_DESC" />
 		<action name="value.access" title="COM_SPVALUE_VALUES_ACCESS" description="COM_SPVALUE_VALUES_ACCESS_DESC" />
 		<action name="value.batch" title="COM_SPVALUE_VALUES_BATCH_USE" description="COM_SPVALUE_VALUES_BATCH_USE_DESC" />

@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		details_left.php
@@ -36,7 +36,11 @@ $fields_tab_layout = 'fields_' . $layout_path_array[1];
 // get the fields
 $fields = $displayData->get($fields_tab_layout) ?: array(
 	'spot_id',
-	'alias'
+	'name',
+	'alias',
+	'business',
+	'latitude',
+	'longitude'
 );
 
 $hiddenFields = $displayData->get('hidden_fields') ?: array();

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			16th June, 2020
+	@build			27th July, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpcampaignController extends JControllerLegacy
 		if (SpcampaignHelper::checkString($view))
 		{
 			$views = array(
-				'campaign'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpcampaignController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function campaignCRUD() {
+
+        parent::display();
+    }
+
 }

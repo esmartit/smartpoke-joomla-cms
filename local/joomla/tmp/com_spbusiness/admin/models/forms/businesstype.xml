@@ -100,14 +100,10 @@
                        label="COM_SPBUSINESS_BUSINESSTYPE_NAME_LABEL"
                        size="40"
                        maxlength="150"
-                       description="COM_SPBUSINESS_BUSINESSTYPE_NAME_DESCRIPTION"
+                       description="JFIELD_TITLE_DESC"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
                        required="true"
-                       filter="STRING"
-                       message="COM_SPBUSINESS_BUSINESSTYPE_NAME_MESSAGE"
-                       hint="COM_SPBUSINESS_BUSINESSTYPE_NAME_HINT" />
+                       filter="STRING" />
                 <!-- Alias Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="alias"

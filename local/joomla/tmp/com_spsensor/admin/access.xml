@@ -15,7 +15,6 @@
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
 		<action name="core.edit.created_by" title="COM_SPSENSOR_EDIT_CREATED_BY" description="COM_SPSENSOR_EDIT_CREATED_BY_DESC" />
 		<action name="core.edit.created" title="COM_SPSENSOR_EDIT_CREATED_DATE" description="COM_SPSENSOR_EDIT_CREATED_DATE_DESC" />
-		<action name="site.itemsensor.access" title="COM_SPSENSOR_ITEMSENSOR_ACCESS_SITE" description="COM_SPSENSOR_ITEMSENSOR_ACCESS_SITE_DESC" />
 		<action name="site.listsensor.access" title="COM_SPSENSOR_LISTSENSOR_ACCESS_SITE" description="COM_SPSENSOR_LISTSENSOR_ACCESS_SITE_DESC" />
 		<action name="sensor.access" title="COM_SPSENSOR_SENSORS_ACCESS" description="COM_SPSENSOR_SENSORS_ACCESS_DESC" />
 		<action name="sensor.batch" title="COM_SPSENSOR_SENSORS_BATCH_USE" description="COM_SPSENSOR_SENSORS_BATCH_USE_DESC" />

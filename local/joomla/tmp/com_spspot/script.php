@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		script.php
@@ -248,7 +248,7 @@ class com_spspotInstallerScript
 			$spot->type_title = 'Spspot Spot';
 			$spot->type_alias = 'com_spspot.spot';
 			$spot->table = '{"special": {"dbtable": "#__spspot_spot","key": "id","type": "Spot","prefix": "spspotTable","config": "array()"},"common": {"dbtable": "#__ucm_content","key": "ucm_id","type": "Corecontent","prefix": "JTable","config": "array()"}}';
-			$spot->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "spot_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot_id":"spot_id","name":"name","business":"business","latitude":"latitude","longitude":"longitude","city":"city","country":"country","state":"state","alias":"alias"}}';
+			$spot->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "spot_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot_id":"spot_id","name":"name","business":"business","latitude":"latitude","longitude":"longitude","city":"city","country":"country","state":"state","zipcode":"zipcode","alias":"alias"}}';
 			$spot->router = 'SpspotHelperRoute::getSpotRoute';
 			$spot->content_history_options = '{"formFile": "administrator/components/com_spspot/models/forms/spot.xml","hideFields": ["asset_id","checked_out","checked_out_time","version"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","business"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"}]}';
 
@@ -286,7 +286,7 @@ class com_spspotInstallerScript
 			$spot->type_title = 'Spspot Spot';
 			$spot->type_alias = 'com_spspot.spot';
 			$spot->table = '{"special": {"dbtable": "#__spspot_spot","key": "id","type": "Spot","prefix": "spspotTable","config": "array()"},"common": {"dbtable": "#__ucm_content","key": "ucm_id","type": "Corecontent","prefix": "JTable","config": "array()"}}';
-			$spot->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "spot_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot_id":"spot_id","name":"name","business":"business","latitude":"latitude","longitude":"longitude","city":"city","country":"country","state":"state","alias":"alias"}}';
+			$spot->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "spot_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot_id":"spot_id","name":"name","business":"business","latitude":"latitude","longitude":"longitude","city":"city","country":"country","state":"state","zipcode":"zipcode","alias":"alias"}}';
 			$spot->router = 'SpspotHelperRoute::getSpotRoute';
 			$spot->content_history_options = '{"formFile": "administrator/components/com_spspot/models/forms/spot.xml","hideFields": ["asset_id","checked_out","checked_out_time","version"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","business"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"}]}';
 
@@ -314,7 +314,7 @@ class com_spspotInstallerScript
 			echo '<a target="_blank" href="https://www.esmartit.es" title="SP Spot">
 				<img src="components/com_spspot/assets/images/vdm-component.png"/>
 				</a>
-				<h3>Upgrade to Version 1.0.1 Was Successful! Let us know if anything is not working as expected.</h3>';
+				<h3>Upgrade to Version 1.0.2 Was Successful! Let us know if anything is not working as expected.</h3>';
 		}
 		return true;
 	}

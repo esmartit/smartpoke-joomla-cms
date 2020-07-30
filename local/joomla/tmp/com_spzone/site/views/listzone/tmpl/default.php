@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			23rd July, 2020
 	@created		14th April, 2020
 	@package		SP Zone
 	@subpackage		default.php
@@ -38,8 +38,8 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 
 
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_spzone'); ?>" method="post" name="adminForm" id="adminForm">
 <?php echo $this->toolbar->render(); ?>
+
 <!--[JCBGUI.site_view.default.34.$$$$]-->
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -59,7 +59,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 <div class="clearfix"></div>
             </div>
             <?php if ($this->user->authorise('core.create', 'com_spzone')): ?>
-                <a href="?option=com_spzone&view=zone&layout=edit" class="btn btn-light"><?php echo JText::_('COM_SPZONE_NEW_ZONE'); ?></a>
+                <button type="button" class="open-zoneModal btn btn-light" data-toggle="modal" data-target="#zoneModal" data-title="New" data-info='{"id":"", "zone":"", "option":"C"}'><?php echo JText::_('COM_SPZONE_NEW_ZONE'); ?></button>
                 <br />
             <?php endif; ?>
             <div class="x_content">
@@ -69,7 +69,6 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                 <tr class="headings">
-                                    <th class='column-title'><?php echo JText::_('COM_SPZONE_ID'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPZONE_ZONE'); ?></th>
                                     <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPZONE_ACTION'); ?></span></th>
                                 </tr>
@@ -82,15 +81,14 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         $canDo = SpzoneHelper::getActions('zone',$item,'zones');
                                     ?>
                                     <tr>
-                                        <td class="a-right a-right "><?php echo $item->id; ?></td>
                                         <td class=""><?php echo $item->name; ?></td>
                                         <td class=" last">
-                                           <a href="<?php echo JRoute::_(SpzoneHelperRoute::getItemzoneRoute($item->slug)); ?>" class="btn-sm btn-outline-secondary"><i class="fa fa-eye"></i></a>
+                                           <a type="button" class="open-zoneModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#zoneModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "zone":"<?php echo $item->name; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
                                             <?php if ($canDo->get('core.edit')): ?>
-                                                <a href="index.php?option=com_spzone&view=zones&task=zone.edit&id=<?php echo $item->id; ?>" class="btn-sm btn-outline-secondary"><i class="fa fa-edit"></i></a>
+                                                <a type="button" class="open-zoneModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#zoneModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "zone":"<?php echo $item->name; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
                                             <?php endif; ?>
                                             <?php if ($canDo->get('core.delete')): ?>
-                                                <a href="" class="btn-sm btn-outline-secondary"><i class="fa fa-trash"></i></a>
+                                                <a type="button" class="open-zoneModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#zoneModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "zone":"<?php echo $item->name; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -103,17 +101,37 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="zoneModal" tabindex="-1" role="dialog" aria-labelledby="zoneModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="zoneModalLabel">Zone</h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm" class="form-horizontal form-label-left>
+                    <div class="item form-group">
+                <div class="col-md-6 col-sm-6">
+                    <input type="hidden" class="form-control" id="id">
+                    <input type="hidden" class="form-control" id="option">
+                </div>
+            </div>
+            <div class="item form-group">
+                <label for="zone" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPZONE_ZONE'); ?><span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6">
+                    <input type="text" class="form-control" id="zone" required="required">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"><?php echo JText::_('COM_SPZONE_CLOSE'); ?></button>
+                <button type="submit" class="btn btn-success" id="btnSave"><?php echo JText::_('COM_SPZONE_SAVE'); ?></button>
+            </div>
+            </form>
+        </div>
+    </div>
 </div><!--[/JCBGUI$$$$]-->
 
-
-<?php //if (isset($this->items) && isset($this->pagination) && isset($this->pagination->pagesTotal) && $this->pagination->pagesTotal > 1): ?>
-<!--	<div class="pagination">-->
-<!--		--><?php //if ($this->params->def('show_pagination_results', 1)) : ?>
-<!--			<p class="counter pull-right"> --><?php //echo $this->pagination->getPagesCounter(); ?><!-- --><?php //echo $this->pagination->getLimitBox(); ?><!--</p>-->
-<!--		--><?php //endif; ?>
-<!--		--><?php //echo $this->pagination->getPagesLinks(); ?>
-<!--	</div>-->
-<?php //endif; ?>
-<input type="hidden" name="task" value="" />
-<?php echo JHtml::_('form.token'); ?>
-</form>

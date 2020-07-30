@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			16th June, 2020
+	@build			27th July, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		route.php
@@ -54,49 +54,6 @@ abstract class SpcampaignHelperRoute
 		if ($catid > 1)
 		{
 			$categories = JCategories::getInstance('spcampaign.listcampaign');
-			$category = $categories->get($catid);
-			if ($category)
-			{
-				$needles['category'] = array_reverse($category->getPath());
-				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
-	/**
-	 * @param int The route of the Itemcampaign
-	 */
-	public static function getItemcampaignRoute($id = 0, $catid = 0)
-	{
-		if ($id > 0)
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemcampaign'  => array((int) $id)
-			);
-			// Create the link
-			$link = 'index.php?option=com_spcampaign&view=itemcampaign&id='. $id;
-		}
-		else
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemcampaign'  => array()
-			);
-			// Create the link but don't add the id.
-			$link = 'index.php?option=com_spcampaign&view=itemcampaign';
-		}
-		if ($catid > 1)
-		{
-			$categories = JCategories::getInstance('spcampaign.itemcampaign');
 			$category = $categories->get($catid);
 			if ($category)
 			{

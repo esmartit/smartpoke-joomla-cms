@@ -23,7 +23,6 @@
 		<action name="customer.export" title="COM_SPCUSTOMER_CUSTOMERS_EXPORT" description="COM_SPCUSTOMER_CUSTOMERS_EXPORT_DESC" />
 		<action name="customer.import" title="COM_SPCUSTOMER_CUSTOMERS_IMPORT" description="COM_SPCUSTOMER_CUSTOMERS_IMPORT_DESC" />
 		<action name="customer.submenu" title="COM_SPCUSTOMER_CUSTOMERS_SUBMENU" description="COM_SPCUSTOMER_CUSTOMERS_SUBMENU_DESC" />
-		<action name="site.itemcustomer.access" title="COM_SPCUSTOMER_ITEMCUSTOMER_ACCESS_SITE" description="COM_SPCUSTOMER_ITEMCUSTOMER_ACCESS_SITE_DESC" />
 		<action name="site.listcustomer.access" title="COM_SPCUSTOMER_LISTCUSTOMER_ACCESS_SITE" description="COM_SPCUSTOMER_LISTCUSTOMER_ACCESS_SITE_DESC" />
 	</section>
 	<section name="customer">

@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		spots.php
@@ -42,7 +42,8 @@ class SpspotModelSpots extends JModelList
 				'a.name','name',
 				'a.city','city',
 				'a.country','country',
-				'a.state','state'
+				'a.state','state',
+				'a.zipcode','zipcode'
 			);
 		}
 
@@ -77,6 +78,9 @@ class SpspotModelSpots extends JModelList
 
 		$state = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state');
 		$this->setState('filter.state', $state);
+
+		$zipcode = $this->getUserStateFromRequest($this->context . '.filter.zipcode', 'filter_zipcode');
+		$this->setState('filter.zipcode', $zipcode);
         
 		$sorting = $this->getUserStateFromRequest($this->context . '.filter.sorting', 'filter_sorting', 0, 'int');
 		$this->setState('filter.sorting', $sorting);
@@ -172,7 +176,7 @@ class SpspotModelSpots extends JModelList
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search) . '%');
-				$query->where('(a.spot_id LIKE '.$search.' OR a.name LIKE '.$search.' OR a.city LIKE '.$search.' OR a.country LIKE '.$search.' OR a.state LIKE '.$search.' OR a.alias LIKE '.$search.')');
+				$query->where('(a.spot_id LIKE '.$search.' OR a.name LIKE '.$search.' OR a.city LIKE '.$search.' OR a.country LIKE '.$search.' OR a.state LIKE '.$search.' OR a.zipcode LIKE '.$search.' OR a.alias LIKE '.$search.')');
 			}
 		}
 
@@ -180,6 +184,26 @@ class SpspotModelSpots extends JModelList
 		if ($spot_id = $this->getState('filter.spot_id'))
 		{
 			$query->where('a.spot_id = ' . $db->quote($db->escape($spot_id)));
+		}
+		// Filter by City.
+		if ($city = $this->getState('filter.city'))
+		{
+			$query->where('a.city = ' . $db->quote($db->escape($city)));
+		}
+		// Filter by Country.
+		if ($country = $this->getState('filter.country'))
+		{
+			$query->where('a.country = ' . $db->quote($db->escape($country)));
+		}
+		// Filter by State.
+		if ($state = $this->getState('filter.state'))
+		{
+			$query->where('a.state = ' . $db->quote($db->escape($state)));
+		}
+		// Filter by Zipcode.
+		if ($zipcode = $this->getState('filter.zipcode'))
+		{
+			$query->where('a.zipcode = ' . $db->quote($db->escape($zipcode)));
 		}
 
 		// Add the list ordering clause.
@@ -310,6 +334,7 @@ class SpspotModelSpots extends JModelList
 		$id .= ':' . $this->getState('filter.city');
 		$id .= ':' . $this->getState('filter.country');
 		$id .= ':' . $this->getState('filter.state');
+		$id .= ':' . $this->getState('filter.zipcode');
 
 		return parent::getStoreId($id);
 	}

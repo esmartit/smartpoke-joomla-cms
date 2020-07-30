@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			23rd July, 2020
 	@created		14th April, 2020
 	@package		SP Device
 	@subpackage		route.php
@@ -54,49 +54,6 @@ abstract class SpdeviceHelperRoute
 		if ($catid > 1)
 		{
 			$categories = JCategories::getInstance('spdevice.listdevice');
-			$category = $categories->get($catid);
-			if ($category)
-			{
-				$needles['category'] = array_reverse($category->getPath());
-				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
-	/**
-	 * @param int The route of the Itemdevice
-	 */
-	public static function getItemdeviceRoute($id = 0, $catid = 0)
-	{
-		if ($id > 0)
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemdevice'  => array((int) $id)
-			);
-			// Create the link
-			$link = 'index.php?option=com_spdevice&view=itemdevice&id='. $id;
-		}
-		else
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemdevice'  => array()
-			);
-			// Create the link but don't add the id.
-			$link = 'index.php?option=com_spdevice&view=itemdevice';
-		}
-		if ($catid > 1)
-		{
-			$categories = JCategories::getInstance('spdevice.itemdevice');
 			$category = $categories->get($catid);
 			if ($category)
 			{

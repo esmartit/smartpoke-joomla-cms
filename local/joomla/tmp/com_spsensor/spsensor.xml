@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.2" method="upgrade">
 	<name>COM_SPSENSOR</name>
-	<creationDate>5th June, 2020</creationDate>
+	<creationDate>26th July, 2020</creationDate>
 	<author>Adolfo Zignago</author>
 	<authorEmail>adolfo.zignago@esmartit.es</authorEmail>
 	<authorUrl>https://www.esmartit.es</authorUrl>

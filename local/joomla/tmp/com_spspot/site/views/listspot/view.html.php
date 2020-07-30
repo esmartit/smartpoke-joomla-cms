@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			24th June, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		view.html.php
@@ -37,7 +37,6 @@ class SpspotViewListspot extends JViewLegacy
 		$this->user = JFactory::getUser();
 		// Initialise variables.
 		$this->items = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
 
 		// Set the toolbar
 		$this->addToolBar();
@@ -54,6 +53,39 @@ class SpspotViewListspot extends JViewLegacy
 		parent::display($tpl);
 	}
 
+
+/***[JCBGUI.site_view.php_jview.30.$$$$]***/
+    public function getBusinessList() {
+
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('id', 'name')));
+        $query->from($db->quoteName('#__spbusiness_businesstype'));
+
+        $db->setQuery($query);
+        $businessList = $db->loadRowList();
+
+        return $businessList;
+
+    }
+
+    public function getCountryList() {
+
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('country_code_isotwo', 'name')));
+        $query->from($db->quoteName('#__spcountry_country'));
+
+        $db->setQuery($query);
+        $countryList = $db->loadRowList();
+
+        return $countryList;
+
+    }/***[/JCBGUI$$$$]***/
+
+
 	/**
 	 * Prepares the document
 	 */
@@ -66,6 +98,9 @@ class SpspotViewListspot extends JViewLegacy
 		require_once( JPATH_COMPONENT_SITE.'/helpers/headercheck.php' );
 		// Initialize the header checker.
 		$HeaderCheck = new spspotHeaderCheck;
+
+		// Add View JavaScript File
+		$this->document->addScript(JURI::root(true) . "/components/com_spspot/assets/js/listspot.js", (SpspotHelper::jVersion()->isCompatible("3.8.0")) ? array("version" => "auto") : "text/javascript");
 		// load the meta description
 		if ($this->params->get('menu-meta_description'))
 		{

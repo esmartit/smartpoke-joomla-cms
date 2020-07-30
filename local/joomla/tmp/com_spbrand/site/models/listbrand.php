@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			6th June, 2020
+	@build			26th July, 2020
 	@created		6th April, 2020
 	@package		SP Brand
 	@subpackage		listbrand.php
@@ -59,6 +59,8 @@ class SpbrandModelListbrand extends JModelList
 		$this->app = JFactory::getApplication();
 		$this->input = $this->app->input;
 		$this->initSet = true; 
+		// Make sure all records load, since no pagination allowed.
+		$this->setState('list.limit', 0);
 		// Get a db connection.
 		$db = JFactory::getDbo();
 
@@ -114,4 +116,33 @@ class SpbrandModelListbrand extends JModelList
 		// return items
 		return $items;
 	}
+
+    public function saveBrand($values = null, $option = null)
+    {
+        $this->user = JFactory::getUser();
+        $this->userId = $this->user->get('id');
+
+        $brand = new stdClass();
+        $brand->name = $values[1];
+        $brand->published = $values[2];
+        $brand->alias = strtolower($values[1]);
+        $db = JFactory::getDBO();
+        if ($option == 'C') {
+            $brand->id = null;
+            $brand->created_by = $this->userId;
+            $brand->created = date("Y-m-d h:i:sa");
+            $brand->access = 1;
+            $brand->params = '';
+            $brand->metakey= '';
+            $brand->metadesc = '';
+            $brand->metadata = '{"robots":"","author":"","rights":""}';
+            $result = $db->insertObject('#__spbrand_brand', $brand, 'id');
+        } else {
+            $brand->id = $values[0];
+            $brand->modified_by = $this->userId;
+            $brand->modified = date("Y-m-d h:i:sa");
+            $result = $db->updateObject('#__spbrand_brand', $brand, 'id');
+        }
+        return $result;
+    }
 }

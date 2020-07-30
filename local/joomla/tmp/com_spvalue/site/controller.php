@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			23rd July, 2020
 	@created		14th April, 2020
 	@package		SP Value
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpvalueController extends JControllerLegacy
 		if (SpvalueHelper::checkString($view))
 		{
 			$views = array(
-				'value'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpvalueController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function valueCRUD() {
+
+        parent::display();
+    }
+
 }

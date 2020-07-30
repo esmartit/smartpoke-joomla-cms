@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			23rd July, 2020
 	@created		14th April, 2020
 	@package		SP Zone
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpzoneController extends JControllerLegacy
 		if (SpzoneHelper::checkString($view))
 		{
 			$views = array(
-				'zone'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpzoneController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function zoneCRUD() {
+
+        parent::display();
+    }
+
 }

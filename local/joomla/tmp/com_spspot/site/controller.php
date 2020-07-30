@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			24th June, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpspotController extends JControllerLegacy
 		if (SpspotHelper::checkString($view))
 		{
 			$views = array(
-				'spot'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpspotController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function spotCRUD() {
+
+        parent::display();
+    }
+
 }

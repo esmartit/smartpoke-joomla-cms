@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			26th July, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpsensorController extends JControllerLegacy
 		if (SpsensorHelper::checkString($view))
 		{
 			$views = array(
-				'sensor'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpsensorController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function sensorCRUD() {
+
+        parent::display();
+    }
+
 }
