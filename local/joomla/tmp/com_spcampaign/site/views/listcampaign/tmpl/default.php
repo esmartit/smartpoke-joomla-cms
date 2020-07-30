@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			27th July, 2020
+	@build			30th July, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		default.php
@@ -70,7 +70,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2><?php echo JText::_('COM_SPCAMPAIGN_LIST_OF_CAMPAIGNS'); ?><small></small></h2>
+            <h2><?php echo JText::_('COM_SPCAMPAIGN_LIST_OF_CAMPAIGN'); ?><small></small></h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                     <li class="dropdown">
@@ -100,7 +100,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED_DATA'); ?></th>
+                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED_DATE'); ?></th>
                                     <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPCAMPAIGN_ACTION'); ?></span></th>
                                 </tr>
                                 </thead>
@@ -265,7 +265,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                         <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?><span class="required">*</span></label>
                         <div class="col-md-3 col-sm-3">
                             <select id="selType" class="form-control" name="type">
-                                <option value="" selected><?php echo JText::_('COM_SPCAMPAIGN_SELECT_TYPE'); ?></option>
+                                <option value="" selected disabled><?php echo JText::_('COM_SPCAMPAIGN_SELECT_TYPE'); ?></option>
                                 <option value="LOGIN"><?php echo JText::_('COM_SPCAMPAIGN_LOGIN'); ?></option>
                                 <option value="REGISTER"><?php echo JText::_('COM_SPCAMPAIGN_REGISTER'); ?></option>
                                 <option value="CAMPAIGN"><?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN'); ?></option>

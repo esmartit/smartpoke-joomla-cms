@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			22nd July, 2020
+	@build			30th July, 2020
 	@created		13th April, 2020
 	@package		SP Business
 	@subpackage		listbusiness.php
@@ -145,4 +145,5 @@ class SpbusinessModelListbusiness extends JModelList
         }
         return $result;
     }
+
 }

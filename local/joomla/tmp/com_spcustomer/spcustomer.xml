@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.2" method="upgrade">
 	<name>COM_SPCUSTOMER</name>
-	<creationDate>29th July, 2020</creationDate>
+	<creationDate>30th July, 2020</creationDate>
 	<author>Adolfo Zignago</author>
 	<authorEmail>adolfo.zignago@esmartit.es</authorEmail>
 	<authorUrl>https://esmartit.es</authorUrl>

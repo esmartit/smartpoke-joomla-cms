@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.2
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default_vdm.php

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			22nd July, 2020
+	@build			30th July, 2020
 	@created		13th April, 2020
 	@package		SP Business
 	@subpackage		default.php
@@ -33,8 +33,7 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.
 $document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dataTables.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive/js/dataTables.responsive.min.js');
-$document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js');
-/***[/JCBGUI$$$$]***/
+$document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js');/***[/JCBGUI$$$$]***/
 
 
 ?>

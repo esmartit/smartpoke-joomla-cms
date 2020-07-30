@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		default.php
@@ -59,7 +59,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
-            <h2><?php echo JText::_('COM_SPCUSTOMER_LIST_OF_CUSTOMERS'); ?><small></small></h2>
+            <h2><?php echo JText::_('COM_SPCUSTOMER_LIST_OF_CUSTOMER'); ?><small></small></h2>
             <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                 <li class="dropdown">
@@ -85,17 +85,17 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                             <thead>
                             <tr class="headings">
                                 <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_USERNAME'); ?></th>
-                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_FIRSTNAME'); ?></th>
-                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_LASTNAME'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_FIRST_NAME'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_LAST_NAME'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_MOBILE'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_EMAIL'); ?></th>
-                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_BIRTHDATE'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_BIRTH_DATE'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_SEX'); ?></th>
-                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_ZIP_CODE'); ?></th>
-                                <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPCUSTOMER_ACTION'); ?></span></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_ZIPCODE'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_SPOT'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_MEMBERSHIP'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_COMMUNICATION'); ?></th>
-                                <th class='column-title'><?php echo JText::_('COM_SPCUSTOMER_SPOT'); ?></th>
+                                <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPCUSTOMER_ACTION'); ?></span></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -118,15 +118,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         <td class="" align="center"><span class='fa fa-female'></td>
                                     <?php endif; ?>
                                     <td class="" align="center"><?php echo $item->zipcode; ?></td>
-                                    <td class=" last">
-                                        <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
-                                        <?php if ($canDo->get('core.edit')): ?>
-                                            <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
-                                        <?php endif; ?>
-                                        <?php if ($canDo->get('core.delete')): ?>
-                                            <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
-                                        <?php endif; ?>
-                                    </td>
+                                    <td class="a-right a-right "><?php echo $item->spot_name; ?></td>
                                     <?php if ($item-> membership == 0): ?>
                                         <td class="" align="center"><span class='glyphicon glyphicon-remove' style='color:#FF0000'></td>
                                     <?php else : ?>
@@ -137,7 +129,15 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <?php else : ?>
                                         <td class="" align="center"><span class='glyphicon glyphicon-ok' style='color:#00FF00'></td>
                                     <?php endif; ?>
-                                    <td class="a-right a-right "><?php echo $item->spot_name; ?></td>
+                                    <td class=" last">
+                                        <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
+                                        <?php if ($canDo->get('core.edit')): ?>
+                                            <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                        <?php endif; ?>
+                                        <?php if ($canDo->get('core.delete')): ?>
+                                            <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -199,7 +199,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label for="mobilePhone" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCUSTOMER_MOBILE_PHONE'); ?><span class="required">*</span></label>
+                        <label for="mobilePhone" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCUSTOMER_MOBILE'); ?><span class="required">*</span></label>
                         <div class="col-md-6 col-sm-6">
                             <input type="text" class="form-control" id="mobilePhone" required="required">
                             <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
@@ -240,7 +240,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                     </div>
                     <div class="item form-group">
                         <div class="col-md-12 col-sm-12">
-                            <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCUSTOMER_MEMBER_SHIP'); ?></label>
+                            <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCUSTOMER_MEMBERSHIP'); ?></label>
                             <div class="col-md-3 col-sm-3">
                                 <div class="checkbox">
                                     <input id="member" name="member" type="checkbox" class="flat">

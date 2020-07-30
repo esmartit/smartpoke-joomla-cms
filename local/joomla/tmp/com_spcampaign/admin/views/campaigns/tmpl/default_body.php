@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			27th July, 2020
+	@build			30th July, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		default_body.php

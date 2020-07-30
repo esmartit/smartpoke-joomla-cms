@@ -4,10 +4,10 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.2
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
-	@subpackage		listcity.php
+	@subpackage		view.html.php
 	@author			Adolfo Zignago <https://www.esmartit.es>
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,26 +21,15 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\Utilities\ArrayHelper;
-
 /**
- * Spspot Model for Listcity
+ * Spspot View class for the Listcity
  */
-class SpspotModelListcity extends JModelList
+class SpspotViewListcity extends JViewLegacy
 {
-    public function getCityList($stateId = null) {
+    // Overwriting JView display method
+    function display($tpl = null)
+    {
 
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('city_code', 'name')));
-        $query->from($db->quoteName('#__spcity_city'));
-        $query->where($db->quoteName('state_id') . ' = ' . $db->quote($stateId));
-
-        $db->setQuery($query);
-        $countryList = $db->loadObjectList();
-
-        return $countryList;
-
+        parent::display($tpl);
     }
 }

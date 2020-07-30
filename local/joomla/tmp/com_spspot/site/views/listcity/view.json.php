@@ -4,10 +4,10 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.2
-	@build			29th July, 2020
+	@build			30th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
-	@subpackage		liststate.php
+	@subpackage		view.json.php
 	@author			Adolfo Zignago <https://www.esmartit.es>
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -21,28 +21,21 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\Utilities\ArrayHelper;
-
 /**
- * Spspot Model for Liststate
+ * Spspot View class for the Listcity
  */
-class SpspotModelListstate extends JModelList
+class SpspotViewListcity extends JViewLegacy
 {
-
-    public function getStateList($countryId = null)
+    // Overwriting JView display method
+    function display($tpl = null)
     {
+        $input = JFactory::getApplication()->input;
 
-        $db = JFactory::getDbo();
+        $stateId = $input->getString('stateId');
 
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('state_code', 'name')));
-        $query->from($db->quoteName('#__spstate_state'));
-        $query->where($db->quoteName('country_id') . ' = ' . $db->quote($countryId));
-
-        $db->setQuery($query);
-        $stateList = $db->loadObjectList();
-
-        return $stateList;
+        $model = $this->getModel();
+        $result = $model->getCityList($stateId);
+        echo new JResponseJson($result);
 
     }
 }
