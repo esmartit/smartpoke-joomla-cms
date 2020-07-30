@@ -15,7 +15,6 @@
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
 		<action name="core.edit.created_by" title="COM_SPSPOT_EDIT_CREATED_BY" description="COM_SPSPOT_EDIT_CREATED_BY_DESC" />
 		<action name="core.edit.created" title="COM_SPSPOT_EDIT_CREATED_DATE" description="COM_SPSPOT_EDIT_CREATED_DATE_DESC" />
-		<action name="site.itemspot.access" title="COM_SPSPOT_ITEMSPOT_ACCESS_SITE" description="COM_SPSPOT_ITEMSPOT_ACCESS_SITE_DESC" />
 		<action name="site.listspot.access" title="COM_SPSPOT_LISTSPOT_ACCESS_SITE" description="COM_SPSPOT_LISTSPOT_ACCESS_SITE_DESC" />
 		<action name="spot.access" title="COM_SPSPOT_SPOTS_ACCESS" description="COM_SPSPOT_SPOTS_ACCESS_DESC" />
 		<action name="spot.batch" title="COM_SPSPOT_SPOTS_BATCH_USE" description="COM_SPSPOT_SPOTS_BATCH_USE_DESC" />

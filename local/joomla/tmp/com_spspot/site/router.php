@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			24th June, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		router.php
@@ -77,11 +77,11 @@ class SpspotRouter extends JComponentRouterBase
 			return $segments;
 		}
 
-		if (isset($view) && isset($query['id']) && ($view === 'spot' || $view === 'listspot' || $view === 'itemspot'))
+		if (isset($view) && isset($query['id']) && ($view === 'listspot'))
 		{
 			if ($mId != (int) $query['id'] || $mView != $view)
 			{
-				if (($view === 'spot' || $view === 'listspot' || $view === 'itemspot'))
+				if (($view === 'listspot'))
 				{
 					$segments[] = $view;
 					$id = explode(':', $query['id']);
@@ -126,30 +126,8 @@ class SpspotRouter extends JComponentRouterBase
 		//Handle View and Identifier
 		switch($segments[0])
 		{
-			case 'spot':
-				$vars['view'] = 'spot';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				break;
 			case 'listspot':
 				$vars['view'] = 'listspot';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				elseif ($segments[$count-1])
-				{
-					$id = $this->getVar('spot', $segments[$count-1], 'alias', 'id');
-					if($id)
-					{
-						$vars['id'] = $id;
-					}
-				}
-				break;
-			case 'itemspot':
-				$vars['view'] = 'itemspot';
 				if (is_numeric($segments[$count-1]))
 				{
 					$vars['id'] = (int) $segments[$count-1];

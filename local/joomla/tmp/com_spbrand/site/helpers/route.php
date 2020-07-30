@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			26th July, 2020
 	@created		6th April, 2020
 	@package		SP Brand
 	@subpackage		route.php
@@ -54,49 +54,6 @@ abstract class SpbrandHelperRoute
 		if ($catid > 1)
 		{
 			$categories = JCategories::getInstance('spbrand.listbrand');
-			$category = $categories->get($catid);
-			if ($category)
-			{
-				$needles['category'] = array_reverse($category->getPath());
-				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
-	/**
-	 * @param int The route of the Itembrand
-	 */
-	public static function getItembrandRoute($id = 0, $catid = 0)
-	{
-		if ($id > 0)
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itembrand'  => array((int) $id)
-			);
-			// Create the link
-			$link = 'index.php?option=com_spbrand&view=itembrand&id='. $id;
-		}
-		else
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itembrand'  => array()
-			);
-			// Create the link but don't add the id.
-			$link = 'index.php?option=com_spbrand&view=itembrand';
-		}
-		if ($catid > 1)
-		{
-			$categories = JCategories::getInstance('spbrand.itembrand');
 			$category = $categories->get($catid);
 			if ($category)
 			{

@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `#__spspot_spot` (
 	`name` VARCHAR(255) NOT NULL DEFAULT '',
 	`spot_id` VARCHAR(50) NOT NULL DEFAULT '',
 	`state` VARCHAR(255) NULL DEFAULT '',
+	`zipcode` VARCHAR(50) NOT NULL DEFAULT '',
 	`params` text NOT NULL,
 	`published` TINYINT(3) NOT NULL DEFAULT 1,
 	`created_by` INT(10) unsigned NOT NULL DEFAULT 0,

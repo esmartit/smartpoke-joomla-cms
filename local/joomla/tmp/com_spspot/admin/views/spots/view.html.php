@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		view.html.php
@@ -225,6 +225,126 @@ class SpspotViewSpots extends JViewLegacy
 				);
 			}
 		}
+
+		// Set City Selection
+		$this->cityOptions = $this->getTheCitySelections();
+		// We do some sanitation for City filter
+		if (SpspotHelper::checkArray($this->cityOptions) &&
+			isset($this->cityOptions[0]->value) &&
+			!SpspotHelper::checkString($this->cityOptions[0]->value))
+		{
+			unset($this->cityOptions[0]);
+		}
+		// Only load City filter if it has values
+		if (SpspotHelper::checkArray($this->cityOptions))
+		{
+			// City Filter
+			JHtmlSidebar::addFilter(
+				'- Select '.JText::_('COM_SPSPOT_SPOT_CITY_LABEL').' -',
+				'filter_city',
+				JHtml::_('select.options', $this->cityOptions, 'value', 'text', $this->state->get('filter.city'))
+			);
+
+			if ($this->canBatch && $this->canCreate && $this->canEdit)
+			{
+				// City Batch Selection
+				JHtmlBatch_::addListSelection(
+					'- Keep Original '.JText::_('COM_SPSPOT_SPOT_CITY_LABEL').' -',
+					'batch[city]',
+					JHtml::_('select.options', $this->cityOptions, 'value', 'text')
+				);
+			}
+		}
+
+		// Set Country Selection
+		$this->countryOptions = $this->getTheCountrySelections();
+		// We do some sanitation for Country filter
+		if (SpspotHelper::checkArray($this->countryOptions) &&
+			isset($this->countryOptions[0]->value) &&
+			!SpspotHelper::checkString($this->countryOptions[0]->value))
+		{
+			unset($this->countryOptions[0]);
+		}
+		// Only load Country filter if it has values
+		if (SpspotHelper::checkArray($this->countryOptions))
+		{
+			// Country Filter
+			JHtmlSidebar::addFilter(
+				'- Select '.JText::_('COM_SPSPOT_SPOT_COUNTRY_LABEL').' -',
+				'filter_country',
+				JHtml::_('select.options', $this->countryOptions, 'value', 'text', $this->state->get('filter.country'))
+			);
+
+			if ($this->canBatch && $this->canCreate && $this->canEdit)
+			{
+				// Country Batch Selection
+				JHtmlBatch_::addListSelection(
+					'- Keep Original '.JText::_('COM_SPSPOT_SPOT_COUNTRY_LABEL').' -',
+					'batch[country]',
+					JHtml::_('select.options', $this->countryOptions, 'value', 'text')
+				);
+			}
+		}
+
+		// Set State Selection
+		$this->stateOptions = $this->getTheStateSelections();
+		// We do some sanitation for State filter
+		if (SpspotHelper::checkArray($this->stateOptions) &&
+			isset($this->stateOptions[0]->value) &&
+			!SpspotHelper::checkString($this->stateOptions[0]->value))
+		{
+			unset($this->stateOptions[0]);
+		}
+		// Only load State filter if it has values
+		if (SpspotHelper::checkArray($this->stateOptions))
+		{
+			// State Filter
+			JHtmlSidebar::addFilter(
+				'- Select '.JText::_('COM_SPSPOT_SPOT_STATE_LABEL').' -',
+				'filter_state',
+				JHtml::_('select.options', $this->stateOptions, 'value', 'text', $this->state->get('filter.state'))
+			);
+
+			if ($this->canBatch && $this->canCreate && $this->canEdit)
+			{
+				// State Batch Selection
+				JHtmlBatch_::addListSelection(
+					'- Keep Original '.JText::_('COM_SPSPOT_SPOT_STATE_LABEL').' -',
+					'batch[state]',
+					JHtml::_('select.options', $this->stateOptions, 'value', 'text')
+				);
+			}
+		}
+
+		// Set Zipcode Selection
+		$this->zipcodeOptions = $this->getTheZipcodeSelections();
+		// We do some sanitation for Zipcode filter
+		if (SpspotHelper::checkArray($this->zipcodeOptions) &&
+			isset($this->zipcodeOptions[0]->value) &&
+			!SpspotHelper::checkString($this->zipcodeOptions[0]->value))
+		{
+			unset($this->zipcodeOptions[0]);
+		}
+		// Only load Zipcode filter if it has values
+		if (SpspotHelper::checkArray($this->zipcodeOptions))
+		{
+			// Zipcode Filter
+			JHtmlSidebar::addFilter(
+				'- Select '.JText::_('COM_SPSPOT_SPOT_ZIPCODE_LABEL').' -',
+				'filter_zipcode',
+				JHtml::_('select.options', $this->zipcodeOptions, 'value', 'text', $this->state->get('filter.zipcode'))
+			);
+
+			if ($this->canBatch && $this->canCreate && $this->canEdit)
+			{
+				// Zipcode Batch Selection
+				JHtmlBatch_::addListSelection(
+					'- Keep Original '.JText::_('COM_SPSPOT_SPOT_ZIPCODE_LABEL').' -',
+					'batch[zipcode]',
+					JHtml::_('select.options', $this->zipcodeOptions, 'value', 'text')
+				);
+			}
+		}
 	}
 
 	/**
@@ -275,6 +395,7 @@ class SpspotViewSpots extends JViewLegacy
 			'a.city' => JText::_('COM_SPSPOT_SPOT_CITY_LABEL'),
 			'a.country' => JText::_('COM_SPSPOT_SPOT_COUNTRY_LABEL'),
 			'a.state' => JText::_('COM_SPSPOT_SPOT_STATE_LABEL'),
+			'a.zipcode' => JText::_('COM_SPSPOT_SPOT_ZIPCODE_LABEL'),
 			'a.id' => JText::_('JGRID_HEADING_ID')
 		);
 	}
@@ -305,6 +426,134 @@ class SpspotViewSpots extends JViewLegacy
 			{
 				// Now add the spot_id and its text to the options array
 				$_filter[] = JHtml::_('select.option', $spot_id, $spot_id);
+			}
+			return $_filter;
+		}
+		return false;
+	}
+
+	protected function getTheCitySelections()
+	{
+		// Get a db connection.
+		$db = JFactory::getDbo();
+
+		// Create a new query object.
+		$query = $db->getQuery(true);
+
+		// Select the text.
+		$query->select($db->quoteName('city'));
+		$query->from($db->quoteName('#__spspot_spot'));
+		$query->order($db->quoteName('city') . ' ASC');
+
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+
+		$results = $db->loadColumn();
+
+		if ($results)
+		{
+			$results = array_unique($results);
+			$_filter = array();
+			foreach ($results as $city)
+			{
+				// Now add the city and its text to the options array
+				$_filter[] = JHtml::_('select.option', $city, $city);
+			}
+			return $_filter;
+		}
+		return false;
+	}
+
+	protected function getTheCountrySelections()
+	{
+		// Get a db connection.
+		$db = JFactory::getDbo();
+
+		// Create a new query object.
+		$query = $db->getQuery(true);
+
+		// Select the text.
+		$query->select($db->quoteName('country'));
+		$query->from($db->quoteName('#__spspot_spot'));
+		$query->order($db->quoteName('country') . ' ASC');
+
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+
+		$results = $db->loadColumn();
+
+		if ($results)
+		{
+			$results = array_unique($results);
+			$_filter = array();
+			foreach ($results as $country)
+			{
+				// Now add the country and its text to the options array
+				$_filter[] = JHtml::_('select.option', $country, $country);
+			}
+			return $_filter;
+		}
+		return false;
+	}
+
+	protected function getTheStateSelections()
+	{
+		// Get a db connection.
+		$db = JFactory::getDbo();
+
+		// Create a new query object.
+		$query = $db->getQuery(true);
+
+		// Select the text.
+		$query->select($db->quoteName('state'));
+		$query->from($db->quoteName('#__spspot_spot'));
+		$query->order($db->quoteName('state') . ' ASC');
+
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+
+		$results = $db->loadColumn();
+
+		if ($results)
+		{
+			$results = array_unique($results);
+			$_filter = array();
+			foreach ($results as $state)
+			{
+				// Now add the state and its text to the options array
+				$_filter[] = JHtml::_('select.option', $state, $state);
+			}
+			return $_filter;
+		}
+		return false;
+	}
+
+	protected function getTheZipcodeSelections()
+	{
+		// Get a db connection.
+		$db = JFactory::getDbo();
+
+		// Create a new query object.
+		$query = $db->getQuery(true);
+
+		// Select the text.
+		$query->select($db->quoteName('zipcode'));
+		$query->from($db->quoteName('#__spspot_spot'));
+		$query->order($db->quoteName('zipcode') . ' ASC');
+
+		// Reset the query using our newly populated query object.
+		$db->setQuery($query);
+
+		$results = $db->loadColumn();
+
+		if ($results)
+		{
+			$results = array_unique($results);
+			$_filter = array();
+			foreach ($results as $zipcode)
+			{
+				// Now add the zipcode and its text to the options array
+				$_filter[] = JHtml::_('select.option', $zipcode, $zipcode);
 			}
 			return $_filter;
 		}

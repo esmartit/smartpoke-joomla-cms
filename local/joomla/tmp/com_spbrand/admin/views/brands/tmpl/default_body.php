@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			26th July, 2020
 	@created		6th April, 2020
 	@package		SP Brand
 	@subpackage		default_body.php

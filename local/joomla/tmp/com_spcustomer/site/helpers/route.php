@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			29th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		route.php
@@ -54,49 +54,6 @@ abstract class SpcustomerHelperRoute
 		if ($catid > 1)
 		{
 			$categories = JCategories::getInstance('spcustomer.listcustomer');
-			$category = $categories->get($catid);
-			if ($category)
-			{
-				$needles['category'] = array_reverse($category->getPath());
-				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
-	/**
-	 * @param int The route of the Itemcustomer
-	 */
-	public static function getItemcustomerRoute($id = 0, $catid = 0)
-	{
-		if ($id > 0)
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemcustomer'  => array((int) $id)
-			);
-			// Create the link
-			$link = 'index.php?option=com_spcustomer&view=itemcustomer&id='. $id;
-		}
-		else
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemcustomer'  => array()
-			);
-			// Create the link but don't add the id.
-			$link = 'index.php?option=com_spcustomer&view=itemcustomer';
-		}
-		if ($catid > 1)
-		{
-			$categories = JCategories::getInstance('spcustomer.itemcustomer');
 			$category = $categories->get($catid);
 			if ($category)
 			{

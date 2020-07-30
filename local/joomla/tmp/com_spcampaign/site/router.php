@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			16th June, 2020
+	@build			27th July, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		router.php
@@ -77,11 +77,11 @@ class SpcampaignRouter extends JComponentRouterBase
 			return $segments;
 		}
 
-		if (isset($view) && isset($query['id']) && ($view === 'campaign' || $view === 'listcampaign' || $view === 'itemcampaign'))
+		if (isset($view) && isset($query['id']) && ($view === 'listcampaign'))
 		{
 			if ($mId != (int) $query['id'] || $mView != $view)
 			{
-				if (($view === 'campaign' || $view === 'listcampaign' || $view === 'itemcampaign'))
+				if (($view === 'listcampaign'))
 				{
 					$segments[] = $view;
 					$id = explode(':', $query['id']);
@@ -126,30 +126,8 @@ class SpcampaignRouter extends JComponentRouterBase
 		//Handle View and Identifier
 		switch($segments[0])
 		{
-			case 'campaign':
-				$vars['view'] = 'campaign';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				break;
 			case 'listcampaign':
 				$vars['view'] = 'listcampaign';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				elseif ($segments[$count-1])
-				{
-					$id = $this->getVar('campaign', $segments[$count-1], 'alias', 'id');
-					if($id)
-					{
-						$vars['id'] = $id;
-					}
-				}
-				break;
-			case 'itemcampaign':
-				$vars['view'] = 'itemcampaign';
 				if (is_numeric($segments[$count-1]))
 				{
 					$vars['id'] = (int) $segments[$count-1];

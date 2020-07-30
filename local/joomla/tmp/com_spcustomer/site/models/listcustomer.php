@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			29th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		listcustomer.php
@@ -59,6 +59,8 @@ class SpcustomerModelListcustomer extends JModelList
 		$this->app = JFactory::getApplication();
 		$this->input = $this->app->input;
 		$this->initSet = true; 
+		// Make sure all records load, since no pagination allowed.
+		$this->setState('list.limit', 0);
 		// Get a db connection.
 		$db = JFactory::getDbo();
 
@@ -120,4 +122,44 @@ class SpcustomerModelListcustomer extends JModelList
 		// return items
 		return $items;
 	}
+
+    public function saveCustomer($values = null, $option = null)
+    {
+        $this->user = JFactory::getUser();
+        $this->userId = $this->user->get('id');
+
+        $objTable = new stdClass();
+        $objTable->spot = $values[1];
+        $objTable->username = $values[2];
+        $objTable->firstname = $values[3];
+        $objTable->lastname = $values[4];
+        $objTable->mobile_phone = $values[5];
+        $objTable->email = $values[6];
+        $objTable->dateofbirth = $values[7];
+        $objTable->sex = $values[8];
+        $objTable->zipcode = $values[9];
+        $objTable->membership = $values[10];
+        $objTable->communication = $values[11];
+        $objTable->published = $values[12];
+        $objTable->alias = strtolower($values[2]);
+
+        $db = JFactory::getDBO();
+        if ($option == 'C') {
+            $objTable->id = null;
+            $objTable->created_by = $this->userId;
+            $objTable->created = date("Y-m-d h:i:sa");
+            $objTable->access = 1;
+            $objTable->params = '';
+            $objTable->metakey= '';
+            $objTable->metadesc = '';
+            $objTable->metadata = '{"robots":"","author":"","rights":""}';
+            $result = $db->insertObject('#__spcustomer_customer', $objTable, 'id');
+        } else {
+            $objTable->id = $values[0];
+            $objTable->modified_by = $this->userId;
+            $objTable->modified = date("Y-m-d h:i:sa");
+            $result = $db->updateObject('#__spcustomer_customer', $objTable, 'id');
+        }
+        return $result;
+    }
 }

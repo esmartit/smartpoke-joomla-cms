@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			23rd July, 2020
 	@created		14th April, 2020
 	@package		SP Device
 	@subpackage		router.php
@@ -77,11 +77,11 @@ class SpdeviceRouter extends JComponentRouterBase
 			return $segments;
 		}
 
-		if (isset($view) && isset($query['id']) && ($view === 'device' || $view === 'listdevice' || $view === 'itemdevice'))
+		if (isset($view) && isset($query['id']) && ($view === 'listdevice'))
 		{
 			if ($mId != (int) $query['id'] || $mView != $view)
 			{
-				if (($view === 'device' || $view === 'listdevice' || $view === 'itemdevice'))
+				if (($view === 'listdevice'))
 				{
 					$segments[] = $view;
 					$id = explode(':', $query['id']);
@@ -126,30 +126,8 @@ class SpdeviceRouter extends JComponentRouterBase
 		//Handle View and Identifier
 		switch($segments[0])
 		{
-			case 'device':
-				$vars['view'] = 'device';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				break;
 			case 'listdevice':
 				$vars['view'] = 'listdevice';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				elseif ($segments[$count-1])
-				{
-					$id = $this->getVar('device', $segments[$count-1], 'alias', 'id');
-					if($id)
-					{
-						$vars['id'] = $id;
-					}
-				}
-				break;
-			case 'itemdevice':
-				$vars['view'] = 'itemdevice';
 				if (is_numeric($segments[$count-1]))
 				{
 					$vars['id'] = (int) $segments[$count-1];

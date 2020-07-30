@@ -100,14 +100,10 @@
                        label="COM_SPCAMPAIGN_CAMPAIGN_NAME_LABEL"
                        size="40"
                        maxlength="150"
-                       description="COM_SPCAMPAIGN_CAMPAIGN_NAME_DESCRIPTION"
+                       description="JFIELD_TITLE_DESC"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
                        required="true"
-                       filter="STRING"
-                       message="COM_SPCAMPAIGN_CAMPAIGN_NAME_MESSAGE"
-                       hint="COM_SPCAMPAIGN_CAMPAIGN_NAME_HINT" />
+                       filter="STRING" />
                 <!-- Validdate Field. Type: Calendar. (joomla)-->
                 <field type="calendar"
                        name="validdate"
@@ -136,8 +132,6 @@
                        name="type"
                        label="COM_SPCAMPAIGN_CAMPAIGN_TYPE_LABEL"
                        class="list_class"
-                       multiple="false"
-                       useglobal="false"
                        default="0">
                         <!-- Option Set.-->
                         <option value="LOGIN">COM_SPCAMPAIGN_CAMPAIGN_LOGIN</option>
@@ -155,7 +149,6 @@
                 <field type="editor"
                        name="message_email"
                        label="COM_SPCAMPAIGN_CAMPAIGN_MESSAGE_EMAIL_LABEL"
-                       description="COM_SPCAMPAIGN_CAMPAIGN_MESSAGE_EMAIL_DESCRIPTION"
                        editor="desired|alternative"
                        filter="safehtml"
                        required="false" />

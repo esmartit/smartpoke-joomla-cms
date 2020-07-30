@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			26th July, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		listsensor.php
@@ -59,6 +59,8 @@ class SpsensorModelListsensor extends JModelList
 		$this->app = JFactory::getApplication();
 		$this->input = $this->app->input;
 		$this->initSet = true; 
+		// Make sure all records load, since no pagination allowed.
+		$this->setState('list.limit', 0);
 		// Get a db connection.
 		$db = JFactory::getDbo();
 
@@ -126,4 +128,40 @@ class SpsensorModelListsensor extends JModelList
 		// return items
 		return $items;
 	}
+
+    public function saveSensor($values = null, $option = null)
+    {
+        $this->user = JFactory::getUser();
+        $this->userId = $this->user->get('id');
+
+        $objTable = new stdClass();
+        $objTable->spot = $values[1];
+        $objTable->sensor_id = $values[2];
+        $objTable->location = $values[3];
+        $objTable->zone = $values[4];
+        $objTable->pwr_in = $values[5];
+        $objTable->pwr_limit = $values[6];
+        $objTable->pwr_out = $values[7];
+        $objTable->published = $values[8];
+        $objTable->alias = strtolower($values[2]);
+        $db = JFactory::getDBO();
+        if ($option == 'C') {
+            $objTable->id = null;
+            $objTable->created_by = $this->userId;
+            $objTable->created = date("Y-m-d h:i:sa");
+            $objTable->access = 1;
+            $objTable->params = '';
+            $objTable->metakey= '';
+            $objTable->metadesc = '';
+            $objTable->metadata = '{"robots":"","author":"","rights":""}';
+            $result = $db->insertObject('#__spsensor_sensor', $objTable, 'id');
+        } else {
+            $objTable->id = $values[0];
+            $objTable->modified_by = $this->userId;
+            $objTable->modified = date("Y-m-d h:i:sa");
+            $result = $db->updateObject('#__spsensor_sensor', $objTable, 'id');
+        }
+        return $result;
+    }
+
 }

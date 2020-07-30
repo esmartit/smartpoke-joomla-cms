@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			26th July, 2020
 	@created		6th April, 2020
 	@package		SP Brand
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpbrandController extends JControllerLegacy
 		if (SpbrandHelper::checkString($view))
 		{
 			$views = array(
-				'brand'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpbrandController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function brandCRUD() {
+
+        parent::display();
+    }
+
 }

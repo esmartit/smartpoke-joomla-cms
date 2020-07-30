@@ -3,7 +3,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			26th July, 2020
 	@created		14th April, 2020
 	@package		SP Device
 	@subpackage		submitbutton.js

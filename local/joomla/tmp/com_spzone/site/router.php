@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			23rd July, 2020
 	@created		14th April, 2020
 	@package		SP Zone
 	@subpackage		router.php
@@ -77,11 +77,11 @@ class SpzoneRouter extends JComponentRouterBase
 			return $segments;
 		}
 
-		if (isset($view) && isset($query['id']) && ($view === 'zone' || $view === 'listzone' || $view === 'itemzone'))
+		if (isset($view) && isset($query['id']) && ($view === 'listzone'))
 		{
 			if ($mId != (int) $query['id'] || $mView != $view)
 			{
-				if (($view === 'zone' || $view === 'listzone' || $view === 'itemzone'))
+				if (($view === 'listzone'))
 				{
 					$segments[] = $view;
 					$id = explode(':', $query['id']);
@@ -126,30 +126,8 @@ class SpzoneRouter extends JComponentRouterBase
 		//Handle View and Identifier
 		switch($segments[0])
 		{
-			case 'zone':
-				$vars['view'] = 'zone';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				break;
 			case 'listzone':
 				$vars['view'] = 'listzone';
-				if (is_numeric($segments[$count-1]))
-				{
-					$vars['id'] = (int) $segments[$count-1];
-				}
-				elseif ($segments[$count-1])
-				{
-					$id = $this->getVar('zone', $segments[$count-1], 'alias', 'id');
-					if($id)
-					{
-						$vars['id'] = $id;
-					}
-				}
-				break;
-			case 'itemzone':
-				$vars['view'] = 'itemzone';
 				if (is_numeric($segments[$count-1]))
 				{
 					$vars['id'] = (int) $segments[$count-1];

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			22nd July, 2020
 	@created		13th April, 2020
 	@package		SP Business
 	@subpackage		view.html.php
@@ -37,7 +37,6 @@ class SpbusinessViewListbusiness extends JViewLegacy
 		$this->user = JFactory::getUser();
 		// Initialise variables.
 		$this->items = $this->get('Items');
-		$this->pagination = $this->get('Pagination');
 
 		// Set the toolbar
 		$this->addToolBar();
@@ -66,6 +65,9 @@ class SpbusinessViewListbusiness extends JViewLegacy
 		require_once( JPATH_COMPONENT_SITE.'/helpers/headercheck.php' );
 		// Initialize the header checker.
 		$HeaderCheck = new spbusinessHeaderCheck;
+
+		// Add View JavaScript File
+		$this->document->addScript(JURI::root(true) . "/components/com_spbusiness/assets/js/listbusiness.js", (SpbusinessHelper::jVersion()->isCompatible("3.8.0")) ? array("version" => "auto") : "text/javascript");
 		// load the meta description
 		if ($this->params->get('menu-meta_description'))
 		{

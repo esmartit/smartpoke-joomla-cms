@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		default_body.php
@@ -110,6 +110,9 @@ $edit = "index.php?option=com_spspot&view=spots&task=spot.edit";
 		</td>
 		<td class="hidden-phone">
 			<?php echo $this->escape($item->state); ?>
+		</td>
+		<td class="hidden-phone">
+			<?php echo $this->escape($item->zipcode); ?>
 		</td>
 		<td class="center">
 		<?php if ($canDo->get('core.edit.state')) : ?>

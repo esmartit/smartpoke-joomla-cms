@@ -2,8 +2,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		submitbutton.js

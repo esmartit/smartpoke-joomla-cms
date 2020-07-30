@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			5th June, 2020
+	@build			29th July, 2020
 	@created		24th April, 2020
 	@package		SP Customer
 	@subpackage		controller.php
@@ -118,7 +118,7 @@ class SpcustomerController extends JControllerLegacy
 		if (SpcustomerHelper::checkString($view))
 		{
 			$views = array(
-				'customer'
+
 				);
 			// check if this is a edit view
 			if (in_array($view,$views))
@@ -128,4 +128,10 @@ class SpcustomerController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function customerCRUD() {
+
+        parent::display();
+    }
+
 }

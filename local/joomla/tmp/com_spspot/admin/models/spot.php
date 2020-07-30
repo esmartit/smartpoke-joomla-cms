@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.1
-	@build			13th July, 2020
+	@version		1.0.2
+	@build			29th July, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		spot.php
@@ -39,16 +39,17 @@ class SpspotModelSpot extends JModelAdmin
 		'details' => array(
 			'left' => array(
 				'spot_id',
-				'alias'
-			),
-			'right' => array(
 				'name',
+				'alias',
 				'business',
 				'latitude',
-				'longitude',
+				'longitude'
+			),
+			'right' => array(
 				'country',
 				'state',
-				'city'
+				'city',
+				'zipcode'
 			)
 		)
 	);

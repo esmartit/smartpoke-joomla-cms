@@ -99,7 +99,6 @@
                        name="spot"
                        label="COM_SPSENSOR_SENSOR_SPOT_LABEL"
                        query="SELECT spot_id, name AS spot FROM #__spspot_spot WHERE published = 1"
-                       default=""
                        required="true"
                        key_field="spot_id"
                        value_field="spot"
@@ -110,29 +109,18 @@
                        label="COM_SPSENSOR_SENSOR_SENSOR_ID_LABEL"
                        size="40"
                        maxlength="50"
-                       description="COM_SPSENSOR_SENSOR_SENSOR_ID_DESCRIPTION"
+                       description="JFIELD_TITLE_DESC"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
                        required="true"
-                       filter="STRING"
-                       message="COM_SPSENSOR_SENSOR_SENSOR_ID_MESSAGE"
-                       hint="COM_SPSENSOR_SENSOR_SENSOR_ID_HINT" />
+                       filter="STRING" />
                 <!-- Location Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="location"
                        label="COM_SPSENSOR_SENSOR_LOCATION_LABEL"
                        size="40"
                        maxlength="150"
-                       default=""
-                       description="COM_SPSENSOR_SENSOR_LOCATION_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
                        filter="STRING"
-                       message="COM_SPSENSOR_SENSOR_LOCATION_MESSAGE"
-                       hint="COM_SPSENSOR_SENSOR_LOCATION_HINT"
                        autocomplete="on" />
                 <!-- Pwr_in Field. Type: Text. (joomla)-->
                 <field type="text"
@@ -141,15 +129,8 @@
                        size="40"
                        maxlength="150"
                        default="-35"
-                       description="COM_SPSENSOR_SENSOR_PWR_IN_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
-                       filter="STRING"
-                       message="COM_SPSENSOR_SENSOR_PWR_IN_MESSAGE"
-                       hint="COM_SPSENSOR_SENSOR_PWR_IN_HINT"
-                       autocomplete="on" />
+                       filter="STRING" />
                 <!-- Pwr_limit Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="pwr_limit"
@@ -157,15 +138,8 @@
                        size="40"
                        maxlength="150"
                        default="-43"
-                       description="COM_SPSENSOR_SENSOR_PWR_LIMIT_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
-                       filter="STRING"
-                       message="COM_SPSENSOR_SENSOR_PWR_LIMIT_MESSAGE"
-                       hint="COM_SPSENSOR_SENSOR_PWR_LIMIT_HINT"
-                       autocomplete="on" />
+                       filter="STRING" />
                 <!-- Pwr_out Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="pwr_out"
@@ -173,23 +147,14 @@
                        size="40"
                        maxlength="150"
                        default="-52"
-                       description="COM_SPSENSOR_SENSOR_PWR_OUT_DESCRIPTION"
                        class="text_area"
-                       readonly="false"
-                       disabled="false"
-                       required="false"
-                       filter="STRING"
-                       message="COM_SPSENSOR_SENSOR_PWR_OUT_MESSAGE"
-                       hint="COM_SPSENSOR_SENSOR_PWR_OUT_HINT"
-                       autocomplete="on" />
+                       filter="STRING" />
                 <!-- Zone Field. Type: Sql. (joomla)-->
                 <field type="sql"
                        name="zone"
                        label="COM_SPSENSOR_SENSOR_ZONE_LABEL"
                        query="SELECT id, name AS zone FROM #__spzone_zone WHERE published = 1"
-                       default=""
                        required="true"
-                       description="COM_SPSENSOR_SENSOR_ZONE_DESCRIPTION"
                        key_field="id"
                        value_field="zone"
                        translate="true" />
