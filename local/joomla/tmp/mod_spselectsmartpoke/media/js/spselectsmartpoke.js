@@ -7,6 +7,8 @@ let campaignId = '';
 
 $(document).ready( function() {
 
+    getCountryList();
+
     if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
     console.log('init_IonRangeSlider');
 
@@ -33,22 +35,140 @@ $(document).ready( function() {
     $('#datatable-offline').DataTable({responsive: true});
     $('#datatable-database').DataTable({responsive: true});
     $('#datatable-file').DataTable({responsive: true});
-    showTableColumns();
+    // showTableColumns();
 });
 
-function setSpotCity() {
-    $('#cityId').val('');
-    getSpotCity();
-}
-
-function getSpotCity() {
-    let cityid = $('#cityId').val();
+function getCountryList() {
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectsmartpoke',  // to target: spselectsmartpoke
-        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectSmartPokeHelper
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotCountry',  // to target: function getSpotCountryAjax in class ModSPSelectOnlineHelper
+        format       : 'json'
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selCountryS").empty();
+            $("#selCountryS").append("<option value='' selected>All Countries</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selCountryS").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            getStateList();
+        });
+
+}
+
+function getStateList() {
+    let countryId = $('#selCountryS').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotState',  // to target: function getSpotStateAjax in class ModSPSelectOnlineHelper
         format       : 'json',
-        data         : cityid
+        data         : countryId
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selStateS").empty();
+            $("#selStateS").append("<option value='' selected>All States</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selStateS").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            getSpotList();
+        });
+
+}
+
+function getCityList() {
+    let countryId = $('#selCountryS').val();
+    let stateId = $('#selStateS').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotCity',  // to target: function getSpotCityAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : {'countryId': countryId, 'stateId': stateId}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selCityS").empty();
+            $("#selCityS").append("<option value='' selected>All Cities</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selCityS").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            getSpotList();
+        });
+
+}
+
+function getZipCodeList() {
+    let countryId = $('#selCountryS').val();
+    let stateId = $('#selStateS').val();
+    let cityId = $('#selCityS').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotZipCode',  // to target: function getSpotZipCodeAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : {'countryId': countryId, 'stateId': stateId, 'cityId': cityId}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selZipCodeS").empty();
+            $("#selZipCodeS").append("<option value='' selected>All ZipCodes</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selZipCodeS").append("<option value='"+id+"'>"+id+" - "+name+"</option>");
+            }
+        });
+}
+
+function getSpotList() {
+    let countryId = $('#selCountryS').val();
+    let stateId = $('#selStateS').val();
+    let cityId = $('#selCityS').val();
+    let zipcodeId = $('#selZipCodeS').val();
+
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : {'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId}
     };
     $.ajax({
         method: 'GET',
@@ -66,18 +186,21 @@ function getSpotCity() {
 
                 $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getSensorSpot();
-            showTableColumns();
+            // showTableColumns();
         });
-
 }
 
-function getSensorSpot() {
+function getSensorZoneList() {
+    getSensorList();
+    getZoneList();
+}
+
+function getSensorList() {
     let spotid = $('#selSpot').val();
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
-        method       : 'getSensors',  // to target: function getSensorsAjax in class ModSPSelectSmartPokeHelper
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSensors',  // to target: function getSensorsAjax in class ModSPSelectOnlineHelper
         format       : 'json',
         data         : spotid
     };
@@ -97,7 +220,34 @@ function getSensorSpot() {
 
                 $("#selSensor").append("<option value='"+id+"'>"+name+"</option>");
             }
-            showTableColumns();
+        });
+}
+
+function getZoneList() {
+    let spotid = $('#selSpot').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getZones',  // to target: function getZonesAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : spotid
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selZone").empty();
+            $("#selZone").append("<option value=''>All Zones</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selZone").append("<option value='"+id+"'>"+name+"</option>");
+            }
         });
 }
 
@@ -113,7 +263,7 @@ $(document).ready(function () {
     });
 });
 
-function getCampaigns(smsemail = '1'){
+function getCampaigns(smsemail = '1') {
     let request = {
         option       : 'com_ajax',
         module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
@@ -140,17 +290,24 @@ function getCampaigns(smsemail = '1'){
         });
 }
 
-function showTableColumns(){
-    let city = $('#cityId').val();
+function showTableColumns() {
+    let countryId = $('#selCountryS').val();
+    let stateId = $('#selStateS').val();
+    let cityId = $('#selCityS').val();
+    let zipcodeId = $('#selZipCodeS').val();
     let spot = $('#selSpot').val();
     let sensor = $('#selSensor').val();
+    let zone = $('#selZone').val();
 
     let request = {
         option       : 'com_ajax',
         module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
         method       : 'getSpotSensors',  // to target: function getSpotSensorsAjax in class ModSPSelectSmartPokeHelper
         format       : 'json',
-        data         : {"city": city, "spot": spot, "sensor": sensor}
+        data         : {
+                        'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId,
+                        'spot': spot, 'sensor': sensor, 'zone': zone
+                    }
     };
     $.ajax({
         method: 'GET',
@@ -194,11 +351,10 @@ function showOnlineOpt(){
     document.getElementById("hourend").style.display = 'block';
     $('#timeend').prop('disabled', true);
     document.getElementById("rangeDate").style.display = 'none';
-    document.getElementById("selcountry").style.display = 'block';
-    document.getElementById("selstate").style.display = 'block';
-    document.getElementById("selcity").style.display = 'block';
-    document.getElementById("selspots").style.display = 'block';
-    document.getElementById("selsensors").style.display = 'block';
+    document.getElementById("selUbiGeo").style.display = 'block';
+    document.getElementById("spotSelect").style.display = 'block';
+    document.getElementById("sensorSelect").style.display = 'block';
+    document.getElementById("zoneSelect").style.display = 'block';
     document.getElementById("selbrands").style.display = 'block';
     document.getElementById("selposition").style.display = 'block';
     document.getElementById("selpresence").style.display = 'block';
@@ -218,11 +374,10 @@ function showOfflineOpt(){
     document.getElementById("hourend").style.display = 'block';
     $('#timeend').prop('disabled', false);
     document.getElementById("rangeDate").style.display = 'block';
-    document.getElementById("selcountry").style.display = 'block';
-    document.getElementById("selstate").style.display = 'block';
-    document.getElementById("selcity").style.display = 'block';
-    document.getElementById("selspots").style.display = 'block';
-    document.getElementById("selsensors").style.display = 'block';
+    document.getElementById("selUbiGeo").style.display = 'block';
+    document.getElementById("spotSelect").style.display = 'block';
+    document.getElementById("sensorSelect").style.display = 'block';
+    document.getElementById("zoneSelect").style.display = 'block';
     document.getElementById("selbrands").style.display = 'block';
     document.getElementById("selposition").style.display = 'block';
     document.getElementById("selpresence").style.display = 'block';
@@ -241,11 +396,10 @@ function showDataBaseOpt(){
     document.getElementById("hourstart").style.display = 'none';
     document.getElementById("hourend").style.display = 'none';
     document.getElementById("rangeDate").style.display = 'none';
-    document.getElementById("selcountry").style.display = 'block';
-    document.getElementById("selstate").style.display = 'block';
-    document.getElementById("selcity").style.display = 'block';
-    document.getElementById("selspots").style.display = 'block';
-    document.getElementById("selsensors").style.display = 'none';
+    document.getElementById("selUbiGeo").style.display = 'block';
+    document.getElementById("spotSelect").style.display = 'block';
+    document.getElementById("sensorSelect").style.display = 'none';
+    document.getElementById("zoneSelect").style.display = 'none';
     document.getElementById("selbrands").style.display = 'none';
     document.getElementById("selposition").style.display = 'none';
     document.getElementById("selpresence").style.display = 'none';
@@ -264,11 +418,10 @@ function showFileOpt() {
     document.getElementById("hourstart").style.display = 'none';
     document.getElementById("hourend").style.display = 'none';
     document.getElementById("rangeDate").style.display = 'none';
-    document.getElementById("selcountry").style.display = 'none';
-    document.getElementById("selstate").style.display = 'none';
-    document.getElementById("selcity").style.display = 'none';
-    document.getElementById("selspots").style.display = 'none';
-    document.getElementById("selsensors").style.display = 'none';
+    document.getElementById("selUbiGeo").style.display = 'none';
+    document.getElementById("spotSelect").style.display = 'none';
+    document.getElementById("sensorSelect").style.display = 'none';
+    document.getElementById("zoneSelect").style.display = 'none';
     document.getElementById("selbrands").style.display = 'none';
     document.getElementById("selposition").style.display = 'none';
     document.getElementById("selpresence").style.display = 'none';
@@ -432,8 +585,10 @@ function sendForm() {
     let t_country = '';
     let t_state = '';
     let t_city = '';
+    let t_zipcode = '';
     let t_spot = '';
     let t_sensor = '';
+    let t_zone = '';
     let t_brands = '';
     let t_status = '';
     let t_presence = '';
@@ -455,6 +610,8 @@ function sendForm() {
         t_timeS = $('#timestart').val();
         t_timeE = $('#timeend').val();
         t_sensor = $('#selSensor').val();
+        t_zone = $('#selZone').val();
+        t_sensor = $('#selSensor').val();
         t_brands = $('#selBrand').val();
         t_status = $('#selStatus').val();
         t_presence = $('#presence').val();
@@ -467,9 +624,10 @@ function sendForm() {
         }
     }
     if (smartpokeOpt != '4') {  // Not File option
-        t_country = $('#countryId').val();
-        t_state = $('#stateId').val();
-        t_city = $('#cityId').val();
+        t_country = $('#selCountryS').val();
+        t_state = $('#selStateS').val();
+        t_city = $('#selCityS').val();
+        t_zipcode = $('#selZipCodeS').val();
         t_spot = $('#selSpot').val();
         if (document.getElementById("checkFilter").checked) {
             t_ageS = $('#from_value').val();
@@ -483,43 +641,66 @@ function sendForm() {
     if (campaignId != '') {
         switch (smartpokeOpt) {
             case '1':
-                smartpokeOnline(t_dateS, t_dateE, t_timeS, t_timeE, t_city, t_spot, t_sensor, t_brands,
-                    t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
+                smartpokeOnline
+                (
+                    t_dateS, t_dateE, t_timeS, t_timeE,
+                    t_country, t_state, t_city, t_zipcode,
+                    t_spot, t_sensor, t_zone,
+                    t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+                    userTimeZone
+                );
                 break;
             case '2':
-                smartpokeOffline(t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
-                    t_city, t_spot, t_sensor, t_brands, t_status, t_presence, t_ageS,
-                    t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
+                smartpokeOffline
+                (
+                    t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
+                    t_country, t_state, t_city, t_zipcode,
+                    t_spot, t_sensor,  t_zone,
+                    t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+                    userTimeZone
+                );
                 break;
             case '3':
-                smartpokeDB(t_city, t_spot, t_ageS, t_ageE, t_sex, t_zipcodes, t_member);
+                smartpokeDB
+                (
+                    t_country, t_state, t_city, t_zipcode,
+                    t_spot,
+                    t_ageS, t_ageE, t_sex, t_zipcodes, t_member
+                );
                 break;
             case '4':
                 smartpokeFile();
                 break;
         }
 
-        let dataForm = { "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
-            "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
-            "countryId": t_country, "stateId": t_state, "cityId": t_city,
-            "spotId": t_spot, "sensorId": t_sensor, "brands": t_brands,
-            "status": t_status, "presence": t_presence,
-            "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex,
-            "zipCode": t_zipcodes, "memberShip": t_member, "file": formFileJson, "timeZone": userTimeZone }
+        let dataForm =
+            {
+                "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
+                "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
+                "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
+                "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone,
+                "brands": t_brands, "status": t_status, "presence": t_presence,
+                "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
+                "file": formFileJson,
+                "timeZone": userTimeZone
+            }
 
     } else {
         Joomla.renderMessages({'warning': ['Select a campaign, please!']});
     }
 }
 
-function smartpokeDB(city, spot, ageS, ageE, sex, zipcodes, member) {
+function smartpokeDB(country, state, city, zipcode, spot, ageS, ageE, sex, zipcodes, member) {
     let request = {
         option       : 'com_ajax',
         module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
         method       : 'getUserList',  // to target: function getUserListAjax in class ModSPSelectSmartPokeHelper
         format       : 'json',
-        data         : { "cityId": city, "spotId": spot, "ageStart": ageS, "ageEnd": ageE, "gender": sex,
-            "zipCode": zipcodes, "memberShip": member }
+        data         : {
+                            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode,
+                            "spotId": spot,
+                            "ageStart": ageS, "ageEnd": ageE, "gender": sex, "zipCode": zipcodes, "memberShip": member
+                        }
     };
     $.ajax({
         method: 'GET',
