@@ -159,17 +159,17 @@ class SpspotModelListspot extends JModelList
         $this->userId = $this->user->get('id');
 
         $objTable = new stdClass();
-        $objTable->spot_id = $values[1];
-        $objTable->name = $values[2];
-        $objTable->business = $values[3];
-        $objTable->latitude = $values[4];
-        $objTable->longitude = $values[5];
-        $objTable->country = $values[6];
-        $objTable->state = $values[7];
-        $objTable->city = $values[8];
-        $objTable->zipcode = $values[9];
-        $objTable->published = $values[10];
-        $objTable->alias = strtolower($values[2]);
+        $objTable->spot_id = $values['spot'];
+        $objTable->name = $values['name'];
+        $objTable->business = $values['business'];
+        $objTable->latitude = $values['latitude'];
+        $objTable->longitude = $values['longitude'];
+        $objTable->country = $values['country'];
+        $objTable->state = $values['state'];
+        $objTable->city = $values['city'];
+        $objTable->zipcode = $values['zipcode'];
+        $objTable->published = $values['publish'];
+        $objTable->alias = strtolower($values['name']);
 
         $db = JFactory::getDBO();
         if ($option == 'C') {
@@ -183,7 +183,7 @@ class SpspotModelListspot extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spspot_spot', $objTable, 'id');
         } else {
-            $objTable->id = $values[0];
+            $objTable->id = $values['id'];
             $objTable->modified_by = $this->userId;
             $objTable->modified = date("Y-m-d h:i:sa");
             $result = $db->updateObject('#__spspot_spot', $objTable, 'id');

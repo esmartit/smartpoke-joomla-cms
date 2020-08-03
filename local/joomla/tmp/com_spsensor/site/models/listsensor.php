@@ -135,15 +135,15 @@ class SpsensorModelListsensor extends JModelList
         $this->userId = $this->user->get('id');
 
         $objTable = new stdClass();
-        $objTable->spot = $values[1];
-        $objTable->sensor_id = $values[2];
-        $objTable->location = $values[3];
-        $objTable->zone = $values[4];
-        $objTable->pwr_in = $values[5];
-        $objTable->pwr_limit = $values[6];
-        $objTable->pwr_out = $values[7];
-        $objTable->published = $values[8];
-        $objTable->alias = strtolower($values[2]);
+        $objTable->spot = $values['spot'];
+        $objTable->sensor_id = $values['sensorId'];
+        $objTable->location = $values['location'];
+        $objTable->zone = $values['zoneId'];
+        $objTable->pwr_in = $values['pwrIn'];
+        $objTable->pwr_limit = $values['pwrLimit'];
+        $objTable->pwr_out = $values['pwrOut'];
+        $objTable->published = $values['publish'];
+        $objTable->alias = strtolower($values['sensorId']);
         $db = JFactory::getDBO();
         if ($option == 'C') {
             $objTable->id = null;
@@ -156,11 +156,47 @@ class SpsensorModelListsensor extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spsensor_sensor', $objTable, 'id');
         } else {
-            $objTable->id = $values[0];
+            $objTable->id = $values['id'];
             $objTable->modified_by = $this->userId;
             $objTable->modified = date("Y-m-d h:i:sa");
             $result = $db->updateObject('#__spsensor_sensor', $objTable, 'id');
         }
         return $result;
+    }
+
+    public function saveSensorSettings($data)
+    {
+        $this->plugin = JPluginHelper::getPlugin('system', 'backend_plugin');
+        $base_uri = json_decode($this->plugin->params, true);
+
+        $ch = curl_init();
+
+        $dir_req = $base_uri['ms_meraki'].'/sensor-settings/';
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POST, 1);
+
+        $param = json_encode($data);
+
+        curl_setopt($ch, CURLOPT_URL, $dir_req);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $headers = array();
+        $headers[] = "Content-Type: application/json";
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $res = curl_exec($ch);
+        $result = json_decode($res);
+
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close ($ch);
+
+        if (empty($result))
+        {
+            return true;
+        }
+        return false;
     }
 }

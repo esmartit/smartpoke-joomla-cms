@@ -68,16 +68,16 @@ class SpcampaignModelListcampaign extends JModelList
 		$query = $db->getQuery(true);
 
 		// Get from #__spcampaign_campaign as a
-		$query->select($db->quoteName(
-			array('a.id','a.smsemail','a.message_sms','a.deferred','a.deferreddate','a.message_email','a.type','a.name','a.alias','a.validdate','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
-			array('id','smsemail','message_sms','deferred','deferreddate','message_email','type','name','alias','validdate','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
-		$query->from($db->quoteName('#__spcampaign_campaign', 'a'));
-		// Get where a.published is 1
-		$query->where('a.published = 1');
-		$query->order('a.name ASC');
+        $query->select($db->quoteName(
+            array('a.id','a.smsemail','a.message_sms','a.deferred','a.deferreddate','a.message_email','a.type','a.name','a.alias','a.validdate','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
+            array('id','smsemail','message_sms','deferred','deferreddate','message_email','type','name','alias','validdate','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
+        $query->from($db->quoteName('#__spcampaign_campaign', 'a'));
+        // Get where a.published is 1
+        $query->where('a.published = 1');
+        $query->order('a.id DESC');
 
-		// return the query object
-		return $query;
+        // return the query object
+        return $query;
 	}
 
 	/**
@@ -138,26 +138,24 @@ class SpcampaignModelListcampaign extends JModelList
         $this->userId = $this->user->get('id');
 
         $objTable = new stdClass();
-        $objTable->name = $values[1];
-        $objTable->validdate = $values[2];
-
-        $objTable->validdate = $values[2];
-        $objTable->smsemail = $values[3];
-        if ($values[3] == '1') {
-            $objTable->message_sms = $values[4];
+        $objTable->name = $values['campaign'];
+        $objTable->validdate = $values['validdate'];
+        $objTable->smsemail = $values['smsemail'];
+        if ($values['smsemail'] == '1') {
+            $objTable->message_sms = $values['messagetype'];
             $objTable->message_email = '';
         } else {
             $objTable->message_sms = '';
-            $objTable->message_email = $values[4];
+            $objTable->message_email = $values['messagetype'];
         }
-        $objTable->deferred = $values[5];
+        $objTable->deferred = $values['deferred'];
         $objTable->deferreddate = "";
         if ($values[5] == '1') {
-            $objTable->deferreddate = $values[6];
+            $objTable->deferreddate = $values['defdate'];
         }
-        $objTable->type = $values[7];
-        $objTable->published = $values[8];
-        $objTable->alias = strtolower($values[1]);
+        $objTable->type = $values['type'];
+        $objTable->published = $values['publish'];
+        $objTable->alias = strtolower($values['campaign']);
 
         $db = JFactory::getDBO();
         if ($option == 'C') {
@@ -171,7 +169,7 @@ class SpcampaignModelListcampaign extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spcampaign_campaign', $objTable, 'id');
         } else {
-            $objTable->id = $values[0];
+            $objTable->id = $values['id'];
             $objTable->modified_by = $this->userId;
             $objTable->modified = date("Y-m-d h:i:sa");
             $result = $db->updateObject('#__spcampaign_campaign', $objTable, 'id');

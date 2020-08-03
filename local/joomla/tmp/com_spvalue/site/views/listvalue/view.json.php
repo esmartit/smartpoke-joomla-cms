@@ -46,7 +46,12 @@ class SpvalueViewListvalue extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $name, $code, $value, $publish);
+//        $values = array($id, $name, $code, $value, $publish);
+        $values = array("id" => $id,
+            "name" => $name,
+            "code" => $code,
+            "value" => $value,
+            "publish" => $publish);
         switch ($opt) {
             case 'C':
                 $message = " saved.";

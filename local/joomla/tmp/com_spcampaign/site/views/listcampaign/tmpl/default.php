@@ -95,6 +95,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                 <thead>
                                 <tr class="headings">
+                                    <th class='column-title'><?php echo JText::_('Id'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_VALID_DATE'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?></th>
@@ -112,6 +113,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         $canDo = SpcampaignHelper::getActions('campaign',$item,'campaigns');
                                     ?>
                                     <tr>
+                                        <td class="a-right a-right "><?php echo $item->id; ?></td>
                                         <td class="a-right a-right "><?php echo $item->name; ?></td>
                                         <td align="center"><?php echo $item->validdate; ?></td>
                                         <?php if ($item->smsemail == 0): ?>

@@ -49,8 +49,17 @@ class SpsensorViewListsensor extends JViewLegacy
         }
 
         $model = $this->getModel();
-
-        $values = array($id, $spot, $sensorId, $location, $zoneId, $pwrIn, $pwrLimit, $pwrOut, $publish);
+//        $values = array($id, $spot, $sensorId, $location, $zoneId, $pwrIn, $pwrLimit, $pwrOut, $publish);
+        $values = array("id" => $id,
+            "spot"=>$spot,
+            "sensorId" => $sensorId,
+            "location" => $location,
+            "zoneId" => $zoneId,
+            "pwrIn" => $pwrIn,
+            "pwrLimit" => $pwrLimit,
+            "pwrOut" => $pwrOut,
+            "publish" => $publish
+        );
         switch ($opt) {
             case 'C':
                 $message = " saved.";
@@ -62,11 +71,25 @@ class SpsensorViewListsensor extends JViewLegacy
                 $message = " deleted.";
                 break;
         }
-        $status = $model->saveSensor($values, $opt);
-        if ($status) {
-            $arr_result[] = array("section" => $opt, "data" => "Sensor: ".$sensorId." ".$message);
+        $data = array(
+            "id" => $id,
+            "spot"=>$spot,
+            "sensorId" => $sensorId,
+            "location" => $location,
+            "inEdge" => $pwrIn,
+            "limitEdge" => $pwrLimit,
+            "outEdge" => $pwrOut
+        );
+        $return = $model->saveSensorSettings($data);
+        if ($return) {
+            $status = $model->saveSensor($values, $opt);
+            if ($status) {
+                $arr_result[] = array("section" => $opt, "data" => "Sensor: ".$sensorId." ".$message);
+            } else {
+                $arr_result[] = array("section" => "error", "data" => "Some error on table sensor");
+            }
         } else {
-            $arr_result[] = array("section" => "error", "data" => "Some error on table sensor");
+            $arr_result[] = array("section" => "error", "data" => "Some error on endpoint");
         }
         echo new JResponseJson($arr_result);
     }

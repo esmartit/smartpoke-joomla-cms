@@ -44,7 +44,11 @@ class SpbrandViewListbrand extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $brand, $publish);
+//        $values = array($id, $brand, $publish);
+        $values = array("id" => $id,
+            "brand"=>$brand,
+            "publish" => $publish
+        );
         switch ($opt) {
             case 'C':
                 $message = " saved.";

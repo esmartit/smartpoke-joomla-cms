@@ -52,7 +52,20 @@ class SpcustomerViewListcustomer extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $spot, $userName, $firstName, $lastName, $mobilePhone, $email, $bdate, $sex, $zipCode, $memberShip, $communication, $publish);
+//        $values = array($id, $spot, $userName, $firstName, $lastName, $mobilePhone, $email, $bdate, $sex, $zipCode, $memberShip, $communication, $publish);
+        $values = array("id" => $id,
+            "spot" => $spot,
+            "username" => $userName,
+            "firstname" => $firstName,
+            "lastname" => $lastName,
+            "mobilephone" => $mobilePhone,
+            "email" => $email,
+            "bdate" => $bdate,
+            "sex" => $sex,
+            "zipcode" => $zipCode,
+            "membership" => $memberShip,
+            "communication" => $communication,
+            "publish" => $publish);
         switch ($opt) {
             case 'C':
                 $message = " saved.";

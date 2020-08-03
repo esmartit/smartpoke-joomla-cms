@@ -123,9 +123,9 @@ class SpbrandModelListbrand extends JModelList
         $this->userId = $this->user->get('id');
 
         $brand = new stdClass();
-        $brand->name = $values[1];
-        $brand->published = $values[2];
-        $brand->alias = strtolower($values[1]);
+        $brand->name = $values['brand'];
+        $brand->published = $values['publish'];
+        $brand->alias = strtolower($values['brand']);
         $db = JFactory::getDBO();
         if ($option == 'C') {
             $brand->id = null;
@@ -138,7 +138,7 @@ class SpbrandModelListbrand extends JModelList
             $brand->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spbrand_brand', $brand, 'id');
         } else {
-            $brand->id = $values[0];
+            $brand->id = $values['id'];
             $brand->modified_by = $this->userId;
             $brand->modified = date("Y-m-d h:i:sa");
             $result = $db->updateObject('#__spbrand_brand', $brand, 'id');

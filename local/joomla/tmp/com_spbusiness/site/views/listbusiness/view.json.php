@@ -44,7 +44,12 @@ class SpbusinessViewListbusiness extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $business, $publish);
+//        $values = array($id, $business, $publish);
+        $values = array("id" => $id,
+            "business"=>$business,
+            "publish" => $publish
+        );
+
         switch ($opt) {
             case 'C':
                 $message = " saved.";
