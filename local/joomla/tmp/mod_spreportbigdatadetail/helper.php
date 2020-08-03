@@ -9,49 +9,6 @@
 
 class ModSPReportBigDataDetailHelper
 {
-
-    /**
-     * Returns the SpotList
-     * @return mixed
-     */
-    public static function getSpotsAjax()
-    {
-        $city = $_REQUEST['data'];
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('spot_id', 'name')));
-        $query->from($db->quoteName('#__spspot_spot'));
-        $query->where($db->quoteName('city'). " = " .$db->quote($city));
-
-        $db->setQuery($query);
-        $spotList = $db->loadRowList();
-
-        return $spotList;
-    }
-
-    /**
-     * Returns the SensorList
-     * @return mixed
-     */
-    public static function getSensorsAjax()
-    {
-        $spotId = $_REQUEST['data'];
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('sensor_id', 'location')));
-        $query->from($db->quoteName('#__spsensor_sensor'));
-        $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
-
-        $db->setQuery($query);
-        $sensorList = $db->loadRowList();
-
-        return $sensorList;
-    }
-
     /**
      * Returns the userTime zone if the user has set one, or the global config one
      * @return mixed

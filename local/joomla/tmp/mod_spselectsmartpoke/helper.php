@@ -11,56 +11,19 @@ class ModSPSelectSmartPokeHelper
 {
 
     /**
-     * Returns the SpotList
-     * @return mixed
-     */
-    public static function getSpotsAjax()
-    {
-        $city = $_REQUEST['data'];
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('spot_id', 'name')));
-        $query->from($db->quoteName('#__spspot_spot'));
-        $query->where($db->quoteName('city'). " = " .$db->quote($city));
-
-        $db->setQuery($query);
-        $spotList = $db->loadRowList();
-
-        return $spotList;
-    }
-
-    /**
-     * Returns the SensorList
-     * @return mixed
-     */
-    public static function getSensorsAjax()
-    {
-        $spotId = $_REQUEST['data'];
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('sensor_id', 'location')));
-        $query->from($db->quoteName('#__spsensor_sensor'));
-        $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
-
-        $db->setQuery($query);
-        $sensorList = $db->loadRowList();
-
-        return $sensorList;
-    }
-
-    /**
-     * Returns the SensorList
+     * Returns the SpotSensorList
      * @return mixed
      */
     public static function getSpotSensorsAjax()
     {
-        $cityId = $_REQUEST['city'];
+        $data = $_REQUEST['data'];
+        $countryId = $data['countryId'];
+        $stateId = $data['stateId'];
+        $cityId = $data['cityId'];
+        $zipcode = implode(",", $data['zipcodeId']);
         $spotId = $_REQUEST['spot'];
         $sensorId = $_REQUEST['sensor'];
+        $zoneId = $_REQUEST['zone'];
 
         $db = JFactory::getDbo();
 
@@ -69,14 +32,29 @@ class ModSPSelectSmartPokeHelper
         $query->from($db->quoteName('#__spspot_spot'));
         $query->join('INNER', $db->quoteName('#__spsensor_sensor') . ' ON ' . $db->quoteName('spot') . ' = ' . $db->quoteName('spot_id'));
 
+        if (!empty($countryId)) {
+            $query->where($db->quoteName('country'). " = " .$db->quote($countryId));
+        }
+
+        if (!empty($stateId)) {
+            $query->where($db->quoteName('state'). " = " .$db->quote($stateId));
+        }
+
         if (!empty($cityId)) {
             $query->where($db->quoteName('city'). " = " .$db->quote($cityId));
+        }
+
+        if (!empty($zipcode[0])) {
+            $query->where('zipcode' . " IN (" . $zipcode . ")");
         }
         if (!empty($spotId)) {
             $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
         }
         if (!empty($sensorId)) {
             $query->where($db->quoteName('sensor_id'). " = " .$db->quote($sensorId));
+        }
+        if (!empty($zoneId)) {
+            $query->where($db->quoteName('zone'). " = " .$db->quote($zoneId));
         }
         $query->group($db->quoteName('spot'), $db->quoteName('name'));
 
@@ -89,14 +67,29 @@ class ModSPSelectSmartPokeHelper
         $query->join('INNER', $db->quoteName('#__spspot_spot') . ' ON ' . $db->quoteName('spot_id') . ' = ' . $db->quoteName('spot'));
         $query->join('INNER', $db->quoteName('#__spzone_zone', 'z') . ' ON ' . $db->quoteName('z.id') . ' = ' . $db->quoteName('zone'));
 
+        if (!empty($countryId)) {
+            $query->where($db->quoteName('country'). " = " .$db->quote($countryId));
+        }
+
+        if (!empty($stateId)) {
+            $query->where($db->quoteName('state'). " = " .$db->quote($stateId));
+        }
+
         if (!empty($cityId)) {
             $query->where($db->quoteName('city'). " = " .$db->quote($cityId));
+        }
+
+        if (!empty($zipcode[0])) {
+            $query->where('zipcode' . " IN (" . $zipcode . ")");
         }
         if (!empty($spotId)) {
             $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
         }
         if (!empty($sensorId)) {
             $query->where($db->quoteName('sensor_id'). " = " .$db->quote($sensorId));
+        }
+        if (!empty($zoneId)) {
+            $query->where($db->quoteName('zone'). " = " .$db->quote($zoneId));
         }
         $query->order($db->quoteName('spot'), $db->quoteName('location'));
 
@@ -206,7 +199,10 @@ class ModSPSelectSmartPokeHelper
     public static function getUserListAjax()
     {
         $data = $_REQUEST['data'];
+        $countryId = $data['countryId'];
+        $stateId = $data['stateId'];
         $cityId = $data['cityId'];
+        $zipcode = implode(",", $data['zipcodeId']);
         $spotId = $data['spotId'];
         $ageS = $data['ageStart'];
         $ageE = $data['ageEnd'];
@@ -217,7 +213,7 @@ class ModSPSelectSmartPokeHelper
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select(array('firstname', 'lastname', 'mobile_phone', 'email', 'username', 'TIMESTAMPDIFF(YEAR, dateofbirth, now()) as age', 'sex', 'zipcode', 'membership', 'name'));
+        $query->select(array('firstname', 'lastname', 'mobile_phone', 'email', 'username', 'TIMESTAMPDIFF(YEAR, dateofbirth, now()) as age', 'sex', 'c.zipcode', 'membership', 'name'));
         $query->from($db->quoteName('#__spcustomer_customer', 'c'));
         $query->join('INNER', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
         $query->where($db->quoteName('communication') . " = 1");
@@ -227,8 +223,20 @@ class ModSPSelectSmartPokeHelper
             $query->where('TIMESTAMPDIFF(YEAR, dateofbirth, now())  >= ' . $ageS);
             $query->where('TIMESTAMPDIFF(YEAR, dateofbirth, now())  <= ' . $ageE);
         }
+        if (!empty($countryId)) {
+            $query->where($db->quoteName('country'). " = " .$db->quote($countryId));
+        }
+
+        if (!empty($stateId)) {
+            $query->where($db->quoteName('state'). " = " .$db->quote($stateId));
+        }
+
         if (!empty($cityId)) {
-            $query->where($db->quoteName('city') . " = " . $db->quote($cityId));
+            $query->where($db->quoteName('city'). " = " .$db->quote($cityId));
+        }
+
+        if (!empty($zipcode[0])) {
+            $query->where('s.zipcode' . " IN (" . $zipcode . ")");
         }
         if (!empty($spotId)) {
             $query->where($db->quoteName('spot') . " = " . $db->quote($spotId));
@@ -237,7 +245,7 @@ class ModSPSelectSmartPokeHelper
             $query->where($db->quoteName('sex') . " = " . $db->quote($sex));
         }
         if (!empty($zipCode[0])) {
-            $query->where('zipcode' . " IN (" . $zipCode . ")");
+            $query->where('c.zipcode' . " IN (" . $zipCode . ")");
         }
         if ($member != "") {
             $query->where($db->quoteName('membership') . " = " . $db->quote($member));

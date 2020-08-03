@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addrulepath="/administrator/components/com_spcity/models/rules"
+	addfieldpath="/administrator/components/com_spcity/models/fields"
+>
+	<fieldset name="details">
+                <!-- Default Fields.-->
+                <!-- Id Field. Type: Text (joomla)-->
+                <field name="id"
+                       type="text"
+                       class="readonly"
+                       readonly="true"
+                       label="JGLOBAL_FIELD_ID_LABEL"
+                       description="JGLOBAL_FIELD_ID_DESC"
+                       size="10"
+                       default="0" />
+                <!-- Date Created Field. Type: Calendar (joomla)-->
+                <field name="created"
+                       type="calendar"
+                       label="COM_SPCITY_CITY_CREATED_DATE_LABEL"
+                       description="COM_SPCITY_CITY_CREATED_DATE_DESC"
+                       size="22"
+                       format="%Y-%m-%d %H:%M:%S"
+                       filter="user_utc" />
+                <!-- User Created Field. Type: User (joomla)-->
+                <field name="created_by"
+                       type="user"
+                       label="COM_SPCITY_CITY_CREATED_BY_LABEL"
+                       description="COM_SPCITY_CITY_CREATED_BY_DESC" />
+                <!-- Published Field. Type: List (joomla)-->
+                <field name="published"
+                       type="list"
+                       label="JSTATUS">
+                        <option value="1">JPUBLISHED</option>
+                        <option value="0">JUNPUBLISHED</option>
+                        <option value="2">JARCHIVED</option>
+                        <option value="-2">JTRASHED</option>
+                </field>
+                <!-- Date Modified Field. Type: Calendar (joomla)-->
+                <field name="modified"
+                       type="calendar"
+                       class="readonly"
+                       label="COM_SPCITY_CITY_MODIFIED_DATE_LABEL"
+                       description="COM_SPCITY_CITY_MODIFIED_DATE_DESC"
+                       size="22"
+                       readonly="true"
+                       format="%Y-%m-%d %H:%M:%S"
+                       filter="user_utc" />
+                <!-- User Modified Field. Type: User (joomla)-->
+                <field name="modified_by"
+                       type="user"
+                       label="COM_SPCITY_CITY_MODIFIED_BY_LABEL"
+                       description="COM_SPCITY_CITY_MODIFIED_BY_DESC"
+                       class="readonly"
+                       readonly="true"
+                       filter="unset" />
+                <!-- Access Field. Type: Accesslevel (joomla)-->
+                <field name="access"
+                       type="accesslevel"
+                       label="JFIELD_ACCESS_LABEL"
+                       description="JFIELD_ACCESS_DESC"
+                       default="1"
+                       required="false" />
+                <!-- Ordering Field. Type: Numbers (joomla)-->
+                <field name="ordering"
+                       type="number"
+                       class="inputbox validate-ordering"
+                       label="COM_SPCITY_CITY_ORDERING_LABEL"
+                       description=""
+                       default="0"
+                       size="6"
+                       required="false" />
+                <!-- Version Field. Type: Text (joomla)-->
+                <field name="version"
+                       type="text"
+                       class="readonly"
+                       label="COM_SPCITY_CITY_VERSION_LABEL"
+                       description="COM_SPCITY_CITY_VERSION_DESC"
+                       size="6"
+                       readonly="true"
+                       filter="unset" />
+                <!-- Dynamic Fields.-->
+                <!-- State_id Field. Type: Sql. (joomla)-->
+                <field type="sql"
+                       name="state_id"
+                       label="COM_SPCITY_CITY_STATE_ID_LABEL"
+                       query="SELECT state_code, name AS name FROM #__spstate_state WHERE published = 1"
+                       required="true"
+                       key_field="state_code"
+                       value_field="name"
+                       translate="true" />
+                <!-- City_code Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="city_code"
+                       label="COM_SPCITY_CITY_CITY_CODE_LABEL"
+                       size="10"
+                       maxlength="10"
+                       class="text_area"
+                       required="true"
+                       filter="STRING" />
+                <!-- Name Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="name"
+                       label="COM_SPCITY_CITY_NAME_LABEL"
+                       size="40"
+                       maxlength="150"
+                       class="text_area"
+                       required="true"
+                       filter="STRING" />
+                <!-- Alias Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="alias"
+                       label="COM_SPCITY_CITY_ALIAS_LABEL"
+                       description="JFIELD_ALIAS_DESC"
+                       filter="STRING"
+                       hint="COM_SPCITY_CITY_ALIAS_HINT" />
+        </fieldset>
+	
+	<!-- Access Control Fields. -->
+	<fieldset name="accesscontrol">
+		<!-- Asset Id Field. Type: Hidden (joomla) -->
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+		<!-- Rules Field. Type: Rules (joomla) -->
+		<field
+			name="rules"
+			type="rules"
+			label="Permissions in relation to this city"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_spcity"
+			section="city"
+		/>
+	</fieldset>
+</form>

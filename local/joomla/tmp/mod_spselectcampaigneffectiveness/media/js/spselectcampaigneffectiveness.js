@@ -1,6 +1,4 @@
 let smsemail = '1';
-getSpotCity();
-getCampaigns(smsemail);
 
 $(document).ready( function() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
@@ -14,14 +12,137 @@ $(document).ready( function() {
     }
 });
 
-function getSpotCity() {
-    let cityid = $('#cityId').val();
+function getCountryList() {
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
-        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectCampaignEffectivenessHelper
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotCountry',  // to target: function getSpotCountryAjax in class ModSPSelectOnlineHelper
+        format       : 'json'
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selCountryS").empty();
+            $("#selCountryS").append("<option value='' selected>All Countries</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selCountryS").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            getStateList();
+        });
+
+}
+
+function getStateList() {
+    let countryId = $('#selCountryS').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotState',  // to target: function getSpotStateAjax in class ModSPSelectOnlineHelper
         format       : 'json',
-        data         : cityid
+        data         : countryId
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selStateS").empty();
+            $("#selStateS").append("<option value='' selected>All States</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selStateS").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            getSpotList();
+        });
+
+}
+
+function getCityList() {
+    let countryId = $('#selCountryS').val();
+    let stateId = $('#selStateS').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotCity',  // to target: function getSpotCityAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : {'countryId': countryId, 'stateId': stateId}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selCityS").empty();
+            $("#selCityS").append("<option value='' selected>All Cities</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selCityS").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            getSpotList();
+        });
+
+}
+
+function getZipCodeList() {
+    let countryId = $('#selCountryS').val();
+    let stateId = $('#selStateS').val();
+    let cityId = $('#selCityS').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpotZipCode',  // to target: function getSpotZipCodeAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : {'countryId': countryId, 'stateId': stateId, 'cityId': cityId}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selZipCodeS").empty();
+            $("#selZipCodeS").append("<option value='' selected>All ZipCodes</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selZipCodeS").append("<option value='"+id+"'>"+id+" - "+name+"</option>");
+            }
+        });
+}
+
+function getSpotList() {
+    let countryId = $('#selCountryS').val();
+    let stateId = $('#selStateS').val();
+    let cityId = $('#selCityS').val();
+    let zipcodeId = $('#selZipCodeS').val();
+
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : {'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId}
     };
     $.ajax({
         method: 'GET',
@@ -43,6 +164,8 @@ function getSpotCity() {
 }
 
 $(document).ready(function () {
+    getCountryList();
+    getCampaigns(smsemail);
 
     $('#datatable-cEffectivenes').DataTable();
     $('#radioSMS').on('change', function () {
@@ -61,8 +184,8 @@ $(document).ready(function () {
 function getCampaigns(smsemailValue = '1'){
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
-        method       : 'getCampaigns',  // to target: function getCampaignsAjax in class ModSPSelectCampaignEffectivenessHelper
+        module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
+        method       : 'getCampaigns',  // to target: function getCampaignsAjax in class ModSPSelectCampaignDetailHelper
         format       : 'json',
         data         : smsemailValue
     };
@@ -104,14 +227,14 @@ function getSmsEmailTotal(){
         });
 }
 
-function getCampaignDetail(dstart, dend, campaign, country, state, city, spot){
+function getCampaignDetail(dstart, dend, campaign, country, state, city, zipcode, spot){
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
-        method       : 'getCampaignDetail',  // to target: function getCampaignDetailAjax in class ModSPSelectCampaignEffectivenessHelper
+        module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
+        method       : 'getCampaignDetail',  // to target: function getCampaignDetailAjax in class ModSPSelectCampaignDetailHelper
         format       : 'json',
         data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign,
-            "countryId": country, "stateId": state, "cityId": city, "spotId": spot }
+            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode, "spotId": spot }
     };
     $.ajax({
         method: 'GET',
@@ -254,25 +377,13 @@ function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
 
-    let selCountry = document.getElementById('countryId');
-    let selectedCountry = selCountry.options[selCountry.selectedIndex];
-    let t_country = selectedCountry.getAttribute('countryid');
-    if (t_country === null) {
-        t_country = '';
-    }
+    let t_country = $('#selCountryS').val();
+    let t_state = $('#selStateS').val();
+    let t_city = $('#selCityS').val();
+    let t_zipcode = $('#selZipCodeS').val();
 
-    let selState = document.getElementById('stateId');
-    let selectedState = selState.options[selState.selectedIndex];
-    let t_state = selectedState.getAttribute('stateid');
-    if (t_state === null) {
-        t_state = '';
-    } else {
-        t_state = t_state.substr(1, t_state.length-2)
-    }
-
-    let t_city = $('#cityId').val();
     let t_spot = $('#selSpot').val();
     let t_campaign = $('#selCampaign').val();
 
-    getCampaignDetail(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_spot);
+    getCampaignDetail(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_zipcode, t_spot);
 }
