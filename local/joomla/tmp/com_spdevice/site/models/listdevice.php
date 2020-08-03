@@ -123,10 +123,10 @@ class SpdeviceModelListdevice extends JModelList
         $this->userId = $this->user->get('id');
 
         $objTable = new stdClass();
-        $objTable->device = $values[1];
-        $objTable->type = $values[2];
-        $objTable->published = $values[4];
-        $objTable->alias = strtolower($values[1]);
+        $objTable->device = $values['device'];
+        $objTable->type = $values['type'];
+        $objTable->published = $values['publish'];
+        $objTable->alias = strtolower($values['device']);
         $db = JFactory::getDBO();
         if ($option == 'C') {
             $objTable->id = null;
@@ -139,7 +139,7 @@ class SpdeviceModelListdevice extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spdevice_device', $objTable, 'id');
         } else {
-            $objTable->id = $values[0];
+            $objTable->id = $values['id'];
             $objTable->modified_by = $this->userId;
             $objTable->modified = date("Y-m-d h:i:sa");
             $result = $db->updateObject('#__spdevice_device', $objTable, 'id');

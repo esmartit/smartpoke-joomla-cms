@@ -49,7 +49,18 @@ class SpspotViewListspot extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $spotId, $spotName, $businessId, $latitude, $longitude, $countryId, $stateId, $cityId, $selZipCode, $publish);
+//        $values = array($id, $spotId, $spotName, $businessId, $latitude, $longitude, $countryId, $stateId, $cityId, $selZipCode, $publish);
+        $values = array("id" => $id,
+            "spot" => $spotId,
+            "name" => $spotName,
+            "business" => $businessId,
+            "latitude" => $latitude,
+            "longitude" => $longitude,
+            "country" => $countryId,
+            "state" => $stateId,
+            "city" => $cityId,
+            "zipcode" => $selZipCode,
+            "publish" => $publish);
         switch ($opt) {
             case 'C':
                 $message = " saved.";

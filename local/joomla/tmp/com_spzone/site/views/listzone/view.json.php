@@ -44,7 +44,11 @@ class SpzoneViewListzone extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $zone, $publish);
+//        $values = array($id, $zone, $publish);
+        $values = array("id" => $id,
+            "zone" => $zone,
+            "publish" => $publish
+        );
         switch ($opt) {
             case 'C':
                 $message = " saved.";

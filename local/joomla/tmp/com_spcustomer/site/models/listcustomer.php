@@ -129,19 +129,19 @@ class SpcustomerModelListcustomer extends JModelList
         $this->userId = $this->user->get('id');
 
         $objTable = new stdClass();
-        $objTable->spot = $values[1];
-        $objTable->username = $values[2];
-        $objTable->firstname = $values[3];
-        $objTable->lastname = $values[4];
-        $objTable->mobile_phone = $values[5];
-        $objTable->email = $values[6];
-        $objTable->dateofbirth = $values[7];
-        $objTable->sex = $values[8];
-        $objTable->zipcode = $values[9];
-        $objTable->membership = $values[10];
-        $objTable->communication = $values[11];
-        $objTable->published = $values[12];
-        $objTable->alias = strtolower($values[2]);
+        $objTable->spot = $values['spot'];
+        $objTable->username = $values['username'];
+        $objTable->firstname = $values['firstname'];
+        $objTable->lastname = $values['lastname'];
+        $objTable->mobile_phone = $values['mobilephone'];
+        $objTable->email = $values['email'];
+        $objTable->dateofbirth = $values['bdate'];
+        $objTable->sex = $values['sex'];
+        $objTable->zipcode = $values['zipcode'];
+        $objTable->membership = $values['membership'];
+        $objTable->communication = $values['communication'];
+        $objTable->published = $values['publish'];
+        $objTable->alias = strtolower($values['username']);
 
         $db = JFactory::getDBO();
         if ($option == 'C') {
@@ -155,7 +155,7 @@ class SpcustomerModelListcustomer extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spcustomer_customer', $objTable, 'id');
         } else {
-            $objTable->id = $values[0];
+            $objTable->id = $values['id'];
             $objTable->modified_by = $this->userId;
             $objTable->modified = date("Y-m-d h:i:sa");
             $result = $db->updateObject('#__spcustomer_customer', $objTable, 'id');

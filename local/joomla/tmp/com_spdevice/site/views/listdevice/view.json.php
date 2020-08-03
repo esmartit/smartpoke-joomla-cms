@@ -45,7 +45,11 @@ class SpdeviceViewListdevice extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $device, $type, $publish);
+//        $values = array($id, $device, $type, $publish);
+        $values = array("id" => $id,
+            "device" => $device,
+            "type" => $type,
+            "publish" => $publish);
         switch ($opt) {
             case 'C':
                 $message = " saved.";

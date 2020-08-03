@@ -52,7 +52,18 @@ class SpcampaignViewListcampaign extends JViewLegacy
 
         $model = $this->getModel();
 
-        $values = array($id, $campaign, $valdate, $smsemail, $messagetype, $deferred, $defdate, $type, $publish);
+//        $values = array($id, $campaign, $valdate, $smsemail, $messagetype, $deferred, $defdate, $type, $publish);
+        $values = array("id" => $id,
+            "campaign" => $campaign,
+            "valdate" => $valdate,
+            "smsemail" => $smsemail,
+            "messagetype" => $messagetype,
+            "deferred" => $deferred,
+            "defdate" => $defdate,
+            "type" => $type,
+            "publish" => $publish
+        );
+
         switch ($opt) {
             case 'C':
                 $message = " saved.";
