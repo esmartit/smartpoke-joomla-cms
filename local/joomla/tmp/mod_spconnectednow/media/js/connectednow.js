@@ -1,24 +1,12 @@
 $(document).ready( function() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
 
-    function showConnectedNow(value) {
-        document.getElementById("connectednow").innerHTML = Intl.NumberFormat().format(value);;
+    let seConnectedNow = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/now-connected-count?timezone="+userTimeZone);
+    let connectedNow = 0;
+
+    seConnectedNow.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        connectedNow = eventData.count;
+        document.getElementById("connectednow").innerHTML = Intl.NumberFormat().format(connectedNow);
     }
-
-    function objTimer() {
-
-        ActualDateTime = new Date()
-        Actualsecond = ActualDateTime.getSeconds()
-
-        unit = Math.floor((Math.random() * 2) + 1);
-        checksec = (Actualsecond / 30);
-        if (checksec % 1 == 0) {
-            connectednow = unit;
-            showConnectedNow(connectednow)
-        }
-
-    }
-    connectednow = 0;
-    setInterval(objTimer, 1000)
-    objTimer()
 });

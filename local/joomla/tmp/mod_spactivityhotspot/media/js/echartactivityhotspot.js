@@ -1,7 +1,9 @@
+let seActivityHotSpot = '';
+
 $(document).ready( function() {
     let theme = {
         color: [
-            '#34495E', '#26B99A', '#3498DB', '#bdc3c7',
+            '#26B99A', '#34495E', '#bdc3c7', '#3498DB',
             '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
         ],
 
@@ -212,10 +214,10 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
+    seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/now-connected?timezone="+userTimeZone);
     let spChart = echarts.init(document.getElementById('echart_activity_hotspot'), theme);
 
-    function echartActivity(hoursAct, newAct, oldAct) {
+    function echartActivity(hoursAct, deviceAct, inAct, limitAct, outAct) {
         let option = {
             title: {
                 text: '',
@@ -231,7 +233,7 @@ $(document).ready( function() {
                 }
             },
             legend: {
-                data:['New Users', 'Registered']
+                data:['TOTAL', 'IN', 'LIMIT', 'OUT']
             },
             toolbox: {
                 show: true,
@@ -265,9 +267,11 @@ $(document).ready( function() {
                     boundaryGap: true,
                     data: [
                         hoursAct[0], hoursAct[1], hoursAct[2], hoursAct[3], hoursAct[4], hoursAct[5],
-                        hoursAct[6], hoursAct[7], hoursAct[8], hoursAct[9], hoursAct[10], hoursAct[11],
-                        hoursAct[12], hoursAct[13], hoursAct[14], hoursAct[15], hoursAct[16], hoursAct[17],
-                        hoursAct[18], hoursAct[19], hoursAct[20], hoursAct[21], hoursAct[22], hoursAct[23]
+                        hoursAct[6], hoursAct[7], hoursAct[8], hoursAct[9], hoursAct[10],
+                        hoursAct[11], hoursAct[12], hoursAct[13], hoursAct[14], hoursAct[15],
+                        hoursAct[16], hoursAct[17], hoursAct[18], hoursAct[19], hoursAct[20],
+                        hoursAct[21], hoursAct[22], hoursAct[23], hoursAct[24], hoursAct[25],
+                        hoursAct[26], hoursAct[27], hoursAct[28], hoursAct[29]
                     ]
                 }
             ],
@@ -275,14 +279,14 @@ $(document).ready( function() {
                 {
                     type: 'value',
                     scale: true,
-                    name: 'Connected',
+                    name: 'Devices',
                     min: 0,
                     boundaryGap: [1, 1]
                 }
             ],
             series: [
                 {
-                    name: 'New Users',
+                    name: 'TOTAL',
                     type: 'line',
                     smooth: true,
                     itemStyle: {
@@ -293,14 +297,41 @@ $(document).ready( function() {
                         }
                     },
                     data: [
-                        newAct[0],newAct[1],newAct[2],newAct[3],newAct[4],newAct[5],
-                        newAct[6],newAct[7],newAct[8],newAct[9],newAct[10],newAct[11],
-                        newAct[12],newAct[13],newAct[14],newAct[15],newAct[16],newAct[17],
-                        newAct[18],newAct[19],newAct[20],newAct[21],newAct[22],newAct[23]
+                        deviceAct[0], deviceAct[1], deviceAct[2], deviceAct[3], deviceAct[4], deviceAct[5],
+                        deviceAct[6], deviceAct[7], deviceAct[8], deviceAct[9], deviceAct[10],
+                        deviceAct[11], deviceAct[12], deviceAct[13], deviceAct[14], deviceAct[15],
+                        deviceAct[16], deviceAct[17], deviceAct[18], deviceAct[19], deviceAct[20],
+                        deviceAct[21], deviceAct[22], deviceAct[23], deviceAct[24], deviceAct[25],
+                        deviceAct[26], deviceAct[27], deviceAct[28], deviceAct[29]
+                    ],
+                    markLine : {
+                        data : [
+                            {type : 'average', name: 'Avg'}
+                        ]
+                    }
+                },
+                {
+                    name: 'IN',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            areaStyle: {
+                                type: 'default'
+                            }
+                        }
+                    },
+                    data: [
+                        inAct[0], inAct[1], inAct[2], inAct[3], inAct[4], inAct[5],
+                        inAct[6], inAct[7], inAct[8], inAct[9], inAct[10],
+                        inAct[11], inAct[12], inAct[13], inAct[14], inAct[15],
+                        inAct[16], inAct[17], inAct[18], inAct[19], inAct[20],
+                        inAct[21], inAct[22], inAct[23], inAct[24], inAct[25],
+                        inAct[26], inAct[27], inAct[28], inAct[29]
                     ]
                 },
                 {
-                    name: 'Registered',
+                    name: 'LIMIT',
                     type: 'line',
                     smooth: true,
                     itemStyle: {
@@ -311,10 +342,32 @@ $(document).ready( function() {
                         }
                     },
                     data: [
-                        oldAct[0],oldAct[1],oldAct[2],oldAct[3],oldAct[4],oldAct[5],
-                        oldAct[6],oldAct[7],oldAct[8],oldAct[9],oldAct[10],oldAct[11],
-                        oldAct[12],oldAct[13],oldAct[14],oldAct[15],oldAct[16],oldAct[17],
-                        oldAct[18],oldAct[19],oldAct[20],oldAct[21],oldAct[22],oldAct[23]
+                        limitAct[0], limitAct[1], limitAct[2], limitAct[3], limitAct[4], limitAct[5],
+                        limitAct[6], limitAct[7], limitAct[8], limitAct[9], limitAct[10],
+                        limitAct[11], limitAct[12], limitAct[13], limitAct[14], limitAct[15],
+                        limitAct[16], limitAct[17], limitAct[18], limitAct[19], limitAct[20],
+                        limitAct[21], limitAct[22], limitAct[23], limitAct[24], limitAct[25],
+                        limitAct[26], limitAct[27], limitAct[28], limitAct[29]
+                    ]
+                },
+                {
+                    name: 'OUT',
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            areaStyle: {
+                                type: 'default'
+                            }
+                        }
+                    },
+                    data: [
+                        outAct[0], outAct[1], outAct[2], outAct[3], outAct[4], outAct[5],
+                        outAct[6], outAct[7], outAct[8], outAct[9], outAct[10],
+                        outAct[11], outAct[12], outAct[13], outAct[14], outAct[15],
+                        outAct[16], outAct[17], outAct[18], outAct[19], outAct[20],
+                        outAct[21], outAct[22], outAct[23], outAct[24], outAct[25],
+                        outAct[26], outAct[27], outAct[28], outAct[29]
                     ]
                 }
             ]
@@ -322,33 +375,37 @@ $(document).ready( function() {
         spChart.setOption(option);
     }
 
-    let newArr = [];
-    let oldArr = [];
+
+    let inArr = [];
+    let limitArr = [];
+    let outArr = [];
+    let deviceArr = [];
     let hoursArr = [];
 
-    for (let x = 0; x < 24; x++) {
-        newArr[x] = 0;
-        oldArr[x] = 0;
-        hoursArr[x] = x;
+    for (let x = 0; x < 30; x++) {
+        inArr[x] = 0;
+        limitArr[x] = 0;
+        outArr[x] = 0;
+        deviceArr[x] = 0;
+        hoursArr[x] = "";
     }
-
-    let totalAnt = 0;
 
     seActivityHotSpot.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
-        let dataHours = (new Date(eventData.time)).getHours();
-        let new_x = eventData.inCount;
-        let old_x = eventData.outCount;
-        let total_x = new_x + old_x;
+        let len = eventData.length;
 
-        newArr[dataHours] = new_x;
-        oldArr[dataHours] = old_x;
-        hoursArr[dataHours] = dataHours;
-
-        if (total_x !== totalAnt) {
-            echartActivity(hoursArr, newArr, oldArr);
-            totalAnt = total_x;
+        for (let i=0; i < len; i++) {
+            let axisTime = (new Date(eventData[i]['time'])).toLocaleTimeString();
+            let xTime = axisTime.substring(0,5);
+            inArr[i] = eventData[i]['inCount'];
+            limitArr[i] = eventData[i]['limitCount'];
+            outArr[i] = eventData[i]['outCount'];
+            deviceArr[i] = inArr[i] + limitArr[i] + outArr[i];
+            hoursArr[i] = xTime;
         }
-        // console.log(dataHours, device_x, in_x, limit_x, out_x);
+
+        echartActivity(hoursArr, deviceArr, inArr, limitArr, outArr);
+        // console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
     }
-})
+});
+

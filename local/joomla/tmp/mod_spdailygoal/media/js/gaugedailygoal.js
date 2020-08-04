@@ -22,7 +22,7 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seDailyGoal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected-count?timezone="+userTimeZone);
+    let seDailyGoal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected-count?timezone="+userTimeZone);
     let currentMax = 0;
     let dailyGoal = 0;
     let currentDate = new Date();
@@ -44,7 +44,7 @@ $(document).ready( function() {
         let eventData = JSON.parse(event.data);
         dailyGoal = eventData.count;
         let today = new Date(eventData.time);
-        let sameDate = (currentDate.getDate() === today.getUTCDate());
+        let sameDate = (currentDate.getDate() === today.getDate());
 
         if ($('#gauge-text').length) {
             chart_gauge_dailygoal.setTextField(document.getElementById("gauge-text"));
