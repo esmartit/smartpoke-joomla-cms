@@ -3,8 +3,8 @@ let seConnectOnline = '';
 $(document).ready( function() {
     let theme = {
         color: [
-            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7',
-            '#26B99A', '#34495E', '#bdc3c7', '#3498DB'
+            '#26B99A', '#34495E', '#bdc3c7', '#3498DB',
+            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
         ],
 
         title: {
@@ -214,8 +214,8 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    seConnectOnline = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?timezone="+userTimeZone);
-    var spChart = echarts.init(document.getElementById('echart_connect_online'), theme);
+    seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/today-connected?timezone="+userTimeZone);
+    let spChart = echarts.init(document.getElementById('echart_connect_online'));
 
     function echartConnect(hoursCon, deviceCon, inCon, limitCon, outCon) {
         var option = {
@@ -378,6 +378,7 @@ $(document).ready( function() {
         deviceArr[x] = 0;
         hoursArr[x] = x;
     }
+    echartConnect(hoursArr, deviceArr, inArr, limitArr, outArr);
 
     let deviceAnt = 0;
 
@@ -403,14 +404,14 @@ $(document).ready( function() {
     }
 });
 
-function evtSourceConnectOnline(dateS, dateE, country, state, city, spot, sensor, brands, status, ageS, ageE, sex,
+function evtSourceConnectOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, brands, status, ageS, ageE, sex,
                                 zipcodes, member, userTZ) {
     if (seConnectOnline.readyState != 2) {
 
         seConnectOnline.close();
-        seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-hourly-device-presence?"+
-            "timezone="+userTZ+"&startTime="+dateS+"&endTime="+dateE+"&countryId="+country+"&stateId="+state+"&cityId="+city+
-            "&spotId="+spot+"&sensorId="+sensor+"&brands="+brands+"&status="+status+"&ageStart="+ageS+"&ageEnd="+ageE+"&gender="+sex+
-            "&zipCode="+zipcodes+"&memberShip="+member);
+        seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/today-connected?"+
+            "timezone="+userTZ+"&startTime="+dateS+"&endTime="+dateE+"&countryId="+country+"&stateId="+state+"&cityId="+city+"&zipcodeId="+zipcode+
+            "&spotId="+spot+"&sensorId="+sensor+"&zoneId="+zone+
+            "&brands="+brands+"&status="+status+"&ageStart="+ageS+"&ageEnd="+ageE+"&gender="+sex+"&zipCode="+zipcodes+"&memberShip="+member);
     }
 }

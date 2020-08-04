@@ -47,14 +47,14 @@ $(document).ready( function() {
     }
 });
 
-function evtSourceQualifiedVisits(dateS, dateE, country, state, city, spot, sensor, brands, status, ageS, ageE, sex,
+function evtSourceQualifiedVisits(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, brands, status, ageS, ageE, sex,
                                   zipcodes, member, userTZ) {
     if (seQualifiedVisits.readyState != 2) {
 
         seQualifiedVisits.close();
-        seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
-            "timezone="+userTZ+"&startTime="+dateS+"&endTime="+dateE+"&countryId="+country+"&stateId="+state+"&cityId="+city+
-            "&spotId="+spot+"&sensorId="+sensor+"&brands="+brands+"&status="+status+"&ageStart="+ageS+"&ageEnd="+ageE+"&gender="+sex+
-            "&zipCode="+zipcodes+"&memberShip="+member);
+        seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
+            "timezone="+userTZ+"&startTime="+dateS+"&endTime="+dateE+"&countryId="+country+"&stateId="+state+"&cityId="+city+"&zipcodeId="+zipcode+
+            "&spotId="+spot+"&sensorId="+sensor+"&zoneId="+zone+
+            "&brands="+brands+"&status="+status+"&ageStart="+ageS+"&ageEnd="+ageE+"&gender="+sex+"&zipCode="+zipcodes+"&memberShip="+member);
     }
 }

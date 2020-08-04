@@ -214,8 +214,8 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    seActivityDate = new EventSource("index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/now-detected?timezone="+userTimeZone);
-    var spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
+    seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/now-detected?timezone="+userTimeZone);
+    let spChart = echarts.init(document.getElementById('echart_activity_date'), theme);
 
     function echartActivity(hoursAct, deviceAct, inAct, limitAct, outAct) {
         let option = {
@@ -266,12 +266,12 @@ $(document).ready( function() {
                     type: 'category',
                     boundaryGap: true,
                     data: [
-                        hoursAct[1], hoursAct[2], hoursAct[3], hoursAct[4], hoursAct[5],
+                        hoursAct[0], hoursAct[1], hoursAct[2], hoursAct[3], hoursAct[4], hoursAct[5],
                         hoursAct[6], hoursAct[7], hoursAct[8], hoursAct[9], hoursAct[10],
                         hoursAct[11], hoursAct[12], hoursAct[13], hoursAct[14], hoursAct[15],
                         hoursAct[16], hoursAct[17], hoursAct[18], hoursAct[19], hoursAct[20],
                         hoursAct[21], hoursAct[22], hoursAct[23], hoursAct[24], hoursAct[25],
-                        hoursAct[26], hoursAct[27], hoursAct[28], hoursAct[29], hoursAct[30]
+                        hoursAct[26], hoursAct[27], hoursAct[28], hoursAct[29]
                     ]
                 }
             ],
@@ -382,18 +382,17 @@ $(document).ready( function() {
     let deviceArr = [];
     let hoursArr = [];
 
-    for (let x = 0; x < 29; x++) {
+    for (let x = 0; x < 30; x++) {
         inArr[x] = 0;
         limitArr[x] = 0;
         outArr[x] = 0;
         deviceArr[x] = 0;
-        hoursArr[x] = x;
+        hoursArr[x] = "";
     }
 
     seActivityDate.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;
-        console.log(eventData, len);
 
         for (let i=0; i < len; i++) {
             let axisTime = (new Date(eventData[i]['time'])).toLocaleTimeString();
@@ -406,7 +405,7 @@ $(document).ready( function() {
         }
 
         echartActivity(hoursArr, deviceArr, inArr, limitArr, outArr);
-        console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
+        // console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
     }
 });
 

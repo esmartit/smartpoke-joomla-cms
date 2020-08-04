@@ -1,9 +1,9 @@
 $(document).ready( function() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
     // const seTrafficHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/daily-unique-devices-detected-count?timezone="+userTimeZone);
-    let totalTraffic = 1048576;
-    let upTraffic = 314572.8;
-    let downTraffic = 734003.2;
+    let totalTraffic = 0;
+    let upTraffic = 0;
+    let downTraffic = 0;
 
     gettoxByte(totalTraffic, 1);
     gettoxByte(upTraffic, 2);
