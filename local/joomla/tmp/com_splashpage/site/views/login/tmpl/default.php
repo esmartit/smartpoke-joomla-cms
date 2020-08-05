@@ -57,7 +57,6 @@ if ($isLoggedIn) {
             <div class="span4"></div>
             <div class="span4" align="center">
                 <h2 class="form-signin-heading">Demo eSmartIT</h2>
-                <br/>
                 <h4>HotSpot Name</h4>
                 <br/>
 
@@ -104,7 +103,8 @@ if ($isLoggedIn) {
                         <td><input type="text" id="mobilephone" name="mobilephone" required autofocus class="form-control"></td>
                     </tr>
                     <tr><td colspan="2">&nbsp;</td></tr>
-                    <tr><td colspan="2"><a type="button" id="btnlogin" name="btnlogin" class="btn btn-md btn-primary btn-block" onclick="userLogin()"><?php echo JText::_('Login'); ?></a></td></tr>
+                    <!--                    <tr><td colspan="2"><a type="button" id="btnlogin" name="btnlogin" class="btn btn-md btn-primary btn-block" onclick="userLogin()">--><?php //echo JText::_('Login'); ?><!--</a></td></tr>-->
+                    <tr><td colspan="2"><button type="submit" id="btnlogin" name="btnlogin" class="btn btn-md btn-primary btn-block"><?php echo JText::_('Login'); ?></button></td></tr>
                     </tbody>
                 </table>
                 <fieldset id="register" style="display: none">
@@ -123,11 +123,11 @@ if ($isLoggedIn) {
                         <tr><td colspan="2"><div id="resultEmail" class="alert alert-danger" style="display: none"></div></td></tr>
                         <tr>
                             <td align="left"><?php echo JText::_('First Name'); ?><span class="required">*</span></td>
-                            <td><input type="text" id="firstname" name="firstname" required class="form-control"></td>
+                            <td><input type="text" id="firstname" name="firstname" required readonly="true" class="form-control"></td>
                         </tr>
                         <tr>
                             <td align="left"><?php echo JText::_('Last Name'); ?></td>
-                            <td><input type="text" id="lastname" name="lastname" required class="form-control"></td>
+                            <td><input type="text" id="lastname" name="lastname" class="form-control"></td>
                         </tr>
                         <tr>
                             <td align="left"><?php echo JText::_('Birth Date'); ?></td>
@@ -158,11 +158,12 @@ if ($isLoggedIn) {
                             </td>
                         </tr>
                         <tr>
-                            <td align="right" padding-right="5"><input type="checkbox" id="checkbox1" class="form-control" name="checkbox1" required value="check"></td>
-                            <td><a href="terminos_condiciones.pdf"><?php echo JText::_('Terms and Conditions'); ?></a></td>
+                            <td align="right" padding-right="5"><input type="checkbox" id="chkboxTC" class="form-control" name="chkboxTC" required readonly="true"></td>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tcModal"><?php echo JText::_('Terms and Conditions'); ?></button></td>
                         </tr>
                         <tr><td colspan="2">&nbsp;</td></tr>
-                        <tr><td colspan="2"><button type="button" id="btnregister" name="btnregister" class="btn btn-lg btn-primary btn-block" onclick="userRegister()"><?php echo JText::_('Register'); ?></button></td></tr>
+                        <!--                        <tr><td colspan="2"><button type="button" id="btnregister" name="btnregister" class="btn btn-lg btn-primary btn-block" onclick="userRegister()">--><?php //echo JText::_('Register'); ?><!--</button></td></tr>-->
+                        <tr><td colspan="2"><button type="submit" id="btnregister" name="btnregister" class="btn btn-lg btn-primary btn-block"><?php echo JText::_('Register'); ?></button></td></tr>
                         </tbody>
                     </table>
                 </fieldset>
@@ -174,4 +175,51 @@ if ($isLoggedIn) {
     <?php } else { ?>
         <div class="alert alert-danger"><?php echo JText::_('Hmmm... not sure what you are doing here...');?></div>
     <?php } ?>
+
 </form>
+
+<!-- Modal HTML -->
+<div id="adsModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ads Video</h4>
+            </div>
+            <div align="center" class="modal-body">
+                <!--                <iframe id="adsVideo" width="100%" height="auto" src="//www.youtube.com/embed/fsBDbOUGwWQ?autoplay=1" frameborder="0" allowfullscreen></iframe>-->
+                <video class="video-fluid z-depth-1" autoplay controls muted style="width: 50%; height:auto;">
+                    <source src="../images/videos/ads_video.mp4" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="tcModal" tabindex="-1" role="dialog" aria-labelledby="tcModalTitle" aria-hidden="true" style="overflow-y: scroll;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tcModalTitle">Terms and Conditions</h5>
+            </div>
+            <div class="modal-body" style="height: 250px; overflow-y: auto;">
+                <p>Al acceder y utilizar la red WI-FI, usted declara que ha leído, entendido y acepta los términos y condiciones para su utilización. Si usted no está de acuerdo con esta norma, no podrá acceder a este servicio.</p>
+                <p>La red WI-FI está destinada únicamente para el uso exclusivo de los clientes. Usted acepta y reconoce que hay riesgos potenciales a través de un servicio WI-FI. Debe tener cuidado al transmitir datos como: número de tarjeta de crédito, contraseñas u otra información personal sensible a través de redes WI-FI.</p>
+                <p><b>SmartPoke</b> no puede y no garantiza la privacidad y seguridad de sus datos y de las comunicaciones al utilizar este servicio.</p>
+                <p><b>SmartPoke</b> no garantiza el nivel de funcionamiento de la red WI-FI. El servicio puede no estar disponible o ser limitado en cualquier momento y por cualquier motivo, incluyendo emergencias, sobre carga de conexiones, fallo del enlace, problemas en equipos de red, interferencias o fuerza de la señal.</p>
+                <p><b>SmartPoke</b>, no se responsabiliza por datos, mensajes o páginas perdidas, no guardadas o retrasos por interrupciones o problemas de rendimiento con el servicio.</p>
+                <p><b>SmartPoke</b>, puede establecer límites de uso, suspender el servicio o bloquear ciertos comportamientos, acceso a ciertos servicios o dominios para proteger la red del establecimiento de fraudes o actividades que atenten contra las leyes nacionales o internacionales.</p>
+                <p>Asimismo, acepta que se pueda hacer uso de sus datos con fines estrictamente comerciales o de publicidad y comunicación pudiendo darse de baja en cualquier momento de nuestra WI-FI. Para ello tendrá que enviar un correo a info@esmartit.es indicando el numero de móvil y el motivo de su baja.</p>
+                <p>NO se podrá utilizar la red WI-FI con los siguientes fines: Transmisión de contenido fraudulento, difamatorio, obsceno, ofensivo o de vandalismo, insultante o acosador, sea este material o mensajes.</p>
+                <p>Interceptar, recopilar o almacenar datos sobre terceros sin su conocimiento o consentimiento. Escanear o probar la vulnerabilidad de equipos, sistemas o segmentos de red. Enviar mensajes no solicitados (spam), virus, o ataques internos o externos a la red del establecimiento.</p>
+                <p>Obtener acceso no autorizado a equipos, sistemas o programas tanto al interior de la red del establecimiento como fuera. Tampoco podrá utilizar la red WI-FI para obtener, manipular y compartir cualquier archivo sin tener los derechos de propiedad intelectual.</p>
+                <p>Transmitir, copiar y/o descargar cualquier material que viole cualquier ley. Esto incluye entre otros: material con derecho de autor, pornografía infantil, material amenazante u obsceno, o material protegido por secreto comercial o patentes.</p>
+                <p>Dañar equipos, sistemas informáticos o redes y/o perturbar el normal funcionamiento de la red. Ser usada con fines de lucro, actividades comerciales o ilegales, por ejemplo hacking. Ser utilizada para crear y/o la infectar con virus informático o malware en la red.</p>
+                <p>He leído y entendido estas condiciones de uso de red WI-FI y declaro conocer las políticas y normas establecidas por <b>SmartPoke</b>. Estoy de acuerdo en cumplir las directrices anteriores y entender que el incumplimiento de éstas, pueden resultar el bloqueo de mis derechos para usar la red WI-FI y asumir las sanciones legales si corresponde.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnaccept" data-dismiss="modal">Accept</button>
+            </div>
+        </div>
+    </div>
+</div>
