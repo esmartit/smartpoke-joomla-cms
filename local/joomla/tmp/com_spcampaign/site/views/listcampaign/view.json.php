@@ -55,7 +55,7 @@ class SpcampaignViewListcampaign extends JViewLegacy
 //        $values = array($id, $campaign, $valdate, $smsemail, $messagetype, $deferred, $defdate, $type, $publish);
         $values = array("id" => $id,
             "campaign" => $campaign,
-            "valdate" => $valdate,
+            "validdate" => $valdate,
             "smsemail" => $smsemail,
             "messagetype" => $messagetype,
             "deferred" => $deferred,
