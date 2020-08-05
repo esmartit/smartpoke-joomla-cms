@@ -1,19 +1,24 @@
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
+    hide();
 });
 
 function show(){
     document.getElementById("selCountryCode").disabled = true;
     document.getElementById("mobilephone").disabled = true;
     document.getElementById("register").style.display = 'block';
-    document.getElementById("pin").disabled = false;
-    document.getElementById("email_cli").disabled = false;
-    document.getElementById("firstname").disabled = false;
-    document.getElementById("lastname").disabled = false;
-    document.getElementById("bdate").disabled = false;
-    document.getElementById("sex").disabled = false;
-    document.getElementById("zipcode").disabled = false;
-    document.getElementById("membership").disabled = false;
-    document.getElementById("checkbox1").disabled = false;
+    jQuery('#pin').prop('readonly', false);
+    jQuery('#email_cli').prop('readonly', false);
+    jQuery('#firstname').prop('readonly', false);
+    // document.getElementById("pin").disabled = false;
+    // document.getElementById("email_cli").disabled = false;
+    // document.getElementById("firstname").disabled = false;
+    // document.getElementById("lastname").disabled = false;
+    // document.getElementById("bdate").disabled = false;
+    // document.getElementById("sex").disabled = false;
+    // document.getElementById("zipcode").disabled = false;
+    // document.getElementById("membership").disabled = false;
+    // document.getElementById("chkboxTC").disabled = false;
+    jQuery('#chkboxTC').prop('readonly', false);
     document.getElementById("btnlogin").style.display = 'none';
     document.getElementById("btnregister").style.display = 'block';
 }
@@ -22,17 +27,65 @@ function hide(){
     document.getElementById("selCountryCode").disabled = false;
     document.getElementById("mobilephone").disabled = false;
     document.getElementById("register").style.display = 'none';
-    document.getElementById("pin").disabled = true;
-    document.getElementById("email_cli").disabled = true;
-    document.getElementById("firstname").disabled = true;
-    document.getElementById("lastname").disabled = true;
-    document.getElementById("bdate").disabled = true;
-    document.getElementById("sex").disabled = true;
-    document.getElementById("zipcode").disabled = true;
-    document.getElementById("membership").disabled = true;
-    document.getElementById("checkbox1").disabled = true;
+    jQuery('#pin').prop('readonly', true);
+    jQuery('#email_cli').prop('readonly', true);
+    jQuery('#firstname').prop('readonly', true);
+    // document.getElementById("pin").disabled = true;
+    // document.getElementById("email_cli").disabled = true;
+    // document.getElementById("firstname").disabled = true;
+    // document.getElementById("lastname").disabled = true;
+    // document.getElementById("bdate").disabled = true;
+    // document.getElementById("sex").disabled = true;
+    // document.getElementById("zipcode").disabled = true;
+    // document.getElementById("membership").disabled = true;
+    // document.getElementById("chkboxTC").disabled = true;
+    jQuery('#chkboxTC').prop('readonly', true);
     document.getElementById("btnlogin").style.display = 'block';
     document.getElementById("btnregister").style.display = 'none';
+}
+
+let clicked = 'r';
+jQuery(document).ready(function () {
+    jQuery('#btnlogin').on('click', function() {
+        clicked = 'l';
+    })
+    jQuery('#btnregister').on('click', function() {
+        clicked = 'r';
+    })
+    jQuery('#btnaccept').on('click', function() {
+        document.getElementById("chkboxTC").checked = true;
+    })
+
+    jQuery('#login_form').submit(function(e) {
+        switch (clicked) {
+            case "l":
+                userLogin();
+                break;
+            case "r":
+                showModal();
+                userRegister();
+                break;
+        }
+        e.preventDefault();
+    });
+});
+
+jQuery(document).ready(function(){
+    let url = jQuery("#adsVideo").attr('src');
+
+    jQuery("#adsModal").on('hide.bs.modal', function(){
+        jQuery("#adsVideo").attr('src', '');
+    });
+
+    jQuery("#adsModal").on('show.bs.modal', function(){
+        jQuery("#adsVideo").attr('src', url);
+    });
+});
+
+function showModal() {
+    jQuery('#adsModal').modal('show');
+    setTimeout(function() {
+        jQuery('#adsModal').modal('hide'); }, 5000);
 }
 
 function userLogin() {
@@ -47,7 +100,6 @@ function userLogin() {
             groupname: jQuery('#groupname').val()
         },
         success: function(response, status, xhr) {
-
             console.log(response);
             let object = response.data[0];
             let section = object['section'];
@@ -72,7 +124,7 @@ function userLogin() {
         },
         error: function() {
             console.log('ajax call failed');
-            },
+        },
     });
 }
 
@@ -120,7 +172,7 @@ function userRegister() {
         },
         error: function() {
             console.log('ajax call failed');
-            },
+        },
     });
 }
 
