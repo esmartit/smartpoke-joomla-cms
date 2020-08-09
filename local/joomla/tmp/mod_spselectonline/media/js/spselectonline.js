@@ -317,7 +317,7 @@ function sendForm() {
         userTimeZone
     );
 
-    evtSourceConnectOnline
+    evtSourceActivityHotSpot
     (
         t_dateS, t_dateE,
         t_country, t_state, t_city, t_zipcode,

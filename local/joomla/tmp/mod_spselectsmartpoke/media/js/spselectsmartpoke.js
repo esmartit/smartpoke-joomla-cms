@@ -465,11 +465,8 @@ $(document).ready(function() {
     let optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2050',
-        dateLimit: {
-            days: 365
-        },
+        minDate: '01/01/1970',
+        linkedCalendars:false,
         showDropdowns: true,
         showWeekNumbers: true,
         timePicker: false,

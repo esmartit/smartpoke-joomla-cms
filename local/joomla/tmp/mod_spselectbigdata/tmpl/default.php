@@ -37,11 +37,11 @@ $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.range
 $document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
 
 $currDate = date('Y-m-d H:i:s');
-$datestart = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
-$dateend = date("Y-m-d", strtotime($currDate));
+$datestart = date("Y-m-d", strtotime("-31 day", strtotime($currDate)));
+$dateend = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
 
-$datestart2 = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
-$dateend2 = date("Y-m-d", strtotime($currDate));
+$datestart2 = date("Y-m-d", strtotime("-31 day", strtotime($datestart)));
+$dateend2 = date("Y-m-d", strtotime("-1 day", strtotime($datestart)));
 
 ?>
 <div class="col-md-12 col-sm-12 ">
@@ -93,7 +93,6 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         </div>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
                                 <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                     <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
@@ -256,16 +255,16 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <div id="selRadioGraph" class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                    <input type="radio" value="0" id="radioDay" name="radioGraph"> <?php echo JText::_('By Day'); ?>
+                                    <input type="radio" value="BY_DAY" id="radioDay" name="radioGraph"> <?php echo JText::_('By Day'); ?>
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" value="1" id="radioWeek" name="radioGraph"> <?php echo JText::_('By Week'); ?>
+                                    <input type="radio" value="BY_WEEK" id="radioWeek" name="radioGraph"> <?php echo JText::_('By Week'); ?>
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" value="2" id="radioMonth" name="radioGraph"> <?php echo JText::_('By Month'); ?>
+                                    <input type="radio" value="BY_MONTH" id="radioMonth" name="radioGraph"> <?php echo JText::_('By Month'); ?>
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" value="3" id="radioYear" name="radioGraph"> <?php echo JText::_('By Year'); ?>
+                                    <input type="radio" value="BY_YEAR" id="radioYear" name="radioGraph"> <?php echo JText::_('By Year'); ?>
                                 </label>
                             </div>
                         </div>
