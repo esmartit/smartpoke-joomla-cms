@@ -17,14 +17,25 @@ $document->addScript('/media/mod_spactivitybigdata/js/echartactivitybigdata.js')
 
 ?>
 <div class="col-md-12 col-sm-12">
-    <div class="dashboard_graph">
-        <div class="x_title">
-            <h2><?php echo JText::_('MOD_SPACTIVITYBIGDATA'); ?> <small></small></h2>
-            <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12">
+        <div class="dashboard_graph">
+            <div class="x_title">
+                <h2><?php echo JText::_('MOD_SPACTIVITYBIGDATA'); ?> <small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
+                <div id="echart_activity_bigdata_r" class="demo-placeholder" style="height:350px;"></div>
+            </div>
         </div>
-        <div class="x_content">
-            <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
-            <div id="echart_activity_bigdata" class="demo-placeholder" style="height:350px;"></div>
+        <div class="dashboard_graph" id="graphCompare">
+            <div class="x_title">
+                <h2><?php echo JText::_('MOD_SPACTIVITYBIGDATA_COMPARE'); ?> <small></small></h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="echart_activity_bigdata_c" class="demo-placeholder" style="height:350px;"></div>
+            </div>
         </div>
     </div>
 </div>

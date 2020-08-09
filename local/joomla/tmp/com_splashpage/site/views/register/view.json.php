@@ -66,7 +66,7 @@ class SplashpageViewRegister extends JViewLegacy
             "memberShip" => $membership,
             "spotId" => $spot_id,
             "hotspotName" => $hotspot_name
-            );
+        );
         $model->signUp($data);
 
         $campaign = $model->getCampaign($smsemail = 1, $type = "REGISTER");

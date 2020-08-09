@@ -94,6 +94,8 @@ class SplashpageModelRegister extends JModelItem
 
     public function saveCustomer($values = null)
     {
+        $currDate = date('Y-m-d H:i:s');
+
         $customer = new stdClass();
         $customer->id = null;
         $customer->alias = strtolower($values[10]).$values[11];
@@ -108,6 +110,8 @@ class SplashpageModelRegister extends JModelItem
         $customer->spot = $values[7];
         $customer->username = $values[8];
         $customer->zipcode = $values[9];
+        $customer->created = $currDate;
+        $customer->modified = $currDate;
         $customer->params = '';
         $db = JFactory::getDBO();
         $db->insertObject('#__spcustomer_customer', $customer, 'id');

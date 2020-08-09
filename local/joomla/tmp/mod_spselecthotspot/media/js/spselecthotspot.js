@@ -190,11 +190,8 @@ $(document).ready(function() {
     let optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2050',
-        dateLimit: {
-            days: 365
-        },
+        minDate: '01/01/1970',
+        linkedCalendars:false,
         showDropdowns: true,
         showWeekNumbers: true,
         timePicker: false,
@@ -267,12 +264,20 @@ function sendForm() {
     let t_member = $('#selMembership').val();
     let userTimeZone = document.getElementById('userTimeZone').innerText;
 
-    let dataForm = {
-        "dateStart": t_dateS, "dateEnd": t_dateE,
-        "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-        "spotId": t_spot,
-        "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
-        "timeZone": userTimeZone }
-    console.log(dataForm);
+    // let dataForm = {
+    //     "dateStart": t_dateS, "dateEnd": t_dateE,
+    //     "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
+    //     "spotId": t_spot,
+    //     "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
+    //     "timeZone": userTimeZone };
+
+    evtSourceConnectOnline(
+        t_dateS, t_dateE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone
+    );
+    console.log(t_dateS, t_dateE, t_country, t_state, t_city, t_zipcode, t_spot, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
 }
 

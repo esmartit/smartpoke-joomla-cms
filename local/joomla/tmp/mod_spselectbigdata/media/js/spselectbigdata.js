@@ -238,20 +238,27 @@ function getZoneList() {
 }
 
 $(document).ready(function () {
+    let optRange = '';
     $('#radioRange').on('change', function () {
-        hideDaterange()
+        optRange = $('#radioRange').val();
+        $('input[name="rangeCompare"]:radio:checked').val(optRange);
+        hideDaterange();
     });
 
     $('#radioCompare').on('change', function () {
-        showDaterange()
+        optRange = $('#radioCompare').val();
+        $('input[name="rangeCompare"]:radio:checked').val(optRange);
+        showDaterange();
     });
 });
 
 function showDaterange(){
     document.getElementById("rangeDate").style.display = 'block';
+    document.getElementById("graphCompare").style.display = 'block';
 }
 function hideDaterange(){
     document.getElementById("rangeDate").style.display = 'none';
+    document.getElementById("graphCompare").style.display = 'none';
 };
 
 $(document).ready(function() {
@@ -281,13 +288,10 @@ $(document).ready(function() {
     };
 
     let optionSet1 = {
-        startDate: moment().subtract(29, 'days'),
-        endDate: moment(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2050',
-        dateLimit: {
-            days: 365
-        },
+        startDate: moment().subtract(31, 'days'),
+        endDate: moment().subtract(1, 'days'),
+        minDate: '01/01/1970',
+        linkedCalendars:false,
         showDropdowns: true,
         showWeekNumbers: true,
         timePicker: false,
@@ -319,7 +323,7 @@ $(document).ready(function() {
         }
     };
 
-    $('#daterange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#daterange span').html(moment().subtract(31, 'days').format('MMMM D, YYYY') + ' - ' + moment().subtract(1, 'days').format('MMMM D, YYYY'));
     $('#daterange').daterangepicker(optionSet1, cb);
     $('#daterange').on('show.daterangepicker', function () {
         console.log("show event fired");
@@ -343,7 +347,7 @@ $(document).ready(function() {
         $('#daterange').data('daterangepicker').remove();
     });
 
-    $('#daterange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#daterange_right span').html(moment().subtract(62, 'days').format('MMMM D, YYYY') + ' - ' + moment().subtract(31, 'days').format('MMMM D, YYYY'));
 
     $('#daterange_right').daterangepicker(optionSet1, cb2);
 
@@ -375,43 +379,27 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
+    let option = '';
     $('#radioDay').on('change', function () {
-        showGraph($('#radioDay').val())
+        option = $('#radioDay').val();
+        $('input[name="radioGraph"]:radio:checked').val(option);
     });
 
     $('#radioWeek').on('change', function () {
-        showGraph($('#radioWeek').val())
+        option = $('#radioWeek').val();
+        $('input[name="radioGraph"]:radio:checked').val(option);
     });
 
     $('#radioMonth').on('change', function () {
-        showGraph($('#radioMonth').val())
+        option = $('#radioMonth').val();
+        $('input[name="radioGraph"]:radio:checked').val(option);
     });
 
     $('#radioYear').on('change', function () {
-        showGraph($('#radioYear').val())
+        option = $('#radioYear').val();
+        $('input[name="radioGraph"]:radio:checked').val(option);
     });
 });
-
-function showGraph(type) {
-    let graphType = type;
-    let request = {
-        option       : 'com_ajax',
-        module       : 'spactivitybigdata',  // to target: mod_spactivitybigdata
-        method       : 'showGraphBigData',  // to target: function showGraphBigDataAjax in class ModSPActivityBigDataHelper
-        format       : 'json',
-        data         : graphType
-    };
-    $.ajax({
-        method: 'POST',
-        data: request
-    })
-        .success(function(response) {
-            console.log('call success '+graphType);
-        })
-        .error(function() {
-            console.log('ajax call failed');
-        });
-}
 
 $(document).ready(function () {
     $('#checkFilter').on('change', function () {
@@ -434,6 +422,7 @@ function filters() {
 }
 
 function sendForm() {
+    let t_range = $('input[name="rangeCompare"]:radio:checked').val();
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
     let t_timeS = $('#timestart').val();
@@ -456,6 +445,7 @@ function sendForm() {
     let t_zipcodes = '';
     let t_member = '';
     let userTimeZone = document.getElementById('userTimeZone').innerText;
+    let t_groupBy = $('input[name="radioGraph"]:radio:checked').val();
 
     if (document.getElementById("checkFilter").checked) {
         t_ageS = $('#from_value').val();
@@ -465,15 +455,56 @@ function sendForm() {
         t_member = $('#selMembership').val();
     }
 
-    let dataForm = {
-        "dateStart": t_dateS, "dateEnd": t_dateE,
-        "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
-        "startTime": t_timeS, "endTime": t_timeE,
-        "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-        "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone,
-        "brands": t_brands, "status": t_status, "presence": t_presence,
-        "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
-        "timeZone": userTimeZone
+    // let dataForm = {
+    //     "dateStart": t_dateS, "dateEnd": t_dateE,
+    //     "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
+    //     "startTime": t_timeS, "endTime": t_timeE,
+    //     "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
+    //     "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone,
+    //     "brands": t_brands, "status": t_status, "presence": t_presence,
+    //     "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
+    //     "timeZone": userTimeZone,
+    //     "group": t_groupBy
+    // }
+    // console.log(t_dateS, t_dateE, t_timeS, t_timeE, t_country, t_state, t_city, t_zipcode, t_spot, t_sensor, t_zone, t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone, t_groupBy);
+
+    evtSourceActivityBigDataR
+    (
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_sensor, t_zone,
+        t_brands, t_status, t_presence,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy
+    );
+
+    if (t_range == '1') {
+        evtSourceActivityBigDataC
+        (
+            t_dateS2, t_dateE2, t_timeS, t_timeE,
+            t_country, t_state, t_city, t_zipcode,
+            t_spot, t_sensor, t_zone,
+            t_brands, t_status, t_presence,
+            t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+            userTimeZone, t_groupBy
+        );
     }
-    console.log(dataForm);
+
+    evtSourceUniqueBigData
+    (
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_sensor, t_zone,
+        t_brands, t_status, t_presence,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone
+    );
+
+    countRegisteredBigData
+    (
+        t_dateS, t_dateE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member
+    );
 }
