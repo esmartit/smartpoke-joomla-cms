@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		view.html.php
@@ -143,11 +143,6 @@ class SplimitationViewLimitation extends JViewLegacy
 					{
 						JToolBarHelper::custom('limitation.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 					}
-				}
-				$canVersion = ($this->canDo->get('core.version') && $this->canDo->get('limitation.version'));
-				if ($this->state->params->get('save_history', 1) && $this->canDo->get('core.edit') && $canVersion)
-				{
-					JToolbarHelper::versions('com_splimitation.limitation', $this->item->id);
 				}
 				if ($this->canDo->get('core.create'))
 				{

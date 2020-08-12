@@ -3,8 +3,8 @@ let seActivityBigDataC = '';
 let spChartBigDataR = '';
 let spChartBigDataC = '';
 
-let optionR = "";
-let optionC = "";
+// let optionR = "";
+// let optionC = "";
 
 let inBigDataR = [];
 let limitBigDataR = [];
@@ -236,8 +236,8 @@ $(document).ready( function() {
     spChartBigDataC = echarts.init(document.getElementById('echart_activity_bigdata_c'));
 })
 
-function echartActivityBigDataR(axisR, deviceActR, inActR, limitActR, outActR) {
-    optionR = {
+// function echartActivityBigDataR(axisR, deviceActR, inActR, limitActR, outActR) {
+let optionR = {
         title: {
             text: '',
             subtext: ''
@@ -284,7 +284,7 @@ function echartActivityBigDataR(axisR, deviceActR, inActR, limitActR, outActR) {
             {
                 type: 'category',
                 boundaryGap: true,
-                data: axisR
+                data: axisBigDataR
             }
         ],
         yAxis: [
@@ -308,7 +308,7 @@ function echartActivityBigDataR(axisR, deviceActR, inActR, limitActR, outActR) {
                         }
                     }
                 },
-                data: deviceActR,
+                data: deviceBigDataR,
                 markLine : {
                     data : [
                         {type : 'average', name: 'Avg'}
@@ -326,7 +326,7 @@ function echartActivityBigDataR(axisR, deviceActR, inActR, limitActR, outActR) {
                         }
                     }
                 },
-                data: inActR
+                data: inBigDataR
             },
             {
                 name: 'LIMIT',
@@ -339,7 +339,7 @@ function echartActivityBigDataR(axisR, deviceActR, inActR, limitActR, outActR) {
                         }
                     }
                 },
-                data: limitActR
+                data: limitBigDataR
             },
             {
                 name: 'OUT',
@@ -352,15 +352,15 @@ function echartActivityBigDataR(axisR, deviceActR, inActR, limitActR, outActR) {
                         }
                     }
                 },
-                data: outActR
+                data: outBigDataR
             }
         ]
     };
-    spChartBigDataR.setOption(optionR);
-}
+    // spChartBigDataR.setOption(optionR);
+// }
 
-function echartActivityBigDataC(axisC, deviceActC, inActC, limitActC, outActC) {
-    optionC = {
+// function echartActivityBigDataC(axisC, deviceActC, inActC, limitActC, outActC) {
+let optionC = {
         title: {
             text: '',
             subtext: ''
@@ -407,7 +407,7 @@ function echartActivityBigDataC(axisC, deviceActC, inActC, limitActC, outActC) {
             {
                 type: 'category',
                 boundaryGap: true,
-                data: axisC
+                data: axisBigDataC
             }
         ],
         yAxis: [
@@ -431,7 +431,7 @@ function echartActivityBigDataC(axisC, deviceActC, inActC, limitActC, outActC) {
                         }
                     }
                 },
-                data: deviceActC,
+                data: deviceBigDataC,
                 markLine : {
                     data : [
                         {type : 'average', name: 'Avg'}
@@ -449,7 +449,7 @@ function echartActivityBigDataC(axisC, deviceActC, inActC, limitActC, outActC) {
                         }
                     }
                 },
-                data: inActC
+                data: inBigDataC
             },
             {
                 name: 'LIMIT',
@@ -462,7 +462,7 @@ function echartActivityBigDataC(axisC, deviceActC, inActC, limitActC, outActC) {
                         }
                     }
                 },
-                data: limitActC
+                data: limitBigDataC
             },
             {
                 name: 'OUT',
@@ -475,37 +475,44 @@ function echartActivityBigDataC(axisC, deviceActC, inActC, limitActC, outActC) {
                         }
                     }
                 },
-                data: outActC
+                data: outBigDataC
             }
         ]
     };
-    spChartBigDataC.setOption(optionC);
-}
+    // spChartBigDataC.setOption(optionC);
+// }
 
-function x_graph(opt) {
-    for (let i=0; i<1; i++) {
-        inBigDataR[i] = 0;
-        limitBigDataR[i] = 0;
-        outBigDataR[i] = 0;
-        deviceBigDataR[i] = 0;
-        axisBigDataR[i] = ''
-        echartActivityBigDataR(axisBigDataR, deviceBigDataR, inBigDataR, limitBigDataR, outBigDataR);
-    }
-    if (opt == 'C') {
-        for (let i=0; i<1; i++) {
-            inBigDataC[i] = 0;
-            limitBigDataC[i] = 0;
-            outBigDataC[i] = 0;
-            deviceBigDataC[i] = 0;
-            axisBigDataC[i] = ''
-            echartActivityBigDataC(axisBigDataC, deviceBigDataC, inBigDataC, limitBigDataC, outBigDataC);
-        }
-    }
-}
+// function x_graph(opt) {
+//     for (let i=0; i<1; i++) {
+//         inBigDataR[i] = 0;
+//         limitBigDataR[i] = 0;
+//         outBigDataR[i] = 0;
+//         deviceBigDataR[i] = 0;
+//         axisBigDataR[i] = ''
+//         // echartActivityBigDataR(axisBigDataR, deviceBigDataR, inBigDataR, limitBigDataR, outBigDataR);
+//     }
+//     if (opt == 'C') {
+//         for (let i=0; i<1; i++) {
+//             inBigDataC[i] = 0;
+//             limitBigDataC[i] = 0;
+//             outBigDataC[i] = 0;
+//             deviceBigDataC[i] = 0;
+//             axisBigDataC[i] = ''
+//             // echartActivityBigDataC(axisBigDataC, deviceBigDataC, inBigDataC, limitBigDataC, outBigDataC);
+//         }
+//     }
+// }
 
 function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
                                    zipcodes, member, userTZ, group) {
-    x_graph('R');
+    // x_graph('R');
+    inBigDataR[0] = 0;
+    limitBigDataR[0] = 0;
+    outBigDataR[0] = 0;
+    deviceBigDataR[0] = 0;
+    axisBigDataR[0] = ''
+    spChartBigDataR.setOption(optionR);
+
     if (seActivityBigDataR.readyState != 2 && seActivityBigDataR != "") {
         seActivityBigDataR.close();
     }
@@ -515,49 +522,65 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
-    let groupAnt = dateS;
     let pos = 0;
+    let group_a = '';
 
     seActivityBigDataR.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
-        let groupAct = eventData.group;
+        let axisGroup = '';
+        let group_x = eventData.group;
         let in_x = eventData.inCount;
         let limit_x = eventData.limitCount;
         let out_x = eventData.outCount;
+        let last = eventData.isLast;
 
-        if (groupAct != groupAnt) {
-            pos += 1;
-            groupAnt = groupAct;
-        }
         switch (group) {
             case "BY_DAY":
-                axisBigDataR[pos] = groupAct.substr(groupAct.length -5,groupAct.length);
+                axisGroup = group_x.substr(group_x.length -5,group_x.length);
                 break;
             case "BY_WEEK":
-                axisBigDataR[pos] = groupAct.substr(groupAct.length -2,groupAct.length);
+                axisGroup = group_x.substr(group_x.length -2,group_x.length);
                 break;
             case "BY_MONTH":
-                month = new Date(groupAct+'/'+'01');
-                axisBigDataR[pos] = month.toLocaleString('default', {month: 'short'});
+                month = new Date(group_x+'/'+'01');
+                axisGroup = month.toLocaleString('default', {month: 'short'});
                 break;
             case "BY_YEAR":
-                axisBigDataR[pos] = groupAct;
+                axisGroup = group_x;
                 break;
         }
 
+        if (group_x != group_a) {
+            if (axisBigDataR.length > 0) {
+                pos += 1;
+            }
+            group_a = group_x;
+        }
         inBigDataR[pos] = in_x;
         limitBigDataR[pos] = limit_x;
         outBigDataR[pos] = out_x;
         deviceBigDataR[pos] = in_x + limit_x + out_x;
+        axisBigDataR[pos] = axisGroup;
 
-        echartActivityBigDataR(axisBigDataR, deviceBigDataR, inBigDataR, limitBigDataR, outBigDataR);
+        spChartBigDataR.setOption(optionR);
+        // echartActivityBigDataR(axisBigDataR, deviceBigDataR, inBigDataR, limitBigDataR, outBigDataR);
         // console.log(axisBigDataR, deviceBigDataR, inBigDataR, limitBigDataR, outBigDataR);
+        if (last) {
+            seActivityBigDataR.close();
+        }
     }
 }
 
 function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
                                    zipcodes, member, userTZ, group) {
-    x_graph('C');
+    // x_graph('C');
+    inBigDataC[0] = 0;
+    limitBigDataC[0] = 0;
+    outBigDataC[0] = 0;
+    deviceBigDataC[0] = 0;
+    axisBigDataC[0] = ''
+    spChartBigDataC.setOption(optionC);
+
     if (seActivityBigDataC.readyState != 2 && seActivityBigDataC != "") {
         seActivityBigDataC.close();
     }
@@ -567,42 +590,52 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
-    let groupAnt = dateS;
     let pos = 0;
+    let group_a = '';
 
     seActivityBigDataC.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
-        let groupAct = eventData.group;
+        let axisGroup = '';
+        let group_x = eventData.group;
         let in_x = eventData.inCount;
         let limit_x = eventData.limitCount;
         let out_x = eventData.outCount;
+        let last = eventData.isLast;
 
-        if (groupAct != groupAnt) {
-            pos += 1;
-            groupAnt = groupAct;
-        }
         switch (group) {
             case "BY_DAY":
-                axisBigDataC[pos] = groupAct.substr(groupAct.length -5,groupAct.length);
+                axisGroup = group_x.substr(group_x.length -5,group_x.length);
                 break;
             case "BY_WEEK":
-                axisBigDataC[pos] = groupAct.substr(groupAct.length -2,groupAct.length);
+                axisGroup = group_x.substr(group_x.length -2,group_x.length);
                 break;
             case "BY_MONTH":
-                month = new Date(groupAct+'/'+'01');
-                axisBigDataC[pos] = month.toLocaleString('default', {month: 'short'});
+                month = new Date(group_x+'/'+'01');
+                axisGroup = month.toLocaleString('default', {month: 'short'});
                 break;
             case "BY_YEAR":
-                axisBigDataC[pos] = groupAct;
+                axisGroup = group_x;
                 break;
         }
 
+        if (group_x != group_a) {
+            if (axisBigDataC.length > 0) {
+                pos += 1;
+            }
+            group_a = group_x;
+        }
         inBigDataC[pos] = in_x;
         limitBigDataC[pos] = limit_x;
         outBigDataC[pos] = out_x;
         deviceBigDataC[pos] = in_x + limit_x + out_x;
+        axisBigDataC[pos] = axisGroup;
 
-        echartActivityBigDataC(axisBigDataC, deviceBigDataC, inBigDataC, limitBigDataC, outBigDataC);
+        spChartBigDataC.setOption(optionC);
+        // echartActivityBigDataC(axisBigDataC, deviceBigDataC, inBigDataC, limitBigDataC, outBigDataC);
         // console.log(axisBigDataC, deviceBigDataC, inBigDataC, limitBigDataC, outBigDataC);
+        if (last) {
+            seActivityBigDataC.close();
+        }
+
     }
 }

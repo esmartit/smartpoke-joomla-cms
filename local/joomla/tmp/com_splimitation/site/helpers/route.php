@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		route.php
@@ -54,49 +54,6 @@ abstract class SplimitationHelperRoute
 		if ($catid > 1)
 		{
 			$categories = JCategories::getInstance('splimitation.listlimitation');
-			$category = $categories->get($catid);
-			if ($category)
-			{
-				$needles['category'] = array_reverse($category->getPath());
-				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
-			}
-		}
-
-		if ($item = self::_findItem($needles))
-		{
-			$link .= '&Itemid='.$item;
-		}
-
-		return $link;
-	}
-
-	/**
-	 * @param int The route of the Itemlimitation
-	 */
-	public static function getItemlimitationRoute($id = 0, $catid = 0)
-	{
-		if ($id != '')
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemlimitation'  => array((int) $id)
-			);
-			// Create the link
-			$link = 'index.php?option=com_splimitation&view=itemlimitation&name='. $id;
-		}
-		else
-		{
-			// Initialize the needel array.
-			$needles = array(
-				'itemlimitation'  => array()
-			);
-			// Create the link but don't add the id.
-			$link = 'index.php?option=com_splimitation&view=itemlimitation';
-		}
-		if ($catid > 1)
-		{
-			$categories = JCategories::getInstance('splimitation.itemlimitation');
 			$category = $categories->get($catid);
 			if ($category)
 			{

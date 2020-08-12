@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		controller.php
@@ -45,7 +45,6 @@ class SplimitationController extends JControllerLegacy
 		$isEdit		= $this->checkEditView($view);
 		$layout		= $this->input->get('layout', null, 'WORD');
 		$id			= $this->input->getInt('id');
-		$name       = $this->input->getString('name');
 		// $cachable	= true; (TODO) working on a fix [gh-238](https://github.com/vdm-io/Joomla-Component-Builder/issues/238)
 		
 		// insure that the view is not cashable if edit view or if user is logged in
@@ -129,4 +128,10 @@ class SplimitationController extends JControllerLegacy
 		}
 		return false;
 	}
+
+    public function limitationCRUD() {
+
+        parent::display();
+    }
+
 }

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		splimitation.php
@@ -34,14 +34,8 @@ class SplimitationModelSplimitation extends JModelList
 		$icons  = array();
 		// view groups array
 		$viewGroups = array(
-			'main' => array('png.limitation.add', 'png.limitations')
+			'main' => array()
 		);
-		// view access array
-		$viewAccess = array(
-			'limitations.access' => 'limitation.access',
-			'limitation.access' => 'limitation.access',
-			'limitations.dashboard_list' => 'limitation.dashboard_list',
-			'limitation.dashboard_add' => 'limitation.dashboard_add');
 		// loop over the $views
 		foreach($viewGroups as $group => $views)
 		{

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		limitations.php
@@ -37,8 +37,7 @@ class SplimitationModelLimitations extends JModelList
 				'a.published','published',
 				'a.ordering','ordering',
 				'a.created_by','created_by',
-				'a.modified_by','modified_by',
-				'a.name','name'
+				'a.modified_by','modified_by'
 			);
 		}
 
@@ -59,8 +58,7 @@ class SplimitationModelLimitations extends JModelList
 		{
 			$this->context .= '.' . $layout;
 		}
-		$name = $this->getUserStateFromRequest($this->context . '.filter.name', 'filter_name');
-		$this->setState('filter.name', $name);
+		
         
 		$sorting = $this->getUserStateFromRequest($this->context . '.filter.sorting', 'filter_sorting', 0, 'int');
 		$this->setState('filter.sorting', $sorting);
@@ -91,9 +89,6 @@ class SplimitationModelLimitations extends JModelList
 	 */
 	public function getItems()
 	{
-		// check in items
-		$this->checkInNow();
-
 		// load parent items
 		$items = parent::getItems();
         
@@ -131,36 +126,6 @@ class SplimitationModelLimitations extends JModelList
 			$query->where('(a.published = 0 OR a.published = 1)');
 		}
 
-		// Join over the asset groups.
-		$query->select('ag.title AS access_level');
-		$query->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
-		// Filter by access level.
-		if ($access = $this->getState('filter.access'))
-		{
-			$query->where('a.access = ' . (int) $access);
-		}
-		// Implement View Level Access
-		if (!$user->authorise('core.options', 'com_splimitation'))
-		{
-			$groups = implode(',', $user->getAuthorisedViewLevels());
-			$query->where('a.access IN (' . $groups . ')');
-		}
-		// Filter by search.
-		$search = $this->getState('filter.search');
-		if (!empty($search))
-		{
-			if (stripos($search, 'id:') === 0)
-			{
-				$query->where('a.id = ' . (int) substr($search, 3));
-			}
-			else
-			{
-				$search = $db->quote('%' . $db->escape($search) . '%');
-				$query->where('(a.name LIKE '.$search.')');
-			}
-		}
-
-
 		// Add the list ordering clause.
 		$orderCol = $this->state->get('list.ordering', 'a.id');
 		$orderDirn = $this->state->get('list.direction', 'asc');
@@ -170,103 +135,6 @@ class SplimitationModelLimitations extends JModelList
 		}
 
 		return $query;
-	}
-
-	/**
-	 * Method to get list export data.
-	 *
-	 * @param   array  $pks  The ids of the items to get
-	 * @param   JUser  $user  The user making the request
-	 *
-	 * @return mixed  An array of data items on success, false on failure.
-	 */
-	public function getExportData($pks, $user = null)
-	{
-		// setup the query
-		if (SplimitationHelper::checkArray($pks))
-		{
-			// Set a value to know this is export method. (USE IN CUSTOM CODE TO ALTER OUTCOME)
-			$_export = true;
-			// Get the user object if not set.
-			if (!isset($user) || !SplimitationHelper::checkObject($user))
-			{
-				$user = JFactory::getUser();
-			}
-			// Create a new query object.
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
-
-			// Select some fields
-			$query->select('a.*');
-
-			// From the splimitation_limitation table
-			$query->from($db->quoteName('#__splimitation_limitation', 'a'));
-			$query->where('a.id IN (' . implode(',',$pks) . ')');
-			// Implement View Level Access
-			if (!$user->authorise('core.options', 'com_splimitation'))
-			{
-				$groups = implode(',', $user->getAuthorisedViewLevels());
-				$query->where('a.access IN (' . $groups . ')');
-			}
-
-			// Order the results by ordering
-			$query->order('a.ordering  ASC');
-
-			// Load the items
-			$db->setQuery($query);
-			$db->execute();
-			if ($db->getNumRows())
-			{
-				$items = $db->loadObjectList();
-
-				// Set values to display correctly.
-				if (SplimitationHelper::checkArray($items))
-				{
-					foreach ($items as $nr => &$item)
-					{
-						// unset the values we don't want exported.
-						unset($item->asset_id);
-						unset($item->checked_out);
-						unset($item->checked_out_time);
-					}
-				}
-				// Add headers to items array.
-				$headers = $this->getExImPortHeaders();
-				if (SplimitationHelper::checkObject($headers))
-				{
-					array_unshift($items,$headers);
-				}
-				return $items;
-			}
-		}
-		return false;
-	}
-
-	/**
-	* Method to get header.
-	*
-	* @return mixed  An array of data items on success, false on failure.
-	*/
-	public function getExImPortHeaders()
-	{
-		// Get a db connection.
-		$db = JFactory::getDbo();
-		// get the columns
-		$columns = $db->getTableColumns("#__splimitation_limitation");
-		if (SplimitationHelper::checkArray($columns))
-		{
-			// remove the headers you don't import/export.
-			unset($columns['asset_id']);
-			unset($columns['checked_out']);
-			unset($columns['checked_out_time']);
-			$headers = new stdClass();
-			foreach ($columns as $column => $type)
-			{
-				$headers->{$column} = $column;
-			}
-			return $headers;
-		}
-		return false;
 	}
 	
 	/**
@@ -284,61 +152,7 @@ class SplimitationModelLimitations extends JModelList
 		$id .= ':' . $this->getState('filter.ordering');
 		$id .= ':' . $this->getState('filter.created_by');
 		$id .= ':' . $this->getState('filter.modified_by');
-		$id .= ':' . $this->getState('filter.name');
 
 		return parent::getStoreId($id);
-	}
-
-	/**
-	 * Build an SQL query to checkin all items left checked out longer then a set time.
-	 *
-	 * @return  a bool
-	 *
-	 */
-	protected function checkInNow()
-	{
-		// Get set check in time
-		$time = JComponentHelper::getParams('com_splimitation')->get('check_in');
-
-		if ($time)
-		{
-
-			// Get a db connection.
-			$db = JFactory::getDbo();
-			// reset query
-			$query = $db->getQuery(true);
-			$query->select('*');
-			$query->from($db->quoteName('#__splimitation_limitation'));
-			$db->setQuery($query);
-			$db->execute();
-			if ($db->getNumRows())
-			{
-				// Get Yesterdays date
-				$date = JFactory::getDate()->modify($time)->toSql();
-				// reset query
-				$query = $db->getQuery(true);
-
-				// Fields to update.
-				$fields = array(
-					$db->quoteName('checked_out_time') . '=\'0000-00-00 00:00:00\'',
-					$db->quoteName('checked_out') . '=0'
-				);
-
-				// Conditions for which records should be updated.
-				$conditions = array(
-					$db->quoteName('checked_out') . '!=0', 
-					$db->quoteName('checked_out_time') . '<\''.$date.'\''
-				);
-
-				// Check table
-				$query->update($db->quoteName('#__splimitation_limitation'))->set($fields)->where($conditions); 
-
-				$db->setQuery($query);
-
-				$db->execute();
-			}
-		}
-
-		return false;
 	}
 }

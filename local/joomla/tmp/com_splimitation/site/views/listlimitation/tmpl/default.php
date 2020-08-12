@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		default.php
@@ -22,7 +22,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 
-/***[JCBGUI.site_view.php_view.44.$$$$]***/
+/***[JCBGUI.site_view.php_view.46.$$$$]***/
 $document = JFactory::getDocument();
 
 $document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css');
@@ -38,8 +38,9 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 
 
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_splimitation'); ?>" method="post" name="adminForm" id="adminForm">
-<!--[JCBGUI.site_view.default.44.$$$$]-->
+<?php echo $this->toolbar->render(); ?>
+
+<!--[JCBGUI.site_view.default.46.$$$$]-->
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
         <div class="x_title">
@@ -58,7 +59,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 <div class="clearfix"></div>
             </div>
             <?php if ($this->user->authorise('core.create', 'com_splimitation')): ?>
-                <a href="?option=com_splimitation&view=limitation&layout=edit" class="btn btn-light"><?php echo JText::_('COM_SPLIMITATION_NEW_LIMITATION'); ?></a>
+                <button type="button" class="open-limitationModal btn btn-light" data-toggle="modal" data-target="#limitationModal" data-title="New" data-info='{"name":"", "maxUpload":"", "upload":"", "maxDownload":"", "download":"", "maxTraffic":"", "traffic":"", "urlRedirect":"", "accessPeriod":"", "period":"", "dailySession":"", "session":"", "option":"C"}'><?php echo JText::_('COM_SPLIMITATION_NEW_LIMITATION'); ?></button>
                 <br />
             <?php endif; ?>
             <div class="x_content">
@@ -80,6 +81,9 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                 </thead>
                                 <tbody>
                                 <?php foreach ($this->items as $item): ?>
+                                    <?php
+                                        $canDo = SplimitationHelper::getActions('limitation',$item,'limitations');
+                                    ?>
                                     <tr>
                                         <td class="a-right a-right "><?php echo $item->name; ?></td>
                                         <td class="a-right a-right "><?php echo $item->maxUpload->value.' '.$item->maxUpload->rate; ?></td>
@@ -89,9 +93,13 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         <td class="a-right a-right "><?php echo $item->accessPeriod->value.' '.$item->accessPeriod->period; ?></td>
                                         <td class="a-right a-right "><?php echo $item->dailySession->value.' '.$item->dailySession->period; ?></td>
                                         <td class=" last">
-                                            <a href="<?php echo JRoute::_(SplimitationHelperRoute::getItemlimitationRoute($item->name)); ?>" class="btn-sm btn-outline-secondary"><i class="fa fa-eye"></i></a>
-                                            <a href="index.php?option=com_splimitation&view=limitation&layout=edit&name=<?php echo $item->name; ?>" class="btn-sm btn-outline-secondary"><i class="fa fa-edit"></i></a>
-                                            <a href="" class="btn-sm btn-outline-secondary"><i class="fa fa-trash"></i></a>
+                                            <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="View" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
+                                            <?php if ($canDo->get('core.edit')): ?>
+                                                <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="Edit" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                            <?php endif; ?>
+                                            <?php if ($canDo->get('core.delete')): ?>
+                                                <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="Delete" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -103,17 +111,113 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="limitationModal" tabindex="-1" role="dialog" aria-labelledby="limitationModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="limitationModalLabel">Limitation</h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalForm" class="form-horizontal form-label-left">
+                    <div class="item form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <input type="hidden" class="form-control" id="id">
+                            <input type="hidden" class="form-control" id="option">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="name"><?php echo JText::_('COM_SPLIMITATION_NAME'); ?></label>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <input type="text" id="name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="maxUpload"><?php echo JText::_('COM_SPLIMITATION_MAX_UPLOAD'); ?></label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="text" id="maxUpload" class="form-control">
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select id="selUpload" class="btn btn-default" name="upload">
+                                <option value="" selected disabled><?php echo JText::_('COM_SPLIMITATION_SELECT_UPLOAD'); ?></option>
+                                <option value="KBPS">KBPS</option>
+                                <option value="MBPS">MBPS</option>
+                                <option value="GBPS">GBPS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="maxDownload"><?php echo JText::_('COM_SPLIMITATION_MAX_DOWNLOAD'); ?> </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="text" id="maxDownload" class="form-control">
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select id="selDownload" class="btn btn-default" name="download">
+                                <option value="" selected disabled><?php echo JText::_('COM_SPLIMITATION_SELECT_DOWNLOAD'); ?></option>
+                                <option value="KBPS">KBPS</option>
+                                <option value="MBPS">MBPS</option>
+                                <option value="GBPS">GBPS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="maxTraffic"><?php echo JText::_('COM_SPLIMITATION_MAX_TRAFFIC'); ?></label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="text" id="maxTraffic" class="form-control">
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select id="selTraffic" class="btn btn-default" name="traffic">
+                                <option value="" selected disabled><?php echo JText::_('COM_SPLIMITATION_SELECT_TRAFFIC'); ?></option>
+                                <option value="KB">KB</option>
+                                <option value="MB">MB</option>
+                                <option value="GB">GB</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="urlRedirect"><?php echo JText::_('COM_SPLIMITATION_URL_REDIRECT'); ?> </label>
+                        <div class="col-md-6 col-sm-6 ">
+                            <input type="text" id="urlRedirect" class="form-control">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="accessPeriod"><?php echo JText::_('COM_SPLIMITATION_ACCESS_PERIOD'); ?></label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="text" id="accessPeriod" class="form-control">
+                         </div>
+                         <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select id="selPeriod" class="btn btn-default" name="period">
+                                <option value="" selected disabled><?php echo JText::_('COM_SPLIMITATION_SELECT_PERIOD'); ?></option>
+                                <option value="MINUTES">MINUTES</option>
+                                <option value="HOURS">HOURS</option>
+                                <option value="DAYS">DAYS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align" for="dailySession"><?php echo JText::_('COM_SPLIMITATION_DAILY_SESSION'); ?> </label>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <input type="text" id="dailySession"class="form-control">
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select id="selSession" class="btn btn-default" name="session">
+                                <option value="" selected disabled><?php echo JText::_('COM_SPLIMITATION_SELECT_SESSION'); ?></option>
+                                <option value="MINUTES">MINUTES</option>
+                                <option value="HOURS">HOURS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"><?php echo JText::_('COM_SPLIMITATION_CLOSE'); ?></button>
+                        <button type="submit" class="btn btn-success" id="btnSave"><?php echo JText::_('COM_SPLIMITATION_SAVE'); ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div><!--[/JCBGUI$$$$]-->
 
-
-<?php //if (isset($this->items) && isset($this->pagination) && isset($this->pagination->pagesTotal) && $this->pagination->pagesTotal > 1): ?>
-<!--	<div class="pagination">-->
-<!--		--><?php //if ($this->params->def('show_pagination_results', 1)) : ?>
-<!--			<p class="counter pull-right"> --><?php //echo $this->pagination->getPagesCounter(); ?><!-- --><?php //echo $this->pagination->getLimitBox(); ?><!--</p>-->
-<!--		--><?php //endif; ?>
-<!--		--><?php //echo $this->pagination->getPagesLinks(); ?>
-<!--	</div>-->
-<?php //endif; ?>
-<input type="hidden" name="task" value="" />
-<?php echo JHtml::_('form.token'); ?>
-</form>

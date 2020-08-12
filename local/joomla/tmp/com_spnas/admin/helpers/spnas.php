@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			3rd June, 2020
+	@build			12th August, 2020
 	@created		7th April, 2020
 	@package		SP Nas
 	@subpackage		spnas.php
@@ -22,11 +22,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Language;
+use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Spnas component helper.
@@ -152,198 +150,6 @@ abstract class SpnasHelper
 	}
 
 	/**
-	* Prepares the xml document
-	*/
-	public static function xls($rows, $fileName = null, $title = null, $subjectTab = null, $creator = 'Joomla Component Builder', $description = null, $category = null,$keywords = null, $modified = null)
-	{
-		// set the user
-		$user = JFactory::getUser();
-		// set fileName if not set
-		if (!$fileName)
-		{
-			$fileName = 'exported_'.JFactory::getDate()->format('jS_F_Y');
-		}
-		// set modified if not set
-		if (!$modified)
-		{
-			$modified = $user->name;
-		}
-		// set title if not set
-		if (!$title)
-		{
-			$title = 'Book1';
-		}
-		// set tab name if not set
-		if (!$subjectTab)
-		{
-			$subjectTab = 'Sheet1';
-		}
-
-		// make sure we have the composer classes loaded
-		self::composerAutoload('phpspreadsheet');
-
-		// Create new Spreadsheet object
-		$spreadsheet = new Spreadsheet();
-
-		// Set document properties
-		$spreadsheet->getProperties()
-			->setCreator($creator)
-			->setCompany('Joomla Component Builder')
-			->setLastModifiedBy($modified)
-			->setTitle($title)
-			->setSubject($subjectTab);
-		// set description
-		if ($description)
-		{
-			$spreadsheet->getProperties()->setDescription($description);
-		}
-		// set keywords
-		if ($keywords)
-		{
-			$spreadsheet->getProperties()->setKeywords($keywords);
-		}
-		// set category
-		if ($category)
-		{
-			$spreadsheet->getProperties()->setCategory($category);
-		}
-
-		// Some styles
-		$headerStyles = array(
-			'font'  => array(
-				'bold'  => true,
-				'color' => array('rgb' => '1171A3'),
-				'size'  => 12,
-				'name'  => 'Verdana'
-		));
-		$sideStyles = array(
-			'font'  => array(
-				'bold'  => true,
-				'color' => array('rgb' => '444444'),
-				'size'  => 11,
-				'name'  => 'Verdana'
-		));
-		$normalStyles = array(
-			'font'  => array(
-				'color' => array('rgb' => '444444'),
-				'size'  => 11,
-				'name'  => 'Verdana'
-		));
-
-		// Add some data
-		if (self::checkArray($rows))
-		{
-			$i = 1;
-			foreach ($rows as $array){
-				$a = 'A';
-				foreach ($array as $value){
-					$spreadsheet->setActiveSheetIndex(0)->setCellValue($a.$i, $value);
-					if ($i == 1){
-						$spreadsheet->getActiveSheet()->getColumnDimension($a)->setAutoSize(true);
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->applyFromArray($headerStyles);
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->getAlignment()->setHorizontal(PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-					} elseif ($a === 'A'){
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->applyFromArray($sideStyles);
-					} else {
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->applyFromArray($normalStyles);
-					}
-					$a++;
-				}
-				$i++;
-			}
-		}
-		else
-		{
-			return false;
-		}
-
-		// Rename worksheet
-		$spreadsheet->getActiveSheet()->setTitle($subjectTab);
-
-		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-		$spreadsheet->setActiveSheetIndex(0);
-
-		// Redirect output to a client's web browser (Excel5)
-		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment;filename="'.$fileName.'.xls"');
-		header('Cache-Control: max-age=0');
-		// If you're serving to IE 9, then the following may be needed
-		header('Cache-Control: max-age=1');
-
-		// If you're serving to IE over SSL, then the following may be needed
-		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-		header ('Pragma: public'); // HTTP/1.0
-
-		$writer = IOFactory::createWriter($spreadsheet, 'Xls');
-		$writer->save('php://output');
-		jexit();
-	}
-
-	/**
-	* Get CSV Headers
-	*/
-	public static function getFileHeaders($dataType)
-	{
-		// make sure we have the composer classes loaded
-		self::composerAutoload('phpspreadsheet');
-		// get session object
-		$session = JFactory::getSession();
-		$package = $session->get('package', null);
-		$package = json_decode($package, true);
-		// set the headers
-		if(isset($package['dir']))
-		{
-			// only load first three rows
-			$chunkFilter = new PhpOffice\PhpSpreadsheet\Reader\chunkReadFilter(2,1);
-			// identify the file type
-			$inputFileType = IOFactory::identify($package['dir']);
-			// create the reader for this file type
-			$excelReader = IOFactory::createReader($inputFileType);
-			// load the limiting filter
-			$excelReader->setReadFilter($chunkFilter);
-			$excelReader->setReadDataOnly(true);
-			// load the rows (only first three)
-			$excelObj = $excelReader->load($package['dir']);
-			$headers = array();
-			foreach ($excelObj->getActiveSheet()->getRowIterator() as $row)
-			{
-				if($row->getRowIndex() == 1)
-				{
-					$cellIterator = $row->getCellIterator();
-					$cellIterator->setIterateOnlyExistingCells(false);
-					foreach ($cellIterator as $cell)
-					{
-						if (!is_null($cell))
-						{
-							$headers[$cell->getColumn()] = $cell->getValue();
-						}
-					}
-					$excelObj->disconnectWorksheets();
-					unset($excelObj);
-					break;
-				}
-			}
-			return $headers;
-		}
-		return false;
-	}
-
-	/**
-	* Load the Composer Vendor phpspreadsheet
-	*/
-	protected static function composephpspreadsheet()
-	{
-		// load the autoloader for phpspreadsheet
-		require_once JPATH_SITE . '/libraries/phpspreadsheet/vendor/autoload.php';
-		// do not load again
-		self::$composer['phpspreadsheet'] = true;
-
-		return  true;
-	}
-
-	/**
 	 * Get a Variable 
 	 *
 	 * @param   string   $table        The table from which to get the variable
@@ -356,45 +162,45 @@ abstract class SpnasHelper
 	 * @return  mix string/int/float
 	 *
 	 */
-//	public static function getVar($table, $where = null, $whereString = 'user', $what = 'id', $operator = '=', $main = 'spnas')
-//	{
-//		if(!$where)
-//		{
-//			$where = JFactory::getUser()->id;
-//		}
-//		// Get a db connection.
-//		$db = JFactory::getDbo();
-//		// Create a new query object.
-//		$query = $db->getQuery(true);
-//		$query->select($db->quoteName(array($what)));
-//		if (empty($table))
-//		{
-//			$query->from($db->quoteName('#__'.$main));
-//		}
-//		else
-//		{
-//			$query->from($db->quoteName('#__'.$main.'_'.$table));
-//		}
-//		if (is_numeric($where))
-//		{
-//			$query->where($db->quoteName($whereString) . ' '.$operator.' '.(int) $where);
-//		}
-//		elseif (is_string($where))
-//		{
-//			$query->where($db->quoteName($whereString) . ' '.$operator.' '. $db->quote((string)$where));
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//		$db->setQuery($query);
-//		$db->execute();
-//		if ($db->getNumRows())
-//		{
-//			return $db->loadResult();
-//		}
-//		return false;
-//	}
+	public static function getVar($table, $where = null, $whereString = 'user', $what = 'id', $operator = '=', $main = 'spnas')
+	{
+		if(!$where)
+		{
+			$where = JFactory::getUser()->id;
+		}
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName(array($what)));
+		if (empty($table))
+		{
+			$query->from($db->quoteName('#__'.$main));
+		}
+		else
+		{
+			$query->from($db->quoteName('#__'.$main.'_'.$table));
+		}
+		if (is_numeric($where))
+		{
+			$query->where($db->quoteName($whereString) . ' '.$operator.' '.(int) $where);
+		}
+		elseif (is_string($where))
+		{
+			$query->where($db->quoteName($whereString) . ' '.$operator.' '. $db->quote((string)$where));
+		}
+		else
+		{
+			return false;
+		}
+		$db->setQuery($query);
+		$db->execute();
+		if ($db->getNumRows())
+		{
+			return $db->loadResult();
+		}
+		return false;
+	}
 
 	/**
 	 * Get array of variables
@@ -410,131 +216,131 @@ abstract class SpnasHelper
 	 * @return  array
 	 *
 	 */
-//	public static function getVars($table, $where = null, $whereString = 'user', $what = 'id', $operator = 'IN', $main = 'spnas', $unique = true)
-//	{
-//		if(!$where)
-//		{
-//			$where = JFactory::getUser()->id;
-//		}
-//
-//		if (!self::checkArray($where) && $where > 0)
-//		{
-//			$where = array($where);
-//		}
-//
-//		if (self::checkArray($where))
-//		{
-//			// prep main <-- why? well if $main='' is empty then $table can be categories or users
-//			if (self::checkString($main))
-//			{
-//				$main = '_'.ltrim($main, '_');
-//			}
-//			// Get a db connection.
-//			$db = JFactory::getDbo();
-//			// Create a new query object.
-//			$query = $db->getQuery(true);
-//
-//			$query->select($db->quoteName(array($what)));
-//			if (empty($table))
-//			{
-//				$query->from($db->quoteName('#__'.$main));
-//			}
-//			else
-//			{
-//				$query->from($db->quoteName('#_'.$main.'_'.$table));
-//			}
-//			// add strings to array search
-//			if ('IN_STRINGS' === $operator || 'NOT IN_STRINGS' === $operator)
-//			{
-//				$query->where($db->quoteName($whereString) . ' ' . str_replace('_STRINGS', '', $operator) . ' ("' . implode('","',$where) . '")');
-//			}
-//			else
-//			{
-//				$query->where($db->quoteName($whereString) . ' ' . $operator . ' (' . implode(',',$where) . ')');
-//			}
-//			$db->setQuery($query);
-//			$db->execute();
-//			if ($db->getNumRows())
-//			{
-//				if ($unique)
-//				{
-//					return array_unique($db->loadColumn());
-//				}
-//				return $db->loadColumn();
-//			}
-//		}
-//		return false;
-//	}
+	public static function getVars($table, $where = null, $whereString = 'user', $what = 'id', $operator = 'IN', $main = 'spnas', $unique = true)
+	{
+		if(!$where)
+		{
+			$where = JFactory::getUser()->id;
+		}
 
-//	public static function jsonToString($value, $sperator = ", ", $table = null, $id = 'id', $name = 'name')
-//	{
-//		// do some table foot work
-//		$external = false;
-//		if (strpos($table, '#__') !== false)
-//		{
-//			$external = true;
-//			$table = str_replace('#__', '', $table);
-//		}
-//		// check if string is JSON
-//		$result = json_decode($value, true);
-//		if (json_last_error() === JSON_ERROR_NONE)
-//		{
-//			// is JSON
-//			if (self::checkArray($result))
-//			{
-//				if (self::checkString($table))
-//				{
-//					$names = array();
-//					foreach ($result as $val)
-//					{
-//						if ($external)
-//						{
-//							if ($_name = self::getVar(null, $val, $id, $name, '=', $table))
-//							{
-//								$names[] = $_name;
-//							}
-//						}
-//						else
-//						{
-//							if ($_name = self::getVar($table, $val, $id, $name))
-//							{
-//								$names[] = $_name;
-//							}
-//						}
-//					}
-//					if (self::checkArray($names))
-//					{
-//						return (string) implode($sperator,$names);
-//					}
-//				}
-//				return (string) implode($sperator,$result);
-//			}
-//			return (string) json_decode($value);
-//		}
-//		return $value;
-//	}
+		if (!self::checkArray($where) && $where > 0)
+		{
+			$where = array($where);
+		}
 
-//	public static function isPublished($id,$type)
-//	{
-//		if ($type == 'raw')
-//		{
-//			$type = 'item';
-//		}
-//		$db = JFactory::getDbo();
-//		$query = $db->getQuery(true);
-//		$query->select(array('a.published'));
-//		$query->from('#__spnas_'.$type.' AS a');
-//		$query->where('a.id = '. (int) $id);
-//		$query->where('a.published = 1');
-//		$db->setQuery($query);
-//		$db->execute();
-//		$found = $db->getNumRows();
-//		if($found)
-//		{
-//			return true;
-//		}
-//		return false;
-//	}
+		if (self::checkArray($where))
+		{
+			// prep main <-- why? well if $main='' is empty then $table can be categories or users
+			if (self::checkString($main))
+			{
+				$main = '_'.ltrim($main, '_');
+			}
+			// Get a db connection.
+			$db = JFactory::getDbo();
+			// Create a new query object.
+			$query = $db->getQuery(true);
+
+			$query->select($db->quoteName(array($what)));
+			if (empty($table))
+			{
+				$query->from($db->quoteName('#__'.$main));
+			}
+			else
+			{
+				$query->from($db->quoteName('#_'.$main.'_'.$table));
+			}
+			// add strings to array search
+			if ('IN_STRINGS' === $operator || 'NOT IN_STRINGS' === $operator)
+			{
+				$query->where($db->quoteName($whereString) . ' ' . str_replace('_STRINGS', '', $operator) . ' ("' . implode('","',$where) . '")');
+			}
+			else
+			{
+				$query->where($db->quoteName($whereString) . ' ' . $operator . ' (' . implode(',',$where) . ')');
+			}
+			$db->setQuery($query);
+			$db->execute();
+			if ($db->getNumRows())
+			{
+				if ($unique)
+				{
+					return array_unique($db->loadColumn());
+				}
+				return $db->loadColumn();
+			}
+		}
+		return false;
+	}
+
+	public static function jsonToString($value, $sperator = ", ", $table = null, $id = 'id', $name = 'name')
+	{
+		// do some table foot work
+		$external = false;
+		if (strpos($table, '#__') !== false)
+		{
+			$external = true;
+			$table = str_replace('#__', '', $table);
+		}
+		// check if string is JSON
+		$result = json_decode($value, true);
+		if (json_last_error() === JSON_ERROR_NONE)
+		{
+			// is JSON
+			if (self::checkArray($result))
+			{
+				if (self::checkString($table))
+				{
+					$names = array();
+					foreach ($result as $val)
+					{
+						if ($external)
+						{
+							if ($_name = self::getVar(null, $val, $id, $name, '=', $table))
+							{
+								$names[] = $_name;
+							}
+						}
+						else
+						{
+							if ($_name = self::getVar($table, $val, $id, $name))
+							{
+								$names[] = $_name;
+							}
+						}
+					}
+					if (self::checkArray($names))
+					{
+						return (string) implode($sperator,$names);
+					}	
+				}
+				return (string) implode($sperator,$result);
+			}
+			return (string) json_decode($value);
+		}
+		return $value;
+	}
+
+	public static function isPublished($id,$type)
+	{
+		if ($type == 'raw')
+		{
+			$type = 'item';
+		}
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array('a.published'));
+		$query->from('#__spnas_'.$type.' AS a');
+		$query->where('a.id = '. (int) $id);
+		$query->where('a.published = 1');
+		$db->setQuery($query);
+		$db->execute();
+		$found = $db->getNumRows();
+		if($found)
+		{
+			return true;
+		}
+		return false;
+	}
 
 	public static function getGroupName($id)
 	{
@@ -802,123 +608,123 @@ abstract class SpnasHelper
 	/**
 	 * Add to asset Table
 	 */
-//	public static function setAsset($id, $table, $inherit = true)
-//	{
-//		$parent = JTable::getInstance('Asset');
-//		$parent->loadByName('com_spnas');
-//
-//		$parentId = $parent->id;
-//		$name     = 'com_spnas.'.$table.'.'.$id;
-//		$title    = '';
-//
-//		$asset = JTable::getInstance('Asset');
-//		$asset->loadByName($name);
-//
-//		// Check for an error.
-//		$error = $asset->getError();
-//
-//		if ($error)
-//		{
-//			return false;
-//		}
-//		else
-//		{
-//			// Specify how a new or moved node asset is inserted into the tree.
-//			if ($asset->parent_id != $parentId)
-//			{
-//				$asset->setLocation($parentId, 'last-child');
-//			}
-//
-//			// Prepare the asset to be stored.
-//			$asset->parent_id = $parentId;
-//			$asset->name      = $name;
-//			$asset->title     = $title;
-//			// get the default asset rules
-//			$rules = self::getDefaultAssetRules('com_spnas', $table, $inherit);
-//			if ($rules instanceof JAccessRules)
-//			{
-//				$asset->rules = (string) $rules;
-//			}
-//
-//			if (!$asset->check() || !$asset->store())
-//			{
-//				JFactory::getApplication()->enqueueMessage($asset->getError(), 'warning');
-//				return false;
-//			}
-//			else
-//			{
-//				// Create an asset_id or heal one that is corrupted.
-//				$object = new stdClass();
-//
-//				// Must be a valid primary key value.
-//				$object->id = $id;
-//				$object->asset_id = (int) $asset->id;
-//
-//				// Update their asset_id to link to the asset table.
-//				return JFactory::getDbo()->updateObject('#__spnas_'.$table, $object, 'id');
-//			}
-//		}
-//		return false;
-//	}
+	public static function setAsset($id, $table, $inherit = true)
+	{
+		$parent = JTable::getInstance('Asset');
+		$parent->loadByName('com_spnas');
+		
+		$parentId = $parent->id;
+		$name     = 'com_spnas.'.$table.'.'.$id;
+		$title    = '';
+
+		$asset = JTable::getInstance('Asset');
+		$asset->loadByName($name);
+
+		// Check for an error.
+		$error = $asset->getError();
+
+		if ($error)
+		{
+			return false;
+		}
+		else
+		{
+			// Specify how a new or moved node asset is inserted into the tree.
+			if ($asset->parent_id != $parentId)
+			{
+				$asset->setLocation($parentId, 'last-child');
+			}
+
+			// Prepare the asset to be stored.
+			$asset->parent_id = $parentId;
+			$asset->name      = $name;
+			$asset->title     = $title;
+			// get the default asset rules
+			$rules = self::getDefaultAssetRules('com_spnas', $table, $inherit);
+			if ($rules instanceof JAccessRules)
+			{
+				$asset->rules = (string) $rules;
+			}
+
+			if (!$asset->check() || !$asset->store())
+			{
+				JFactory::getApplication()->enqueueMessage($asset->getError(), 'warning');
+				return false;
+			}
+			else
+			{
+				// Create an asset_id or heal one that is corrupted.
+				$object = new stdClass();
+
+				// Must be a valid primary key value.
+				$object->id = $id;
+				$object->asset_id = (int) $asset->id;
+
+				// Update their asset_id to link to the asset table.
+				return JFactory::getDbo()->updateObject('#__spnas_'.$table, $object, 'id');
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Gets the default asset Rules for a component/view.
 	 */
-//	protected static function getDefaultAssetRules($component, $view, $inherit = true)
-//	{
-//		// if new or inherited
-//		$assetId = 0;
-//		// Only get the actual item rules if not inheriting
-//		if (!$inherit)
-//		{
-//			// Need to find the asset id by the name of the component.
-//			$db = JFactory::getDbo();
-//			$query = $db->getQuery(true)
-//				->select($db->quoteName('id'))
-//				->from($db->quoteName('#__assets'))
-//				->where($db->quoteName('name') . ' = ' . $db->quote($component));
-//			$db->setQuery($query);
-//			$db->execute();
-//			// check that there is a value
-//			if ($db->getNumRows())
-//			{
-//				// asset already set so use saved rules
-//				$assetId = (int) $db->loadResult();
-//			}
-//		}
-//		// get asset rules
-//		$result =  JAccess::getAssetRules($assetId);
-//		if ($result instanceof JAccessRules)
-//		{
-//			$_result = (string) $result;
-//			$_result = json_decode($_result);
-//			foreach ($_result as $name => &$rule)
-//			{
-//				$v = explode('.', $name);
-//				if ($view !== $v[0])
-//				{
-//					// remove since it is not part of this view
-//					unset($_result->$name);
-//				}
-//				elseif ($inherit)
-//				{
-//					// clear the value since we inherit
-//					$rule = array();
-//				}
-//			}
-//			// check if there are any view values remaining
-//			if (count((array) $_result))
-//			{
-//				$_result = json_encode($_result);
-//				$_result = array($_result);
-//				// Instantiate and return the JAccessRules object for the asset rules.
-//				$rules = new JAccessRules($_result);
-//				// return filtered rules
-//				return $rules;
-//			}
-//		}
-//		return $result;
-//	}
+	protected static function getDefaultAssetRules($component, $view, $inherit = true)
+	{
+		// if new or inherited
+		$assetId = 0;
+		// Only get the actual item rules if not inheriting
+		if (!$inherit)
+		{
+			// Need to find the asset id by the name of the component.
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true)
+				->select($db->quoteName('id'))
+				->from($db->quoteName('#__assets'))
+				->where($db->quoteName('name') . ' = ' . $db->quote($component));
+			$db->setQuery($query);
+			$db->execute();
+			// check that there is a value
+			if ($db->getNumRows())
+			{
+				// asset already set so use saved rules
+				$assetId = (int) $db->loadResult();
+			}
+		}
+		// get asset rules
+		$result =  JAccess::getAssetRules($assetId);
+		if ($result instanceof JAccessRules)
+		{
+			$_result = (string) $result;
+			$_result = json_decode($_result);
+			foreach ($_result as $name => &$rule)
+			{
+				$v = explode('.', $name);
+				if ($view !== $v[0])
+				{
+					// remove since it is not part of this view
+					unset($_result->$name);
+				}
+				elseif ($inherit)
+				{
+					// clear the value since we inherit
+					$rule = array();
+				}
+			}
+			// check if there are any view values remaining
+			if (count((array) $_result))
+			{
+				$_result = json_encode($_result);
+				$_result = array($_result);
+				// Instantiate and return the JAccessRules object for the asset rules.
+				$rules = new JAccessRules($_result);
+				// return filtered rules
+				return $rules;
+			}
+		}
+		return $result;
+	}
 
 	/**
 	 * xmlAppend

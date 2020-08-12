@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		limitation.php
@@ -614,12 +614,6 @@ class SplimitationModelLimitation extends JModelAdmin
 				}
 			}
 
-			// Only for strings
-			if (SplimitationHelper::checkString($this->table->name) && !is_numeric($this->table->name))
-			{
-				$this->table->name = $this->generateUnique('name',$this->table->name);
-			}
-
 			// insert all set values
 			if (SplimitationHelper::checkArray($values))
 			{
@@ -864,27 +858,5 @@ class SplimitationModelLimitation extends JModelAdmin
 		}
 
 		return $value;
-	}
-
-	/**
-	 * Method to change the title
-	 *
-	 * @param   string   $title   The title.
-	 *
-	 * @return	array  Contains the modified title and alias.
-	 *
-	 */
-	protected function _generateNewTitle($title)
-	{
-
-		// Alter the title
-		$table = $this->getTable();
-
-		while ($table->load(array('title' => $title)))
-		{
-			$title = StringHelper::increment($title);
-		}
-
-		return $title;
 	}
 }

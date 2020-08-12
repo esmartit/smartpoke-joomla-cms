@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		view.html.php
@@ -138,16 +138,6 @@ class SplimitationViewLimitations extends JViewLegacy
 			{
 				JToolbarHelper::trash('limitations.trash');
 			}
-
-			if ($this->canDo->get('core.export') && $this->canDo->get('limitation.export'))
-			{
-				JToolBarHelper::custom('limitations.exportData', 'download', '', 'COM_SPLIMITATION_EXPORT_DATA', true);
-			}
-		}
-
-		if ($this->canDo->get('core.import') && $this->canDo->get('limitation.import'))
-		{
-			JToolBarHelper::custom('limitations.importData', 'upload', '', 'COM_SPLIMITATION_IMPORT_DATA', false);
 		}
 
 		// set help url for this view if found
@@ -240,7 +230,6 @@ class SplimitationViewLimitations extends JViewLegacy
 		return array(
 			'ordering' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.published' => JText::_('JSTATUS'),
-			'a.name' => JText::_('COM_SPLIMITATION_LIMITATION_NAME_LABEL'),
 			'a.id' => JText::_('JGRID_HEADING_ID')
 		);
 	}
