@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			3rd June, 2020
+	@build			12th August, 2020
 	@created		7th April, 2020
 	@package		SP Nas
 	@subpackage		spnas.php
@@ -35,6 +35,7 @@ $document->addScript('components/com_spnas/assets/js/admin.js');
 
 // require helper files
 JLoader::register('SpnasHelper', __DIR__ . '/helpers/spnas.php'); 
+JLoader::register('JHtmlBatch_', __DIR__ . '/helpers/html/batch_.php'); 
 
 // Get an instance of the controller prefixed by Spnas
 $controller = JControllerLegacy::getInstance('Spnas');

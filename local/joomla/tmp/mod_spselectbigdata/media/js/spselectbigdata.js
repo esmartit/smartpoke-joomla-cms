@@ -497,7 +497,7 @@ function sendForm() {
         t_spot, t_sensor, t_zone,
         t_brands, t_status, t_presence,
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
-        userTimeZone
+        userTimeZone, t_groupBy
     );
 
     countRegisteredBigData

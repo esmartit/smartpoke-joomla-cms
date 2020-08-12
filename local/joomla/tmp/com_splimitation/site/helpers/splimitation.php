@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		splimitation.php
@@ -22,6 +22,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Language;
+use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
@@ -67,53 +68,53 @@ abstract class SplimitationHelper
 	/**
 	 * Convert it into a string
 	 */
-//	public static function jsonToString($value, $sperator = ", ", $table = null, $id = 'id', $name = 'name')
-//	{
-//		// do some table foot work
-//		$external = false;
-//		if (strpos($table, '#__') !== false)
-//		{
-//			$external = true;
-//			$table = str_replace('#__', '', $table);
-//		}
-//		// check if string is JSON
-//		$result = json_decode($value, true);
-//		if (json_last_error() === JSON_ERROR_NONE)
-//		{
-//			// is JSON
-//			if (self::checkArray($result))
-//			{
-//				if (self::checkString($table))
-//				{
-//					$names = array();
-//					foreach ($result as $val)
-//					{
-//						if ($external)
-//						{
-//							if ($_name = self::getVar(null, $val, $id, $name, '=', $table))
-//							{
-//								$names[] = $_name;
-//							}
-//						}
-//						else
-//						{
-//							if ($_name = self::getVar($table, $val, $id, $name))
-//							{
-//								$names[] = $_name;
-//							}
-//						}
-//					}
-//					if (self::checkArray($names))
-//					{
-//						return (string) implode($sperator,$names);
-//					}
-//				}
-//				return (string) implode($sperator,$result);
-//			}
-//			return (string) json_decode($value);
-//		}
-//		return $value;
-//	}
+	public static function jsonToString($value, $sperator = ", ", $table = null, $id = 'id', $name = 'name')
+	{
+		// do some table foot work
+		$external = false;
+		if (strpos($table, '#__') !== false)
+		{
+			$external = true;
+			$table = str_replace('#__', '', $table);
+		}
+		// check if string is JSON
+		$result = json_decode($value, true);
+		if (json_last_error() === JSON_ERROR_NONE)
+		{
+			// is JSON
+			if (self::checkArray($result))
+			{
+				if (self::checkString($table))
+				{
+					$names = array();
+					foreach ($result as $val)
+					{
+						if ($external)
+						{
+							if ($_name = self::getVar(null, $val, $id, $name, '=', $table))
+							{
+								$names[] = $_name;
+							}
+						}
+						else
+						{
+							if ($_name = self::getVar($table, $val, $id, $name))
+							{
+								$names[] = $_name;
+							}
+						}
+					}
+					if (self::checkArray($names))
+					{
+						return (string) implode($sperator,$names);
+					}	
+				}
+				return (string) implode($sperator,$result);
+			}
+			return (string) json_decode($value);
+		}
+		return $value;
+	}
 
 	/**
 	 * Load the Component xml manifest.
@@ -557,45 +558,45 @@ abstract class SplimitationHelper
 	 * @return  mix string/int/float
 	 *
 	 */
-//	public static function getVar($table, $where = null, $whereString = 'user', $what = 'id', $operator = '=', $main = 'splimitation')
-//	{
-//		if(!$where)
-//		{
-//			$where = JFactory::getUser()->id;
-//		}
-//		// Get a db connection.
-//		$db = JFactory::getDbo();
-//		// Create a new query object.
-//		$query = $db->getQuery(true);
-//		$query->select($db->quoteName(array($what)));
-//		if (empty($table))
-//		{
-//			$query->from($db->quoteName('#__'.$main));
-//		}
-//		else
-//		{
-//			$query->from($db->quoteName('#__'.$main.'_'.$table));
-//		}
-//		if (is_numeric($where))
-//		{
-//			$query->where($db->quoteName($whereString) . ' '.$operator.' '.(int) $where);
-//		}
-//		elseif (is_string($where))
-//		{
-//			$query->where($db->quoteName($whereString) . ' '.$operator.' '. $db->quote((string)$where));
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//		$db->setQuery($query);
-//		$db->execute();
-//		if ($db->getNumRows())
-//		{
-//			return $db->loadResult();
-//		}
-//		return false;
-//	}
+	public static function getVar($table, $where = null, $whereString = 'user', $what = 'id', $operator = '=', $main = 'splimitation')
+	{
+		if(!$where)
+		{
+			$where = JFactory::getUser()->id;
+		}
+		// Get a db connection.
+		$db = JFactory::getDbo();
+		// Create a new query object.
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName(array($what)));		
+		if (empty($table))
+		{
+			$query->from($db->quoteName('#__'.$main));
+		}
+		else
+		{
+			$query->from($db->quoteName('#__'.$main.'_'.$table));
+		}
+		if (is_numeric($where))
+		{
+			$query->where($db->quoteName($whereString) . ' '.$operator.' '.(int) $where);
+		}
+		elseif (is_string($where))
+		{
+			$query->where($db->quoteName($whereString) . ' '.$operator.' '. $db->quote((string)$where));
+		}
+		else
+		{
+			return false;
+		}
+		$db->setQuery($query);
+		$db->execute();
+		if ($db->getNumRows())
+		{
+			return $db->loadResult();
+		}
+		return false;
+	}
 
 	/**
 	 * Get array of variables
@@ -611,83 +612,83 @@ abstract class SplimitationHelper
 	 * @return  array
 	 *
 	 */
-//	public static function getVars($table, $where = null, $whereString = 'user', $what = 'id', $operator = 'IN', $main = 'splimitation', $unique = true)
-//	{
-//		if(!$where)
-//		{
-//			$where = JFactory::getUser()->id;
-//		}
-//
-//		if (!self::checkArray($where) && $where > 0)
-//		{
-//			$where = array($where);
-//		}
-//
-//		if (self::checkArray($where))
-//		{
-//			// prep main <-- why? well if $main='' is empty then $table can be categories or users
-//			if (self::checkString($main))
-//			{
-//				$main = '_'.ltrim($main, '_');
-//			}
-//			// Get a db connection.
-//			$db = JFactory::getDbo();
-//			// Create a new query object.
-//			$query = $db->getQuery(true);
-//
-//			$query->select($db->quoteName(array($what)));
-//			if (empty($table))
-//			{
-//				$query->from($db->quoteName('#__'.$main));
-//			}
-//			else
-//			{
-//				$query->from($db->quoteName('#_'.$main.'_'.$table));
-//			}
-//			// add strings to array search
-//			if ('IN_STRINGS' === $operator || 'NOT IN_STRINGS' === $operator)
-//			{
-//				$query->where($db->quoteName($whereString) . ' ' . str_replace('_STRINGS', '', $operator) . ' ("' . implode('","',$where) . '")');
-//			}
-//			else
-//			{
-//				$query->where($db->quoteName($whereString) . ' ' . $operator . ' (' . implode(',',$where) . ')');
-//			}
-//			$db->setQuery($query);
-//			$db->execute();
-//			if ($db->getNumRows())
-//			{
-//				if ($unique)
-//				{
-//					return array_unique($db->loadColumn());
-//				}
-//				return $db->loadColumn();
-//			}
-//		}
-//		return false;
-//	}
+	public static function getVars($table, $where = null, $whereString = 'user', $what = 'id', $operator = 'IN', $main = 'splimitation', $unique = true)
+	{
+		if(!$where)
+		{
+			$where = JFactory::getUser()->id;
+		}
 
-//	public static function isPublished($id,$type)
-//	{
-//		if ($type == 'raw')
-//		{
-//			$type = 'item';
-//		}
-//		$db = JFactory::getDbo();
-//		$query = $db->getQuery(true);
-//		$query->select(array('a.published'));
-//		$query->from('#__splimitation_'.$type.' AS a');
-//		$query->where('a.id = '. (int) $id);
-//		$query->where('a.published = 1');
-//		$db->setQuery($query);
-//		$db->execute();
-//		$found = $db->getNumRows();
-//		if($found)
-//		{
-//			return true;
-//		}
-//		return false;
-//	}
+		if (!self::checkArray($where) && $where > 0)
+		{
+			$where = array($where);
+		}
+
+		if (self::checkArray($where))
+		{
+			// prep main <-- why? well if $main='' is empty then $table can be categories or users
+			if (self::checkString($main))
+			{
+				$main = '_'.ltrim($main, '_');
+			}
+			// Get a db connection.
+			$db = JFactory::getDbo();
+			// Create a new query object.
+			$query = $db->getQuery(true);
+
+			$query->select($db->quoteName(array($what)));
+			if (empty($table))
+			{
+				$query->from($db->quoteName('#__'.$main));
+			}
+			else
+			{
+				$query->from($db->quoteName('#_'.$main.'_'.$table));
+			}
+			// add strings to array search
+			if ('IN_STRINGS' === $operator || 'NOT IN_STRINGS' === $operator)
+			{
+				$query->where($db->quoteName($whereString) . ' ' . str_replace('_STRINGS', '', $operator) . ' ("' . implode('","',$where) . '")');
+			}
+			else
+			{
+				$query->where($db->quoteName($whereString) . ' ' . $operator . ' (' . implode(',',$where) . ')');
+			}
+			$db->setQuery($query);
+			$db->execute();
+			if ($db->getNumRows())
+			{
+				if ($unique)
+				{
+					return array_unique($db->loadColumn());
+				}
+				return $db->loadColumn();
+			}
+		}
+		return false;
+	} 
+
+	public static function isPublished($id,$type)
+	{
+		if ($type == 'raw')
+		{
+			$type = 'item';
+		}
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array('a.published'));
+		$query->from('#__splimitation_'.$type.' AS a');
+		$query->where('a.id = '. (int) $id);
+		$query->where('a.published = 1');
+		$db->setQuery($query);
+		$db->execute();
+		$found = $db->getNumRows();
+		if($found)
+		{
+			return true;
+		}
+		return false;
+	}
 
 	public static function getGroupName($id)
 	{

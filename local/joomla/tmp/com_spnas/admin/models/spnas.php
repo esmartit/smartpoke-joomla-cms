@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			3rd June, 2020
+	@build			12th August, 2020
 	@created		7th April, 2020
 	@package		SP Nas
 	@subpackage		spnas.php
@@ -34,14 +34,8 @@ class SpnasModelSpnas extends JModelList
 		$icons  = array();
 		// view groups array
 		$viewGroups = array(
-			'main' => array('png.nas.add', 'png.nases')
+			'main' => array()
 		);
-		// view access array
-		$viewAccess = array(
-			'nases.access' => 'nas.access',
-			'nas.access' => 'nas.access',
-			'nases.dashboard_list' => 'nas.dashboard_list',
-			'nas.dashboard_add' => 'nas.dashboard_add');
 		// loop over the $views
 		foreach($viewGroups as $group => $views)
 		{

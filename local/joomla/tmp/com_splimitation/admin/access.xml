@@ -4,8 +4,6 @@
 		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
 		<action name="core.options" title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC" />
 		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
-		<action name="core.export" title="COM_SPLIMITATION_EXPORT_DATA" description="COM_SPLIMITATION_EXPORT_DATA_DESC" />
-		<action name="core.import" title="COM_SPLIMITATION_IMPORT_DATA" description="COM_SPLIMITATION_IMPORT_DATA_DESC" />
 		<action name="core.batch" title="COM_SPLIMITATION_USE_BATCH" description="COM_SPLIMITATION_USE_BATCH_DESC" />
 		<action name="core.version" title="COM_SPLIMITATION_EDIT_VERSIONS" description="COM_SPLIMITATION_EDIT_VERSIONS_DESC" />
 		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
@@ -15,14 +13,7 @@
 		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
 		<action name="core.edit.created_by" title="COM_SPLIMITATION_EDIT_CREATED_BY" description="COM_SPLIMITATION_EDIT_CREATED_BY_DESC" />
 		<action name="core.edit.created" title="COM_SPLIMITATION_EDIT_CREATED_DATE" description="COM_SPLIMITATION_EDIT_CREATED_DATE_DESC" />
-		<action name="site.itemlimitation.access" title="COM_SPLIMITATION_ITEMLIMITATION_ACCESS_SITE" description="COM_SPLIMITATION_ITEMLIMITATION_ACCESS_SITE_DESC" />
-		<action name="limitation.access" title="COM_SPLIMITATION_LIMITATIONS_ACCESS" description="COM_SPLIMITATION_LIMITATIONS_ACCESS_DESC" />
 		<action name="limitation.batch" title="COM_SPLIMITATION_LIMITATIONS_BATCH_USE" description="COM_SPLIMITATION_LIMITATIONS_BATCH_USE_DESC" />
-		<action name="limitation.dashboard_add" title="COM_SPLIMITATION_LIMITATIONS_DASHBOARD_ADD" description="COM_SPLIMITATION_LIMITATIONS_DASHBOARD_ADD_DESC" />
-		<action name="limitation.dashboard_list" title="COM_SPLIMITATION_LIMITATIONS_DASHBOARD_LIST" description="COM_SPLIMITATION_LIMITATIONS_DASHBOARD_LIST_DESC" />
-		<action name="limitation.version" title="COM_SPLIMITATION_LIMITATIONS_EDIT_VERSION" description="COM_SPLIMITATION_LIMITATIONS_EDIT_VERSION_DESC" />
-		<action name="limitation.export" title="COM_SPLIMITATION_LIMITATIONS_EXPORT" description="COM_SPLIMITATION_LIMITATIONS_EXPORT_DESC" />
-		<action name="limitation.import" title="COM_SPLIMITATION_LIMITATIONS_IMPORT" description="COM_SPLIMITATION_LIMITATIONS_IMPORT_DESC" />
 		<action name="site.listlimitation.access" title="COM_SPLIMITATION_LISTLIMITATION_ACCESS_SITE" description="COM_SPLIMITATION_LISTLIMITATION_ACCESS_SITE_DESC" />
 	</section>
 	<section name="limitation">
@@ -33,6 +24,5 @@
 		<action name="core.edit.created" title="COM_SPLIMITATION_LIMITATIONS_EDIT_CREATED_DATE" description="COM_SPLIMITATION_LIMITATIONS_EDIT_CREATED_DATE_DESC" />
 		<action name="core.create" title="COM_SPLIMITATION_LIMITATIONS_CREATE" description="COM_SPLIMITATION_LIMITATIONS_CREATE_DESC" />
 		<action name="core.delete" title="COM_SPLIMITATION_LIMITATIONS_DELETE" description="COM_SPLIMITATION_LIMITATIONS_DELETE_DESC" />
-		<action name="limitation.version" title="COM_SPLIMITATION_LIMITATIONS_EDIT_VERSION" description="COM_SPLIMITATION_LIMITATIONS_EDIT_VERSION_DESC" />
 	</section>
 </access>

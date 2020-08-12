@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			3rd June, 2020
+	@build			12th August, 2020
 	@created		7th April, 2020
 	@package		SP Nas
 	@subpackage		view.html.php
@@ -37,13 +37,12 @@ class SpnasViewListnas extends JViewLegacy
 		$this->user = JFactory::getUser();
 		// Initialise variables.
 		$this->items = $this->get('Items');
-//		$this->pagination = $this->get('Pagination');
 
 		// Set the toolbar
-//		$this->addToolBar();
+		$this->addToolBar();
 
 		// set the document
-//		$this->_prepareDocument();
+		$this->_prepareDocument();
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -57,51 +56,54 @@ class SpnasViewListnas extends JViewLegacy
 	/**
 	 * Prepares the document
 	 */
-//	protected function _prepareDocument()
-//	{
-//
-//		// always make sure jquery is loaded.
-//		JHtml::_('jquery.framework');
-//		// Load the header checker class.
-//		require_once( JPATH_COMPONENT_SITE.'/helpers/headercheck.php' );
-//		// Initialize the header checker.
-//		$HeaderCheck = new spnasHeaderCheck;
-//		// load the meta description
-//		if ($this->params->get('menu-meta_description'))
-//		{
-//			$this->document->setDescription($this->params->get('menu-meta_description'));
-//		}
-//		// load the key words if set
-//		if ($this->params->get('menu-meta_keywords'))
-//		{
-//			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
-//		}
-//		// check the robot params
-//		if ($this->params->get('robots'))
-//		{
-//			$this->document->setMetadata('robots', $this->params->get('robots'));
-//		}
-//		// add the document default css file
-//		$this->document->addStyleSheet(JURI::root(true) .'/components/com_spnas/assets/css/listnas.css', (SpnasHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/css');
-//	}
+	protected function _prepareDocument()
+	{
+
+		// always make sure jquery is loaded.
+		JHtml::_('jquery.framework');
+		// Load the header checker class.
+		require_once( JPATH_COMPONENT_SITE.'/helpers/headercheck.php' );
+		// Initialize the header checker.
+		$HeaderCheck = new spnasHeaderCheck;
+
+		// Add View JavaScript File
+		$this->document->addScript(JURI::root(true) . "/components/com_spnas/assets/js/listnas.js", (SpnasHelper::jVersion()->isCompatible("3.8.0")) ? array("version" => "auto") : "text/javascript");
+		// load the meta description
+		if ($this->params->get('menu-meta_description'))
+		{
+			$this->document->setDescription($this->params->get('menu-meta_description'));
+		}
+		// load the key words if set
+		if ($this->params->get('menu-meta_keywords'))
+		{
+			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
+		}
+		// check the robot params
+		if ($this->params->get('robots'))
+		{
+			$this->document->setMetadata('robots', $this->params->get('robots'));
+		}
+		// add the document default css file
+		$this->document->addStyleSheet(JURI::root(true) .'/components/com_spnas/assets/css/listnas.css', (SpnasHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/css');
+	}
 
 	/**
 	 * Setting the toolbar
 	 */
-//	protected function addToolBar()
-//	{
-//		// adding the joomla toolbar to the front
-//		JLoader::register('JToolbarHelper', JPATH_ADMINISTRATOR.'/includes/toolbar.php');
-//
-//		// set help url for this view if found
-//		$help_url = SpnasHelper::getHelpUrl('listnas');
-//		if (SpnasHelper::checkString($help_url))
-//		{
-//			JToolbarHelper::help('COM_SPNAS_HELP_MANAGER', false, $help_url);
-//		}
-//		// now initiate the toolbar
-//		$this->toolbar = JToolbar::getInstance();
-//	}
+	protected function addToolBar()
+	{
+		// adding the joomla toolbar to the front
+		JLoader::register('JToolbarHelper', JPATH_ADMINISTRATOR.'/includes/toolbar.php');
+		
+		// set help url for this view if found
+		$help_url = SpnasHelper::getHelpUrl('listnas');
+		if (SpnasHelper::checkString($help_url))
+		{
+			JToolbarHelper::help('COM_SPNAS_HELP_MANAGER', false, $help_url);
+		}
+		// now initiate the toolbar
+		$this->toolbar = JToolbar::getInstance();
+	}
 
 	/**
 	 * Escapes a value for output in a view script.

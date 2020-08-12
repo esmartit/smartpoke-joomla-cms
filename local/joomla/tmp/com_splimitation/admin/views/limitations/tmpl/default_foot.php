@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		default_foot.php
@@ -23,5 +23,5 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <tr>
-	<td colspan="11"><?php echo $this->pagination->getListFooter(); ?></td>
+	<td colspan=""><?php echo $this->pagination->getListFooter(); ?></td>
 </tr>

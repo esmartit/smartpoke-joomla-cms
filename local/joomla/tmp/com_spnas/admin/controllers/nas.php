@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			3rd June, 2020
+	@build			12th August, 2020
 	@created		7th April, 2020
 	@package		SP Nas
 	@subpackage		nas.php
@@ -63,12 +63,6 @@ class SpnasControllerNas extends JControllerForm
 	{
 		// Get user object.
 		$user = JFactory::getUser();
-		// Access check.
-		$access = $user->authorise('nas.access', 'com_spnas');
-		if (!$access)
-		{
-			return false;
-		}
 
 		// In the absense of better information, revert to the component permissions.
 		return parent::allowAdd($data);

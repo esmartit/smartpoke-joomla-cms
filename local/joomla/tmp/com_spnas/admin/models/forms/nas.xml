@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form
+	addrulepath="/administrator/components/com_spnas/models/rules"
+	addfieldpath="/administrator/components/com_spnas/models/fields"
+>
+	<fieldset name="details">
+                <!-- Default Fields.-->
+                <!-- Id Field. Type: Text (joomla)-->
+                <field name="id"
+                       type="text"
+                       class="readonly"
+                       readonly="true"
+                       label="JGLOBAL_FIELD_ID_LABEL"
+                       description="JGLOBAL_FIELD_ID_DESC"
+                       size="10"
+                       default="0" />
+                <!-- Date Created Field. Type: Calendar (joomla)-->
+                <field name="created"
+                       type="calendar"
+                       label="COM_SPNAS_NAS_CREATED_DATE_LABEL"
+                       description="COM_SPNAS_NAS_CREATED_DATE_DESC"
+                       size="22"
+                       format="%Y-%m-%d %H:%M:%S"
+                       filter="user_utc" />
+                <!-- User Created Field. Type: User (joomla)-->
+                <field name="created_by"
+                       type="user"
+                       label="COM_SPNAS_NAS_CREATED_BY_LABEL"
+                       description="COM_SPNAS_NAS_CREATED_BY_DESC" />
+                <!-- Published Field. Type: List (joomla)-->
+                <field name="published"
+                       type="list"
+                       label="JSTATUS">
+                        <option value="1">JPUBLISHED</option>
+                        <option value="0">JUNPUBLISHED</option>
+                        <option value="2">JARCHIVED</option>
+                        <option value="-2">JTRASHED</option>
+                </field>
+                <!-- Date Modified Field. Type: Calendar (joomla)-->
+                <field name="modified"
+                       type="calendar"
+                       class="readonly"
+                       label="COM_SPNAS_NAS_MODIFIED_DATE_LABEL"
+                       description="COM_SPNAS_NAS_MODIFIED_DATE_DESC"
+                       size="22"
+                       readonly="true"
+                       format="%Y-%m-%d %H:%M:%S"
+                       filter="user_utc" />
+                <!-- User Modified Field. Type: User (joomla)-->
+                <field name="modified_by"
+                       type="user"
+                       label="COM_SPNAS_NAS_MODIFIED_BY_LABEL"
+                       description="COM_SPNAS_NAS_MODIFIED_BY_DESC"
+                       class="readonly"
+                       readonly="true"
+                       filter="unset" />
+                <!-- Ordering Field. Type: Numbers (joomla)-->
+                <field name="ordering"
+                       type="number"
+                       class="inputbox validate-ordering"
+                       label="COM_SPNAS_NAS_ORDERING_LABEL"
+                       description=""
+                       default="0"
+                       size="6"
+                       required="false" />
+                <!-- Version Field. Type: Text (joomla)-->
+                <field name="version"
+                       type="text"
+                       class="readonly"
+                       label="COM_SPNAS_NAS_VERSION_LABEL"
+                       description="COM_SPNAS_NAS_VERSION_DESC"
+                       size="6"
+                       readonly="true"
+                       filter="unset" />
+                <!-- Dynamic Fields.-->
+                <!-- Server Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="server"
+                       label="COM_SPNAS_NAS_SERVER_LABEL"
+                       size="40"
+                       maxlength="60"
+                       class="text_area"
+                       filter="STRING"
+                       hint="COM_SPNAS_NAS_SERVER_HINT" />
+                <!-- Community Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="community"
+                       label="COM_SPNAS_NAS_COMMUNITY_LABEL"
+                       size="40"
+                       maxlength="50"
+                       class="text_area"
+                       filter="STRING" />
+                <!-- Alias Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="alias"
+                       label="COM_SPNAS_NAS_ALIAS_LABEL"
+                       filter="STRING"
+                       hint="COM_SPNAS_NAS_ALIAS_HINT" />
+                <!-- Ports Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="ports"
+                       label="COM_SPNAS_NAS_PORTS_LABEL"
+                       size="40"
+                       maxlength="7"
+                       default="0"
+                       class="text_area"
+                       filter="INT" />
+                <!-- Description Field. Type: Textarea. (joomla)-->
+                <field type="textarea"
+                       name="description"
+                       label="COM_SPNAS_NAS_DESCRIPTION_LABEL"
+                       rows="11"
+                       cols="10"
+                       class="text_area span12"
+                       filter="HTML" />
+                <!-- Secret Field. Type: Password. (joomla)-->
+                <field type="password"
+                       name="secret"
+                       label="COM_SPNAS_NAS_SECRET_LABEL"
+                       size="40"
+                       default="3Sm4rt1T"
+                       class="text_area"
+                       required="true"
+                       filter="STRING" />
+                <!-- Type Field. Type: List. (joomla)-->
+                <field type="list"
+                       name="type"
+                       label="COM_SPNAS_NAS_TYPE_LABEL"
+                       class="list_class"
+                       multiple="false"
+                       default="0">
+                        <!-- Option Set.-->
+                        <option value="meraki">COM_SPNAS_NAS_MERAKI</option>
+                        <option value="huawei">COM_SPNAS_NAS_HUAWEI</option>
+                        <option value="ignite">COM_SPNAS_NAS_IGNITE</option>
+                        <option value="galgus">COM_SPNAS_NAS_GALGUS</option>
+                        <option value="ubiquiti">COM_SPNAS_NAS_UBIQUITI</option>
+                        <option value="aruba">COM_SPNAS_NAS_ARUBA</option>
+                        <option value="ruckus">COM_SPNAS_NAS_RUCKUS</option>
+                        <option value="mikrotik">COM_SPNAS_NAS_MIKROTIK</option>
+                        <option value="other">COM_SPNAS_NAS_OTHER</option>
+                </field>
+                <!-- Shortname Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="shortname"
+                       label="COM_SPNAS_NAS_SHORTNAME_LABEL"
+                       size="40"
+                       maxlength="32"
+                       class="text_area"
+                       required="true"
+                       filter="STRING" />
+                <!-- Nasname Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="nasname"
+                       label="COM_SPNAS_NAS_NASNAME_LABEL"
+                       size="40"
+                       maxlength="128"
+                       class="text_area"
+                       required="true"
+                       filter="STRING" />
+        </fieldset>
+	
+	<!-- Access Control Fields. -->
+	<fieldset name="accesscontrol">
+		<!-- Asset Id Field. Type: Hidden (joomla) -->
+		<field
+			name="asset_id"
+			type="hidden"
+			filter="unset"
+		/>
+		<!-- Rules Field. Type: Rules (joomla) -->
+		<field
+			name="rules"
+			type="rules"
+			label="Permissions in relation to this nas"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			class="inputbox"
+			component="com_spnas"
+			section="nas"
+		/>
+	</fieldset>
+</form>

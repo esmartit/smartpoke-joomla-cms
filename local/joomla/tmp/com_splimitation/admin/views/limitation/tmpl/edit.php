@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		edit.php
@@ -69,14 +69,14 @@ $componentParams = $this->params; // will be removed just use $this->params inst
 	<?php $this->tab_name = 'limitationTab'; ?>
 	<?php echo JLayoutHelper::render('joomla.edit.params', $this); ?>
 
-	<?php if ($this->canDo->get('core.delete') || $this->canDo->get('core.edit.created_by') || $this->canDo->get('core.edit.state') || $this->canDo->get('core.edit.created')) : ?>
+	<?php if ($this->canDo->get('core.edit.created_by') || $this->canDo->get('core.edit.created') || $this->canDo->get('core.edit.state') || ($this->canDo->get('core.delete') && $this->canDo->get('core.edit.state'))) : ?>
 	<?php echo JHtml::_('bootstrap.addTab', 'limitationTab', 'publishing', JText::_('COM_SPLIMITATION_LIMITATION_PUBLISHING', true)); ?>
 		<div class="row-fluid form-horizontal-desktop">
 			<div class="span6">
 				<?php echo JLayoutHelper::render('limitation.publishing', $this); ?>
 			</div>
 			<div class="span6">
-				<?php echo JLayoutHelper::render('limitation.metadata', $this); ?>
+				<?php echo JLayoutHelper::render('limitation.publlshing', $this); ?>
 			</div>
 		</div>
 	<?php echo JHtml::_('bootstrap.endTab'); ?>

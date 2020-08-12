@@ -125,7 +125,10 @@ class plgSystemBackend_plugin extends CMSPlugin
                 echo $chunk;
             });
             $response->on('end', function() {
-                echo 'DONE';
+                echo "event: complete \n";
+                $curDate = date(DATE_ISO8601);
+                echo 'data: {"time": "' . $curDate . '"}';
+                echo "\n\n";
             });
         });
         $request->on('error', function (\Exception $e) {

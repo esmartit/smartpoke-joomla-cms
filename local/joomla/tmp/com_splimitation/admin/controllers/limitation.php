@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		limitation.php
@@ -63,12 +63,6 @@ class SplimitationControllerLimitation extends JControllerForm
 	{
 		// Get user object.
 		$user = JFactory::getUser();
-		// Access check.
-		$access = $user->authorise('limitation.access', 'com_splimitation');
-		if (!$access)
-		{
-			return false;
-		}
 
 		// In the absense of better information, revert to the component permissions.
 		return parent::allowAdd($data);

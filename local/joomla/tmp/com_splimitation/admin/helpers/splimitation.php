@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			15th June, 2020
+	@build			12th August, 2020
 	@created		12th June, 2020
 	@package		SP Limitation
 	@subpackage		splimitation.php
@@ -22,11 +22,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 use Joomla\CMS\Language\Language;
+use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Splimitation component helper.
@@ -149,198 +147,6 @@ abstract class SplimitationHelper
 		$user = JFactory::getUser();
 		// load the submenus to sidebar
 		JHtmlSidebar::addEntry(JText::_('COM_SPLIMITATION_SUBMENU_DASHBOARD'), 'index.php?option=com_splimitation&view=splimitation', $submenu === 'splimitation');
-	}
-
-	/**
-	* Prepares the xml document
-	*/
-	public static function xls($rows, $fileName = null, $title = null, $subjectTab = null, $creator = 'Joomla Component Builder', $description = null, $category = null,$keywords = null, $modified = null)
-	{
-		// set the user
-		$user = JFactory::getUser();
-		// set fileName if not set
-		if (!$fileName)
-		{
-			$fileName = 'exported_'.JFactory::getDate()->format('jS_F_Y');
-		}
-		// set modified if not set
-		if (!$modified)
-		{
-			$modified = $user->name;
-		}
-		// set title if not set
-		if (!$title)
-		{
-			$title = 'Book1';
-		}
-		// set tab name if not set
-		if (!$subjectTab)
-		{
-			$subjectTab = 'Sheet1';
-		}
-
-		// make sure we have the composer classes loaded
-		self::composerAutoload('phpspreadsheet');
-
-		// Create new Spreadsheet object
-		$spreadsheet = new Spreadsheet();
-
-		// Set document properties
-		$spreadsheet->getProperties()
-			->setCreator($creator)
-			->setCompany('Joomla Component Builder')
-			->setLastModifiedBy($modified)
-			->setTitle($title)
-			->setSubject($subjectTab);
-		// set description
-		if ($description)
-		{
-			$spreadsheet->getProperties()->setDescription($description);
-		}
-		// set keywords
-		if ($keywords)
-		{
-			$spreadsheet->getProperties()->setKeywords($keywords);
-		}
-		// set category
-		if ($category)
-		{
-			$spreadsheet->getProperties()->setCategory($category);
-		}
-
-		// Some styles
-		$headerStyles = array(
-			'font'  => array(
-				'bold'  => true,
-				'color' => array('rgb' => '1171A3'),
-				'size'  => 12,
-				'name'  => 'Verdana'
-		));
-		$sideStyles = array(
-			'font'  => array(
-				'bold'  => true,
-				'color' => array('rgb' => '444444'),
-				'size'  => 11,
-				'name'  => 'Verdana'
-		));
-		$normalStyles = array(
-			'font'  => array(
-				'color' => array('rgb' => '444444'),
-				'size'  => 11,
-				'name'  => 'Verdana'
-		));
-
-		// Add some data
-		if (self::checkArray($rows))
-		{
-			$i = 1;
-			foreach ($rows as $array){
-				$a = 'A';
-				foreach ($array as $value){
-					$spreadsheet->setActiveSheetIndex(0)->setCellValue($a.$i, $value);
-					if ($i == 1){
-						$spreadsheet->getActiveSheet()->getColumnDimension($a)->setAutoSize(true);
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->applyFromArray($headerStyles);
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->getAlignment()->setHorizontal(PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-					} elseif ($a === 'A'){
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->applyFromArray($sideStyles);
-					} else {
-						$spreadsheet->getActiveSheet()->getStyle($a.$i)->applyFromArray($normalStyles);
-					}
-					$a++;
-				}
-				$i++;
-			}
-		}
-		else
-		{
-			return false;
-		}
-
-		// Rename worksheet
-		$spreadsheet->getActiveSheet()->setTitle($subjectTab);
-
-		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-		$spreadsheet->setActiveSheetIndex(0);
-
-		// Redirect output to a client's web browser (Excel5)
-		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment;filename="'.$fileName.'.xls"');
-		header('Cache-Control: max-age=0');
-		// If you're serving to IE 9, then the following may be needed
-		header('Cache-Control: max-age=1');
-
-		// If you're serving to IE over SSL, then the following may be needed
-		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-		header ('Pragma: public'); // HTTP/1.0
-
-		$writer = IOFactory::createWriter($spreadsheet, 'Xls');
-		$writer->save('php://output');
-		jexit();
-	}
-
-	/**
-	* Get CSV Headers
-	*/
-	public static function getFileHeaders($dataType)
-	{
-		// make sure we have the composer classes loaded
-		self::composerAutoload('phpspreadsheet');
-		// get session object
-		$session = JFactory::getSession();
-		$package = $session->get('package', null);
-		$package = json_decode($package, true);
-		// set the headers
-		if(isset($package['dir']))
-		{
-			// only load first three rows
-			$chunkFilter = new PhpOffice\PhpSpreadsheet\Reader\chunkReadFilter(2,1);
-			// identify the file type
-			$inputFileType = IOFactory::identify($package['dir']);
-			// create the reader for this file type
-			$excelReader = IOFactory::createReader($inputFileType);
-			// load the limiting filter
-			$excelReader->setReadFilter($chunkFilter);
-			$excelReader->setReadDataOnly(true);
-			// load the rows (only first three)
-			$excelObj = $excelReader->load($package['dir']);
-			$headers = array();
-			foreach ($excelObj->getActiveSheet()->getRowIterator() as $row)
-			{
-				if($row->getRowIndex() == 1)
-				{
-					$cellIterator = $row->getCellIterator();
-					$cellIterator->setIterateOnlyExistingCells(false);
-					foreach ($cellIterator as $cell)
-					{
-						if (!is_null($cell))
-						{
-							$headers[$cell->getColumn()] = $cell->getValue();
-						}
-					}
-					$excelObj->disconnectWorksheets();
-					unset($excelObj);
-					break;
-				}
-			}
-			return $headers;
-		}
-		return false;
-	}
-
-	/**
-	* Load the Composer Vendor phpspreadsheet
-	*/
-	protected static function composephpspreadsheet()
-	{
-		// load the autoloader for phpspreadsheet
-		require_once JPATH_SITE . '/libraries/phpspreadsheet/vendor/autoload.php';
-		// do not load again
-		self::$composer['phpspreadsheet'] = true;
-
-		return  true;
 	}
 
 	/**
