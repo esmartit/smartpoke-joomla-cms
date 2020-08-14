@@ -379,29 +379,6 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
-    let option = '';
-    $('#radioDay').on('change', function () {
-        option = $('#radioDay').val();
-        $('input[name="radioGraph"]:radio:checked').val(option);
-    });
-
-    $('#radioWeek').on('change', function () {
-        option = $('#radioWeek').val();
-        $('input[name="radioGraph"]:radio:checked').val(option);
-    });
-
-    $('#radioMonth').on('change', function () {
-        option = $('#radioMonth').val();
-        $('input[name="radioGraph"]:radio:checked').val(option);
-    });
-
-    $('#radioYear').on('change', function () {
-        option = $('#radioYear').val();
-        $('input[name="radioGraph"]:radio:checked').val(option);
-    });
-});
-
-$(document).ready(function () {
     $('#checkFilter').on('change', function () {
         filters();
     });
@@ -445,7 +422,7 @@ function sendForm() {
     let t_zipcodes = '';
     let t_member = '';
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    let t_groupBy = $('input[name="radioGraph"]:radio:checked').val();
+    let t_groupBy = $('#selRadioGraph input:radio:checked').val();
 
     if (document.getElementById("checkFilter").checked) {
         t_ageS = $('#from_value').val();
