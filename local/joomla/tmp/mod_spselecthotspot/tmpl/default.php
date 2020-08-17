@@ -138,8 +138,8 @@ $dateend = date("Y-m-d", strtotime($currDate));
                                 <label><?php echo JText::_('Sex'); ?></label>
                                 <select id="selSex" class="form-control" name="sex">
                                     <option value="" selected><?php echo JText::_('Both'); ?></option>
-                                    <option value="0"><?php echo JText::_('Man'); ?></option>
-                                    <option value="1"><?php echo JText::_('Woman'); ?></option>
+                                    <option value="MALE"><?php echo JText::_('Male'); ?></option>
+                                    <option value="FEMALE"><?php echo JText::_('Female'); ?></option>
                                 </select>
                             </div>
                         </div>

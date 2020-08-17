@@ -206,10 +206,21 @@ class ModSPSelectSmartPokeHelper
         $spotId = $data['spotId'];
         $ageS = $data['ageStart'];
         $ageE = $data['ageEnd'];
-        $sex = $data['gender'];
+        $gender = $data['gender'];
         $zipCode = implode(",", $data['zipCode']);
         $member = $data['memberShip'];
 
+        switch ($gender) {
+            case 'MALE':
+                $sex = '0';
+                break;
+            case 'FEMALE':
+                $sex = '1';
+                break;
+            default:
+                $sex = '';
+                break;
+        }
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 

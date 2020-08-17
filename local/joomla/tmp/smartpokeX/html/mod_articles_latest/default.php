@@ -31,18 +31,20 @@ defined('_JEXEC') or die;
         <div class="x_content">
             <div class="dashboard-widget-content">
                 <ul class="list-unstyled timeline widget">
-                <?php foreach ($list as $item) : ?>
-                    <li itemscope itemtype="https://schema.org/Article">
-                        <div class="block">
-                            <div class="block_content">
-                                <h2 class="title">
-                                    <a href="<?php echo $item->link; ?>" itemprop="url">
-                                        <?php echo $item->title; ?></a>
-                                </h2>
-                            </div>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
+                    <?php foreach ($list as $item) : ?>
+                        <?php if ($item->featured == "1") : ?>
+                            <li itemscope itemtype="https://schema.org/Article">
+                                <div class="block">
+                                    <div class="block_content">
+                                        <h2 class="title">
+                                            <a href="<?php echo $item->link; ?>" itemprop="url">
+                                                <?php echo $item->title; ?></a>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
