@@ -177,8 +177,8 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                                 <label><?php echo JText::_('Sex'); ?></label>
                                 <select id="selSex" class="form-control" name="sex">
                                     <option value="" selected><?php echo JText::_('Both'); ?></option>
-                                    <option value="MALE"><?php echo JText::_('Male'); ?></option>
-                                    <option value="FEMALE"><?php echo JText::_('Female'); ?></option>
+                                    <option value="MALE"><?php echo JText::_('Man'); ?></option>
+                                    <option value="FEMALE"><?php echo JText::_('Woman'); ?></option>
                                 </select>
                             </div>
                         </div>

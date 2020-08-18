@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     SmartPoke.Site
- * @subpackage  mod_spselectbigdata
+ * @subpackage  mod_spselectsmartpoke
  *
  * @copyright   Copyright (C) 2020 eSmartIT. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -22,9 +22,11 @@ $document->addStyleSheet('/templates/smartpokex/vendors/normalize-css/normalize.
 $document->addStyleSheet('/templates/smartpokex/vendors/ion.rangeSlider/css/ion.rangeSlider.css');
 $document->addStyleSheet('/templates/smartpokex/vendors/ion.rangeSlider/css/ion.rangeSlider.skinNice.css');
 
+$document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css');
+$document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css');
+
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
-
 // Switchery
 $document->addScript('/templates/smartpokex/vendors/switchery/dist/switchery.min.js');
 // bootstrap-daterangepicker
@@ -34,83 +36,50 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/da
 $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
 // Ion.RangeSlider
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
-$document->addScript('/media/mod_spselectbigdata/js/spselectbigdata.js');
+
+// DataTables
+$document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dataTables.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/dataTables.buttons.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/buttons.flash.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/buttons.html5.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/buttons.print.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-responsive/js/dataTables.responsive.min.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js');
+$document->addScript('/templates/smartpokex/vendors/datatables.net-scroller/js/dataTables.scroller.min.js');
+$document->addScript('/templates/smartpokex/vendors/jszip/dist/jszip.min.js');
+$document->addScript('/templates/smartpokex/vendors/pdfmake/build/pdfmake.min.js');
+$document->addScript('/templates/smartpokex/vendors/pdfmake/build/vfs_fonts.js');
+
+$document->addScript('/media/mod_spexportcustomer/js/spexportcustomer.js');
 
 $currDate = date('Y-m-d H:i:s');
-$datestart = date("Y-m-d", strtotime("-31 day", strtotime($currDate)));
-$dateend = date("Y-m-d", strtotime("-1 day", strtotime($currDate)));
-
-$datestart2 = date("Y-m-d", strtotime("-31 day", strtotime($datestart)));
-$dateend2 = date("Y-m-d", strtotime("-1 day", strtotime($datestart)));
+$datestart = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
+$dateend = date("Y-m-d", strtotime($currDate));
 
 ?>
 <div class="col-md-12 col-sm-12 ">
     <p>
         <a class="btn btn-outline-secondary" data-toggle="collapse" href="#collapseSelect" role="button" aria-expanded="false" aria-controls="collapseSelect">
-            <?php echo JText::_('MOD_SPSELECTBIGDATA');?>
+            <?php echo JText::_('MOD_SPEXPORTCUSTOMER');?>
         </a>
     </p>
     <div class="collapse" id="collapseSelect">
         <div class="x_panel">
-            <!--        <div class="x_title">-->
-            <!--            <h2>--><?php //echo JText::_('MOD_SPSELECTBIGDATA');?><!-- <small></small></h2>-->
-            <!--            <ul class="nav navbar-right panel_toolbox">-->
-            <!--                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
-            <!--                </li>-->
-            <!--                <li class="dropdown">-->
-            <!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
-            <!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-            <!--                        <a class="dropdown-item" href="#">Settings 1</a>-->
-            <!--                        <a class="dropdown-item" href="#">Settings 2</a>-->
-            <!--                    </div>-->
-            <!--                </li>-->
-            <!--                <li><a class="close-link"><i class="fa fa-close"></i></a>-->
-            <!--                </li>-->
-            <!--            </ul>-->
-            <!--            <div class="clearfix"></div>-->
-            <!--        </div>-->
             <div class="x_content">
-                <form id="bigdata_select_form" class="form-horizontal form-label-left" method="POST">
+                <form id="export_select_form" class="form-horizontal form-label-left" method="POST" enctype="multipart/form-data">
                     <!-- select -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <div id="selRadio" class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" value="0" id="radioRange" name="rangeCompare"> <?php echo JText::_('Range'); ?>
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" value="1" id="radioCompare" name="rangeCompare"> <?php echo JText::_('Compare'); ?>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input id="timestart" type="text" name="timestart" class="form-control"/>
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input id="timeend" type="text" name="timeend" class="form-control"/>
-                            </div>
-                        </div>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                    <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
+                                    <span>October 24, 1971 - October 24, 1971</span><b class="caret"></b>
                                 </div>
                             </div>
                             <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
                             <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
-                            <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 col-xs-12" id="rangeDate" style="display: none;">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div id="daterange_right" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                    <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
-                                </div>
-                            </div>
-                            <input type="hidden" name="datestart2" id="datestart2" value='<?php echo $datestart2; ?>'/>
-                            <input type="hidden" name="dateend2" id="dateend2" value='<?php echo $dateend2; ?>'/>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -148,67 +117,19 @@ $dateend2 = date("Y-m-d", strtotime("-1 day", strtotime($datestart)));
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div id="spotSelect" class="col-md-2 col-sm-2 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selSpot" class="form-control" name="spot" onblur="getSensorZoneList()">
-                                    <option value="" selected><?php echo JText::_('All Spots'); ?></option>
+                                <select id="selSpot" class="form-control" name="spot">
+                                    <option value="" selected><?php echo JText::_('All HotSpots'); ?></option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <br/>
-                                <select id="selSensor" class="form-control" name="sensor">
-                                    <option value="" selected><?php echo JText::_('All Sensors'); ?></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <br/>
-                                <select id="selZone" class="form-control" name="zone">
-                                    <option value="" selected><?php echo JText::_('All Zones'); ?></option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <br/>
-                                <select id="selBrand" class="form-control" name="brand" multiple="multiple">
-                                    <option value="" selected><?php echo JText::_('All Brands'); ?></option>
-                                    <?php foreach ($brands as $item): ?>
-                                        <option value="<?php echo $item->name; ?>"><?php echo $item->name; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <br/>
-                                <select id="selStatus" class="form-control" name="status">
-                                    <option value="" selected><?php echo JText::_('All Status'); ?></option>
-                                    <option value="IN"><?php echo JText::_('IN'); ?></option>
-                                    <option value="LIMIT"><?php echo JText::_('LIMIT'); ?></option>
-                                    <option value="OUT"><?php echo JText::_('OUT'); ?></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <br/>
-                                <label class="col-md-6 col-sm-6 col-xs-12"><?php echo JText::_('Presence');?></label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input id="presence" type="text" name="presence" class="form-control" value="1">
-                                </div>
-                            </div>
+                            <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                         </div>
                     </div>
                     <!-- / select -->
                     <!-- filters -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div id="filters" class="col-md-12 col-sm-12 col-xs-12">
                         <div class="ln_solid"></div>
                         <h2><?php echo JText::_('Filters');?>
                             <input id="checkFilter" type="checkbox" class="js-switch" /></h2>
@@ -252,24 +173,6 @@ $dateend2 = date("Y-m-d", strtotime("-1 day", strtotime($datestart)));
                     </div>
                     <!-- /filters -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div id="selRadioGraph" class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" value="BY_DAY" id="radioDay" name="radioGraph"> <?php echo JText::_('By Day'); ?>
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" value="BY_WEEK" id="radioWeek" name="radioGraph"> <?php echo JText::_('By Week'); ?>
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" value="BY_MONTH" id="radioMonth" name="radioGraph"> <?php echo JText::_('By Month'); ?>
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" value="BY_YEAR" id="radioYear" name="radioGraph"> <?php echo JText::_('By Year'); ?>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-6 offset-md-3">
@@ -280,6 +183,48 @@ $dateend2 = date("Y-m-d", strtotime("-1 day", strtotime($datestart)));
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><?php echo JText::_('MOD_SPEXPORTCUSTOMER_USERS');?><small></small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <form id="smartpoke_form" method="POST">
+                <div id="database" class="table-responsive">
+                    <table id="datatable-database" class="table table-striped table-bordered bulk_action">
+                        <thead>
+                        <tr>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_FIRSTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_LASTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_MOBILE PHONE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_EMAIL'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_USERNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_AGE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_SEX'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_ZIPCODE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_MEMBER'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_COMMUNICATION'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPEXPORTCUSTOMER_SPOT'); ?></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -138,8 +138,8 @@ $dateend = date("Y-m-d", strtotime($currDate));
                                 <label><?php echo JText::_('Sex'); ?></label>
                                 <select id="selSex" class="form-control" name="sex">
                                     <option value="" selected><?php echo JText::_('Both'); ?></option>
-                                    <option value="MALE"><?php echo JText::_('Male'); ?></option>
-                                    <option value="FEMALE"><?php echo JText::_('Female'); ?></option>
+                                    <option value="MALE"><?php echo JText::_('Man'); ?></option>
+                                    <option value="FEMALE"><?php echo JText::_('Woman'); ?></option>
                                 </select>
                             </div>
                         </div>
@@ -166,6 +166,24 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         </div>
                     </div>
                     <!-- /filters -->
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div id="selRadioGraph" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" value="BY_DAY" id="radioDay" name="radioGraph"> <?php echo JText::_('By Day'); ?>
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" value="BY_WEEK" id="radioWeek" name="radioGraph"> <?php echo JText::_('By Week'); ?>
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" value="BY_MONTH" id="radioMonth" name="radioGraph"> <?php echo JText::_('By Month'); ?>
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" value="BY_YEAR" id="radioYear" name="radioGraph"> <?php echo JText::_('By Year'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="ln_solid"></div>
                         <div class="item form-group">

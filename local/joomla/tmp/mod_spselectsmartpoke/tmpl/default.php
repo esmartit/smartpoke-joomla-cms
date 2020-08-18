@@ -241,8 +241,8 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 <label><?php echo JText::_('Sex'); ?></label>
                                 <select id="selSex" class="form-control" name="sex">
                                     <option value="" selected><?php echo JText::_('Both'); ?></option>
-                                    <option value="MALE"><?php echo JText::_('Male'); ?></option>
-                                    <option value="FEMALE"><?php echo JText::_('Female'); ?></option>
+                                    <option value="MALE"><?php echo JText::_('Man'); ?></option>
+                                    <option value="FEMALE"><?php echo JText::_('Woman'); ?></option>
                                 </select>
                             </div>
                         </div>
@@ -334,14 +334,11 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                     <table id="datatable-online" class="table table-striped table-bordered bulk_action">
                         <thead>
                         <tr>
-                            <th colspan="3"></th>
-                            <th colspan ='1'><center>Spot</center></th>
-                        </tr>
-                        <tr>
                             <th><input type='checkbox' name= 'select_all_on' id='smartpoke_select_all_on' value='1' /></th>
-                            <th>Device</th>
-                            <th>Username</th>
-                            <th><center>Sensor Name</center></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_DEVICE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_USERNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SENSOR'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SPOT'); ?></th>
                         </tr>
                         </thead>
                     </table>
@@ -350,14 +347,11 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                     <table id="datatable-offline" class="table table-striped table-bordered bulk_action">
                         <thead>
                         <tr>
-                            <th colspan="3"></th>
-                            <th colspan ='1'><center>Spot</center></th>
-                        </tr>
-                        <tr>
                             <th><input type='checkbox' name= 'select_all_off' id='smartpoke_select_all_off' value='1' /></th>
-                            <th>Device</th>
-                            <th>Username</th>
-                            <th><center>Sensor Name</center></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_DEVICE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_USERNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SENSOR'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SPOT'); ?></th>
                         </tr>
                         </thead>
                     </table>
@@ -367,16 +361,16 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <thead>
                         <tr>
                             <th><input type='checkbox' name= 'select_all_db' id='smartpoke_select_all_db' value='1' /></th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Mobile Phone</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Age</th>
-                            <th>Sex</th>
-                            <th>ZipCode</th>
-                            <th>Member</th>
-                            <th>Spot</th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_FIRSTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_LASTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_MOBILE PHONE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_EMAIL'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_USERNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_AGE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SEX'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_ZIPCODE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_MEMBER'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SPOT'); ?></th>
                         </tr>
                         </thead>
                     </table>
@@ -386,10 +380,10 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <thead>
                         <tr>
                             <th><input type='checkbox' name= 'select_all_fl' id='smartpoke_select_all_fl' value='1' /></th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Mobile Phone</th>
-                            <th>Email</th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_FIRSTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_LASTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_MOBILE PHONE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_EMAIL'); ?></th>
                         </tr>
                         </thead>
                     </table>
