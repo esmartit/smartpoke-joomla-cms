@@ -1,9 +1,10 @@
 $(document).ready( function() {
 
-    var theme = {
+    let theme = {
         color: [
             '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
-            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+            '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7',
+            '#f57641', '#e3225e'
         ],
 
         title: {
@@ -212,9 +213,9 @@ $(document).ready( function() {
         }
     };
 
-    var spChart = echarts.init(document.getElementById('echart_rankingby_brand'), theme);
+    let spChart = echarts.init(document.getElementById('echart_rankingby_brand'), theme);
 
-    var option = {
+    let option = {
         title: {
             text: '',
             subtext: '',
@@ -225,28 +226,33 @@ $(document).ready( function() {
             formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
         legend: {
-            orient: 'horizontal',
-            left: 'left',
+            orient: 'vertical',
+            left: '10',
             data: []
         },
         series: [
             {
                 name: 'Brand',
                 type: 'pie',
-                radius: ['50%', '65%'],
-                center: ['50%', '38%'],
+                radius: ['50%', '55%'],
+                center: ['50%', '33%'],
                 data: [
                     {value: 1548, name: 'Others'},
-                    {value: 335, name: 'Apple'},
-                    {value: 310, name: 'Samsung'},
-                    {value: 234, name: 'Huawei'},
-                    {value: 135, name: 'Xiaomi'}
+                    {value: 1023, name: 'Apple'},
+                    {value: 1019, name: 'Samsung'},
+                    {value: 720, name: 'Huawei'},
+                    {value: 612, name: 'Xiaomi'},
+                    {value: 428, name: 'ZTE'},
+                    {value: 318, name: 'Google'},
+                    {value: 315, name: 'Oppo'},
+                    {value: 312, name: 'Sony Ericsson'},
+                    {value: 289, name: 'LG'}
                 ],
                 emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    label: {
+                        show: true,
+                        fontSize: '12',
+                        fontWeight: 'bold'
                     }
                 }
             }

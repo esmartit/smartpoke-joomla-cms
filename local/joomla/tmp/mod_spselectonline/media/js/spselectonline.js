@@ -301,8 +301,8 @@ function sendForm() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
 
     if (document.getElementById("checkFilter").checked) {
-        t_ageS = $('#from_value').val();
-        t_ageE = $('#to_value').val();
+        // t_ageS = $('#from_value').val();
+        // t_ageE = $('#to_value').val();
         t_sex = $('#selSex').val();
         t_zipcodes = $('#selZipCode').val();
         t_member = $('#selMembership').val();

@@ -122,7 +122,7 @@ else
                     <div class="menu_section">
                         <h3>Configuration</h3>
                         <ul class="nav side-menu">
-                            <li><a href="index.php?option=com_spcampaign&view=listcampaign"><i class="fa fa-send"></i> Campaign </a></li>
+                            <li><a href="/index.php/configurations/campaigns"><i class="fa fa-send"></i> Campaign </a></li>
                         </ul>
                     </div>
                     <div class="menu_section">

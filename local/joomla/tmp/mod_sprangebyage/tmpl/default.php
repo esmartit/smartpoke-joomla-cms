@@ -35,7 +35,7 @@ $document->addScript('/media/mod_sprangebyage/js/echartrangebyage.js');
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <div id="echart_rangeby_age" style="width:400px; height:250px;"></div>
+            <div id="echart_rangeby_age" style="width:375px; height:250px;"></div>
         </div>
     </div>
 </div>

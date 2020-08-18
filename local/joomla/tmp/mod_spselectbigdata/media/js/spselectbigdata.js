@@ -425,25 +425,12 @@ function sendForm() {
     let t_groupBy = $('#selRadioGraph input:radio:checked').val();
 
     if (document.getElementById("checkFilter").checked) {
-        t_ageS = $('#from_value').val();
-        t_ageE = $('#to_value').val();
+        // t_ageS = $('#from_value').val();
+        // t_ageE = $('#to_value').val();
         t_sex = $('#selSex').val();
         t_zipcodes = $('#selZipCode').val();
         t_member = $('#selMembership').val();
     }
-
-    // let dataForm = {
-    //     "dateStart": t_dateS, "dateEnd": t_dateE,
-    //     "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
-    //     "startTime": t_timeS, "endTime": t_timeE,
-    //     "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-    //     "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone,
-    //     "brands": t_brands, "status": t_status, "presence": t_presence,
-    //     "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
-    //     "timeZone": userTimeZone,
-    //     "group": t_groupBy
-    // }
-    // console.log(t_dateS, t_dateE, t_timeS, t_timeE, t_country, t_state, t_city, t_zipcode, t_spot, t_sensor, t_zone, t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone, t_groupBy);
 
     evtSourceActivityBigDataR
     (

@@ -1,3 +1,5 @@
+let tableDB = '';
+
 $(document).ready( function() {
 
     getCountryList();
@@ -20,6 +22,7 @@ $(document).ready( function() {
         }
     });
 
+    $('#datatable-database').DataTable({responsive: true});
 });
 
 function getCountryList() {
@@ -75,7 +78,7 @@ function getStateList() {
 
                 $("#selStateS").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getHotSpotList();
+            getSpotList();
         });
 
 }
@@ -106,7 +109,7 @@ function getCityList() {
 
                 $("#selCityS").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getHotSpotList();
+            getSpotList();
         });
 
 }
@@ -141,7 +144,7 @@ function getZipCodeList() {
         });
 }
 
-function getHotSpotList() {
+function getSpotList() {
     let countryId = $('#selCountryS').val();
     let stateId = $('#selStateS').val();
     let cityId = $('#selCityS').val();
@@ -149,8 +152,8 @@ function getHotSpotList() {
 
     let request = {
         option       : 'com_ajax',
-        module       : 'spselecthotspot',  // to target: mod_spselecthotspot
-        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectHotSpotHelper
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectOnlineHelper
         format       : 'json',
         data         : {'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId}
     };
@@ -162,13 +165,13 @@ function getHotSpotList() {
             let object = response.data;
             let len = object.length;
 
-            $("#selHotSpot").empty();
-            $("#selHotSpot").append("<option value=''>All HotSpots</option>");
+            $("#selSpot").empty();
+            $("#selSpot").append("<option value=''>All HotSpots</option>");
             for (let i = 0; i<len; i++) {
                 let id = object[i][0];
                 let name = object[i][1];
 
-                $("#selHotSpot").append("<option value='"+id+"'>"+name+"</option>");
+                $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
         });
 }
@@ -246,32 +249,147 @@ $(document).ready(function() {
     $('#destroy').click(function () {
         $('#daterange').data('daterangepicker').remove();
     });
+});
+
+$(document).ready(function () {
+    $('#checkFilter').on('change', function () {
+        filters();
+    });
 
 });
 
+function filters() {
+    document.getElementById("filterAge").style.display = 'none';
+    document.getElementById("filterSex").style.display = 'none';
+    document.getElementById("filterZipCode").style.display = 'none';
+    document.getElementById("filterMember").style.display = 'none';
+    if (document.getElementById("checkFilter").checked) {
+        document.getElementById("filterAge").style.display = 'block';
+        document.getElementById("filterSex").style.display = 'block';
+        document.getElementById("filterZipCode").style.display = 'block';
+        document.getElementById("filterMember").style.display = 'block';
+    }
+}
+
 function sendForm() {
+
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
     let t_country = $('#selCountryS').val();
     let t_state = $('#selStateS').val();
     let t_city = $('#selCityS').val();
     let t_zipcode = $('#selZipCodeS').val();
-    let t_spot = $('#selHotSpot').val();
-    let t_ageS = $('#from_value').val();
-    let t_ageE = $('#to_value').val();
-    let t_sex = $('#selSex').val();
-    let t_zipcodes = $('#selZipCode').val();
-    let t_member = $('#selMembership').val();
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    let t_groupBy = $('#selRadioGraph input:radio:checked').val();
+    let t_spot = $('#selSpot').val();
 
-    evtSourceConnectOnline(
-        t_dateS, t_dateE,
+    let t_ageS = '';
+    let t_ageE = '';
+    let t_sex = '';
+    let t_zipcodes = '';
+    let t_member = '';
+
+    if (document.getElementById("checkFilter").checked) {
+        t_ageS = $('#from_value').val();
+        t_ageE = $('#to_value').val();
+        t_sex = $('#selSex').val();
+        t_zipcodes = $('#selZipCode').val();
+        t_member = $('#selMembership').val();
+    }
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+
+    smartpokeDB
+    (   t_dateS, t_dateE,
         t_country, t_state, t_city, t_zipcode,
         t_spot,
-        '', '', t_sex, t_zipcodes, t_member,
-        userTimeZone, t_groupBy
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member
     );
-    // console.log(t_dateS, t_dateE, t_country, t_state, t_city, t_zipcode, t_spot, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
+}
+
+function smartpokeDB(dateS, dateE, country, state, city, zipcode, spot, ageS, ageE, sex, zipcodes, member) {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spexportcustomer',  // to target: mod_spexportcustomer
+        method       : 'getCustomerList',  // to target: function getCustomerListAjax in class ModSPExportCustomerHelper
+        format       : 'json',
+        data         : {    "dateStart": dateS, "dateEnd": dateE,
+            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode,
+            "spotId": spot,
+            "ageStart": ageS, "ageEnd": ageE, "gender": sex, "zipCode": zipcodes, "memberShip": member
+        }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let data = response.data
+            tableDB = $('#datatable-database').DataTable({
+                "destroy": true,
+                "aaData": data,
+                "columnDefs": [
+                    {"data": "firstname", "targets": 0},
+                    {"data": "lastname", "targets": 1},
+                    {"data": "mobile_phone", "targets": 2},
+                    {"data": "email", "targets": 3},
+                    {"data": "username", "targets": 4},
+                    {"data": "age", "targets": 5},
+                    {
+                        "data": "sex", "targets": 6,
+                        "render": function (data, type) {
+                            if (data == '0') {
+                                return "<div align='center'>H</div>";
+                            } else {
+                                return "<div align='center'>M</div>";
+                            }
+                        }
+                    },
+                    {"data": "zipcode", "targets": 7},
+                    {
+                        "data": "membership", "targets": 8,
+                        "render": function (data, type) {
+                            if (data == '0') {
+                                return "<div align='center'><span> NO </span></div>";
+                            } else {
+                                return "<div align='center'><span> SI </span></div>";
+                            }
+                        }
+                    },
+                    {
+                        "data": "communication", "targets": 9,
+                        "render": function (data, type) {
+                            if (data == '0') {
+                                return "<div align='center'><span> NO </span></div>";
+                            } else {
+                                return "<div align='center'><span> SI </span></div>";
+                            }
+                        }
+                    },
+                    {"data": "name", "targets": 10}
+                ],
+                "dom": 'Bfrtip',
+                "buttons": [
+                    {
+                        "extend": 'copy',
+                        "className": 'btn-sm'
+                    },
+                    {
+                        "extend": 'csv',
+                        "className": 'btn-sm'
+                    },
+                    {
+                        "extend": 'excel',
+                        "className": 'btn-sm'
+                    },
+                    {
+                        "extend": 'pdfHtml5',
+                        "className": 'btn-sm'
+                    },
+                    {
+                        "extend": 'print',
+                        "className": 'btn-sm'
+                    },
+                ],
+                "responsive": true
+            });
+        });
 }
 
