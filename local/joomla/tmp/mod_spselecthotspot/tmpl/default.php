@@ -166,7 +166,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         </div>
                     </div>
                     <!-- /filters -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <div id="selRadioGraph" class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
