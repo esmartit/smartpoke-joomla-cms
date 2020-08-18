@@ -394,7 +394,7 @@ function evtSourceConnectOnline(dateS, dateE, country, state, city, zipcode, spo
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+
-        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_DAY");
     let pos = 0;
 
     seConnectOnline.onmessage = function (event) {

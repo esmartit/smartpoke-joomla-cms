@@ -263,7 +263,8 @@ function sendForm() {
     let t_zipcodes = $('#selZipCode').val();
     let t_member = $('#selMembership').val();
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    let t_groupBy = $('#selRadioGraph input:radio:checked').val();
+    let t_groupBy = 'BY_DAY';
+    // let t_groupBy = $('#selRadioGraph input:radio:checked').val();
 
     evtSourceConnectOnline(
         t_dateS, t_dateE,
