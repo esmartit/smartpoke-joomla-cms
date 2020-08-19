@@ -2,9 +2,16 @@ let seUniqueBigData = '';
 let devUniqueBigData = [];
 let bigDataR = [];
 
-
 $(document).ready( function() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
+    seUniqueBigData = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/unique-devices-detected-count?timezone="+userTimeZone);
+    let uniqueBigData = 0;
+
+    seUniqueBigData.onmessage = function (event) {
+        uniqueBigData = JSON.parse(event.data).count;
+        document.getElementById("devuniquebigdata").innerHTML = Intl.NumberFormat().format(uniqueBigData);
+    }
+
 });
 
 Date.prototype.getWeek = function() {
@@ -78,6 +85,9 @@ function evtSourceUniqueBigData(dateS, dateE, timeS, timeE, country, state, city
             break;
     }
 
+    if (seUniqueBigData.readyState != 2) {
+        seUniqueBigData.close();
+    }
     seUniqueBigData = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+

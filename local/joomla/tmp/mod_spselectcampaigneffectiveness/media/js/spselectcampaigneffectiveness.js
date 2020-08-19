@@ -1,8 +1,13 @@
 let smsemail = '1';
+let seUniqueIN = '';
+let devUniqueIN = [];
+let bigDataIN = [];
+let userTimeZone = '';
+
 
 $(document).ready( function() {
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    const seRegisteredTotal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/total-registered-count?timezone="+userTimeZone);
+    userTimeZone = document.getElementById('userTimeZone').innerText;
+    let seRegisteredTotal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/total-registered-count?timezone="+userTimeZone);
     let registeredtotal = 0;
 
     seRegisteredTotal.onmessage = function (event) {
@@ -171,13 +176,13 @@ $(document).ready(function () {
     $('#radioSMS').on('change', function () {
         smsemail = $('#radioSMS').val();
         getCampaigns(smsemail);
-        getSmsEmailMonthly('total_sms_month');
+        getSmsEmailTotal();
     });
 
     $('#radioEmail').on('change', function () {
         smsemail = $('#radioEmail').val();
         getCampaigns(smsemail);
-        getSmsEmailMonthly('total_email_month');
+        getSmsEmailTotal();
     });
 });
 
@@ -198,7 +203,7 @@ function getCampaigns(smsemailValue = '1'){
             let len = object.length;
 
             $("#selCampaign").empty();
-            $("#selCampaign").append("<option value=''>Select Campaign</option>");
+            $("#selCampaign").append("<option value='' selected disabled>Select Campaign</option>");
             for (let i = 0; i<len; i++) {
                 let id = object[i][0];
                 let name = object[i][1];
@@ -224,6 +229,7 @@ function getSmsEmailTotal(){
         .success(function(response){
             let object = response.data;
             document.getElementById('totalMessage').innerHTML = Intl.NumberFormat().format(object);
+            $('#itotalMessage').val(object);
         });
 }
 
@@ -370,6 +376,106 @@ $(document).ready(function() {
 
 });
 
+function getNewUsersCampaign(dstart, dend, campaign, type){
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
+        method       : 'getNewUsers',  // to target: function getNewUsersAjax in class ModSPSelectCampaignEffectivenessHelper
+        format       : 'json',
+        data         : { "dateStart": dstart, "dateEnd": dend, "campaignId":campaign, "type": type }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data
+            if (type == 'T') {
+                document.getElementById('targetNew').innerHTML = Intl.NumberFormat().format(object);
+                $('#itargetNew').val(object);
+            } else {
+                document.getElementById('newUsers').innerHTML = Intl.NumberFormat().format(object);
+                $('#inewUsers').val(object);
+            }
+            newUsersPercentage();
+        });
+}
+
+function newUsersPercentage(){
+    let targetNew = $('#itargetNew').val();
+    let newUsers = $('#inewUsers').val();
+
+    let totalUsers = parseInt(targetNew) + parseInt(newUsers);
+    document.getElementById('totalUsers').innerHTML = totalUsers;
+    $('#itotalUsers').val(totalUsers);
+
+    let totalTarget = $('#itotalMessage').val();
+    let newUsersPercentage = (parseInt(totalUsers)/parseInt(totalTarget))*100;
+    document.getElementById('newUserPercentage').innerHTML = Intl.NumberFormat().format(newUsersPercentage)+' %';
+
+}
+
+function percentageIN(){
+    let totalTarget = $('#itotalMessage').val();
+    let totalIN = $('#itotalIn').val();
+    let percentageIN = (parseInt(totalIN)/parseInt(totalTarget))*100;
+    document.getElementById("percentageIN").innerHTML = Intl.NumberFormat().format(percentageIN)+' %';
+}
+
+function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
+                                zipcodes, member, userTZ, group) {
+    let len = bigDataIN.length;
+    for (let i=0; i<len; i++) {
+        bigDataIN[i] = '';
+        devUniqueIN[i] = 0;
+    }
+    let d1 = new Date(dateS + 'Z12:00:00');
+    let d2 = new Date(dateE + 'Z12:00:00');
+    let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
+    for (let i=0; i<=days; i++) {
+        let month = '' + (d1.getMonth() + 1);
+        let day = '' + d1.getDate();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day =  '0' + day;
+        bigDataIN[i] = [month, day].join('/');
+        devUniqueIN[i] = 0;
+        d1 = new Date(d1.setDate(d1.getDate() + 1));
+    }
+
+    seUniqueIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    let pos = 0;
+    let uniqueIN = 0;
+    seUniqueIN.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        let axisGroup = '';
+        let group_x = eventData.group;
+        let in_x = eventData.inCount;
+        let last = eventData.isLast;
+
+        axisGroup = group_x.substr(group_x.length -5,group_x.length);
+        pos = bigDataIN.indexOf(axisGroup);
+        devUniqueIN[pos] = in_x;
+        uniqueIN = in_x;
+
+        document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
+        if (last) {
+            for(var i = 0, len = devUniqueIN.length; i < len; i++) {
+                uniqueIN += devUniqueIN[i];
+                document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
+                $("#itotalIn").val(uniqueIN);
+            }
+            seUniqueIN.close();
+            percentageIN();
+        }
+    }
+}
+
 function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
@@ -382,5 +488,14 @@ function sendForm() {
     let t_spot = $('#selSpot').val();
     let t_campaign = $('#selCampaign').val();
 
+    evtSourceUniqueIN(t_dateS, t_dateE, '', '',
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, '', '',
+        '', 'IN', '1',
+        '', '', '', '', '',
+        userTimeZone, 'BY_DAY'
+    );
+    getNewUsersCampaign(t_dateS, t_dateE, t_campaign, 'T');
+    getNewUsersCampaign(t_dateS, t_dateE, t_campaign, 'U');
     getCampaignDetail(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_zipcode, t_spot);
 }

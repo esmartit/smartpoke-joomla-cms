@@ -49,6 +49,7 @@ class ModSPSelectCampaignDetailHelper
         $query->select($db->quoteName(array('id', 'name')));
         $query->from($db->quoteName('#__spcampaign_campaign'));
         $query->where($db->quoteName('smsemail'). " = ". $db->quote($smsemail));
+        $query->where($db->quoteName('published'). " = '1'");
         $db->setQuery($query);
         $campaignList = $db->loadRowList();
 
