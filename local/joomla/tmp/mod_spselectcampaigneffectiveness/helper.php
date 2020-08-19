@@ -50,6 +50,7 @@ class ModSPSelectCampaignEffectivenessHelper
         $query->from($db->quoteName('#__spcampaign_campaign'));
         $query->where($db->quoteName('smsemail'). " = " . $db->quote($smsemail));
         $query->where($db->quoteName('type'). " = " . $db->quote('CAMPAIGN'));
+        $query->where($db->quoteName('published'). " = '1'");
         $db->setQuery($query);
         $campaignList = $db->loadRowList();
 
@@ -64,4 +65,38 @@ class ModSPSelectCampaignEffectivenessHelper
         }
         return $timeZone;
     }
+
+    /**
+     * Returns the NewUserTarget
+     * @return mixed
+     */
+    public static function getNewUsersAjax()
+    {
+        $data = $_REQUEST['data'];
+        $campaignId = $data['campaignId'];
+        $dStart = $data['dateStart'].' 00:00:00';
+        $dEnd = $data['dateEnd'].' 23:59:59';
+        $type = $data['type'];
+
+        $timeOffset = timezone_offset_get(  timezone_open(self::getTimeZone()), new DateTime() );
+
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('COUNT(*)');
+        $query->from($db->quoteName('#__spcustomer_customer'));
+        $query->where("TIMESTAMP(created + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart));
+        $query->where("TIMESTAMP(created + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd));
+        if ($type == 'T') {
+            $query->where('username'. " IN (SELECT username FROM jos_spmessage_message WHERE campaign_id = ".$campaignId.")");
+        } else {
+            $query->where('username'. " NOT IN (SELECT username FROM jos_spmessage_message WHERE campaign_id = ".$campaignId.")");
+        }
+
+        $db->setQuery($query);
+        $newUsersTarget = $db->loadResult();
+
+        return $newUsersTarget;
+    }
+
 }

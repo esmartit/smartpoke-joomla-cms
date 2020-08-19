@@ -173,7 +173,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
         </div>
     </div>
 </div>
-<div class="col-md-12 col-sm-12 ">
+<div class="col-md-12 col-sm-12">
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo JText::_('MOD_SPSELECTCAMPAIGNEFFECTIVENESS_EFFECTIVENESS');?> <small></small></h2>
@@ -197,16 +197,22 @@ $dateend = date("Y-m-d", strtotime($currDate));
                 <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-paper-plane"></i> <?php echo JText::_('Total SMS / Email');?></span>
                     <div id="totalMessage" class='count'>0</div>
+                    <input type="hidden" id="itotalMessage"/>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
                     <span class="count_top green"><i class="fa fa-download"></i> <?php echo JText::_('IN');?></span>
                     <div id="totalIn" class="count green">0</div>
+                    <input type="hidden" id="itotalIn"/>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+                    <span class="count_top green"><i class="fa fa-pie-chart"></i> </span>
+                    <div id="percentageIN" class="count green">0 %</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-12 col-sm-12 ">
+<div class="col-md-12 col-sm-12">
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo JText::_('MOD_SPSELECTCAMPAIGNEFFECTIVENESS_TARGETUSERS');?> <small></small></h2>
@@ -233,23 +239,30 @@ $dateend = date("Y-m-d", strtotime($currDate));
                 </div>
             </div>
             <div class='row tile_count'>
-                <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-users"></i> <?php echo JText::_('Total New Users');?></span>
                     <div id="totalUsers" class='count'>0</div>
+                    <input type="hidden" id="itotalUsers"/>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top blue"><i class="fa fa-file-text-o"></i> <?php echo JText::_('Target New Users');?></span>
                     <div id="targetNew" class="count blue">0</div>
+                    <input type="hidden" id="itargetNew"/>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 tile_stats_count">
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top green"><i class="fa fa-file-o"></i> <?php echo JText::_('New Users');?></span>
                     <div id="newUsers" class="count green">0</div>
+                    <input type="hidden" id="inewUsers"/>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
+                    <span class="count_top green"><i class="fa fa-pie-chart"></i> </span>
+                    <div id="newUserPercentage" class="count green">0 %</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-12 col-sm-12 ">
+<div class="col-md-12 col-sm-12">
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo JText::_('MOD_SPSELECTCAMPAIGNEFFECTIVENESS_DETAIL');?> <small></small></h2>

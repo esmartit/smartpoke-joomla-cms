@@ -471,4 +471,15 @@ function sendForm() {
         t_spot,
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member
     );
+
+    evtSourceAvgTimeBigData
+    (
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_sensor, t_zone,
+        t_brands, t_status, t_presence,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy
+    );
+
 }

@@ -280,7 +280,7 @@ function getCampaigns(smsemail = '1') {
             let len = object.length;
 
             $("#selCampaign").empty();
-            $("#selCampaign").append("<option value=''>Select Campaign</option>");
+            $("#selCampaign").append("<option value='' selected disabled>Select Campaign</option>");
             for (let i = 0; i<len; i++) {
                 let id = object[i][0];
                 let name = object[i][1];
