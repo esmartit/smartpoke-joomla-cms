@@ -316,7 +316,7 @@ Date.prototype.getWeek = function() {
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
 
-function evtSourceConnectOnline(dateS, dateE, country, state, city, zipcode, spot, ageS, ageE, sex,
+function evtSourceConnectOnline(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, ageS, ageE, sex,
                                    zipcodes, member, userTZ, group) {
     let len = axisOnline.length;
     for (let i=0; i<len; i++) {
@@ -391,7 +391,7 @@ function evtSourceConnectOnline(dateS, dateE, country, state, city, zipcode, spo
     spChartConnectedOnline.setOption(option);
 
     seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/connected-registered?"+
-        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_DAY");
