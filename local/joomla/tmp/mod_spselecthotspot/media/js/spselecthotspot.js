@@ -20,6 +20,9 @@ $(document).ready( function() {
         }
     });
 
+    document.getElementById("timestart").value = '00:00:00';
+    document.getElementById("timeend").value = '23:59:59';
+
 });
 
 function getCountryList() {
@@ -252,6 +255,8 @@ $(document).ready(function() {
 function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
+    let t_timeS = $('#timestart').val();
+    let t_timeE = $('#timeend').val();
     let t_country = $('#selCountryS').val();
     let t_state = $('#selStateS').val();
     let t_city = $('#selCityS').val();
@@ -267,7 +272,7 @@ function sendForm() {
     // let t_groupBy = $('#selRadioGraph input:radio:checked').val();
 
     evtSourceConnectOnline(
-        t_dateS, t_dateE,
+        t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
         t_spot,
         '', '', t_sex, t_zipcodes, t_member,
