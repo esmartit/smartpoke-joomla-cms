@@ -305,9 +305,9 @@ function showTableColumns() {
         method       : 'getSpotSensors',  // to target: function getSpotSensorsAjax in class ModSPSelectSmartPokeHelper
         format       : 'json',
         data         : {
-                        'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId,
-                        'spot': spot, 'sensor': sensor, 'zone': zone
-                    }
+            'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId,
+            'spot': spot, 'sensor': sensor, 'zone': zone
+        }
     };
     $.ajax({
         method: 'GET',
@@ -694,10 +694,10 @@ function smartpokeDB(country, state, city, zipcode, spot, ageS, ageE, sex, zipco
         method       : 'getUserList',  // to target: function getUserListAjax in class ModSPSelectSmartPokeHelper
         format       : 'json',
         data         : {
-                            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode,
-                            "spotId": spot,
-                            "ageStart": ageS, "ageEnd": ageE, "gender": sex, "zipCode": zipcodes, "memberShip": member
-                        }
+            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode,
+            "spotId": spot,
+            "ageStart": ageS, "ageEnd": ageE, "gender": sex, "zipCode": zipcodes, "memberShip": member
+        }
     };
     $.ajax({
         method: 'GET',
@@ -794,7 +794,27 @@ function smartpokeFile() {
                             "orderable": false,
                             "className": 'dt-body-center',
                             "render": function (data, type, row, meta) {
-                                return '<input type="checkbox" name="id[]" value="' + row[0] + '/">';
+                                return '<input type="checkbox" name="id[]" value="' + row['0'] + row['2'] + '-' + row['3'] + '/' + row['1'] + row['2'] + '">';
+                            }
+                        },
+                        {"targets": 1,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['3'] + "</div>";
+                            }
+                        },
+                        {"targets": 2,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['4'] + "</div>";
+                            }
+                        },
+                        {"targets": 3,
+                            "render": function (data, type, row, meta) {
+                                return "<div align='center'>" + row['0'] + row['2'] + "</div>";
+                            }
+                        },
+                        {"targets": 4,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['5'] + "</div>";
                             }
                         }
                     ],

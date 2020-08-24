@@ -118,7 +118,6 @@ class ModSPSelectSmartPokeHelper
         $query->where($db->quoteName('validdate'). " >= " . $db->quote($currDate), 'AND');
         $query->where($db->quoteName('smsemail'). " = ". $db->quote($smsemail), 'AND');
         $query->where($db->quoteName('type'). " = 'CAMPAIGN'");
-        $query->where($db->quoteName('published'). " = '1'");
         $db->setQuery($query);
         $campaignList = $db->loadRowList();
 
