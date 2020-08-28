@@ -11,6 +11,7 @@
     <description>MOD_SPRANKINGBYBRAND_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_sprankingbybrand">mod_sprankingbybrand.php</filename>
+        <filename>helper.php</filename>
         <folder>tmpl</folder>
     </files>
     <media folder="media" destination="mod_sprankingbybrand">

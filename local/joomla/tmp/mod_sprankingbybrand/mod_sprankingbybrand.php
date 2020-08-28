@@ -9,4 +9,7 @@
 
 defined('_JEXEC') or die;
 
+require_once dirname(__FILE__) . '/helper.php';
+
+$usertimezone = ModSPRankingByBrandHelper::getTimeZone();
 require JModuleHelper::getLayoutPath('mod_sprankingbybrand', $params->get('layout', 'default'));
