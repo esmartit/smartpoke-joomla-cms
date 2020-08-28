@@ -1,3 +1,6 @@
+let seRankingBrand = '';
+let deviceBrand = [];
+
 $(document).ready( function() {
 
     let theme = {
@@ -213,50 +216,81 @@ $(document).ready( function() {
         }
     };
 
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    seRankingBrand = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-brands?timezone="+userTimeZone);
     let spChart = echarts.init(document.getElementById('echart_rankingby_brand'), theme);
 
-    let option = {
-        title: {
-            text: '',
-            subtext: '',
-            left: 'center'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        legend: {
-            orient: 'vertical',
-            left: '10',
-            data: []
-        },
-        series: [
-            {
-                name: 'Brand',
-                type: 'pie',
-                radius: ['50%', '55%'],
-                center: ['50%', '33%'],
-                data: [
-                    {value: 1548, name: 'Others'},
-                    {value: 1023, name: 'Apple'},
-                    {value: 1019, name: 'Samsung'},
-                    {value: 720, name: 'Huawei'},
-                    {value: 612, name: 'Xiaomi'},
-                    {value: 428, name: 'ZTE'},
-                    {value: 318, name: 'Google'},
-                    {value: 315, name: 'Oppo'},
-                    {value: 312, name: 'Sony Ericsson'},
-                    {value: 289, name: 'LG'}
-                ],
-                emphasis: {
+    function echartBrands(brands) {
+
+        let option = {
+            title: {
+                text: '',
+                subtext: '',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b} : {c} ({d}%)'
+            },
+            series: [
+                {
+                    name: 'Brand',
+                    type: 'pie',
+                    radius: ['50%', '60%'],
+                    center: ['50%', '37%'],
                     label: {
-                        show: true,
-                        fontSize: '12',
-                        fontWeight: 'bold'
-                    }
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '9',
+                            fontWeight: 'bold',
+                            formatter: '({d}%)'
+
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: brands
                 }
-            }
-        ]
+            ]
+        };
+        spChart.setOption(option);
+
+    }
+
+    seRankingBrand.onmessage = function (event) {
+        deviceBrand = JSON.parse(event.data);
+
+        deviceBrand.sort(compareValues('value', 'desc'));
+        echartBrands(deviceBrand)
+        // console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
+    }
+});
+
+function compareValues(key, order = 'asc') {
+    return function innerSort(a, b) {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            // property doesn't exist on either object
+            return 0;
+        }
+
+        const varA = (typeof a[key] === 'string')
+            ? a[key].toUpperCase() : a[key];
+        const varB = (typeof b[key] === 'string')
+            ? b[key].toUpperCase() : b[key];
+
+        let comparison = 0;
+        if (varA > varB) {
+            comparison = 1;
+        } else if (varA < varB) {
+            comparison = -1;
+        }
+        return (
+            (order === 'desc') ? (comparison * -1) : comparison
+        );
     };
-    spChart.setOption(option);
-})
+}

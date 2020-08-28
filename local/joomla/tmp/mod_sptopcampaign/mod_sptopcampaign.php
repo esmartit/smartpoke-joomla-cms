@@ -11,5 +11,6 @@ defined('_JEXEC') or die;
 
 JLoader::register('ModSPTopCampaignHelper', __DIR__ . '/helper.php');
 
-$data = ModSPTopCampaignHelper::getTopCampaign();
+$usertimezone = ModSPTopCampaignHelper::getTimeZone();
+
 require JModuleHelper::getLayoutPath('mod_sptopcampaign', $params->get('layout', 'default'));

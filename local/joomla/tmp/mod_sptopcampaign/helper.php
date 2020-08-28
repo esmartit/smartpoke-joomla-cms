@@ -17,13 +17,32 @@ defined('_JEXEC') or die;
  */
 class ModSPTopCampaignHelper
 {
-    public static function getTopCampaign()
+    public static function getTopCampaignsAjax()
     {
-        $date = array();
-        $data[0] = 87;
-        $data[1] = 56;
-        $data[2] = 49;
-        $data[3] = 34;
-        return $data;
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query
+            ->select(array('campaign_id', 'c.name', 'MIN(DATE(senddate)) as sent', 'c.validdate', 'COUNT(username) as total'))
+            ->from($db->quoteName('#__spmessage_message', 'm'))
+            ->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('m.campaign_id'))
+            ->where($db->quoteName('validdate'). '<= NOW()')
+            ->where($db->quoteName('type'). '='. $db->quote( 'CAMPAIGN'))
+            ->where($db->quoteName('c.published'). '= 1')
+            ->group($db->quoteName('campaign_id'));
+        $db->setQuery($query);
+        $campaignList = $db->loadObjectList();
+
+        return $campaignList;
     }
+
+    public static function getTimeZone() {
+        $userTz = JFactory::getUser()->getParam('timezone');
+        $timeZone = JFactory::getConfig()->get('offset');
+        if($userTz) {
+            $timeZone = $userTz;
+        }
+        return $timeZone;
+    }
+
 }

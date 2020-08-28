@@ -465,7 +465,7 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
 
         document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
         if (last) {
-            for(var i = 0, len = devUniqueIN.length; i < len; i++) {
+            for(let i = 0, len = devUniqueIN.length; i < len; i++) {
                 uniqueIN += devUniqueIN[i];
                 document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
                 $("#itotalIn").val(uniqueIN);

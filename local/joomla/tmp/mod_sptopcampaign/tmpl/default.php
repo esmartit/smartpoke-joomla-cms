@@ -20,46 +20,45 @@ $document->addScript('/templates/smartpokex/vendors/fastclick/lib/fastclick.js')
 $document->addScript('/templates/smartpokex/vendors/nprogress/nprogress.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js');
 
+$document->addScript('/media/mod_sptopcampaign/js/sptopcampaign.js');
+
 ?>
 
 <div class="col-md-3 col-sm-3  bg-white">
     <div class="x_title">
         <h2><?php echo JText::_('MOD_SPTOPCAMPAIGN');?></h2>
         <div class="clearfix"></div>
+        <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
     </div>
 
     <div class="col-md-12 col-sm-12 ">
-        <div>
-            <p>Campaign 1</p>
+        <div><span id="campaign_0"></span>
             <div class="">
-                <div class="progress progress_sm" style="width: 76%;">
-                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php echo $data[0];?>"><?php echo $data[0].'%';?></div>
+                <div class="progress progress_sm" style="width: 80%;">
+                    <div id="value_0" class="progress-bar bg-green" role="progressbar"></div>
                 </div>
             </div>
         </div>
-        <div>
-            <p>Campaign 2</p>
+        <div><span id="campaign_1"></span>
             <div class="">
-                <div class="progress progress_sm" style="width: 76%;">
-                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php echo $data[1];?>"><?php echo $data[1].'%';?></div>
+                <div class="progress progress_sm" style="width: 80%;">
+                    <div id="value_1" class="progress-bar bg-blue" role="progressbar"></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-12 col-sm-12 ">
-        <div>
-            <p>Campaign 3</p>
+        <div><span id="campaign_2"></span>
             <div class="">
-                <div class="progress progress_sm" style="width: 76%;">
-                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php echo $data[2];?>"><?php echo $data[2].'%';?></div>
+                <div class="progress progress_sm" style="width: 80%;">
+                    <div id="value_2" class="progress-bar bg-orange" role="progressbar"></div>
                 </div>
             </div>
         </div>
-        <div>
-            <p>Campaign 4</p>
+        <div><span id="campaign_3"></span>
             <div class="">
-                <div class="progress progress_sm" style="width: 76%;">
-                    <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="<?php echo $data[3];?>"><?php echo $data[3].'%';?></div>
+                <div class="progress progress_sm" style="width: 80%;">
+                    <div id="value_3" class="progress-bar bg-red" role="progressbar"></div>
                 </div>
             </div>
         </div>
