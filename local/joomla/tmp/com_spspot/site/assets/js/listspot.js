@@ -229,6 +229,7 @@ jQuery(document).on("click", ".open-spotModal", function () {
             $("#selZipCode").prop('disabled', true);
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             $("#spotId").prop('disabled', true);
             $("#selCountry").prop('disabled', true);
             $("#selState").prop('disabled', true);

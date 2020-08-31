@@ -102,6 +102,7 @@ jQuery(document).on("click", ".open-deviceModal", function () {
             $('input[name="deviceType"]').prop("disabled", true);
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             break;
         case "D":
             $("#device").prop( 'disabled', true );

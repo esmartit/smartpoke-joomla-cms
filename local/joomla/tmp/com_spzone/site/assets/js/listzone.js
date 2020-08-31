@@ -84,6 +84,7 @@ jQuery(document).on("click", ".open-zoneModal", function () {
             $("#zone").prop( 'disabled', true );
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             break;
         case "D":
             $("#zone").prop( 'disabled', true );

@@ -94,6 +94,7 @@ jQuery(document).on("click", ".open-valueModal", function () {
             $("#value").prop( 'disabled', true );
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             $("#name").prop( 'disabled', true );
             $("#code").prop( 'disabled', true );
             if (code == 'daily_goal_device' || code == 'daily_goal_registered') {

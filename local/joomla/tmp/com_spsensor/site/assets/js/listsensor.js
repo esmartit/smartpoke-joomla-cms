@@ -150,6 +150,7 @@ jQuery(document).on("click", ".open-sensorModal", function () {
             $("#range_pwrOut").prop( 'disabled', true );
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             break;
         case "D":
             $("#selSpot").prop( 'disabled', true );
