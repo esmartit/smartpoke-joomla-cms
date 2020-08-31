@@ -122,6 +122,7 @@ jQuery(document).on("click", ".open-nasModal", function () {
             $("#description").prop('disabled', true);
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             break;
         case "D":
             $("#name").prop('disabled', true);

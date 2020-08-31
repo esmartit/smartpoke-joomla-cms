@@ -142,6 +142,7 @@ jQuery(document).on("click", ".open-limitationModal", function () {
             $("#selSession").prop('disabled', true);
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             $("#name").prop('disabled', true);
             break;
         case "D":

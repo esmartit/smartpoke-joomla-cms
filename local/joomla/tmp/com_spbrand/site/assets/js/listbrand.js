@@ -77,12 +77,14 @@ jQuery(document).on("click", ".open-brandModal", function () {
     document.getElementById( 'btnSave' ).textContent = title;
     switch (option) {
         case "C":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             break
         case "R":
             document.getElementById( 'btnSave' ).style.display = 'none';
             $("#brand").prop( 'disabled', true );
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             break;
         case "D":
             $("#brand").prop( 'disabled', true );

@@ -198,6 +198,7 @@ jQuery(document).on("click", ".open-customerModal", function () {
             $("#communication").prop('disabled', true);
             break;
         case "U":
+            document.getElementById( 'btnSave' ).textContent = 'Save';
             $("#selSpot").prop('disabled', true);
             $("#userName").prop('disabled', true);
             $("#firstName").prop('disabled', true);
