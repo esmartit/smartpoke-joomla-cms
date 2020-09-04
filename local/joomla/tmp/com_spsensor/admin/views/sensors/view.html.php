@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		view.html.php
@@ -303,6 +303,7 @@ class SpsensorViewSensors extends JViewLegacy
 			'a.spot' => JText::_('COM_SPSENSOR_SENSOR_SPOT_LABEL'),
 			'a.sensor_id' => JText::_('COM_SPSENSOR_SENSOR_SENSOR_ID_LABEL'),
 			'a.zone' => JText::_('COM_SPSENSOR_SENSOR_ZONE_LABEL'),
+			'a.serialnumber' => JText::_('COM_SPSENSOR_SENSOR_SERIALNUMBER_LABEL'),
 			'a.id' => JText::_('JGRID_HEADING_ID')
 		);
 	}

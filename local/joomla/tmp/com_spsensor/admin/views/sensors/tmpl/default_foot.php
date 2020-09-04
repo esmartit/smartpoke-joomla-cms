@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		default_foot.php
@@ -23,5 +23,5 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 <tr>
-	<td colspan="11"><?php echo $this->pagination->getListFooter(); ?></td>
+	<td colspan="14"><?php echo $this->pagination->getListFooter(); ?></td>
 </tr>

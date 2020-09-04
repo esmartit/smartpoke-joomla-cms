@@ -109,7 +109,6 @@
                        label="COM_SPSENSOR_SENSOR_SENSOR_ID_LABEL"
                        size="40"
                        maxlength="50"
-                       description="JFIELD_TITLE_DESC"
                        class="text_area"
                        required="true"
                        filter="STRING" />
@@ -158,6 +157,37 @@
                        key_field="id"
                        value_field="zone"
                        translate="true" />
+                <!-- Apmac Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="apmac"
+                       label="COM_SPSENSOR_SENSOR_APMAC_LABEL"
+                       size="40"
+                       maxlength="17"
+                       class="text_area"
+                       required="true"
+                       filter="STRING"
+                       message="COM_SPSENSOR_SENSOR_APMAC_MESSAGE"
+                       hint="COM_SPSENSOR_SENSOR_APMAC_HINT" />
+                <!-- Serialnumber Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="serialnumber"
+                       label="COM_SPSENSOR_SENSOR_SERIALNUMBER_LABEL"
+                       size="40"
+                       maxlength="17"
+                       class="text_area"
+                       required="true"
+                       filter="STRING"
+                       message="COM_SPSENSOR_SENSOR_SERIALNUMBER_MESSAGE" />
+                <!-- Tags Field. Type: Textarea. (joomla)-->
+                <field type="textarea"
+                       name="tags"
+                       label="COM_SPSENSOR_SENSOR_TAGS_LABEL"
+                       rows="11"
+                       cols="10"
+                       description="COM_SPSENSOR_SENSOR_TAGS_DESCRIPTION"
+                       class="text_area span12"
+                       filter="HTML"
+                       hint="COM_SPSENSOR_SENSOR_TAGS_HINT" />
                 <!-- Alias Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="alias"

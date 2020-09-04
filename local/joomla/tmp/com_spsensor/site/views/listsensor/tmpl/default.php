@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		default.php
@@ -46,6 +46,9 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/da
 $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
 // Ion.RangeSlider
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
+// jQuery Tags Input
+$document->addScript('/templates/smartpokex/vendors/jquery.tagsinput/src/jquery.tagsinput.js');
+
 
 $document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dataTables.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
@@ -76,7 +79,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
             <div class="clearfix"></div>
         </div>
         <?php if ($this->user->authorise('core.create', 'com_spsensor')): ?>
-            <button type="button" class="open-sensorModal btn btn-light" data-toggle="modal" data-target="#sensorModal" data-title="New" data-info='{"id":"", "spot":"", "sensorId":"", "location":"", "zoneId":"", "pwrIn":"", "pwrLimit":"", "pwrOut":"", "option":"C"}'><?php echo JText::_('COM_SPSENSOR_NEW_SENSOR'); ?></button>
+            <button type="button" class="open-sensorModal btn btn-light" data-toggle="modal" data-target="#sensorModal" data-title="New" data-info='{"id":"", "spot":"", "sensorId":"", "location":"", "zoneId":"", "pwrIn":"", "pwrLimit":"", "pwrOut":"", "apMac":"", "serialNumber":"", "tags":"", "option":"C"}'><?php echo JText::_('COM_SPSENSOR_NEW_SENSOR'); ?></button>
             <br />
         <?php endif; ?>
         <div class="x_content">
@@ -93,6 +96,9 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                 <th class='column-title'><?php echo JText::_('IN'); ?></th>
                                 <th class='column-title'><?php echo JText::_('LIMIT'); ?></th>
                                 <th class='column-title'><?php echo JText::_('OUT'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPSENSOR_AP_MAC'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPSENSOR_SERIAL_NUMBER'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPSENSOR_TAGS'); ?></th>
                                 <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPSENSOR_ACTION'); ?></span></th>
                             </tr>
                             </thead>
@@ -111,13 +117,16 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <td class=""><?php echo $item->pwr_in; ?></td>
                                     <td class=""><?php echo $item->pwr_limit; ?></td>
                                     <td class=""><?php echo $item->pwr_out; ?></td>
+                                    <td class=""><?php echo $item->apmac; ?></td>
+                                    <td class=""><?php echo $item->serialnumber; ?> </td>
+                                    <td class=""><?php echo $item->tags; ?></td>
                                     <td class=" last">
-                                        <a type="button" class="open-sensorModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#sensorModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "sensorId":"<?php echo $item->sensor_id; ?>", "location":"<?php echo $item->location; ?>", "zoneId":"<?php echo $item->zone; ?>", "pwrIn":"<?php echo $item->pwr_in; ?>", "pwrLimit":"<?php echo $item->pwr_limit; ?>", "pwrOut":"<?php echo $item->pwr_out; ?>",  "option":"R"}'><i class="fa fa-eye"></i></a>
+                                        <a type="button" class="open-sensorModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#sensorModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "sensorId":"<?php echo $item->sensor_id; ?>", "location":"<?php echo $item->location; ?>", "zoneId":"<?php echo $item->zone; ?>", "pwrIn":"<?php echo $item->pwr_in; ?>", "pwrLimit":"<?php echo $item->pwr_limit; ?>", "pwrOut":"<?php echo $item->pwr_out; ?>", "apMac":"<?php echo $item->apmac; ?>", "serialNumber":"<?php echo $item->serialnumber; ?>", "tags":"<?php echo $item->tags; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
                                         <?php if ($canDo->get('core.edit')): ?>
-                                            <a type="button" class="open-sensorModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#sensorModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "sensorId":"<?php echo $item->sensor_id; ?>", "location":"<?php echo $item->location; ?>", "zoneId":"<?php echo $item->zone; ?>", "pwrIn":"<?php echo $item->pwr_in; ?>", "pwrLimit":"<?php echo $item->pwr_limit; ?>", "pwrOut":"<?php echo $item->pwr_out; ?>",  "option":"U"}'><i class="fa fa-edit"></i></a>
+                                            <a type="button" class="open-sensorModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#sensorModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "sensorId":"<?php echo $item->sensor_id; ?>", "location":"<?php echo $item->location; ?>", "zoneId":"<?php echo $item->zone; ?>", "pwrIn":"<?php echo $item->pwr_in; ?>", "pwrLimit":"<?php echo $item->pwr_limit; ?>", "pwrOut":"<?php echo $item->pwr_out; ?>", "apMac":"<?php echo $item->apmac; ?>", "serialNumber":"<?php echo $item->serialnumber; ?>", "tags":"<?php echo $item->tags; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
                                         <?php endif; ?>
                                         <?php if ($canDo->get('core.delete')): ?>
-                                            <a type="button" class="open-sensorModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#sensorModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "sensorId":"<?php echo $item->sensor_id; ?>", "location":"<?php echo $item->location; ?>", "zoneId":"<?php echo $item->zone; ?>", "pwrIn":"<?php echo $item->pwr_in; ?>", "pwrLimit":"<?php echo $item->pwr_limit; ?>", "pwrOut":"<?php echo $item->pwr_out; ?>",  "option":"D"}'><i class="fa fa-trash"></i></a>
+                                            <a type="button" class="open-sensorModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#sensorModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "sensorId":"<?php echo $item->sensor_id; ?>", "location":"<?php echo $item->location; ?>", "zoneId":"<?php echo $item->zone; ?>", "pwrIn":"<?php echo $item->pwr_in; ?>", "pwrLimit":"<?php echo $item->pwr_limit; ?>", "pwrOut":"<?php echo $item->pwr_out; ?>", "apMac":"<?php echo $item->apmac; ?>", "serialNumber":"<?php echo $item->serialnumber; ?>", "tags":"<?php echo $item->tags; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
@@ -203,6 +212,26 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('OUT'); ?><span class="required">*</span></label>
                 <div class="col-md-6 col-sm-6">
                     <input type="text" id="range_pwrOut" value="" name="pwrOut" />
+                </div>
+            </div>
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPSENSOR_AP_MAC'); ?><span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6">
+                    <input type="text" class="form-control" id="apMac" required="required">
+                </div>
+            </div>
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPSENSOR_SERIAL_NUMBER'); ?><span class="required">*</span></label>
+                <div class="col-md-6 col-sm-6">
+                    <input type="text" class="form-control" id="serialNumber" required="required">
+                </div>
+            </div>
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPSENSOR_TAGS'); ?><span class="required">*</span></label>
+                <div class="col-md-9 col-sm-9">
+                    <input id="tags_1" type="text" class="tags form-control" value="" />
+                    <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                    <!--                    <textarea class="resizable_textarea form-control" id="tags"></textarea>-->
                 </div>
             </div>
             <div class="modal-footer">
