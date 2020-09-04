@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		default_head.php
@@ -58,6 +58,15 @@ defined('_JEXEC') or die('Restricted access');
 	</th>
 	<th class="nowrap hidden-phone" >
 			<?php echo JHtml::_('grid.sort', 'COM_SPSENSOR_SENSOR_ZONE_LABEL', 'a.zone', $this->listDirn, $this->listOrder); ?>
+	</th>
+	<th class="nowrap hidden-phone" >
+			<?php echo JText::_('COM_SPSENSOR_SENSOR_APMAC_LABEL'); ?>
+	</th>
+	<th class="nowrap hidden-phone" >
+			<?php echo JHtml::_('grid.sort', 'COM_SPSENSOR_SENSOR_SERIALNUMBER_LABEL', 'a.serialnumber', $this->listDirn, $this->listOrder); ?>
+	</th>
+	<th class="nowrap hidden-phone" >
+			<?php echo JText::_('COM_SPSENSOR_SENSOR_TAGS_LABEL'); ?>
 	</th>
 	<?php if ($this->canState): ?>
 		<th width="10" class="nowrap center" >

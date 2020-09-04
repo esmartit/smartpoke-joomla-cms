@@ -3,8 +3,8 @@
 				eSmartIT
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		view.html.php
@@ -42,6 +42,9 @@ class SpsensorViewListsensor extends JViewLegacy
         $pwrIn = $input->getString('pwrIn');
         $pwrLimit = $input->getString('pwrLimit');
         $pwrOut = $input->getString('pwrOut');
+        $apMac = $input->getString('apMac');
+        $serialNumber = $input->getString('serialNumber');
+        $tags = $input->getString('tags');
 
         $publish = 1;
         if ($opt == 'D') {
@@ -51,13 +54,16 @@ class SpsensorViewListsensor extends JViewLegacy
         $model = $this->getModel();
 //        $values = array($id, $spot, $sensorId, $location, $zoneId, $pwrIn, $pwrLimit, $pwrOut, $publish);
         $values = array("id" => $id,
-            "spot"=>$spot,
+            "spot" => $spot,
             "sensorId" => $sensorId,
             "location" => $location,
             "zoneId" => $zoneId,
             "pwrIn" => $pwrIn,
             "pwrLimit" => $pwrLimit,
             "pwrOut" => $pwrOut,
+            "apMac" => $apMac,
+            "serialNumber" => $serialNumber,
+            "tags" => $tags,
             "publish" => $publish
         );
         switch ($opt) {
@@ -73,14 +79,16 @@ class SpsensorViewListsensor extends JViewLegacy
         }
         $data = array(
             "id" => $id,
-            "spot"=>$spot,
+            "spot" => $spot,
             "sensorId" => $sensorId,
             "location" => $location,
             "inEdge" => $pwrIn,
             "limitEdge" => $pwrLimit,
-            "outEdge" => $pwrOut
+            "outEdge" => $pwrOut,
+            "apMac" => $apMac,
+            "tags" => $tags
         );
-        $return = $model->saveSensorSettings($data);
+        $return = $model->saveSensorSettings($data, $opt);
         if ($return) {
             $status = $model->saveSensor($values, $opt);
             if ($status) {

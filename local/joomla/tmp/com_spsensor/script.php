@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		script.php
@@ -248,7 +248,7 @@ class com_spsensorInstallerScript
 			$sensor->type_title = 'Spsensor Sensor';
 			$sensor->type_alias = 'com_spsensor.sensor';
 			$sensor->table = '{"special": {"dbtable": "#__spsensor_sensor","key": "id","type": "Sensor","prefix": "spsensorTable","config": "array()"},"common": {"dbtable": "#__ucm_content","key": "ucm_id","type": "Corecontent","prefix": "JTable","config": "array()"}}';
-			$sensor->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "sensor_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot":"spot","sensor_id":"sensor_id","location":"location","pwr_in":"pwr_in","pwr_limit":"pwr_limit","pwr_out":"pwr_out","zone":"zone","alias":"alias"}}';
+			$sensor->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "sensor_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot":"spot","sensor_id":"sensor_id","location":"location","pwr_in":"pwr_in","pwr_limit":"pwr_limit","pwr_out":"pwr_out","zone":"zone","apmac":"apmac","serialnumber":"serialnumber","tags":"tags","alias":"alias"}}';
 			$sensor->router = 'SpsensorHelperRoute::getSensorRoute';
 			$sensor->content_history_options = '{"formFile": "administrator/components/com_spsensor/models/forms/sensor.xml","hideFields": ["asset_id","checked_out","checked_out_time","version"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","zone"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"}]}';
 
@@ -300,7 +300,7 @@ class com_spsensorInstallerScript
 			$sensor->type_title = 'Spsensor Sensor';
 			$sensor->type_alias = 'com_spsensor.sensor';
 			$sensor->table = '{"special": {"dbtable": "#__spsensor_sensor","key": "id","type": "Sensor","prefix": "spsensorTable","config": "array()"},"common": {"dbtable": "#__ucm_content","key": "ucm_id","type": "Corecontent","prefix": "JTable","config": "array()"}}';
-			$sensor->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "sensor_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot":"spot","sensor_id":"sensor_id","location":"location","pwr_in":"pwr_in","pwr_limit":"pwr_limit","pwr_out":"pwr_out","zone":"zone","alias":"alias"}}';
+			$sensor->field_mappings = '{"common": {"core_content_item_id": "id","core_title": "sensor_id","core_state": "published","core_alias": "alias","core_created_time": "created","core_modified_time": "modified","core_body": "null","core_hits": "hits","core_publish_up": "null","core_publish_down": "null","core_access": "access","core_params": "params","core_featured": "null","core_metadata": "metadata","core_language": "null","core_images": "null","core_urls": "null","core_version": "version","core_ordering": "ordering","core_metakey": "metakey","core_metadesc": "metadesc","core_catid": "null","core_xreference": "null","asset_id": "asset_id"},"special": {"spot":"spot","sensor_id":"sensor_id","location":"location","pwr_in":"pwr_in","pwr_limit":"pwr_limit","pwr_out":"pwr_out","zone":"zone","apmac":"apmac","serialnumber":"serialnumber","tags":"tags","alias":"alias"}}';
 			$sensor->router = 'SpsensorHelperRoute::getSensorRoute';
 			$sensor->content_history_options = '{"formFile": "administrator/components/com_spsensor/models/forms/sensor.xml","hideFields": ["asset_id","checked_out","checked_out_time","version"],"ignoreChanges": ["modified_by","modified","checked_out","checked_out_time","version","hits"],"convertToInt": ["published","ordering","zone"],"displayLookup": [{"sourceColumn": "created_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"},{"sourceColumn": "access","targetTable": "#__viewlevels","targetColumn": "id","displayColumn": "title"},{"sourceColumn": "modified_by","targetTable": "#__users","targetColumn": "id","displayColumn": "name"}]}';
 
@@ -328,7 +328,7 @@ class com_spsensorInstallerScript
 			echo '<a target="_blank" href="https://www.esmartit.es" title="SP Sensor">
 				<img src="components/com_spsensor/assets/images/vdm-component.png"/>
 				</a>
-				<h3>Upgrade to Version 1.0.0 Was Successful! Let us know if anything is not working as expected.</h3>';
+				<h3>Upgrade to Version 1.0.1 Was Successful! Let us know if anything is not working as expected.</h3>';
 		}
 		return true;
 	}

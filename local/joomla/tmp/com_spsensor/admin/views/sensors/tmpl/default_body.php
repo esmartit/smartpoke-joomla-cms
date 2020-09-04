@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		default_body.php
@@ -98,6 +98,15 @@ $edit = "index.php?option=com_spsensor&view=sensors&task=sensor.edit";
 		</td>
 		<td class="hidden-phone">
 			<?php echo $this->escape($item->zone); ?>
+		</td>
+		<td class="hidden-phone">
+			<?php echo $this->escape($item->apmac); ?>
+		</td>
+		<td class="hidden-phone">
+			<?php echo $this->escape($item->serialnumber); ?>
+		</td>
+		<td class="hidden-phone">
+			<?php echo $this->escape($item->tags); ?>
 		</td>
 		<td class="center">
 		<?php if ($canDo->get('core.edit.state')) : ?>

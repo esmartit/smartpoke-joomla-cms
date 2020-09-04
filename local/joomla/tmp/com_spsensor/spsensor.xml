@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.2" method="upgrade">
 	<name>COM_SPSENSOR</name>
-	<creationDate>30th July, 2020</creationDate>
+	<creationDate>3rd September, 2020</creationDate>
 	<author>Adolfo Zignago</author>
 	<authorEmail>adolfo.zignago@esmartit.es</authorEmail>
 	<authorUrl>https://www.esmartit.es</authorUrl>
 	<copyright>Copyright (C) 2020. All Rights Reserved</copyright>
 	<license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description><![CDATA[
-		<h1>SP Sensor (v.1.0.0)</h1>
+		<h1>SP Sensor (v.1.0.1)</h1>
 		<div style="clear: both;"></div>
 		<p>SmartPoke BigData Settings</p>
 		<p>Created by <a href="https://www.esmartit.es" target="_blank">Adolfo Zignago</a><br /><small>Development started 14th April, 2020</small></p>

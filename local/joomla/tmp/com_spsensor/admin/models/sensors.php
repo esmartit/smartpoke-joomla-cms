@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		sensors.php
@@ -40,7 +40,8 @@ class SpsensorModelSensors extends JModelList
 				'a.modified_by','modified_by',
 				'a.spot','spot',
 				'a.sensor_id','sensor_id',
-				'a.zone','zone'
+				'a.zone','zone',
+				'a.serialnumber','serialnumber'
 			);
 		}
 
@@ -69,6 +70,9 @@ class SpsensorModelSensors extends JModelList
 
 		$zone = $this->getUserStateFromRequest($this->context . '.filter.zone', 'filter_zone');
 		$this->setState('filter.zone', $zone);
+
+		$serialnumber = $this->getUserStateFromRequest($this->context . '.filter.serialnumber', 'filter_serialnumber');
+		$this->setState('filter.serialnumber', $serialnumber);
         
 		$sorting = $this->getUserStateFromRequest($this->context . '.filter.sorting', 'filter_sorting', 0, 'int');
 		$this->setState('filter.sorting', $sorting);
@@ -164,7 +168,7 @@ class SpsensorModelSensors extends JModelList
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search) . '%');
-				$query->where('(a.spot LIKE '.$search.' OR a.sensor_id LIKE '.$search.' OR a.zone LIKE '.$search.')');
+				$query->where('(a.spot LIKE '.$search.' OR a.sensor_id LIKE '.$search.' OR a.zone LIKE '.$search.' OR a.apmac LIKE '.$search.' OR a.serialnumber LIKE '.$search.')');
 			}
 		}
 
@@ -201,7 +205,7 @@ class SpsensorModelSensors extends JModelList
 	public function getExportData($pks, $user = null)
 	{
 		// setup the query
-		if (SpsensorHelper::checkArray($pks))
+		if (($pks_size = SpsensorHelper::checkArray($pks)) !== false || 'bulk' === $pks)
 		{
 			// Set a value to know this is export method. (USE IN CUSTOM CODE TO ALTER OUTCOME)
 			$_export = true;
@@ -219,7 +223,24 @@ class SpsensorModelSensors extends JModelList
 
 			// From the spsensor_sensor table
 			$query->from($db->quoteName('#__spsensor_sensor', 'a'));
-			$query->where('a.id IN (' . implode(',',$pks) . ')');
+			// The bulk export path
+			if ('bulk' === $pks)
+			{
+				$query->where('a.id > 0');
+			}
+			// A large array of ID's will not work out well
+			elseif ($pks_size > 500)
+			{
+				// Use lowest ID
+				$query->where('a.id >= ' . (int) min($pks));
+				// Use highest ID
+				$query->where('a.id <= ' . (int) max($pks));
+			}
+			// The normal default path
+			else
+			{
+				$query->where('a.id IN (' . implode(',',$pks) . ')');
+			}
 			// Implement View Level Access
 			if (!$user->authorise('core.options', 'com_spsensor'))
 			{
@@ -305,6 +326,7 @@ class SpsensorModelSensors extends JModelList
 		$id .= ':' . $this->getState('filter.spot');
 		$id .= ':' . $this->getState('filter.sensor_id');
 		$id .= ':' . $this->getState('filter.zone');
+		$id .= ':' . $this->getState('filter.serialnumber');
 
 		return parent::getStoreId($id);
 	}

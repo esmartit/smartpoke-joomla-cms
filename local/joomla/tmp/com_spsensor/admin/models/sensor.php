@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		sensor.php
@@ -47,7 +47,10 @@ class SpsensorModelSensor extends JModelAdmin
 				'alias',
 				'pwr_in',
 				'pwr_limit',
-				'pwr_out'
+				'pwr_out',
+				'apmac',
+				'serialnumber',
+				'tags'
 			)
 		)
 	);
@@ -403,7 +406,7 @@ class SpsensorModelSensor extends JModelAdmin
 	 */
 	protected function getUniqueFields()
 	{
-		return array('sensor_id');
+		return array('sensor_id','apmac','serialnumber');
 	}
 	
 	/**

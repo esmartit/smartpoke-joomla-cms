@@ -2,8 +2,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.0
-	@build			30th July, 2020
+	@version		1.0.1
+	@build			3rd September, 2020
 	@created		14th April, 2020
 	@package		SP Sensor
 	@subpackage		listsensor.js
@@ -77,7 +77,10 @@ function sensorAction() {
             zone: $("#selZone").val(),
             pwrIn: $("#range_pwrIn").val(),
             pwrLimit: $("#range_pwrLimit").val(),
-            pwrOut: $("#range_pwrOut").val()
+            pwrOut: $("#range_pwrOut").val(),
+            apMac: $("#apMac").val(),
+            serialNumber: $("#serialNumber").val(),
+            tags: $("#tags_1").val()
         },
         success: function(response, status, xhr) {
 
@@ -87,7 +90,7 @@ function sensorAction() {
             let data = object['data'];
 
             if (section == "error") {
-                Joomla.renderMessages({'error': [data]});
+                Joomla.renderMessages({'alert': [data]});
             } else {
                 closeModal();
                 location.reload();
@@ -110,6 +113,9 @@ jQuery(document).on("click", ".open-sensorModal", function () {
     let pwrIn = $(this).data('info').pwrIn;
     let pwrLimit = $(this).data('info').pwrLimit;
     let pwrOut = $(this).data('info').pwrOut;
+    let apMac = $(this).data('info').apMac;
+    let serialNumber = $(this).data('info').serialNumber;
+    let tags = $(this).data('info').tags;
     let option = $(this).data('info').option;
     $(".modal-title").text( title + ' Sensor' );
     $(".modal-body #id").val(id);
@@ -125,6 +131,9 @@ jQuery(document).on("click", ".open-sensorModal", function () {
     iLimit.update({from: pwrLimit});
     let iOut = $("#range_pwrOut").data("ionRangeSlider");
     iOut.update({from: pwrOut});
+    $("#apMac").val(apMac);
+    $("#serialNumber").val(serialNumber);
+    $("#tags_1").val(tags);
 
     $("#selSpot").prop( 'disabled', false );
     $("#sensorId").prop( 'disabled', false );
@@ -133,6 +142,9 @@ jQuery(document).on("click", ".open-sensorModal", function () {
     $("#range_pwrIn").prop( 'disabled', false );
     $("#range_pwrLimit").prop( 'disabled', false );
     $("#range_pwrOut").prop( 'disabled', false );
+    $("#apMac").prop( 'disabled', false );
+    $("#serialNumber").prop( 'disabled', false );
+    $("#tags_1").prop( 'disabled', false );
     document.getElementById( 'btnSave' ).style.display = 'block';
     document.getElementById( 'btnSave' ).textContent = title;
     switch (option) {
@@ -148,6 +160,9 @@ jQuery(document).on("click", ".open-sensorModal", function () {
             $("#range_pwrIn").prop( 'disabled', true );
             $("#range_pwrLimit").prop( 'disabled', true );
             $("#range_pwrOut").prop( 'disabled', true );
+            $("#apMac").prop( 'disabled', true );
+            $("#serialNumber").prop( 'disabled', true );
+            $("#tags_1").prop( 'disabled', true );
             break;
         case "U":
             document.getElementById( 'btnSave' ).textContent = 'Save';
@@ -160,6 +175,9 @@ jQuery(document).on("click", ".open-sensorModal", function () {
             $("#range_pwrIn").prop( 'disabled', true );
             $("#range_pwrLimit").prop( 'disabled', true );
             $("#range_pwrOut").prop( 'disabled', true );
+            $("#apMac").prop( 'disabled', true );
+            $("#serialNumber").prop( 'disabled', true );
+            $("#tags_1").prop( 'disabled', true );
             break;
     }
 
