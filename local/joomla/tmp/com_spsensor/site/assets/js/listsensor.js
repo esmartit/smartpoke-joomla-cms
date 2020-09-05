@@ -90,7 +90,7 @@ function sensorAction() {
             let data = object['data'];
 
             if (section == "error") {
-                Joomla.renderMessages({'alert': [data]});
+                Joomla.renderMessages({'error': [data]});
             } else {
                 closeModal();
                 location.reload();

@@ -77,6 +77,16 @@ class SpsensorViewListsensor extends JViewLegacy
                 $message = " deleted.";
                 break;
         }
+
+        $itemTags = "";
+        $arrTags = explode(",", $tags);
+        for($i=0; $i<count($arrTags); $i++) {
+            $arrItem = explode(":", $arrTags[$i]);
+            $itemTags .= '"'.$arrItem[0].'":"'.$arrItem[1].'",';
+        }
+        $itemTags = '{'.substr($itemTags, 0, strlen($itemTags)-1).'}';
+        $tags = json_decode($itemTags);
+
         $data = array(
             "id" => $id,
             "spot" => $spot,
