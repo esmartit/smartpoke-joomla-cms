@@ -1,8 +1,10 @@
 let smsemail = '1';
-let seUniqueIN = '';
-let devUniqueIN = [];
-let bigDataIN = [];
+let sePresenceIN = '';
+let devPresenceIN = [];
+let bigDataPresenceIN = [];
 let userTimeZone = '';
+let existIN = 0;
+
 
 
 $(document).ready( function() {
@@ -422,27 +424,33 @@ function percentageIN(){
     document.getElementById("percentageIN").innerHTML = Intl.NumberFormat().format(percentageIN)+' %';
 }
 
+function getPresenceUsersCampaign(campaign, user){
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
+        method       : 'getPresenceUsers',  // to target: function getPresenceUsersAjax in class ModSPSelectCampaignEffectivenessHelper
+        format       : 'json',
+        data         : { "campaignId":campaign, "username": user }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            $("#itotalIn").val(object);
+        });
+}
+
 function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
                                 zipcodes, member, userTZ, group) {
-    let len = bigDataIN.length;
+    let len = bigDataPresenceIN.length;
     for (let i=0; i<len; i++) {
-        bigDataIN[i] = '';
-        devUniqueIN[i] = 0;
-    }
-    let d1 = new Date(dateS + 'Z12:00:00');
-    let d2 = new Date(dateE + 'Z12:00:00');
-    let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
-    for (let i=0; i<=days; i++) {
-        let month = '' + (d1.getMonth() + 1);
-        let day = '' + d1.getDate();
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day =  '0' + day;
-        bigDataIN[i] = [month, day].join('/');
-        devUniqueIN[i] = 0;
-        d1 = new Date(d1.setDate(d1.getDate() + 1));
+        bigDataPresenceIN[i] = '';
+        devPresenceIN[i] = 0;
     }
 
-    seUniqueIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
+    sePresenceIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
@@ -451,27 +459,46 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
 
     let pos = 0;
     let uniqueIN = 0;
-    seUniqueIN.onmessage = function (event) {
+    let t_campaign = $('#selCampaign').val();
+
+    sePresenceIN.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let axisGroup = '';
-        let group_x = eventData.group;
-        let in_x = eventData.inCount;
         let last = eventData.isLast;
+        if (eventData.body != null) {
+            let bodyData = eventData.body;
+            let userInfo = bodyData.userInfo;
 
-        axisGroup = group_x.substr(group_x.length -5,group_x.length);
-        pos = bigDataIN.indexOf(axisGroup);
-        devUniqueIN[pos] = in_x;
-        uniqueIN = in_x;
+            if (userInfo != null) {
+                let group_x = new Date(bodyData.seenTime);
+                let position = bodyData.position;
+                let username = userInfo.username;
 
-        document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
-        if (last) {
-            for(let i = 0, len = devUniqueIN.length; i < len; i++) {
-                uniqueIN += devUniqueIN[i];
-                document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
-                $("#itotalIn").val(uniqueIN);
+                let month = '' + (group_x.getMonth() + 1);
+                let day = '' + group_x.getDate();
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day =  '0' + day;
+                axisGroup = [month, day].join('/') + ' ' + username;
+                getPresenceUsersCampaign(t_campaign, username);
+                existIN = $("#itotalIn").val();
+
+                if (existIN > 0) {
+                    if (position == 'IN') {
+                        pos = bigDataPresenceIN.indexOf(axisGroup);
+                        if (pos == -1) {
+                            bigDataPresenceIN.push(axisGroup);
+                            uniqueIN += 1;
+                            document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
+                            $("#itotalIn").val(uniqueIN);
+                            percentageIN();
+                        }
+                    }
+                }
             }
-            seUniqueIN.close();
-            percentageIN();
+        }
+
+        if (last) {
+            sePresenceIN.close();
         }
     }
 }
@@ -488,7 +515,7 @@ function sendForm() {
     let t_spot = $('#selSpot').val();
     let t_campaign = $('#selCampaign').val();
 
-    evtSourceUniqueIN(t_dateS, t_dateE, '', '',
+    evtSourceUniqueIN(t_dateS, t_dateE, '00:00:00', '23:59:59',
         t_country, t_state, t_city, t_zipcode,
         t_spot, '', '',
         '', 'IN', '1',
