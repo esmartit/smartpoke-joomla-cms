@@ -83,7 +83,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <label><?php echo JText::_('Dates Range');?></label>
                                 <div id="daterange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                    <i class="glyphicon glyphicon-th fa fa-calendar"></i>
                                     <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                                 </div>
                             </div>
