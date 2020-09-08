@@ -33,6 +33,24 @@ function topCampaign() {
     document.getElementById("value_3").style.width = Intl.NumberFormat().format(campaign[3]['value'])+'%';
 }
 
+function getPresenceUsersCampaign(campaign, user){
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
+        method       : 'getPresenceUsers',  // to target: function getPresenceUsersAjax in class ModSPSelectCampaignEffectivenessHelper
+        format       : 'json',
+        data         : { "campaignId":campaign, "username": user }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            $("#itotalIn").val(object);
+        });
+}
+
 function getTopCampaignList() {
     let request = {
         option       : 'com_ajax',
@@ -54,43 +72,30 @@ function getTopCampaignList() {
                 sent = object[i]['sent'];
                 valid = object[i]['validdate'];
                 total = object[i]['total'];
-                let x = i + 2;
 
-                // evtSourceUniqueTopIN(sent, valid, timeStart, timeEnd,
-                //     '', '', '', '',
-                //     '', '', '',
-                //     '', 'IN', '1',
-                //     '', '', '', '', '',
-                //     userTimeZone, 'BY_DAY');
-                percent = (x / total) * 100;
-                campaign.push({"name":name, "value":percent});
+                percent = (uniqueTopIN / total) * 100;
+                campaign.push({"id":id, "name":name, "value":percent});
+
+                evtSourceUniqueTopIN(sent, valid, timeStart, timeEnd,
+                    '', '', '', '',
+                    '', '', '',
+                    '', 'IN', '1',
+                    '', '', '', '', '',
+                    userTimeZone, 'BY_DAY', id);
             }
-            campaign.sort(sortValues('value', 'desc'));
+            campaign.sort(sortValues('id', 'desc'));
             topCampaign();
         });
 }
 
 function evtSourceUniqueTopIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
-                           zipcodes, member, userTZ, group) {
+                           zipcodes, member, userTZ, group, t_campaign) {
     let len = bigDataTopIN.length;
     for (let i=0; i<len; i++) {
         bigDataTopIN[i] = '';
-        devUniqueTopIN[i] = 0;
-    }
-    let d1 = new Date(dateS + 'Z12:00:00');
-    let d2 = new Date(dateE + 'Z12:00:00');
-    let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
-    for (let i=0; i<=days; i++) {
-        let month = '' + (d1.getMonth() + 1);
-        let day = '' + d1.getDate();
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day =  '0' + day;
-        bigDataTopIN[i] = [month, day].join('/');
-        devUniqueTopIN[i] = 0;
-        d1 = new Date(d1.setDate(d1.getDate() + 1));
     }
 
-    seUniqueTopIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
+    seUniqueTopIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
@@ -102,19 +107,45 @@ function evtSourceUniqueTopIN(dateS, dateE, timeS, timeE, country, state, city, 
     seUniqueTopIN.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let axisGroup = '';
-        let group_x = eventData.group;
-        let in_x = eventData.inCount;
         let last = eventData.isLast;
+        if (eventData.body != null) {
+            let bodyData = eventData.body;
+            let userInfo = bodyData.userInfo;
 
-        axisGroup = group_x.substr(group_x.length -5,group_x.length);
-        pos = bigDataTopIN.indexOf(axisGroup);
-        devUniqueTopIN[pos] = in_x;
+            if (userInfo != null) {
+                let group_x = new Date(bodyData.seenTime);
+                let position = bodyData.position;
+                let username = userInfo.username;
+
+                let month = '' + (group_x.getMonth() + 1);
+                let day = '' + group_x.getDate();
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day =  '0' + day;
+                axisGroup = [month, day].join('/') + ' ' + username;
+                getPresenceUsersCampaign(t_campaign, username);
+                existIN = $("#itotalIn").val();
+
+                if (existIN > 0) {
+                    if (position == 'IN') {
+                        pos = bigDataTopIN.indexOf(axisGroup);
+                        if (pos == -1) {
+                            bigDataTopIN.push(axisGroup);
+                            uniqueTopIN += 1;
+                        }
+                    }
+                }
+            }
+        }
 
         if (last) {
-            for(let i = 0, len = devUniqueTopIN.length; i < len; i++) {
-                uniqueTopIN += devUniqueTopIN[i];
-            }
+            percent = (uniqueTopIN / total) * 100;
+            pos = campaign.map(function(o) { return o.id; }).indexOf(t_campaign);
+            campaign[pos]['value'] = percent;
+            campaign.sort(sortValues('value', 'desc'));
+            topCampaign();
             seUniqueTopIN.close();
+            campaign.sort(sortValues('id', 'desc'));
+            $("#itotalIn").val(0);
         }
     }
 }

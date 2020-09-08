@@ -447,7 +447,6 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
     let len = bigDataPresenceIN.length;
     for (let i=0; i<len; i++) {
         bigDataPresenceIN[i] = '';
-        devPresenceIN[i] = 0;
     }
 
     sePresenceIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/find?"+
