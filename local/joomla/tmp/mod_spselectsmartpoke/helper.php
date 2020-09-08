@@ -135,11 +135,11 @@ class ModSPSelectSmartPokeHelper
         $db = JFactory::getDbo();
 
         $query = $db->getQuery(true);
-        $query->select($db->quoteName('message_sms'));
+        $query->select(array('name', 'message_sms', 'message_email', 'deferred', 'deferreddate'));
         $query->from($db->quoteName('#__spcampaign_campaign'));
-        $query->where($db->quoteName('id'). " = ". $db->quote($campaignId), 'AND');
+        $query->where($db->quoteName('id'). " = ". $db->quote($campaignId));
         $db->setQuery($query);
-        $campaign = $db->loadResult();
+        $campaign = $db->loadAssoc();
 
         return $campaign;
     }
@@ -280,7 +280,13 @@ class ModSPSelectSmartPokeHelper
         $nok = 0;
 
         $campaignId = $arrlist['campaign'];
-        $messageCampaign = self::getMessageCampaign($campaignId);
+        $arrCampaign = self::getMessageCampaign($campaignId);
+        $messageCampaign = $arrCampaign['message_sms'];
+        $deferred = $arrCampaign['deferred'];
+        $deferreddate = '';
+        if ($deferred == '1') {
+            $deferreddate = $arrCampaign['deferreddate'];
+        }
 
         for ($i=0; $i<count($list); $i++) {
             $field = $list[$i]['name'];
@@ -291,14 +297,15 @@ class ModSPSelectSmartPokeHelper
                 $strName = substr($data, (strpos($data, "-") + 1), (strlen($data) - strpos($data, "-")));
                 $msgName = substr($strName, 0, strpos($strName, "/"));
                 $msgDevice = '';
-                $msgUsername = substr($data, (strpos($data, "/") + 1), (strlen($data) - strpos($data, "/")));
+                $strUsername = substr($data, (strpos($data, "/") + 1), (strlen($data) - strpos($data, "/")));
+                $msgUsername = substr($strUsername, 0, strpos($strUsername, "|"));
 
                 $phoneSMS = $msgMobile;
                 // $messageSMS = $msgDesc;
                 $messageSMS = trim($msgName).', '.$messageCampaign;
 
                 $status = 0;
-                $resultSMS = trim(self::sendWorldLine($phoneSMS, $messageSMS, 'SmartPoke')); // WorldLine Web SMS
+                $resultSMS = trim(self::sendWorldLine($phoneSMS, $messageSMS, 'SmartPoke', $deferreddate)); // WorldLine Web SMS
                 if (substr($resultSMS, 0, 2) == 'OK') {
                     $status = 1;
                     $ok = $ok + 1;
@@ -314,33 +321,10 @@ class ModSPSelectSmartPokeHelper
     }
 
     /**
-     * Returns the SaveMessage
-     * @return mixed
-     */
-    public static function saveMessage($values = null)
-    {
-        $msg = new stdClass();
-        $msg->id = null;
-        $msg->campaign_id = $values[0];
-        $msg->device_sms = $values[1];
-        $msg->username = $values[2];
-        $msg->senddate = $values[3];
-        $msg->status = $values[4];
-        $msg->description = $values[5];
-        $msg->params = '';
-        $msg->metakey= '';
-        $msg->metadesc = '';
-        $msg->metadata = '';
-        $db = JFactory::getDBO();
-        $db->insertObject('#__spmessage_message', $msg, 'id');
-        return;
-    }
-
-    /**
      * Returns the SendWorlLineSMS
      * @return mixed
      */
-    public static function sendWorldLine($phone, $message, $sender) {
+    public static function sendWorldLine($phone, $message, $sender, $deferred) {
 
         //  certificado pem extraido de un pkcs12 con la ruta completa absoluta
         $cert = '/bitnami/joomla/certs_sms/esmartit.pem';
@@ -349,13 +333,16 @@ class ModSPSelectSmartPokeHelper
         //  password del certificado pem
         $passwd = "Te2pp2so";
 
-        $param='user=ESMARTIT'.
+        $param = 'user=ESMARTIT'.
             '&company=ESMARTIT'.
             '&passwd=P45_m61X'.
             '&gsm=%2B'.$phone.
             '&type=plus'.
             '&msg='.$message.
             '&sender='.$sender;
+        if ($deferred != '') {
+            $param .= '&deferred='.$deferred;
+        }
 
         //    $url = 'https://push.tempos21.com/mdirectnx-trust/send?'; Ruta con IP
         $url = 'https://push.tempos21.com/mdirectnx/send?';
@@ -385,6 +372,100 @@ class ModSPSelectSmartPokeHelper
         curl_close($ch);
 
         return $output;
+    }
+
+    /**
+     * Returns the SendEmail
+     * @return mixed
+     */
+    public static function sendEmailAjax() {
+        $arrlist = $_REQUEST['data'];
+        $list = ($arrlist['str']);
+
+        $ok = 0;
+        $nok = 0;
+
+        $campaignId = $arrlist['campaign'];
+        $arrCampaign = self::getMessageCampaign($campaignId);
+        $messageTitle = $arrCampaign['name'];
+        $messageCampaign = $arrCampaign['message_email'];
+        $deferred = $arrCampaign['deferred'];
+        $deferreddate = '';
+        if ($deferred == '1') {
+            $deferreddate = $arrCampaign['$deferreddate'];
+        }
+
+        for ($i=0; $i<count($list); $i++) {
+            $field = $list[$i]['name'];
+            $data = $list[$i]['value'];
+
+            if ($field == 'id[]') {
+                $strName = substr($data, (strpos($data, "-") + 1), (strlen($data) - strpos($data, "-")));
+                $msgName = substr($strName, 0, strpos($strName, "/"));
+                $msgDevice = '';
+                $strUsername = substr($data, (strpos($data, "/") + 1), (strlen($data) - strpos($data, "/")));
+                $msgUsername = substr($strUsername, 0, strpos($strUsername, "|"));
+                $userEmail = substr($data, (strpos($data, "|") + 1), (strlen($data) - strpos($data, "|")));
+                $messageEmail = trim($msgName).", \n".$messageCampaign;
+
+                $status = 0;
+                $result = trim(self::sendJoomlaEmail($userEmail, $messageTitle, $messageEmail, 'SmartPoke')); // WorldLine Web SMS
+                if ($result) {
+                    $status = 1;
+                    $description = 'Email was sent successfully';
+                    $ok = $ok + 1;
+                } else {
+                    $nok = $nok + 1;
+                    $description = 'Email could not sent correctly';
+                }
+                $currDate = date('Y-m-d H:i:s');
+
+                $values = array($campaignId, $msgDevice, $msgUsername, $currDate, $status, $description);
+                self::saveMessage($values);
+            }
+        }
+        $message = "Total eMail(s) Ok: ".$ok." Total eMail(s) NOk: ".$nok;
+        return $message;
+    }
+
+    /**
+     * Returns the SendJoomlaEmail
+     * @return mixed
+     */
+    public static function sendJoomlaEmail($email, $title, $message, $sender) {
+
+        $subject = $title;
+        $body = $message;
+        $to = $email;
+        $from = 'no-reply@esmartit.es';
+
+        // Invoke JMail Class
+        $output = JFactory::getMailer()->sendMail($from, $sender, $to, $subject, $body);
+
+        return $output;
+    }
+
+    /**
+     * Returns the SaveMessage
+     * @return mixed
+     */
+    public static function saveMessage($values = null)
+    {
+        $msg = new stdClass();
+        $msg->id = null;
+        $msg->campaign_id = $values[0];
+        $msg->device_sms = $values[1];
+        $msg->username = $values[2];
+        $msg->senddate = $values[3];
+        $msg->status = $values[4];
+        $msg->description = $values[5];
+        $msg->params = '';
+        $msg->metakey= '';
+        $msg->metadesc = '';
+        $msg->metadata = '';
+        $db = JFactory::getDBO();
+        $db->insertObject('#__spmessage_message', $msg, 'id');
+        return;
     }
 
     public static function saveFileAjax() {

@@ -4,6 +4,7 @@ let tableOff = '';
 let tableDB = '';
 let tableFile = '';
 let campaignId = '';
+let msgType = '1';
 
 $(document).ready( function() {
 
@@ -254,12 +255,14 @@ function getZoneList() {
 $(document).ready(function () {
     $('#radioSMS').on('change', function () {
         let sms = $('#radioSMS').val();
-        getCampaigns(sms)
+        getCampaigns(sms);
+        msgType = sms;
     });
 
     $('#radioEmail').on('change', function () {
         let email = $('#radioEmail').val();
-        getCampaigns(email)
+        getCampaigns(email);
+        msgType = email;
     });
 });
 
@@ -716,7 +719,7 @@ function smartpokeDB(country, state, city, zipcode, spot, ageS, ageE, sex, zipco
                         "orderable": false,
                         "className": 'dt-body-center',
                         "render": function (data, type, row, meta) {
-                            return '<input type="checkbox" name="id[]" value="' + row['mobile_phone'] + '-' + row['firstname'] + '/' + row['username'] + '">';
+                            return '<input type="checkbox" name="id[]" value="' + row['mobile_phone'] + '-' + row['firstname'] + '/' + row['username'] + '|' + row['email'] + '">';
                         }
                     },
                     {"data": "firstname", "targets": 1},
@@ -794,7 +797,7 @@ function smartpokeFile() {
                             "orderable": false,
                             "className": 'dt-body-center',
                             "render": function (data, type, row, meta) {
-                                return '<input type="checkbox" name="id[]" value="' + row['0'] + row['2'] + '-' + row['3'] + '/' + row['1'] + row['2'] + '">';
+                                return '<input type="checkbox" name="id[]" value="' + row['0'] + row['2'] + '-' + row['3'] + '/' + row['1'] + row['2'] + '|' + row['5'] + '">';
                             }
                         },
                         {"targets": 1,
@@ -919,14 +922,25 @@ $(document).ready(function() {
 
         // Output form data to a console
         let str = JSON.parse(JSON.stringify($(form).serializeArray()));
+        let request = '';
+        if (msgType == '1') {
+            request = {
+                option       : 'com_ajax',
+                module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+                method       : 'sendSMS',  // to target: function sendSMSAjax in class ModSPSelectSmartPokeHelper
+                format       : 'json',
+                data         : {str, 'campaign': campaignId }
+            };
+        } else {
+            request = {
+                option       : 'com_ajax',
+                module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+                method       : 'sendEmail',  // to target: function sendEmailAjax in class ModSPSelectSmartPokeHelper
+                format       : 'json',
+                data         : {str, 'campaign': campaignId }
+            };
+        }
 
-        let request = {
-            option       : 'com_ajax',
-            module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
-            method       : 'sendSMS',  // to target: function sendSMSAjax in class ModSPSelectSmartPokeHelper
-            format       : 'json',
-            data         : {str, 'campaign': campaignId }
-        };
         $.ajax({
             method: 'GET',
             data: request
