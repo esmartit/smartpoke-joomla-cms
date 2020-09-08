@@ -215,7 +215,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 <br/>
                                 <label><?php echo JText::_('Days');?></label>
                                 <div id="daterange_right" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                    <i class="glyphicon glyphicon-th fa fa-calendar"></i>
                                     <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                                 </div>
                             </div>
