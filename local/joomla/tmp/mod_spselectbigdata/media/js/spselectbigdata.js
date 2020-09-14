@@ -1,6 +1,12 @@
+let t_devicesIn = [];
+let t_devicesEx = [];
+let t_devices = [];
+
 $(document).ready( function() {
 
     getCountryList();
+    getDeviceInList();
+    getDeviceExList();
 
     if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
     console.log('init_IonRangeSlider');
@@ -237,6 +243,54 @@ function getZoneList() {
         });
 }
 
+function getDeviceInList() {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getDevices',  // to target: function getDevicesAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : 1
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+            t_devicesIn = [];
+
+            for (let i = 0; i<len; i++) {
+                t_devicesIn.push(object[i]['device']);
+
+            }
+        });
+}
+
+function getDeviceExList() {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getDevices',  // to target: function getDevicesAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : 0
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+            t_devicesEx = [];
+
+            for (let i = 0; i<len; i++) {
+                t_devicesEx.push(object[i]['device']);
+
+            }
+        });
+}
+
 $(document).ready(function () {
     let optRange = '';
     $('#radioRange').on('change', function () {
@@ -399,6 +453,8 @@ function filters() {
 }
 
 function sendForm() {
+    getDeviceInList();
+    getDeviceExList();
     let t_range = $('input[name="rangeCompare"]:radio:checked').val();
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
@@ -413,6 +469,7 @@ function sendForm() {
     let t_spot = $('#selSpot').val();
     let t_sensor = $('#selSensor').val();
     let t_zone = $('#selZone').val();
+    let t_type = $('#selType').val();
     let t_brands = $('#selBrand').val();
     let t_status = $('#selStatus').val();
     let t_presence = $('#presence').val();
@@ -425,18 +482,31 @@ function sendForm() {
     let t_groupBy = $('#selRadioGraph input:radio:checked').val();
 
     if (document.getElementById("checkFilter").checked) {
-        // t_ageS = $('#from_value').val();
-        // t_ageE = $('#to_value').val();
+        t_ageS = $('#from_value').val();
+        t_ageE = $('#to_value').val();
         t_sex = $('#selSex').val();
         t_zipcodes = $('#selZipCode').val();
         t_member = $('#selMembership').val();
+    }
+
+    switch (t_type) {
+        case '0':
+            t_devicesIn = [];
+            break;
+        case '1':
+            t_devicesEx = [];
+            break;
+        default:
+            t_devicesIn = [];
+            t_devicesEx = [];
+            break;
     }
 
     evtSourceActivityBigDataR
     (
         t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
-        t_spot, t_sensor, t_zone,
+        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
         t_brands, t_status, t_presence,
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone, t_groupBy
@@ -447,7 +517,7 @@ function sendForm() {
         (
             t_dateS2, t_dateE2, t_timeS, t_timeE,
             t_country, t_state, t_city, t_zipcode,
-            t_spot, t_sensor, t_zone,
+            t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
             t_brands, t_status, t_presence,
             t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
             userTimeZone, t_groupBy
@@ -458,7 +528,7 @@ function sendForm() {
     (
         t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
-        t_spot, t_sensor, t_zone,
+        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
         t_brands, t_status, t_presence,
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone, t_groupBy
@@ -476,7 +546,7 @@ function sendForm() {
     (
         t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
-        t_spot, t_sensor, t_zone,
+        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
         t_brands, t_status, t_presence,
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone, t_groupBy

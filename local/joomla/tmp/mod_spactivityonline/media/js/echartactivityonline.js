@@ -397,14 +397,15 @@ function echartActivityOnline(hoursAct, deviceAct, inAct, limitAct, outAct) {
     spChartOnline.setOption(option);
 }
 
-function evtSourceActivityOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, brands, status, ageS, ageE, sex,
+function evtSourceActivityOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
                                  zipcodes, member, userTZ) {
     if (seActivityOnline.readyState != 2) {
         seActivityOnline.close();
     }
+
     seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
         "timezone="+userTZ+"%26startTime="+dateS+"%26endTime="+dateE+"%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+brands+"%26status="+status+"%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
 
     for (let x = 0; x < 24; x++) {
