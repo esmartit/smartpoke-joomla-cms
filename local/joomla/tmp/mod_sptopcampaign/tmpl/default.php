@@ -29,7 +29,6 @@ $document->addScript('/media/mod_sptopcampaign/js/sptopcampaign.js');
         <h2><?php echo JText::_('MOD_SPTOPCAMPAIGN');?></h2>
         <div class="clearfix"></div>
         <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
-        <input type="hidden" id="itotalIn"/>
     </div>
 
     <div class="col-md-12 col-sm-12 ">

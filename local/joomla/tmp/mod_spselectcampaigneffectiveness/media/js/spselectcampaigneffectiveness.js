@@ -437,8 +437,7 @@ function getPresenceUsersCampaign(campaign, user){
         data: request
     })
         .success(function(response){
-            let object = response.data;
-            $("#itotalIn").val(object);
+            existIN = response.data;
         });
 }
 
@@ -466,38 +465,33 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
         let last = eventData.isLast;
         if (eventData.body != null) {
             let bodyData = eventData.body;
-            let userInfo = bodyData.userInfo;
+            let username = bodyData.username;
+            let status = bodyData.status;
+            let group_x = new Date(bodyData.seenTime);
 
-            if (userInfo != null) {
-                let group_x = new Date(bodyData.seenTime);
-                let position = bodyData.position;
-                let username = userInfo.username;
+            let month = '' + (group_x.getUTCMonth() + 1);
+            let day = '' + group_x.getUTCDate();
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day =  '0' + day;
+            axisGroup = [month, day].join('/') + ' ' + username;
+            getPresenceUsersCampaign(t_campaign, username);
 
-                let month = '' + (group_x.getMonth() + 1);
-                let day = '' + group_x.getDate();
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day =  '0' + day;
-                axisGroup = [month, day].join('/') + ' ' + username;
-                getPresenceUsersCampaign(t_campaign, username);
-                existIN = $("#itotalIn").val();
-
-                if (existIN > 0) {
-                    if (position == 'IN') {
-                        pos = bigDataPresenceIN.indexOf(axisGroup);
-                        if (pos == -1) {
-                            bigDataPresenceIN.push(axisGroup);
-                            uniqueIN += 1;
-                            document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
-                            $("#itotalIn").val(uniqueIN);
-                            percentageIN();
-                        }
+            if (existIN == 1) {
+                if (status == 'IN') {
+                    pos = bigDataPresenceIN.indexOf(axisGroup);
+                    if (pos == -1) {
+                        bigDataPresenceIN.push(axisGroup);
+                        uniqueIN += 1;
+                        document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(uniqueIN);
+                        $("#itotalIn").val(uniqueIN);
+                        percentageIN();
                     }
                 }
             }
-        }
-
-        if (last) {
-            sePresenceIN.close();
+        } else {
+            if (last) {
+                sePresenceIN.close();
+            }
         }
     }
 }

@@ -12,6 +12,8 @@ let sent = '';
 let valid = '';
 let total = '';
 let percent = 0;
+let existIN = 0;
+
 
 $(document).ready( function() {
     userTimeZone = document.getElementById('userTimeZone').innerText;
@@ -33,21 +35,20 @@ function topCampaign() {
     document.getElementById("value_3").style.width = Intl.NumberFormat().format(campaign[3]['value'])+'%';
 }
 
-function getPresenceUsersCampaign(campaign, user){
+function getPresenceUsersCampaign(idCampaign, user){
     let request = {
         option       : 'com_ajax',
         module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
         method       : 'getPresenceUsers',  // to target: function getPresenceUsersAjax in class ModSPSelectCampaignEffectivenessHelper
         format       : 'json',
-        data         : { "campaignId":campaign, "username": user }
+        data         : { "campaignId":idCampaign, "username": user }
     };
     $.ajax({
         method: 'GET',
         data: request
     })
         .success(function(response){
-            let object = response.data;
-            $("#itotalIn").val(object);
+            existIN = response.data;
         });
 }
 
@@ -73,8 +74,8 @@ function getTopCampaignList() {
                 valid = object[i]['validdate'];
                 total = object[i]['total'];
 
-                percent = (uniqueTopIN / total) * 100;
-                campaign.push({"id":id, "name":name, "value":percent});
+                percent = 0;
+                campaign.push({"id":id, "name":name, "total":total, "value":percent});
 
                 evtSourceUniqueTopIN(sent, valid, timeStart, timeEnd,
                     '', '', '', '',
@@ -83,17 +84,13 @@ function getTopCampaignList() {
                     '', '', '', '', '',
                     userTimeZone, 'BY_DAY', id);
             }
-            campaign.sort(sortValues('id', 'desc'));
+            campaign.sort(sortValues('name', 'asc'));
             topCampaign();
         });
 }
 
 function evtSourceUniqueTopIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
                            zipcodes, member, userTZ, group, t_campaign) {
-    let len = bigDataTopIN.length;
-    for (let i=0; i<len; i++) {
-        bigDataTopIN[i] = '';
-    }
 
     seUniqueTopIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
@@ -110,42 +107,43 @@ function evtSourceUniqueTopIN(dateS, dateE, timeS, timeE, country, state, city, 
         let last = eventData.isLast;
         if (eventData.body != null) {
             let bodyData = eventData.body;
-            let userInfo = bodyData.userInfo;
+            let username = bodyData.username;
+            let status = bodyData.status;
+            let group_x = new Date(bodyData.seenTime);
 
-            if (userInfo != null) {
-                let group_x = new Date(bodyData.seenTime);
-                let position = bodyData.position;
-                let username = userInfo.username;
+            let month = '' + (group_x.getUTCMonth() + 1);
+            let day = '' + group_x.getUTCDate();
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day =  '0' + day;
+            axisGroup = [month, day].join('/') + ' ' + username + ' ' + t_campaign;
+            getPresenceUsersCampaign(t_campaign, username);
 
-                let month = '' + (group_x.getMonth() + 1);
-                let day = '' + group_x.getDate();
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day =  '0' + day;
-                axisGroup = [month, day].join('/') + ' ' + username;
-                getPresenceUsersCampaign(t_campaign, username);
-                existIN = $("#itotalIn").val();
-
-                if (existIN > 0) {
-                    if (position == 'IN') {
-                        pos = bigDataTopIN.indexOf(axisGroup);
-                        if (pos == -1) {
-                            bigDataTopIN.push(axisGroup);
-                            uniqueTopIN += 1;
-                        }
+            if (existIN == 1) {
+                if (status == 'IN') {
+                    pos = bigDataTopIN.map(function(o) { return o.id; }).indexOf(axisGroup);
+                    // pos = bigDataTopIN.indexOf(axisGroup);
+                    if (pos == -1) {
+                        bigDataTopIN.push({"id":axisGroup, "campaignId":t_campaign, "in":1});
+                        pos = campaign.map(function(o) { return o.id; }).indexOf(t_campaign);
+                        uniqueTopIN += 1;
+                        campaign[pos]['value'] = (uniqueTopIN / campaign[pos]['total']) * 100;
                     }
                 }
             }
-        }
-
-        if (last) {
-            percent = (uniqueTopIN / total) * 100;
-            pos = campaign.map(function(o) { return o.id; }).indexOf(t_campaign);
-            campaign[pos]['value'] = percent;
+        } else {
+            if (last) {
+                // percent = (uniqueTopIN / total) * 100;
+                // pos = campaign.map(function(o) { return o.id; }).indexOf(t_campaign);
+                // percent = (uniqueTopIN / campaign[pos]['total']) * 100;
+                // campaign[pos]['value'] = percent;
+                uniqueTopIN = 0;
+                existIN = 0;
+            }
+            seUniqueTopIN.close();
+            console.log(campaign);
             campaign.sort(sortValues('value', 'desc'));
             topCampaign();
-            seUniqueTopIN.close();
-            campaign.sort(sortValues('id', 'desc'));
-            $("#itotalIn").val(0);
+            campaign.sort(sortValues('name', 'asc'));
         }
     }
 }
