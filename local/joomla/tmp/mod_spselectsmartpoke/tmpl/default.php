@@ -177,6 +177,16 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <div id="typeSelect" class="col-md-12 col-sm-12 col-xs-12" style="display: block;">
+                                <br/>
+                                <select id="selType" class="form-control" name="type">
+                                    <option value="" selected><?php echo JText::_('All Devices'); ?></option>
+                                    <option value="1"><?php echo JText::_('Only FM'); ?></option>
+                                    <option value="0"><?php echo JText::_('Exclude Other'); ?></option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div id="selbrands" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">

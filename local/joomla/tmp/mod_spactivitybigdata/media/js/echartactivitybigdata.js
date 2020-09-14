@@ -476,7 +476,7 @@ Date.prototype.getWeek = function() {
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
 
-function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
+function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                    zipcodes, member, userTZ, group) {
     let len = axisBigDataR.length;
     for (let i=0; i<len; i++) {
@@ -560,14 +560,13 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
             }
             break;
     }
-
     spChartBigDataR = echarts.init(document.getElementById('echart_activity_bigdata_r'), theme);
     spChartBigDataR.setOption(optionR);
 
     seActivityBigDataR = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
     let pos = 0;
@@ -611,7 +610,7 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
     }
 }
 
-function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
+function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                    zipcodes, member, userTZ, group) {
 
     let len = axisBigDataC.length;
@@ -702,7 +701,7 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
     seActivityBigDataC = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
     let pos = 0;

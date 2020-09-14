@@ -45,23 +45,6 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
     </p>
     <div class="collapse" id="collapseSelect">
         <div class="x_panel">
-            <!--            <div class="x_title">-->
-            <!--                <h2>--><?php //echo JText::_('MOD_SPSELECTONLINE');?><!-- <small></small></h2>-->
-            <!--                <ul class="nav navbar-right panel_toolbox">-->
-            <!--                    <li><a class="collapse-link" aria-expanded="false"><i class="fa fa-chevron-up"></i></a>-->
-            <!--                    </li>-->
-            <!--                    <li class="dropdown">-->
-            <!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
-            <!--                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-            <!--                            <a class="dropdown-item" href="#">Settings 1</a>-->
-            <!--                            <a class="dropdown-item" href="#">Settings 2</a>-->
-            <!--                        </div>-->
-            <!--                    </li>-->
-            <!--                    <li><a class="close-link"><i class="fa fa-close"></i></a>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--                <div class="clearfix"></div>-->
-            <!--            </div>-->
             <div class="x_content">
                 <form id="online_select_form" class="form-horizontal form-label-left" method="POST">
                     <!-- select -->
@@ -130,8 +113,18 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                         <div class="col-md-2 col-sm-2 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selZone" class="form-control" name="sensor">
+                                <select id="selZone" class="form-control" name="zone">
                                     <option value="" selected><?php echo JText::_('All Zones'); ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <br/>
+                                <select id="selType" class="form-control" name="type">
+                                    <option value="" selected><?php echo JText::_('All Devices'); ?></option>
+                                    <option value="1"><?php echo JText::_('Only FM'); ?></option>
+                                    <option value="0"><?php echo JText::_('Exclude Other'); ?></option>
                                 </select>
                             </div>
                         </div>

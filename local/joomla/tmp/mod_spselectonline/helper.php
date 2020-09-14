@@ -198,7 +198,7 @@ class ModSPSelectOnlineHelper
     }
 
     /**
-     * Returns the SensorList
+     * Returns the ZoneList
      * @return mixed
      */
     public static function getZonesAjax()
@@ -222,6 +222,30 @@ class ModSPSelectOnlineHelper
         $zoneList = $db->loadRowList();
 
         return $zoneList;
+    }
+
+    /**
+     * Returns the DeviceList
+     * @return mixed
+     */
+    public static function getDevicesAjax()
+    {
+        $type = $_REQUEST['data'];
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query
+            ->select($db->quoteName(array('device')))
+            ->from($db->quoteName('#__spdevice_device'));
+
+        if ($type == '0' || $type == '1') {
+            $query->where($db->quoteName('type'). " = " .$db->quote($type));
+        }
+
+        $db->setQuery($query);
+        $deviceList = $db->loadObjectList();
+
+        return $deviceList;
     }
 
     /**
