@@ -1,5 +1,12 @@
-$(document).ready(function() {
+let t_devicesIn = [];
+let t_devicesEx = [];
+let t_devices = [];
+
+$(document).ready( function() {
+
     getCountryList();
+    getDeviceInList();
+    getDeviceExList();
 
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
@@ -217,6 +224,54 @@ function getZoneList() {
         });
 }
 
+function getDeviceInList() {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getDevices',  // to target: function getDevicesAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : 1
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+            t_devicesIn = [];
+
+            for (let i = 0; i<len; i++) {
+                t_devicesIn.push(object[i]['device']);
+
+            }
+        });
+}
+
+function getDeviceExList() {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getDevices',  // to target: function getDevicesAjax in class ModSPSelectOnlineHelper
+        format       : 'json',
+        data         : 0
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+            t_devicesEx = [];
+
+            for (let i = 0; i<len; i++) {
+                t_devicesEx.push(object[i]['device']);
+
+            }
+        });
+}
+
 $(document).ready(function() {
 
     let datestart = moment().startOf('month');
@@ -294,6 +349,8 @@ $(document).ready(function() {
 });
 
 function sendForm() {
+    getDeviceInList();
+    getDeviceExList();
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
     let t_timeS = $('#timestart').val();
@@ -306,12 +363,26 @@ function sendForm() {
     let t_spot = $('#selSpot').val();
     let t_sensor = $('#selSensor').val();
     let t_zone = $('#selZone').val();
+    let t_type = $('#selType').val();
     let userTimeZone = document.getElementById('userTimeZone').innerText;
+
+    switch (t_type) {
+        case '0':
+            t_devicesIn = [];
+            break;
+        case '1':
+            t_devicesEx = [];
+            break;
+        default:
+            t_devicesIn = [];
+            t_devicesEx = [];
+            break;
+    }
 
     let dataForm = {
             "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
             "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-            "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone,
+            "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone, "includedDevices": t_devicesIn, "excludedDevices": t_devicesEx,
             "timeZone": userTimeZone
     }
     console.log(dataForm);
