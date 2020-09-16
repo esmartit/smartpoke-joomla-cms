@@ -1,12 +1,13 @@
+<?php
 /*----------------------------------------------------------------------------------|  www.vdm.io  |----/
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
-	@build			30th July, 2020
+	@version		1.0.0
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
-	@subpackage		site.js
+	@subpackage		metadata.php
 	@author			Adolfo Zignago <https://www.esmartit.es>	
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,4 +18,33 @@
 
 /------------------------------------------------------------------------------------------------------*/
 
-/* JS Document */
+// No direct access to this file
+defined('_JEXEC') or die('Restricted access');
+
+$form = $displayData->getForm();
+
+// JLayout for standard handling of metadata fields in the administrator content edit screens.
+$fieldSets = $form->getFieldsets('metadata');
+?>
+
+<?php foreach ($fieldSets as $name => $fieldSet) : ?>
+	<?php if (isset($fieldSet->description) && trim($fieldSet->description)) : ?>
+		<p class="alert alert-info"><?php echo $this->escape(JText::_($fieldSet->description)); ?></p>
+	<?php endif; ?>
+
+	<?php
+	// Include the real fields in this panel.
+	if ($name == 'vdmmetadata')
+	{
+		echo $form->renderField('metadesc');
+		echo $form->renderField('metakey');
+	}
+
+	foreach ($form->getFieldset($name) as $field)
+	{
+		if ($field->name != 'jform[metadata][tags][]')
+		{
+			echo $field->renderField();
+		}
+	} ?>
+<?php endforeach; ?>
