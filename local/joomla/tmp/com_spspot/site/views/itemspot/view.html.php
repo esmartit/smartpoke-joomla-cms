@@ -3,8 +3,8 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
-	@build			30th July, 2020
+	@version		1.0.0
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
 	@subpackage		view.html.php
@@ -22,9 +22,9 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Spspot View class for the Listspot
+ * Spspot View class for the Itemspot
  */
-class SpspotViewListspot extends JViewLegacy
+class SpspotViewItemspot extends JViewLegacy
 {
 	// Overwriting JView display method
 	function display($tpl = null)
@@ -36,7 +36,7 @@ class SpspotViewListspot extends JViewLegacy
 		// get the user object
 		$this->user = JFactory::getUser();
 		// Initialise variables.
-		$this->items = $this->get('Items');
+		$this->item = $this->get('Item');
 
 		// Set the toolbar
 		$this->addToolBar();
@@ -53,39 +53,6 @@ class SpspotViewListspot extends JViewLegacy
 		parent::display($tpl);
 	}
 
-
-/***[JCBGUI.site_view.php_jview.30.$$$$]***/
-    public function getBusinessList() {
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('id', 'name')));
-        $query->from($db->quoteName('#__spbusiness_businesstype'));
-
-        $db->setQuery($query);
-        $businessList = $db->loadRowList();
-
-        return $businessList;
-
-    }
-
-    public function getCountryList() {
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('country_code_isotwo', 'name')));
-        $query->from($db->quoteName('#__spcountry_country'));
-
-        $db->setQuery($query);
-        $countryList = $db->loadRowList();
-
-        return $countryList;
-
-    }/***[/JCBGUI$$$$]***/
-
-
 	/**
 	 * Prepares the document
 	 */
@@ -98,26 +65,52 @@ class SpspotViewListspot extends JViewLegacy
 		require_once( JPATH_COMPONENT_SITE.'/helpers/headercheck.php' );
 		// Initialize the header checker.
 		$HeaderCheck = new spspotHeaderCheck;
-
-		// Add View JavaScript File
-		$this->document->addScript(JURI::root(true) . "/components/com_spspot/assets/js/listspot.js", (SpspotHelper::jVersion()->isCompatible("3.8.0")) ? array("version" => "auto") : "text/javascript");
 		// load the meta description
-		if ($this->params->get('menu-meta_description'))
+		if (isset($this->item->metadesc) && $this->item->metadesc)
+		{
+			$this->document->setDescription($this->item->metadesc);
+		}
+		elseif ($this->params->get('menu-meta_description'))
 		{
 			$this->document->setDescription($this->params->get('menu-meta_description'));
 		}
 		// load the key words if set
-		if ($this->params->get('menu-meta_keywords'))
+		if (isset($this->item->metakey) && $this->item->metakey)
+		{
+			$this->document->setMetadata('keywords', $this->item->metakey);
+		}
+		elseif ($this->params->get('menu-meta_keywords'))
 		{
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
 		// check the robot params
-		if ($this->params->get('robots'))
+		if (isset($this->item->robots) && $this->item->robots)
+		{
+			$this->document->setMetadata('robots', $this->item->robots);
+		}
+		elseif ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
+		// check if autor is to be set
+		if (isset($this->item->created_by) && $this->params->get('MetaAuthor') == '1')
+		{
+			$this->document->setMetaData('author', $this->item->created_by);
+		}
+		// check if metadata is available
+		if (isset($this->item->metadata) && $this->item->metadata)
+		{
+			$mdata = json_decode($this->item->metadata,true);
+			foreach ($mdata as $k => $v)
+			{
+				if ($v)
+				{
+					$this->document->setMetadata($k, $v);
+				}
+			}
+		} 
 		// add the document default css file
-		$this->document->addStyleSheet(JURI::root(true) .'/components/com_spspot/assets/css/listspot.css', (SpspotHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/css');
+		$this->document->addStyleSheet(JURI::root(true) .'/components/com_spspot/assets/css/itemspot.css', (SpspotHelper::jVersion()->isCompatible('3.8.0')) ? array('version' => 'auto') : 'text/css');
 	}
 
 	/**
@@ -127,9 +120,9 @@ class SpspotViewListspot extends JViewLegacy
 	{
 		// adding the joomla toolbar to the front
 		JLoader::register('JToolbarHelper', JPATH_ADMINISTRATOR.'/includes/toolbar.php');
-		
+
 		// set help url for this view if found
-		$help_url = SpspotHelper::getHelpUrl('listspot');
+		$help_url = SpspotHelper::getHelpUrl('itemspot');
 		if (SpspotHelper::checkString($help_url))
 		{
 			JToolbarHelper::help('COM_SPSPOT_HELP_MANAGER', false, $help_url);

@@ -2,11 +2,11 @@
 				eSmartIT 
 /-------------------------------------------------------------------------------------------------------/
 
-	@version		1.0.2
-	@build			30th July, 2020
+	@version		1.0.0
+	@build			24th June, 2020
 	@created		14th April, 2020
 	@package		SP Spot
-	@subpackage		site.js
+	@subpackage		submitbutton.js
 	@author			Adolfo Zignago <https://www.esmartit.es>	
 	@copyright		Copyright (C) 2020. All Rights Reserved
 	@license		GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,4 +17,18 @@
 
 /------------------------------------------------------------------------------------------------------*/
 
-/* JS Document */
+Joomla.submitbutton = function(task)
+{
+	if (task == ''){
+		return false;
+	} else { 
+		var action = task.split('.');
+		if (action[1] == 'cancel' || action[1] == 'close' || document.formvalidator.isValid(document.getElementById("adminForm"))){
+			Joomla.submitform(task, document.getElementById("adminForm"));
+			return true;
+		} else {
+			alert(Joomla.JText._('spot, some values are not acceptable.','Some values are unacceptable'));
+			return false;
+		}
+	}
+}
