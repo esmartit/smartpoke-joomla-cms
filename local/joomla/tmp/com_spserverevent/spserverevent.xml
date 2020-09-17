@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.1.0" method="upgrade">
+    <name>SP Server Event</name>
+    <author>Gustavo Rodriguez</author>
+    <creationDate>April 2020</creationDate>
+    <copyright>Copyright (C) 2020 eSmartIT. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>tech@esmartit.es</authorEmail>
+    <authorUrl>www.esmartit.es</authorUrl>
+    <description>SmartPoke Server Event</description>
+
+    <administration>
+    </administration>
+
+    <menu>SP Server Event</menu>
+    <files folder="site">
+        <filename>spserverevent.php</filename>
+    </files>
+
+</extension>
