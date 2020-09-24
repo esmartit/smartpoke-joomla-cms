@@ -67,30 +67,37 @@ function getTopCampaignList() {
             let object = response.data;
             let len = object.length;
 
-            for (let i = 0; i<len; i++) {
-                id = object[i]['campaign_id'];
-                name = object[i]['name'];
-                sent = object[i]['sent'];
-                valid = object[i]['validdate'];
-                total = object[i]['total'];
+            if (len > 0) {
+                for (let i = 0; i<len; i++) {
+                    id = object[i]['campaign_id'];
+                    name = object[i]['name'];
+                    sent = object[i]['sent'];
+                    valid = object[i]['validdate'];
+                    total = object[i]['total'];
 
-                percent = 0;
-                campaign.push({"id":id, "name":name, "total":total, "value":percent});
+                    percent = 0;
+                    campaign.push({"id":id, "name":name, "total":total, "value":percent});
 
-                evtSourceUniqueTopIN(sent, valid, timeStart, timeEnd,
-                    '', '', '', '',
-                    '', '', '',
-                    '', 'IN', '1',
-                    '', '', '', '', '',
-                    userTimeZone, 'BY_DAY', id);
+                    evtSourceUniqueTopIN(sent, valid, timeStart, timeEnd,
+                        '', '', '', '',
+                        '', '', '',
+                        '', 'IN', '1',
+                        '', '', '', '', '',
+                        userTimeZone, 'BY_DAY', id);
+                }
+                campaign.sort(sortValues('name', 'asc'));
+            } else {
+                campaign.push({"id":1, "name":"", "total":0, "value":0});
+                campaign.push({"id":2, "name":"", "total":0, "value":0});
+                campaign.push({"id":3, "name":"", "total":0, "value":0});
+                campaign.push({"id":4, "name":"", "total":0, "value":0});
             }
-            campaign.sort(sortValues('name', 'asc'));
             topCampaign();
         });
 }
 
 function evtSourceUniqueTopIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
-                           zipcodes, member, userTZ, group, t_campaign) {
+                              zipcodes, member, userTZ, group, t_campaign) {
 
     seUniqueTopIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
@@ -140,7 +147,6 @@ function evtSourceUniqueTopIN(dateS, dateE, timeS, timeE, country, state, city, 
                 existIN = 0;
             }
             seUniqueTopIN.close();
-            console.log(campaign);
             campaign.sort(sortValues('value', 'desc'));
             topCampaign();
             campaign.sort(sortValues('name', 'asc'));

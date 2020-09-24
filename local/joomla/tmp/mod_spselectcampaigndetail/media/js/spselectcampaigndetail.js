@@ -218,7 +218,22 @@ function getSmsEmailMonthly(value = 'total_sms_month'){
         });
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 function getSmsEmailSent(dstart, dend, type){
+
     let request = {
         option       : 'com_ajax',
         module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
@@ -449,7 +464,14 @@ function sendForm() {
     let t_spot = $('#selSpot').val();
     let t_campaign = $('#selCampaign').val();
 
-    getSmsEmailSent(t_dateS, t_dateE, smsemail);
+    let date = new Date();
+    let fDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    let lDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    let firstDay = formatDate(fDay);
+    let lastDay = formatDate(lDay);
+
+
+    getSmsEmailSent(firstDay, lastDay, smsemail);
     getCampaignSent(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_zipcode, t_spot);
     getCampaignDetail(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_zipcode, t_spot);
 }
