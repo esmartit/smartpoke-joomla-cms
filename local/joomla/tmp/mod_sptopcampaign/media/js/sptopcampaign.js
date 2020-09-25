@@ -133,7 +133,12 @@ function evtSourceUniqueTopIN(dateS, dateE, timeS, timeE, country, state, city, 
                         bigDataTopIN.push({"id":axisGroup, "campaignId":t_campaign, "in":1});
                         pos = campaign.map(function(o) { return o.id; }).indexOf(t_campaign);
                         uniqueTopIN += 1;
-                        campaign[pos]['value'] = (uniqueTopIN / campaign[pos]['total']) * 100;
+
+                        let value = (uniqueTopIN / campaign[pos]['total']) * 100;
+                        let roundValue = Math.round(value * 10) / 10;
+                        campaign[pos]['value'] = roundValue;
+
+                        //campaign[pos]['value'] = Math.round10(((uniqueTopIN / campaign[pos]['total']) * 100), -1);
                     }
                 }
             }

@@ -228,6 +228,8 @@ class ModSPSelectSmartPokeHelper
         $query->from($db->quoteName('#__spcustomer_customer', 'c'));
         $query->join('INNER', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
         $query->where($db->quoteName('communication') . " = 1");
+        $query->where($db->quoteName('c.published') . " = 1");
+
 
 
         if (!empty($ageS) && !empty($ageE)) {

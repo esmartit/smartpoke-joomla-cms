@@ -80,6 +80,7 @@ class ModSPExportCustomerHelper
         $query->join('INNER', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
         $query->where("TIMESTAMP(c.created + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart));
         $query->where("TIMESTAMP(c.created + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd));
+        $query->where($db->quoteName('c.published') . " = 1");
 
 
         if (!empty($ageS) && !empty($ageE)) {
