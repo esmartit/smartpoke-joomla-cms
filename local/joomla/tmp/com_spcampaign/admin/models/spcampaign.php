@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			30th July, 2020
+	@build			28th September, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		spcampaign.php
@@ -61,8 +61,8 @@ class SpcampaignModelSpcampaign extends JModelList
 							$viewName 	= $name;
 							$alt 		= $name;
 							$url 		= $url;
-							$image 		= $name.'.'.$type;
-							$name 		= 'COM_SPCAMPAIGN_DASHBOARD_'.SpcampaignHelper::safeString($name,'U');
+							$image 		= $name . '.' . $type;
+							$name 		= 'COM_SPCAMPAIGN_DASHBOARD_' . SpcampaignHelper::safeString($name,'U');
 						}
 					}
 					// internal views
@@ -84,17 +84,27 @@ class SpcampaignModelSpcampaign extends JModelList
 							switch($action)
 							{
 								case 'add':
-									$url 	= 'index.php?option=com_spcampaign&view='.$name.'&layout=edit';
-									$image 	= $name.'_'.$action.'.'.$type;
-									$alt 	= $name.'&nbsp;'.$action;
+									$url	= 'index.php?option=com_spcampaign&view=' . $name . '&layout=edit';
+									$image	= $name . '_' . $action.  '.' . $type;
+									$alt	= $name . '&nbsp;' . $action;
 									$name	= 'COM_SPCAMPAIGN_DASHBOARD_'.SpcampaignHelper::safeString($name,'U').'_ADD';
 									$add	= true;
 								break;
 								default:
-									$url 	= 'index.php?option=com_categories&view=categories&extension=com_spcampaign.'.$name;
-									$image 	= $name.'_'.$action.'.'.$type;
-									$alt 	= $name.'&nbsp;'.$action;
-									$name	= 'COM_SPCAMPAIGN_DASHBOARD_'.SpcampaignHelper::safeString($name,'U').'_'.SpcampaignHelper::safeString($action,'U');
+									// check for new convention (more stable)
+									if (strpos($action, '_qpo0O0oqp_') !== false)
+									{
+										list($action, $extension) = (array) explode('_qpo0O0oqp_', $action);
+										$extension = str_replace('_po0O0oq_', '.', $extension);
+									}
+									else
+									{
+										$extension = 'com_spcampaign.' . $name;
+									}
+									$url	= 'index.php?option=com_categories&view=categories&extension=' . $extension;
+									$image	= $name . '_' . $action . '.' . $type;
+									$alt	= $viewName . '&nbsp;' . $action;
+									$name	= 'COM_SPCAMPAIGN_DASHBOARD_' . SpcampaignHelper::safeString($name,'U') . '_' . SpcampaignHelper::safeString($action,'U');
 								break;
 							}
 						}
@@ -102,9 +112,9 @@ class SpcampaignModelSpcampaign extends JModelList
 						{
 							$viewName 	= $name;
 							$alt 		= $name;
-							$url 		= 'index.php?option=com_spcampaign&view='.$name;
-							$image 		= $name.'.'.$type;
-							$name 		= 'COM_SPCAMPAIGN_DASHBOARD_'.SpcampaignHelper::safeString($name,'U');
+							$url 		= 'index.php?option=com_spcampaign&view=' . $name;
+							$image 		= $name . '.' . $type;
+							$name 		= 'COM_SPCAMPAIGN_DASHBOARD_' . SpcampaignHelper::safeString($name,'U');
 							$hover		= false;
 						}
 					}
@@ -112,8 +122,8 @@ class SpcampaignModelSpcampaign extends JModelList
 					{
 						$viewName 	= $view;
 						$alt 		= $view;
-						$url 		= 'index.php?option=com_spcampaign&view='.$view;
-						$image 		= $view.'.png';
+						$url 		= 'index.php?option=com_spcampaign&view=' . $view;
+						$image 		= $view . '.png';
 						$name 		= ucwords($view).'<br /><br />';
 						$hover		= false;
 					}
@@ -125,7 +135,7 @@ class SpcampaignModelSpcampaign extends JModelList
 						$dashboard_list = false;
 						$accessTo = '';
 						$accessAdd = '';
-						// acces checking start
+						// access checking start
 						$accessCreate = (isset($viewAccess[$viewName.'.create'])) ? SpcampaignHelper::checkString($viewAccess[$viewName.'.create']):false;
 						$accessAccess = (isset($viewAccess[$viewName.'.access'])) ? SpcampaignHelper::checkString($viewAccess[$viewName.'.access']):false;
 						// set main controllers
@@ -140,7 +150,7 @@ class SpcampaignModelSpcampaign extends JModelList
 						{
 							$accessAdd = 'core.create';
 						}
-						// check if acces to view is set
+						// check if access to view is set
 						if ($accessAccess)
 						{
 							$accessTo = $viewAccess[$viewName.'.access'];

@@ -22,6 +22,7 @@
 		<action name="campaign.version" title="COM_SPCAMPAIGN_CAMPAIGNS_EDIT_VERSION" description="COM_SPCAMPAIGN_CAMPAIGNS_EDIT_VERSION_DESC" />
 		<action name="campaign.export" title="COM_SPCAMPAIGN_CAMPAIGNS_EXPORT" description="COM_SPCAMPAIGN_CAMPAIGNS_EXPORT_DESC" />
 		<action name="campaign.import" title="COM_SPCAMPAIGN_CAMPAIGNS_IMPORT" description="COM_SPCAMPAIGN_CAMPAIGNS_IMPORT_DESC" />
+		<action name="site.itemcampaign.access" title="COM_SPCAMPAIGN_ITEMCAMPAIGN_ACCESS_SITE" description="COM_SPCAMPAIGN_ITEMCAMPAIGN_ACCESS_SITE_DESC" />
 		<action name="site.listcampaign.access" title="COM_SPCAMPAIGN_LISTCAMPAIGN_ACCESS_SITE" description="COM_SPCAMPAIGN_LISTCAMPAIGN_ACCESS_SITE_DESC" />
 	</section>
 	<section name="campaign">

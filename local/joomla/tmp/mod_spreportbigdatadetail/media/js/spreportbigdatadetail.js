@@ -2,6 +2,8 @@ let t_devicesIn = [];
 let t_devicesEx = [];
 let t_devices = [];
 
+let tableDetail = '';
+
 $(document).ready( function() {
 
     getCountryList();
@@ -10,6 +12,8 @@ $(document).ready( function() {
 
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
+
+    //$('#datatable-buttons').DataTable({responsive: true});
 });
 
 function getCountryList() {
@@ -364,6 +368,16 @@ function sendForm() {
     let t_sensor = $('#selSensor').val();
     let t_zone = $('#selZone').val();
     let t_type = $('#selType').val();
+
+    let t_brands = '';
+    let t_status = '';
+    let t_presence = '';
+    let t_ageS = '';
+    let t_ageE = '';
+    let t_sex = '';
+    let t_zipcodes = '';
+    let t_member = '';
+
     let userTimeZone = document.getElementById('userTimeZone').innerText;
 
     switch (t_type) {
@@ -379,11 +393,97 @@ function sendForm() {
             break;
     }
 
-    let dataForm = {
-            "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
-            "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-            "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone, "includedDevices": t_devicesIn, "excludedDevices": t_devicesEx,
-            "timeZone": userTimeZone
+    evtSourceDetailBigData
+    (
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
+        t_brands, t_status, t_presence,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone
+    );
+}
+
+function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+                                zipcodes, member, userTZ) {
+
+    let seActivityBigData = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/list?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
+
+    tableDetail = $('#datatable-buttons').DataTable({
+        "destroy": true,
+        "column": [
+            {"data": "spotId"},
+            {"data": "zone"},
+            {"data": "sensorId"},
+            {"data": "clientMac"},
+            {"data": "seenTime"},
+            {"data": "rssi"},
+            {"data": "status"},
+            {"data": "countryId"},
+            {"data": "stateId"},
+            {"data": "cityId"},
+            {"data": "zipCode"}
+        ],
+        "dom": 'Bfrtip',
+        "buttons": [
+            {
+                "extend": 'copy',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'csv',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'excel',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'pdfHtml5',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'print',
+                "className": 'btn-sm'
+            },
+        ],
+        "responsive": true
+    });
+
+    NProgress.start();
+    NProgress.set(0,4);
+    seActivityBigData.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        let len = eventData.length;
+        for (let x=0; x<len; x++) {
+            let last = eventData[x].isLast;
+            if (eventData[x].body != null) {
+                let bodyData = eventData[x].body;
+                tableDetail.row.add(
+                    [
+                        bodyData.spotId,
+                        bodyData.zone,
+                        bodyData.sensorId,
+                        bodyData.clientMac,
+                        bodyData.seenTime,
+                        bodyData.rssi,
+                        bodyData.status,
+                        bodyData.countryId,
+                        bodyData.stateId,
+                        bodyData.cityId,
+                        bodyData.zipCode
+                    ]).draw(false);
+            } else {
+                if (last) {
+                    seActivityBigData.close();
+                    NProgress.done();
+                }
+            }
+        }
     }
-    console.log(dataForm);
 }

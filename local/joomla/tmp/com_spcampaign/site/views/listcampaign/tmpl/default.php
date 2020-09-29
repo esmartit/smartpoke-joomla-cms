@@ -100,6 +100,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_VALID_DATE'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?></th>
+                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_PERCENT'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED'); ?></th>
                                     <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED_DATE'); ?></th>
                                     <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPCAMPAIGN_ACTION'); ?></span></th>
@@ -122,6 +123,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                             <td class=""><div align='center'><?php echo JText::_('SMS'); ?> <span class='fa fa-comment'></span></div></td>
                                         <?php endif; ?>
                                         <td class="a-right a-right "><?php echo $item->type; ?></td>
+                                        <td align="center"><?php echo $item->percent; ?> %</td>
                                         <?php if ($item->deferred == 0): ?>
                                             <td align="center"><input type="checkbox" class="js-switch" disabled="disabled" /></td>
                                             <td class=""></td>

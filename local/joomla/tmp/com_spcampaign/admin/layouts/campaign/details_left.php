@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			30th July, 2020
+	@build			28th September, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		details_left.php
@@ -37,7 +37,9 @@ $fields_tab_layout = 'fields_' . $layout_path_array[1];
 $fields = $displayData->get($fields_tab_layout) ?: array(
 	'smsemail',
 	'message_sms',
-	'type'
+	'type',
+	'valuein',
+	'percent'
 );
 
 $hiddenFields = $displayData->get('hidden_fields') ?: array();
