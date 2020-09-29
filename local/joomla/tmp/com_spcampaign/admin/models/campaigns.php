@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			30th July, 2020
+	@build			28th September, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		campaigns.php
@@ -112,8 +112,8 @@ class SpcampaignModelCampaigns extends JModelList
 			{
 				// convert smsemail
 				$item->smsemail = $this->selectionTranslation($item->smsemail, 'smsemail');
-				// convert type
-				$item->type = $this->selectionTranslation($item->type, 'type');
+                // convert type
+                $item->type = $this->selectionTranslation($item->type, 'type');
 			}
 		}
 
@@ -142,20 +142,20 @@ class SpcampaignModelCampaigns extends JModelList
 				return $smsemailArray[$value];
 			}
 		}
-		// Array of type language strings
-		if ($name === 'type')
-		{
-			$typeArray = array(
-				'LOGIN' => 'COM_SPCAMPAIGN_CAMPAIGN_LOGIN',
-				'REGISTER' => 'COM_SPCAMPAIGN_CAMPAIGN_REGISTER',
-				'CAMPAIGN' => 'COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN'
-			);
-			// Now check if value is found in this array
-			if (isset($typeArray[$value]) && SpcampaignHelper::checkString($typeArray[$value]))
-			{
-				return $typeArray[$value];
-			}
-		}
+        // Array of type language strings
+        if ($name === 'type')
+        {
+            $typeArray = array(
+                'LOGIN' => 'COM_SPCAMPAIGN_CAMPAIGN_LOGIN',
+                'REGISTER' => 'COM_SPCAMPAIGN_CAMPAIGN_REGISTER',
+                'CAMPAIGN' => 'COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN'
+            );
+            // Now check if value is found in this array
+            if (isset($typeArray[$value]) && SpcampaignHelper::checkString($typeArray[$value]))
+            {
+                return $typeArray[$value];
+            }
+        }
 		return $value;
 	}
 	
@@ -214,7 +214,7 @@ class SpcampaignModelCampaigns extends JModelList
 			else
 			{
 				$search = $db->quote('%' . $db->escape($search) . '%');
-				$query->where('(a.name LIKE '.$search.' OR a.validdate LIKE '.$search.' OR a.smsemail LIKE '.$search.' OR a.type LIKE '.$search.' OR a.alias LIKE '.$search.' OR a.deferred LIKE '.$search.')');
+                $query->where('(a.name LIKE '.$search.' OR a.validdate LIKE '.$search.' OR a.smsemail LIKE '.$search.' OR a.type LIKE '.$search.' OR a.alias LIKE '.$search.' OR a.deferred LIKE '.$search.')');
 			}
 		}
 
@@ -246,7 +246,7 @@ class SpcampaignModelCampaigns extends JModelList
 	public function getExportData($pks, $user = null)
 	{
 		// setup the query
-		if (SpcampaignHelper::checkArray($pks))
+		if (($pks_size = SpcampaignHelper::checkArray($pks)) !== false || 'bulk' === $pks)
 		{
 			// Set a value to know this is export method. (USE IN CUSTOM CODE TO ALTER OUTCOME)
 			$_export = true;
@@ -264,7 +264,24 @@ class SpcampaignModelCampaigns extends JModelList
 
 			// From the spcampaign_campaign table
 			$query->from($db->quoteName('#__spcampaign_campaign', 'a'));
-			$query->where('a.id IN (' . implode(',',$pks) . ')');
+			// The bulk export path
+			if ('bulk' === $pks)
+			{
+				$query->where('a.id > 0');
+			}
+			// A large array of ID's will not work out well
+			elseif ($pks_size > 500)
+			{
+				// Use lowest ID
+				$query->where('a.id >= ' . (int) min($pks));
+				// Use highest ID
+				$query->where('a.id <= ' . (int) max($pks));
+			}
+			// The normal default path
+			else
+			{
+				$query->where('a.id IN (' . implode(',',$pks) . ')');
+			}
 			// Implement View Level Access
 			if (!$user->authorise('core.options', 'com_spcampaign'))
 			{

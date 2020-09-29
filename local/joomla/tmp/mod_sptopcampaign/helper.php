@@ -23,13 +23,12 @@ class ModSPTopCampaignHelper
 
         $query = $db->getQuery(true);
         $query
-            ->select(array('campaign_id', 'c.name', 'MIN(DATE(senddate)) as sent', 'c.validdate', 'COUNT(username) as total'))
-            ->from($db->quoteName('#__spmessage_message', 'm'))
-            ->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('m.campaign_id'))
+            ->select(array('id', 'name', 'percent as value'))
+            ->from($db->quoteName('#__spcampaign_campaign', 'c'))
             ->where($db->quoteName('validdate'). '<= NOW()')
             ->where($db->quoteName('type'). '='. $db->quote( 'CAMPAIGN'))
             ->where($db->quoteName('c.published'). '= 1')
-            ->group($db->quoteName('campaign_id'));
+            ->order('percent DESC');
         $db->setQuery($query);
         $campaignList = $db->loadObjectList();
 

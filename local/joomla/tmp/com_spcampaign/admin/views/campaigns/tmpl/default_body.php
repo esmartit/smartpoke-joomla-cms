@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			30th July, 2020
+	@build			28th September, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		default_body.php
@@ -87,8 +87,14 @@ $edit = "index.php?option=com_spcampaign&view=campaigns&task=campaign.edit";
 		<td class="hidden-phone">
 			<?php echo JText::_($item->smsemail); ?>
 		</td>
+        <td class="hidden-phone">
+            <?php echo JText::_($item->type); ?>
+        </td>
 		<td class="hidden-phone">
-			<?php echo JText::_($item->type); ?>
+			<?php echo $this->escape($item->valuein); ?>
+		</td>
+		<td class="hidden-phone">
+			<?php echo $this->escape($item->percent); ?>
 		</td>
 		<td class="center">
 		<?php if ($canDo->get('core.edit.state')) : ?>

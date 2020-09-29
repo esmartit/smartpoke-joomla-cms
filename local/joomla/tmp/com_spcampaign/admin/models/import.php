@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			30th July, 2020
+	@build			28th September, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		import.php
@@ -435,7 +435,15 @@ class SpcampaignModelImport extends JModelLegacy
 			$jinput = JFactory::getApplication()->input;
 			foreach($target_headers as $header)
 			{
-				$data['target_headers'][$header] = $jinput->getString($header, null);
+				if (($column = $jinput->getString($header, false)) !== false ||
+					($column = $jinput->getString(strtolower($header), false)) !== false)
+				{
+					$data['target_headers'][$header] = $column;
+				}
+				else
+				{
+					$data['target_headers'][$header] = null;
+				}
 			}
 			// set the data
 			if(isset($package['dir']))

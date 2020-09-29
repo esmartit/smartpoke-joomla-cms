@@ -100,7 +100,6 @@
                        label="COM_SPCAMPAIGN_CAMPAIGN_NAME_LABEL"
                        size="40"
                        maxlength="150"
-                       description="JFIELD_TITLE_DESC"
                        class="text_area"
                        required="true"
                        filter="STRING" />
@@ -138,6 +137,24 @@
                         <option value="REGISTER">COM_SPCAMPAIGN_CAMPAIGN_REGISTER</option>
                         <option value="CAMPAIGN">COM_SPCAMPAIGN_CAMPAIGN_CAMPAIGN</option>
                 </field>
+                <!-- Valuein Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="valuein"
+                       label="COM_SPCAMPAIGN_CAMPAIGN_VALUEIN_LABEL"
+                       size="40"
+                       maxlength="150"
+                       default="0"
+                       class="text_area"
+                       filter="STRING" />
+                <!-- Percent Field. Type: Text. (joomla)-->
+                <field type="text"
+                       name="percent"
+                       label="COM_SPCAMPAIGN_CAMPAIGN_PERCENT_LABEL"
+                       size="40"
+                       maxlength="150"
+                       default="0"
+                       class="text_area"
+                       filter="FLOAT" />
                 <!-- Alias Field. Type: Text. (joomla)-->
                 <field type="text"
                        name="alias"
@@ -149,6 +166,7 @@
                 <field type="editor"
                        name="message_email"
                        label="COM_SPCAMPAIGN_CAMPAIGN_MESSAGE_EMAIL_LABEL"
+                       description="COM_SPCAMPAIGN_CAMPAIGN_MESSAGE_EMAIL_DESCRIPTION"
                        editor="desired|alternative"
                        filter="safehtml"
                        required="false" />

@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			30th July, 2020
+	@build			28th September, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		campaign.php
@@ -38,9 +38,11 @@ class SpcampaignModelCampaign extends JModelAdmin
 	protected $tabLayoutFields = array(
 		'details' => array(
 			'left' => array(
-				'smsemail',
-				'message_sms',
-				'type'
+                'smsemail',
+                'message_sms',
+                'type',
+                'valuein',
+                'percent'
 			),
 			'right' => array(
 				'deferred',
@@ -415,7 +417,7 @@ class SpcampaignModelCampaign extends JModelAdmin
 	public function validate($form, $data, $group = null)
 	{
 		// check if the not_required field is set
-		if (SpcampaignHelper::checkString($data['not_required']))
+		if (isset($data['not_required']) && SpcampaignHelper::checkString($data['not_required']))
 		{
 			$requiredFields = (array) explode(',',(string) $data['not_required']);
 			$requiredFields = array_unique($requiredFields);

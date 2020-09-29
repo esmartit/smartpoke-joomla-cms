@@ -4,7 +4,9 @@ let devPresenceIN = [];
 let bigDataPresenceIN = [];
 let userTimeZone = '';
 let existIN = 0;
-
+let totalTarget = 0;
+let totalIN = 0;
+let percentIN = 0;
 
 
 $(document).ready( function() {
@@ -178,12 +180,15 @@ $(document).ready(function () {
     $('#radioSMS').on('change', function () {
         smsemail = $('#radioSMS').val();
         getCampaigns(smsemail);
-        getSmsEmailTotal();
     });
 
     $('#radioEmail').on('change', function () {
         smsemail = $('#radioEmail').val();
         getCampaigns(smsemail);
+    });
+
+    $('#selCampaign').on('change', function () {
+        getExpCampaign();
         getSmsEmailTotal();
     });
 });
@@ -191,8 +196,8 @@ $(document).ready(function () {
 function getCampaigns(smsemailValue = '1'){
     let request = {
         option       : 'com_ajax',
-        module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
-        method       : 'getCampaigns',  // to target: function getCampaignsAjax in class ModSPSelectCampaignDetailHelper
+        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
+        method       : 'getCampaigns',  // to target: function getCampaignsAjax in class ModSPSelectCampaignEffectivenessHelper
         format       : 'json',
         data         : smsemailValue
     };
@@ -212,6 +217,28 @@ function getCampaigns(smsemailValue = '1'){
 
                 $("#selCampaign").append("<option value='"+id+"'>"+name+"</option>");
             }
+        });
+}
+
+function getExpCampaign() {
+    let campaign = $('#selCampaign').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
+        method       : 'getInfoCampaigns',  // to target: function getDatesCampaignsAjax in class ModSPSelectCampaignDetailHelper
+        format       : 'json',
+        data         : campaign
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+
+            $('#datestart').val(object[0].sent);
+            $('#dateend').val(object[0].validdate);
+
         });
 }
 
@@ -412,16 +439,21 @@ function newUsersPercentage(){
     $('#itotalUsers').val(totalUsers);
 
     let totalTarget = $('#itotalMessage').val();
-    let newUsersPercentage = (parseInt(totalUsers)/parseInt(totalTarget))*100;
+    let newUsersPercentage = 0;
+    if (totalTarget != 0) {
+        newUsersPercentage = (parseInt(totalUsers)/parseInt(totalTarget))*100;
+        newUsersPercentage = Math.round(newUsersPercentage * 10) / 10;
+    }
     document.getElementById('newUserPercentage').innerHTML = Intl.NumberFormat().format(newUsersPercentage)+' %';
 
 }
 
 function percentageIN(){
-    let totalTarget = $('#itotalMessage').val();
-    let totalIN = $('#itotalIn').val();
-    let percentageIN = (parseInt(totalIN)/parseInt(totalTarget))*100;
-    document.getElementById("percentageIN").innerHTML = Intl.NumberFormat().format(percentageIN)+' %';
+    totalTarget = $('#itotalMessage').val();
+    totalIN = $('#itotalIn').val();
+    percentIN = (parseInt(totalIN)/parseInt(totalTarget))*100;
+    percentIN = Math.round(percentIN * 10) / 10;
+    document.getElementById("percentageIN").innerHTML = Intl.NumberFormat().format(percentIN)+' %';
 }
 
 function getPresenceUsersCampaign(campaign, user){
@@ -441,8 +473,25 @@ function getPresenceUsersCampaign(campaign, user){
         });
 }
 
+function updateValueCampaign(campaign, valIn, valPencent){
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectcampaigneffectiveness',  // to target: mod_spselectcampaigneffectiveness
+        method       : 'updateCampaign',  // to target: function updateCampaignAjax in class ModSPSelectCampaignEffectivenessHelper
+        format       : 'json',
+        data         : { "campaignId":campaign, "valueIn": valIn, "valuePercent": valPencent}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            console.log(response.data);
+        });
+}
+
 function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
-                                zipcodes, member, userTZ, group) {
+                           zipcodes, member, userTZ, group) {
     let len = bigDataPresenceIN.length;
     for (let i=0; i<len; i++) {
         bigDataPresenceIN[i] = '';
@@ -458,6 +507,9 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
     let pos = 0;
     let uniqueIN = 0;
     let t_campaign = $('#selCampaign').val();
+
+    NProgress.start();
+    NProgress.set(0,4);
 
     sePresenceIN.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
@@ -490,7 +542,9 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
             }
         } else {
             if (last) {
+                updateValueCampaign(t_campaign, uniqueIN, percentIN);
                 sePresenceIN.close();
+                NProgress.done();
             }
         }
     }
@@ -508,13 +562,17 @@ function sendForm() {
     let t_spot = $('#selSpot').val();
     let t_campaign = $('#selCampaign').val();
 
-    evtSourceUniqueIN(t_dateS, t_dateE, '00:00:00', '23:59:59',
-        t_country, t_state, t_city, t_zipcode,
-        t_spot, '', '',
-        '', 'IN', '1',
-        '', '', '', '', '',
-        userTimeZone, 'BY_DAY'
-    );
+    let totMsg = $('#itotalMessage').val();
+
+    if (totMsg > 0) {
+        evtSourceUniqueIN(t_dateS, t_dateE, '00:00:00', '23:59:59',
+            t_country, t_state, t_city, t_zipcode,
+            t_spot, '', '',
+            '', 'IN', '1',
+            '', '', '', '', '',
+            userTimeZone, 'BY_DAY'
+        );
+    }
     getNewUsersCampaign(t_dateS, t_dateE, t_campaign, 'T');
     getNewUsersCampaign(t_dateS, t_dateE, t_campaign, 'U');
     getCampaignDetail(t_dateS, t_dateE, t_campaign, t_country, t_state, t_city, t_zipcode, t_spot);

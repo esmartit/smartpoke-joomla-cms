@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     SmartPoke.Site
- * @subpackage  mod_spselectcampaigndetail
+ * @subpackage  mod_spselectreportbigdatadetail
  *
  * @copyright   Copyright (C) 2020 eSmartIT. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -23,6 +23,10 @@ $document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-scroller-
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
+
+// NProgress
+$document->addScript('/templates/smartpokex/vendors/nprogress/nprogress.js');
+
 // bootstrap-daterangepicker
 $document->addScript('/templates/smartpokex/vendors/moment/min/moment.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/daterangepicker.js');
@@ -194,13 +198,17 @@ $dateend = date("Y-m-d", strtotime($currDate));
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                         <thead>
                         <tr class="headings">
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_SPOT'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_LOCATION'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_SENSOR'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_DEVICE'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_DATESTART'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_TIMESTART'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_TIMEENDE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_DATE'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_POWER'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_STATUS'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_COUNTRY'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_STATE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_CITY'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_ZIPCODE'); ?></th>
                         </tr>
                         </thead>
                         <tbody>

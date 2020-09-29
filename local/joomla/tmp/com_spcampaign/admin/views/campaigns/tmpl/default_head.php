@@ -4,7 +4,7 @@
 /-------------------------------------------------------------------------------------------------------/
 
 	@version		1.0.0
-	@build			30th July, 2020
+	@build			28th September, 2020
 	@created		6th April, 2020
 	@package		SP Campaign
 	@subpackage		default_head.php
@@ -47,8 +47,14 @@ defined('_JEXEC') or die('Restricted access');
 	<th class="nowrap hidden-phone" >
 			<?php echo JHtml::_('grid.sort', 'COM_SPCAMPAIGN_CAMPAIGN_SMSEMAIL_LABEL', 'a.smsemail', $this->listDirn, $this->listOrder); ?>
 	</th>
+    <th class="nowrap hidden-phone" >
+        <?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN_TYPE_LABEL'); ?>
+    </th>
 	<th class="nowrap hidden-phone" >
-			<?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN_TYPE_LABEL'); ?>
+			<?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN_VALUEIN_LABEL'); ?>
+	</th>
+	<th class="nowrap hidden-phone" >
+			<?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN_PERCENT_LABEL'); ?>
 	</th>
 	<?php if ($this->canState): ?>
 		<th width="10" class="nowrap center" >

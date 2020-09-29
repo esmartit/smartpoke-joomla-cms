@@ -25,10 +25,7 @@ class ModSPSelectCampaignEffectivenessHelper
         $query->from($db->quoteName('#__spmessage_message', 'a'));
         $query->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'));
         $query->where($db->quoteName('c.type'). " = " . $db->quote('CAMPAIGN'));
-
-        if (!empty($campaignId)) {
-            $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
-        }
+        $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
 
         $db->setQuery($query);
         $value = $db->loadResult();
@@ -41,6 +38,7 @@ class ModSPSelectCampaignEffectivenessHelper
      */
     public static function getCampaignsAjax()
     {
+        $currDate = date('Y-m-d');
         $smsemail = $_REQUEST['data'];
 
         $db = JFactory::getDbo();
@@ -48,8 +46,9 @@ class ModSPSelectCampaignEffectivenessHelper
         $query = $db->getQuery(true);
         $query->select($db->quoteName(array('id', 'name')));
         $query->from($db->quoteName('#__spcampaign_campaign'));
-        $query->where($db->quoteName('smsemail'). " = " . $db->quote($smsemail));
-        $query->where($db->quoteName('type'). " = " . $db->quote('CAMPAIGN'));
+        $query->where($db->quoteName('validdate'). " < " . $db->quote($currDate), 'AND');
+        $query->where($db->quoteName('smsemail'). " = ". $db->quote($smsemail), 'AND');
+        $query->where($db->quoteName('type'). " = " . $db->quote('CAMPAIGN'), 'AND');
         $query->where($db->quoteName('published'). " = '1'");
         $db->setQuery($query);
         $campaignList = $db->loadRowList();
@@ -121,6 +120,33 @@ class ModSPSelectCampaignEffectivenessHelper
         $presenceUsersTarget = $db->loadResult();
 
         return $presenceUsersTarget;
+    }
+
+    /**
+     * Update ValueIN and Percent of the campaign
+     * @return mixed
+     */
+    public function updateCampaignAjax()
+    {
+        $data = $_REQUEST['data'];
+        $campaignId = $data['campaignId'];
+        $valueIn = $data['valueIn'];
+        $valuePercent = $data['valuePercent'];
+
+        $user = JFactory::getUser();
+        $userId = $user->get('id');
+
+        $objTable = new stdClass();
+
+        $db = JFactory::getDBO();
+        $objTable->id = $campaignId;
+        $objTable->valuein = $valueIn;
+        $objTable->percent = $valuePercent;
+        $objTable->modified_by = $userId;
+        $objTable->modified = date("Y-m-d h:i:sa");
+        $result = $db->updateObject('#__spcampaign_campaign', $objTable, 'id');
+
+        return $result;
     }
 
 }

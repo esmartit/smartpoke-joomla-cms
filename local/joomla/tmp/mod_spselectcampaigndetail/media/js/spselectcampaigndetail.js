@@ -170,6 +170,11 @@ $(document).ready(function () {
         getCampaigns(smsemail);
         getSmsEmailMonthly('total_email_month');
     });
+
+    $('#selCampaign').on('change', function () {
+        getDatesCampaign();
+    });
+
 });
 
 function getCampaigns(smsemailValue = '1'){
@@ -196,6 +201,28 @@ function getCampaigns(smsemailValue = '1'){
 
                 $("#selCampaign").append("<option value='"+id+"'>"+name+"</option>");
             }
+        });
+}
+
+function getDatesCampaign() {
+    let campaign = $('#selCampaign').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectcampaigndetail',  // to target: mod_spselectcampaigndetail
+        method       : 'getInfoCampaigns',  // to target: function getInfoCampaignsAjax in class ModSPSelectCampaignDetailHelper
+        format       : 'json',
+        data         : campaign
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+
+            $('#datestart').val(object[0].sent);
+            $('#dateend').val(object[0].validdate);
+
         });
 }
 

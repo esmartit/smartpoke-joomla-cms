@@ -115,10 +115,7 @@ class ModSPSelectCampaignDetailHelper
         $query->join('LEFT', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
         $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart));
         $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd));
-
-        if (!empty($campaignId)) {
-            $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
-        }
+        $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
 
         if (!empty($countryId)) {
             $query->where($db->quoteName('country'). " = " .$db->quote($countryId));
@@ -145,6 +142,27 @@ class ModSPSelectCampaignDetailHelper
         $statusList = $db->loadRowList();
 
         return $statusList;
+    }
+
+    /**
+     * Returns the Information Campoign
+     * @return mixed
+     */
+    public static function getInfoCampaignsAjax()
+    {
+        $campaignId = $_REQUEST['data'];
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query
+            ->select(array('campaign_id', 'c.name', 'MIN(DATE(senddate)) as sent', 'c.validdate', 'COUNT(username) as total'))
+            ->from($db->quoteName('#__spmessage_message', 'm'))
+            ->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id') . ' = ' . $db->quoteName('m.campaign_id'))
+            ->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
+        $db->setQuery($query);
+        $campaignInfo = $db->loadObjectList();
+
+        return $campaignInfo;
     }
 
     /**
