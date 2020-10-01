@@ -200,7 +200,7 @@ function getSpotList() {
 function getSensorZoneHotSpotList() {
     getSensorList();
     getZoneList();
-    getHotspotList();
+    getHotSpotList();
 }
 
 function getSensorList() {
