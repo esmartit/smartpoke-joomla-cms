@@ -258,6 +258,34 @@ function getZoneList() {
         });
 }
 
+function getHotSpotList() {
+    let spotid = $('#selSpot').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectSmartPokeeHelper
+        format       : 'json',
+        data         : spotid
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selHotSpot").empty();
+            $("#selHotSpot").append("<option value=''>All HotSpots</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][1];
+                let name = object[i][1];
+
+                $("#selHotspot").append("<option value='"+id+"'>"+name+"</option>");
+            }
+        });
+}
+
 function getDeviceInList() {
     let request = {
         option       : 'com_ajax',
@@ -412,6 +440,7 @@ function showOnlineOpt(){
     document.getElementById("spotSelect").style.display = 'block';
     document.getElementById("sensorSelect").style.display = 'block';
     document.getElementById("zoneSelect").style.display = 'block';
+    document.getElementById("hotspotSelect").style.display = 'block';
     document.getElementById("typeSelect").style.display = 'block';
     document.getElementById("selbrands").style.display = 'block';
     document.getElementById("selposition").style.display = 'block';
@@ -436,6 +465,7 @@ function showOfflineOpt(){
     document.getElementById("spotSelect").style.display = 'block';
     document.getElementById("sensorSelect").style.display = 'block';
     document.getElementById("zoneSelect").style.display = 'block';
+    document.getElementById("hotspotSelect").style.display = 'block';
     document.getElementById("typeSelect").style.display = 'block';
     document.getElementById("selbrands").style.display = 'block';
     document.getElementById("selposition").style.display = 'block';
@@ -459,6 +489,7 @@ function showDataBaseOpt(){
     document.getElementById("spotSelect").style.display = 'block';
     document.getElementById("sensorSelect").style.display = 'none';
     document.getElementById("zoneSelect").style.display = 'none';
+    document.getElementById("hotspotSelect").style.display = 'none';
     document.getElementById("typeSelect").style.display = 'none';
     document.getElementById("selbrands").style.display = 'none';
     document.getElementById("selposition").style.display = 'none';
@@ -482,6 +513,7 @@ function showFileOpt() {
     document.getElementById("spotSelect").style.display = 'none';
     document.getElementById("sensorSelect").style.display = 'none';
     document.getElementById("zoneSelect").style.display = 'none';
+    document.getElementById("hotspotSelect").style.display = 'none';
     document.getElementById("typeSelect").style.display = 'none';
     document.getElementById("selbrands").style.display = 'none';
     document.getElementById("selposition").style.display = 'none';
@@ -649,6 +681,7 @@ function sendForm() {
     let t_spot = '';
     let t_sensor = '';
     let t_zone = '';
+    let t_hotspot = '';
     let t_type = '';
     let t_brands = '';
     let t_status = '';
@@ -672,6 +705,7 @@ function sendForm() {
         t_timeE = $('#timeend').val();
         t_sensor = $('#selSensor').val();
         t_zone = $('#selZone').val();
+        t_hotspot = $('#selHotSpot').val();
         t_type = $('#selType').val();
         t_sensor = $('#selSensor').val();
         t_brands = $('#selBrand').val();
@@ -719,7 +753,7 @@ function sendForm() {
                 (
                     t_dateS, t_dateE, t_timeS, t_timeE,
                     t_country, t_state, t_city, t_zipcode,
-                    t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
+                    t_spot, t_sensor, t_zone, t_hotpsot, t_devicesIn, t_devicesEx,
                     t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
                     userTimeZone
                 );
@@ -729,7 +763,7 @@ function sendForm() {
                 (
                     t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
                     t_country, t_state, t_city, t_zipcode,
-                    t_spot, t_sensor,  t_zone, t_devicesIn, t_devicesEx,
+                    t_spot, t_sensor,  t_zone, t_hotspot, t_devicesIn, t_devicesEx,
                     t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
                     userTimeZone
                 );
@@ -752,7 +786,7 @@ function sendForm() {
                 "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
                 "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
                 "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-                "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone,
+                "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone, "hotspotId": t_hotspot,
                 "brands": t_brands, "status": t_status, "presence": t_presence,
                 "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
                 "file": formFileJson,
@@ -764,18 +798,18 @@ function sendForm() {
     }
 }
 
-function smartpokeOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
+function smartpokeOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, ageS, ageE, sex,
                          zipcodes, member, userTZ) {
 
-    console.log(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
+    console.log(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, ageS, ageE, sex,
         zipcodes, member, userTZ);
 
 }
 
-function smartpokeOffline(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+function smartpokeOffline(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                           zipcodes, member, userTZ, group) {
 
-    console.log(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+    console.log(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
         zipcodes, member, userTZ, group);
 }
 
