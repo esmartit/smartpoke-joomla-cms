@@ -122,26 +122,41 @@ class SpbrandModelListbrand extends JModelList
         $this->user = JFactory::getUser();
         $this->userId = $this->user->get('id');
 
-        $brand = new stdClass();
-        $brand->name = $values['brand'];
-        $brand->published = $values['publish'];
-        $brand->alias = strtolower($values['brand']);
+        $objTable = new stdClass();
+        $objTable->name = $values['brand'];
+        $objTable->published = $values['publish'];
+        $objTable->alias = strtolower($values['brand']);
         $db = JFactory::getDBO();
         if ($option == 'C') {
-            $brand->id = null;
-            $brand->created_by = $this->userId;
-            $brand->created = date("Y-m-d h:i:sa");
-            $brand->access = 1;
-            $brand->params = '';
-            $brand->metakey= '';
-            $brand->metadesc = '';
-            $brand->metadata = '{"robots":"","author":"","rights":""}';
-            $result = $db->insertObject('#__spbrand_brand', $brand, 'id');
+            $objTable->id = null;
+            $objTable->created_by = $this->userId;
+            $objTable->created = date("Y-m-d h:i:sa");
+            $objTable->access = 1;
+            $objTable->params = '';
+            $objTable->metakey= '';
+            $objTable->metadesc = '';
+            $objTable->metadata = '{"robots":"","author":"","rights":""}';
+            $result = $db->insertObject('#__spbrand_brand', $objTable, 'id');
         } else {
-            $brand->id = $values['id'];
-            $brand->modified_by = $this->userId;
-            $brand->modified = date("Y-m-d h:i:sa");
-            $result = $db->updateObject('#__spbrand_brand', $brand, 'id');
+            if ($option == 'U') {
+                $objTable->id = $values['id'];
+                $objTable->modified_by = $this->userId;
+                $objTable->modified = date("Y-m-d h:i:sa");
+                $result = $db->updateObject('#__spbrand_brand', $objTable, 'id');
+            } else {
+                $query = $db->getQuery(true);
+
+                // delete all custom keys for user 1001.
+                $conditions = array(
+                    $db->quoteName('id') . ' = '.$values['id']
+                );
+
+                $query->delete($db->quoteName('#__spbrand_brand'));
+                $query->where($conditions);
+                $db->setQuery($query);
+
+                $result = $db->execute();
+            }
         }
         return $result;
     }

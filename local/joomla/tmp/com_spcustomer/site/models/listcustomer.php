@@ -155,10 +155,25 @@ class SpcustomerModelListcustomer extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spcustomer_customer', $objTable, 'id');
         } else {
-            $objTable->id = $values['id'];
-            $objTable->modified_by = $this->userId;
-            $objTable->modified = date("Y-m-d h:i:sa");
-            $result = $db->updateObject('#__spcustomer_customer', $objTable, 'id');
+            if ($option == 'U') {
+                $objTable->id = $values['id'];
+                $objTable->modified_by = $this->userId;
+                $objTable->modified = date("Y-m-d h:i:sa");
+                $result = $db->updateObject('#__spcustomer_customer', $objTable, 'id');
+            } else {
+                $query = $db->getQuery(true);
+
+                // delete all custom keys for user 1001.
+                $conditions = array(
+                    $db->quoteName('id') . ' = '.$values['id']
+                );
+
+                $query->delete($db->quoteName('#__spcustomer_customer'));
+                $query->where($conditions);
+                $db->setQuery($query);
+
+                $result = $db->execute();
+            }
         }
         return $result;
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.2" method="upgrade">
-    <name>COM_SPLASHPAGE</name>
-    <creationDate>11th June, 2020</creationDate>
+    <name>COM_SPHOTSPOTPAGE</name>
+    <creationDate>30th September, 2020</creationDate>
     <author>Adolfo Zignago</author>
     <authorEmail>adolfo.zignago@esmartit.es</authorEmail>
     <authorUrl>https://www.esmartit.es</authorUrl>
@@ -9,10 +9,10 @@
     <license>GNU/GPL Version 2 or later - http://www.gnu.org/licenses/gpl-2.0.html</license>
     <version>1.0.0</version>
     <description><![CDATA[
-		<h1>SmartPoke Splash Page</h1>
+		<h1>SP HotSpotPage</h1>
 		<div style="clear: both;"></div>
 		<p></p>
-		<p>Created by <a href="https://www.esmartit.es" target="_blank">Adolfo Zignago</a><br /><small>Development started 14th April, 2020</small></p>
+		<p>Created by <a href="https://www.esmartit.es" target="_blank">Adolfo Zignago</a><br /><small>Development started 30th September, 2020</small></p>
 	]]></description>
 
     <update> <!-- Runs on update; New since J2.5 -->
@@ -21,7 +21,7 @@
         </schemas>
     </update>
 
-    <media destination="com_splashpage" folder="media">
+    <media destination="com_sphotspotpage" folder="media">
         <filename>index.html</filename>
         <folder>js</folder>
         <folder>css</folder>
@@ -34,7 +34,7 @@
         in this section are copied from /site/ in the package -->
     <files folder="site">
         <filename>index.html</filename>
-        <filename>splashpage.php</filename>
+        <filename>sphotspotpage.php</filename>
         <filename>controller.php</filename>
         <folder>assets</folder>
         <folder>controllers</folder>
@@ -46,13 +46,13 @@
     </files>
 
     <languages folder="site">
-        <language tag="en-GB">language/en-GB/en-GB.com_splashpage.ini</language>
-        <language tag="en-GB">language/en-GB/en-GB.com_splashpage.sys.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.com_sphotspotpage.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.com_sphotspotpage.sys.ini</language>
     </languages>
 
     <administration>
         <!-- Administration Menu Section -->
-        <menu link='index.php?option=com_splashpage'>SmartPoke Splash</menu>
+        <menu link='index.php?option=com_sphotspotpage'>SmartPoke HotSpot Page</menu>
         <!-- Administration Main File Copy Section -->
         <!-- Note the folder attribute: This attribute describes the folder
             to copy FROM in the package to install therefore files copied
@@ -60,7 +60,7 @@
         <files folder="admin">
             <!-- Admin Main File Copy Section -->
             <filename>index.html</filename>
-            <filename>splashpage.php</filename>
+            <filename>sphotspotpage.php</filename>
             <!-- SQL files section -->
             <folder>sql</folder>
         </files>

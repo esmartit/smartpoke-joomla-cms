@@ -138,10 +138,25 @@ class SpzoneModelListzone extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spzone_zone', $objTable, 'id');
         } else {
-            $objTable->id = $values['id'];
-            $objTable->modified_by = $this->userId;
-            $objTable->modified = date("Y-m-d h:i:sa");
-            $result = $db->updateObject('#__spzone_zone', $objTable, 'id');
+            if ($option == 'U') {
+                $objTable->id = $values['id'];
+                $objTable->modified_by = $this->userId;
+                $objTable->modified = date("Y-m-d h:i:sa");
+                $result = $db->updateObject('#__spzone_zone', $objTable, 'id');
+            } else {
+                $query = $db->getQuery(true);
+
+                // delete all custom keys for user 1001.
+                $conditions = array(
+                    $db->quoteName('id') . ' = '.$values['id']
+                );
+
+                $query->delete($db->quoteName('#__spzone_zone'));
+                $query->where($conditions);
+                $db->setQuery($query);
+
+                $result = $db->execute();
+            }
         }
         return $result;
     }

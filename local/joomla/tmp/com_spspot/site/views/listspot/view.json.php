@@ -76,7 +76,7 @@ class SpspotViewListspot extends JViewLegacy
         if ($status) {
             $arr_result[] = array("section" => $opt, "data" => "Spot: ".$spotName." ".$message);
         } else {
-            $arr_result[] = array("section" => "error", "data" => "Some error on table spot");
+            $arr_result[] = array("section" => "error", "data" => "Cannot delete campaign. It has sensors.");
         }
         echo new JResponseJson($arr_result);
     }

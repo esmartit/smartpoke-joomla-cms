@@ -183,11 +183,47 @@ class SpspotModelListspot extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spspot_spot', $objTable, 'id');
         } else {
-            $objTable->id = $values['id'];
-            $objTable->modified_by = $this->userId;
-            $objTable->modified = date("Y-m-d h:i:sa");
-            $result = $db->updateObject('#__spspot_spot', $objTable, 'id');
+            if ($option == 'U') {
+                $objTable->id = $values['id'];
+                $objTable->modified_by = $this->userId;
+                $objTable->modified = date("Y-m-d h:i:sa");
+                $result = $db->updateObject('#__spspot_spot', $objTable, 'id');
+            } else {
+
+                $result = false;
+                if ($this->getSensorsCount($values['id']) > 0) {
+
+                    $query = $db->getQuery(true);
+
+                    // delete all custom keys for user 1001.
+                    $conditions = array(
+                        $db->quoteName('id') . ' = '.$values['id']
+                    );
+
+                    $query->delete($db->quoteName('#__spspot_spot'));
+                    $query->where($conditions);
+                    $db->setQuery($query);
+
+                    $result = $db->execute();
+                }
+            }
         }
         return $result;
+    }
+
+    public function getSensorsCount($id = null) {
+        $spotId = $id;
+
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('COUNT(*)');
+        $query->from($db->quoteName('#__spsensor_sensor', 'a'));
+        $query->where($db->quoteName('spot_id'). " = ". $db->quote($spotId));
+
+        $db->setQuery($query);
+        $value = $db->loadResult();
+        return $value;
+
     }
 }
