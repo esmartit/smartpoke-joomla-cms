@@ -138,7 +138,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <div id="spotSelect" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selSpot" class="form-control" name="spot" onblur="getSensorZoneList()">
+                                <select id="selSpot" class="form-control" name="spot" onblur="getSensorZoneHotSpotList()">
                                     <option value="" selected><?php echo JText::_('All Data Lakes'); ?></option>
                                 </select>
                             </div>
