@@ -102,6 +102,31 @@ class ModSPSelectSmartPokeHelper
     }
 
     /**
+     * Returns the HotSpotList
+     * @return mixed
+     */
+    public static function getHotSpotsAjax()
+    {
+        $spotId = $_REQUEST['data'];
+
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query
+            ->select($db->quoteName(array('id', 'name')))
+            ->from($db->quoteName('#__sphotspot_hotspot'));
+
+        if (!empty($spotId)) {
+            $query->where($db->quoteName('spot'). " = " .$db->quote($spotId));
+        }
+
+        $db->setQuery($query);
+        $hotspotList = $db->loadRowList();
+
+        return $hotspotList;
+    }
+
+    /**
      * Returns the CampaignList
      * @return mixed
      */

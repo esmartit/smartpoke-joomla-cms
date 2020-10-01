@@ -61,23 +61,6 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
     </p>
     <div class="collapse" id="collapseSelect">
         <div class="x_panel">
-            <!--        <div class="x_title">-->
-            <!--            <h2>--><?php //echo JText::_('MOD_SPSELECTSMARTPOKE');?><!-- <small></small></h2>-->
-            <!--            <ul class="nav navbar-right panel_toolbox">-->
-            <!--                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
-            <!--                </li>-->
-            <!--                <li class="dropdown">-->
-            <!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
-            <!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-            <!--                        <a class="dropdown-item" href="#">Settings 1</a>-->
-            <!--                        <a class="dropdown-item" href="#">Settings 2</a>-->
-            <!--                    </div>-->
-            <!--                </li>-->
-            <!--                <li><a class="close-link"><i class="fa fa-close"></i></a>-->
-            <!--                </li>-->
-            <!--            </ul>-->
-            <!--            <div class="clearfix"></div>-->
-            <!--        </div>-->
             <div class="x_content">
                 <form id="smartpoke_select_form" class="form-horizontal form-label-left" method="POST" enctype="multipart/form-data">
                     <!-- select -->
@@ -108,7 +91,6 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         </div>
                         <div id="rangeDate" class="col-md-3 col-sm-3 col-xs-12" style="display: none;">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
                                 <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                     <i class="glyphicon glyphicon-th fa fa-calendar"></i>
                                     <span>October 24, 1971 - October 24, 1971</span><b class="caret"></b>
@@ -174,6 +156,14 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 <br/>
                                 <select id="selZone" class="form-control" name="zone">
                                     <option value="" selected><?php echo JText::_('All Zones'); ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <div id="hotspotSelect" class="col-md-12 col-sm-12 col-xs-12" style="display: block;">
+                                <br/>
+                                <select id="selHotSpot" class="form-control" name="zone">
+                                    <option value="" selected><?php echo JText::_('All HotSpots'); ?></option>
                                 </select>
                             </div>
                         </div>
