@@ -79,7 +79,7 @@ class SpcampaignViewListcampaign extends JViewLegacy
         if ($status) {
             $arr_result[] = array("section" => $opt, "data" => "Campaign: ".$campaign." ".$message);
         } else {
-            $arr_result[] = array("section" => "error", "data" => "Some error on table campaign");
+            $arr_result[] = array("section" => "error", "data" => "Cannot delete campaign. You have sent messages.");
         }
         echo new JResponseJson($arr_result);
     }

@@ -172,11 +172,47 @@ class SpcampaignModelListcampaign extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spcampaign_campaign', $objTable, 'id');
         } else {
-            $objTable->id = $values['id'];
-            $objTable->modified_by = $this->userId;
-            $objTable->modified = date("Y-m-d h:i:sa");
-            $result = $db->updateObject('#__spcampaign_campaign', $objTable, 'id');
+            if ($option == 'U') {
+                $objTable->id = $values['id'];
+                $objTable->modified_by = $this->userId;
+                $objTable->modified = date("Y-m-d h:i:sa");
+                $result = $db->updateObject('#__spcampaign_campaign', $objTable, 'id');
+            } else {
+
+                $result = false;
+                if ($this->getMessagesCount($values['id']) > 0) {
+
+                    $query = $db->getQuery(true);
+
+                    // delete all custom keys for user 1001.
+                    $conditions = array(
+                        $db->quoteName('id') . ' = ' . $values['id']
+                    );
+
+                    $query->delete($db->quoteName('#__spcampaign_campaign'));
+                    $query->where($conditions);
+                    $db->setQuery($query);
+
+                    $result = $db->execute();
+                }
+            }
         }
         return $result;
+    }
+
+    public function getMessagesCount($id = null) {
+        $campaignId = $id;
+
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select('COUNT(*)');
+        $query->from($db->quoteName('#__spmessage_message', 'a'));
+        $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
+
+        $db->setQuery($query);
+        $value = $db->loadResult();
+        return $value;
+
     }
 }

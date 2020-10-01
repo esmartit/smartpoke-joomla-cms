@@ -169,10 +169,25 @@ class SpsensorModelListsensor extends JModelList
             $objTable->metadata = '{"robots":"","author":"","rights":""}';
             $result = $db->insertObject('#__spsensor_sensor', $objTable, 'id');
         } else {
-            $objTable->id = $values['id'];
-            $objTable->modified_by = $this->userId;
-            $objTable->modified = date("Y-m-d h:i:sa");
-            $result = $db->updateObject('#__spsensor_sensor', $objTable, 'id');
+            if ($option == 'U') {
+                $objTable->id = $values['id'];
+                $objTable->modified_by = $this->userId;
+                $objTable->modified = date("Y-m-d h:i:sa");
+                $result = $db->updateObject('#__spsensor_sensor', $objTable, 'id');
+            } else {
+                $query = $db->getQuery(true);
+
+                // delete all custom keys for user 1001.
+                $conditions = array(
+                    $db->quoteName('id') . ' = '.$values['id']
+                );
+
+                $query->delete($db->quoteName('#__spsensor_sensor'));
+                $query->where($conditions);
+                $db->setQuery($query);
+
+                $result = $db->execute();
+            }
         }
         return $result;
     }
@@ -224,15 +239,6 @@ class SpsensorModelListsensor extends JModelList
         if (in_array($httpCode, $arrHttpCode)) {
             return true;
         }
-//        if ($option != 'D') {
-//            if ($result->name !== '') {
-//                return true;
-//            }
-//        } else {
-//            if ($res == "") {
-//                return true;
-//            }
-//        }
         return false;
     }
 }

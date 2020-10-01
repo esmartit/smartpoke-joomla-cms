@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metadata>
+	<layout title="COM_SPHOTSPOT_MENU_LISTHOTSPOT_TITLE" option="COM_SPHOTSPOT_MENU_LISTHOTSPOT_OPTION">
+		<message>
+			<![CDATA[COM_SPHOTSPOT_MENU_LISTHOTSPOT_DESC]]>
+		</message>
+	</layout>
+</metadata>

@@ -89,7 +89,7 @@ class SplashpageViewLogin extends JViewLegacy
                 if ($status == 1) {
                     $arr_result[] = array("section" => "ok", "data" => $newpwd);
                 } else {
-                    $arr_result[] = array("section" => "error", "data" => Jtext::_('COM_SPLASPAGE_ERROR_PHONE'));
+                    $arr_result[] = array("section" => "error", "data" => Jtext::_('COM_SPLASPAGE_ERROR_MSG'));
                 }
             }
         }

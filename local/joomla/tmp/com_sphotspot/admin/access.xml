@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_sphotspot">
+	<section name="component">
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.options" title="JACTION_OPTIONS" description="JACTION_OPTIONS_COMPONENT_DESC" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.export" title="COM_SPHOTSPOT_EXPORT_DATA" description="COM_SPHOTSPOT_EXPORT_DATA_DESC" />
+		<action name="core.import" title="COM_SPHOTSPOT_IMPORT_DATA" description="COM_SPHOTSPOT_IMPORT_DATA_DESC" />
+		<action name="core.batch" title="COM_SPHOTSPOT_USE_BATCH" description="COM_SPHOTSPOT_USE_BATCH_DESC" />
+		<action name="core.version" title="COM_SPHOTSPOT_EDIT_VERSIONS" description="COM_SPHOTSPOT_EDIT_VERSIONS_DESC" />
+		<action name="core.create" title="JACTION_CREATE" description="JACTION_CREATE_COMPONENT_DESC" />
+		<action name="core.delete" title="JACTION_DELETE" description="JACTION_DELETE_COMPONENT_DESC" />
+		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />
+		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_ACCESS_EDITSTATE_DESC" />
+		<action name="core.edit.own" title="JACTION_EDITOWN" description="JACTION_EDITOWN_COMPONENT_DESC" />
+		<action name="core.edit.created_by" title="COM_SPHOTSPOT_EDIT_CREATED_BY" description="COM_SPHOTSPOT_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPHOTSPOT_EDIT_CREATED_DATE" description="COM_SPHOTSPOT_EDIT_CREATED_DATE_DESC" />
+		<action name="site.listhotspot.access" title="COM_SPHOTSPOT_LISTHOTSPOT_ACCESS_SITE" description="COM_SPHOTSPOT_LISTHOTSPOT_ACCESS_SITE_DESC" />
+		<action name="hotspot.access" title="COM_SPHOTSPOT_HOTSPOTS_ACCESS" description="COM_SPHOTSPOT_HOTSPOTS_ACCESS_DESC" />
+		<action name="hotspot.batch" title="COM_SPHOTSPOT_HOTSPOTS_BATCH_USE" description="COM_SPHOTSPOT_HOTSPOTS_BATCH_USE_DESC" />
+		<action name="hotspot.dashboard_add" title="COM_SPHOTSPOT_HOTSPOTS_DASHBOARD_ADD" description="COM_SPHOTSPOT_HOTSPOTS_DASHBOARD_ADD_DESC" />
+		<action name="hotspot.dashboard_list" title="COM_SPHOTSPOT_HOTSPOTS_DASHBOARD_LIST" description="COM_SPHOTSPOT_HOTSPOTS_DASHBOARD_LIST_DESC" />
+		<action name="hotspot.version" title="COM_SPHOTSPOT_HOTSPOTS_EDIT_VERSION" description="COM_SPHOTSPOT_HOTSPOTS_EDIT_VERSION_DESC" />
+		<action name="hotspot.export" title="COM_SPHOTSPOT_HOTSPOTS_EXPORT" description="COM_SPHOTSPOT_HOTSPOTS_EXPORT_DESC" />
+		<action name="hotspot.import" title="COM_SPHOTSPOT_HOTSPOTS_IMPORT" description="COM_SPHOTSPOT_HOTSPOTS_IMPORT_DESC" />
+	</section>
+	<section name="hotspot">
+		<action name="core.edit" title="COM_SPHOTSPOT_HOTSPOTS_EDIT" description="COM_SPHOTSPOT_HOTSPOTS_EDIT_DESC" />
+		<action name="core.edit.own" title="COM_SPHOTSPOT_HOTSPOTS_EDIT_OWN" description="COM_SPHOTSPOT_HOTSPOTS_EDIT_OWN_DESC" />
+		<action name="core.edit.state" title="COM_SPHOTSPOT_HOTSPOTS_EDIT_STATE" description="COM_SPHOTSPOT_HOTSPOTS_EDIT_STATE_DESC" />
+		<action name="core.edit.created_by" title="COM_SPHOTSPOT_HOTSPOTS_EDIT_CREATED_BY" description="COM_SPHOTSPOT_HOTSPOTS_EDIT_CREATED_BY_DESC" />
+		<action name="core.edit.created" title="COM_SPHOTSPOT_HOTSPOTS_EDIT_CREATED_DATE" description="COM_SPHOTSPOT_HOTSPOTS_EDIT_CREATED_DATE_DESC" />
+		<action name="core.create" title="COM_SPHOTSPOT_HOTSPOTS_CREATE" description="COM_SPHOTSPOT_HOTSPOTS_CREATE_DESC" />
+		<action name="core.delete" title="COM_SPHOTSPOT_HOTSPOTS_DELETE" description="COM_SPHOTSPOT_HOTSPOTS_DELETE_DESC" />
+		<action name="hotspot.version" title="COM_SPHOTSPOT_HOTSPOTS_EDIT_VERSION" description="COM_SPHOTSPOT_HOTSPOTS_EDIT_VERSION_DESC" />
+	</section>
+</access>
