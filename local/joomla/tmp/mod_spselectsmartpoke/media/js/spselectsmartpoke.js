@@ -197,9 +197,10 @@ function getSpotList() {
         });
 }
 
-function getSensorZoneList() {
+function getSensorZoneHotSpotList() {
     getSensorList();
     getZoneList();
+    getHotspotList();
 }
 
 function getSensorList() {
