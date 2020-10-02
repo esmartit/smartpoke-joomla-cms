@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  * @package   com_sphotspotpage
  * @since     1.0.0
  */
-class SpHotSpotPAgeViewLogin extends HtmlView
+class SpHotSpotPageViewLogin extends HtmlView
 {
     /**
      * Display the Login view
