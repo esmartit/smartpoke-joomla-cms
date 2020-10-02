@@ -282,7 +282,7 @@ function getHotSpotList() {
                 let id = object[i][1];
                 let name = object[i][1];
 
-                $("#selHotspot").append("<option value='"+id+"'>"+name+"</option>");
+                $("#selHotSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
         });
 }
