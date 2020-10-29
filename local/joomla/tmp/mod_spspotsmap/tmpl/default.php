@@ -15,6 +15,8 @@ $document->addStyleSheet('templates/smartpokex/vendors/jqvmap/dist/jqvmap.css', 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('templates/smartpokex/vendors/jqvmap/dist/jquery.vmap.js');
 $document->addScript('/media/mod_spspotsmap/js/jquery.vmap.spain.js');
+$document->addScript('/media/mod_spspotsmap/js/jquery.vmap.europe.js');
+$document->addScript('/media/mod_spspotsmap/js/jquery.vmap.world.js');
 $document->addScript('/media/mod_spspotsmap/js/jvmapspotsmap.js');
 
 ?>
@@ -41,16 +43,11 @@ $document->addScript('/media/mod_spspotsmap/js/jvmapspotsmap.js');
         <div class="x_content">
             <div class="dashboard-widget-content">
                 <div class="col-md-4 hidden-small">
-                    <table class="countries_list">
-                        <tbody>
-                        <tr>
-                            <td>Madrid</td>
-                            <td class="fs15 fw700 text-right">33%</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
+                    <div><p>Countries</p></div>
+                    <div id="countries"></div>
                 </div>
-                <div id="vmap_spain" class="col-md-8 col-sm-12 " style="height:230px;"></div>
+                <div id="vmap_world" class="col-md-8 col-sm-12 " style="height:350px;"></div>
             </div>
         </div>
     </div>

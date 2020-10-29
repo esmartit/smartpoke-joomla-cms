@@ -24,44 +24,59 @@ $document->addScript('/media/mod_sptopcampaign/js/sptopcampaign.js');
 
 ?>
 
-<div class="col-md-3 col-sm-3  bg-white">
-    <div class="x_title">
-        <h2><?php echo JText::_('MOD_SPTOPCAMPAIGN');?></h2>
-        <div class="clearfix"></div>
-        <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
-    </div>
+<div class="col-md-3 col-sm-3 bg-white">
+    <div class="x_panel tile fixed_height_400">
+        <div class="x_title">
+            <h2><?php echo JText::_('MOD_SPTOPCAMPAIGN');?></h2>
+            <div class="clearfix"></div>
+            <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
+        </div>
 
-    <div class="col-md-12 col-sm-12 ">
-        <div><span id="campaign_0"></span>
-            <div class="">
-                <div class="progress progress_sm" style="width: 80%;">
-                    <div id="value_0" class="progress-bar bg-green" role="progressbar"></div>
+        <div class="x_content">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="row col-md-12 col-sm-12 ">
+                    <br>
+                </div>
+                <div><span id="campaign_0"></span>
+                    <div class="">
+                        <div class="progress progress_sm" style="width: 80%;">
+                            <div id="value_0" class="progress-bar bg-green" role="progressbar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-12 col-sm-12 ">
+                    <br>
+                </div>
+                <div><span id="campaign_1"></span>
+                    <div class="">
+                        <div class="progress progress_sm" style="width: 80%;">
+                            <div id="value_1" class="progress-bar bg-blue" role="progressbar"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div><span id="campaign_1"></span>
-            <div class="">
-                <div class="progress progress_sm" style="width: 80%;">
-                    <div id="value_1" class="progress-bar bg-blue" role="progressbar"></div>
+            <div class="col-md-12 col-sm-12 ">
+                <div class="row col-md-12 col-sm-12 ">
+                    <br>
+                </div>
+                <div><span id="campaign_2"></span>
+                    <div class="">
+                        <div class="progress progress_sm" style="width: 80%;">
+                            <div id="value_2" class="progress-bar bg-orange" role="progressbar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-12 col-sm-12 ">
+                    <br>
+                </div>
+                <div><span id="campaign_3"></span>
+                    <div class="">
+                        <div class="progress progress_sm" style="width: 80%;">
+                            <div id="value_3" class="progress-bar bg-red" role="progressbar"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-sm-12 ">
-        <div><span id="campaign_2"></span>
-            <div class="">
-                <div class="progress progress_sm" style="width: 80%;">
-                    <div id="value_2" class="progress-bar bg-orange" role="progressbar"></div>
-                </div>
-            </div>
-        </div>
-        <div><span id="campaign_3"></span>
-            <div class="">
-                <div class="progress progress_sm" style="width: 80%;">
-                    <div id="value_3" class="progress-bar bg-red" role="progressbar"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>

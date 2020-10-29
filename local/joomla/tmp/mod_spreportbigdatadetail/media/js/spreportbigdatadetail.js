@@ -418,7 +418,6 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
         "destroy": true,
         "column": [
             {"data": "spotId"},
-            {"data": "zone"},
             {"data": "sensorId"},
             {"data": "clientMac"},
             {"data": "seenTime"},
@@ -467,7 +466,6 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
                 tableDetail.row.add(
                     [
                         bodyData.spotId,
-                        bodyData.zone,
                         bodyData.sensorId,
                         bodyData.clientMac,
                         bodyData.seenTime,

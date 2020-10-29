@@ -46,13 +46,15 @@ $(document).ready( function() {
         document.getElementById("inVisits").innerHTML = Intl.NumberFormat().format(visitIn);
         document.getElementById("limitVisits").innerHTML = Intl.NumberFormat().format(visitLimit);
         document.getElementById("outVisits").innerHTML = Intl.NumberFormat().format(visitOut);
-    }});
+    }
+});
 
 function evtSourceQualifiedVisits(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
                                   zipcodes, member, userTZ) {
     if (seQualifiedVisits.readyState != 2) {
         seQualifiedVisits.close();
     }
+
     seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
         "timezone="+userTZ+"%26startTime="+dateS+"%26endTime="+dateE+"%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
@@ -68,6 +70,8 @@ function evtSourceQualifiedVisits(dateS, dateE, country, state, city, zipcode, s
     limitDataAnt = 0;
     outDataAnt = 0;
 
+    NProgress.start();
+    NProgress.set(0,4);
     seQualifiedVisits.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         visitHour = (new Date(eventData.time)).getHours();
@@ -102,4 +106,5 @@ function evtSourceQualifiedVisits(dateS, dateE, country, state, city, zipcode, s
         document.getElementById("limitVisits").innerHTML = Intl.NumberFormat().format(visitLimit);
         document.getElementById("outVisits").innerHTML = Intl.NumberFormat().format(visitOut);
     }
+    NProgress.done();
 }

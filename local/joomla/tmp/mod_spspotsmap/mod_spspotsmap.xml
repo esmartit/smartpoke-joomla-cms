@@ -11,6 +11,7 @@
     <description>MOD_SPSPOTSMAP_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_spspotsmap">mod_spspotsmap.php</filename>
+        <filename>helper.php</filename>
         <folder>tmpl</folder>
     </files>
     <media folder="media" destination="mod_spspotsmap">
