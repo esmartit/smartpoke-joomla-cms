@@ -142,7 +142,7 @@ class SpHotSpotPageViewLogin extends JViewLegacy
                 }
                 break;
             case "MEX":
-                if (preg_match("/^[5]{1}[2]{1}[1]{1}[0-9]{8}$/", $number)) {
+                if (preg_match("/^[58]{1}[15]{1}[0-9]{8}$/", $number) ||  preg_match("/^[2-9]{3}[0-9]{7}$/", $number)) {
                     $res = 1;
                 }
                 break;

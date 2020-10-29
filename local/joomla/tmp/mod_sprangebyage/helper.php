@@ -18,6 +18,7 @@ class ModSPRangeByAgeHelper
         $db = JFactory::getDbo();
         $db->setQuery('select TIMESTAMPDIFF(YEAR, dateofbirth, now()) as years, count(*) 
                             from jos_spcustomer_customer 
+                            where published = 1
                             group by years');
 
         $ageList = $db->loadRowList();

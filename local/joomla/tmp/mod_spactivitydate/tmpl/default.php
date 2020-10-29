@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 $document = JFactory::getDocument();
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
+$document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
 $document->addScript('/templates/smartpokex/vendors/echarts/dist/echarts.min.js');
 $document->addScript('/media/mod_spactivitydate/js/echartactivitydate.js');
 

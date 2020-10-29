@@ -490,7 +490,7 @@ function updateValueCampaign(campaign, valIn, valPencent){
         });
 }
 
-function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, brands, status, presence, ageS, ageE, sex,
+function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                            zipcodes, member, userTZ, group) {
     let len = bigDataPresenceIN.length;
     for (let i=0; i<len; i++) {
@@ -500,7 +500,7 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
     sePresenceIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
@@ -521,11 +521,11 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
             let status = bodyData.status;
             let group_x = new Date(bodyData.seenTime);
 
-            let month = '' + (group_x.getUTCMonth() + 1);
-            let day = '' + group_x.getUTCDate();
+            let month = '' + (group_x.getMonth() + 1);
+            let day = '' + group_x.getDate();
             if (month.length < 2) month = '0' + month;
             if (day.length < 2) day =  '0' + day;
-            axisGroup = [month, day].join('/') + ' ' + username;
+            axisGroup = [month, day].join('-') + ' ' + username;
             getPresenceUsersCampaign(t_campaign, username);
 
             if (existIN == 1) {
@@ -567,7 +567,7 @@ function sendForm() {
     if (totMsg > 0) {
         evtSourceUniqueIN(t_dateS, t_dateE, '00:00:00', '23:59:59',
             t_country, t_state, t_city, t_zipcode,
-            t_spot, '', '',
+            t_spot, '', '', '', '',
             '', 'IN', '1',
             '', '', '', '', '',
             userTimeZone, 'BY_DAY'

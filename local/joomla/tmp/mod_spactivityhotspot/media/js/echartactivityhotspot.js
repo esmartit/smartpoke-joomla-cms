@@ -118,111 +118,6 @@ $(document).ready( function() {
                 }
             }
         },
-        map: {
-            itemStyle: {
-                normal: {
-                    areaStyle: {
-                        color: '#ddd'
-                    },
-                    label: {
-                        textStyle: {
-                            color: '#c12e34'
-                        }
-                    }
-                },
-                emphasis: {
-                    areaStyle: {
-                        color: '#99d2dd'
-                    },
-                    label: {
-                        textStyle: {
-                            color: '#c12e34'
-                        }
-                    }
-                }
-            }
-        },
-        force: {
-            itemStyle: {
-                normal: {
-                    linkStyle: {
-                        strokeColor: '#408829'
-                    }
-                }
-            }
-        },
-        chord: {
-            padding: 4,
-            itemStyle: {
-                normal: {
-                    lineStyle: {
-                        width: 1,
-                        color: 'rgba(128, 128, 128, 0.5)'
-                    },
-                    chordStyle: {
-                        lineStyle: {
-                            width: 1,
-                            color: 'rgba(128, 128, 128, 0.5)'
-                        }
-                    }
-                },
-                emphasis: {
-                    lineStyle: {
-                        width: 1,
-                        color: 'rgba(128, 128, 128, 0.5)'
-                    },
-                    chordStyle: {
-                        lineStyle: {
-                            width: 1,
-                            color: 'rgba(128, 128, 128, 0.5)'
-                        }
-                    }
-                }
-            }
-        },
-        gauge: {
-            startAngle: 225,
-            endAngle: -45,
-            axisLine: {
-                show: true,
-                lineStyle: {
-                    color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
-                    width: 8
-                }
-            },
-            axisTick: {
-                splitNumber: 10,
-                length: 12,
-                lineStyle: {
-                    color: 'auto'
-                }
-            },
-            axisLabel: {
-                textStyle: {
-                    color: 'auto'
-                }
-            },
-            splitLine: {
-                length: 18,
-                lineStyle: {
-                    color: 'auto'
-                }
-            },
-            pointer: {
-                length: '90%',
-                color: 'auto'
-            },
-            title: {
-                textStyle: {
-                    color: '#333'
-                }
-            },
-            detail: {
-                textStyle: {
-                    color: 'auto'
-                }
-            }
-        },
         textStyle: {
             fontFamily: 'Arial, Verdana, sans-serif'
         }
@@ -416,6 +311,8 @@ function evtSourceActivityHotSpot(dateS, dateE, country, state, city, zipcode, s
         hoursHotSpot[x] = x;
     }
 
+    NProgress.start();
+    NProgress.set(0,4);
     seActivityHotSpot.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let dataHours = (new Date(eventData.time)).getHours();
@@ -432,5 +329,6 @@ function evtSourceActivityHotSpot(dateS, dateE, country, state, city, zipcode, s
         echartActivityHotSpot(hoursHotSpot, deviceHotSpot, inHotSpot, limitHotSpot, outHotSpot);
         // console.log(dataHours, device_x, in_x, limit_x, out_x);
     }
+    NProgress.done();
 }
 

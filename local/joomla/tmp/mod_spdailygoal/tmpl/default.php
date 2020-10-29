@@ -50,7 +50,7 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
                     <div id="dailygoalRegMaxValue" class="goal-value pull-right" style="display:none"><b><?php echo $dailygoalregistered; ?></b></div>
                 </div>
                 <div class="sidebar-widget">
-                    <h4>Devices</h4>
+                    <h4>Visitors</h4>
                     <div class="goal-value pull-center"><b><?php echo number_format($dailygoaldevice); ?></b></div>
                     <canvas width="150" height="80" id="chart_gauge_dailygoal" class="" style="width: 160px; height: 100px;"></canvas>
                     <div class="goal-wrapper">

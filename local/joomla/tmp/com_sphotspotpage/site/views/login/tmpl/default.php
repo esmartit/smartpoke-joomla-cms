@@ -92,6 +92,7 @@ if ($isLoggedIn) {
                                     <option value="44">GBR</option>
                                     <option value="502">GTM</option>
                                     <option value="39">ITA</option>
+                                    <option value="52">MEX</option>
                                     <option value="31">NLD</option>
                                     <option value="51">PER</option>
                                     <option value="351">PRT</option>

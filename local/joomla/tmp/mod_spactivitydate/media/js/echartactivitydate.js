@@ -248,7 +248,7 @@ $(document).ready( function() {
         let len = eventData.length;
 
         for (let i=0; i < len; i++) {
-            let axisTime = (new Date(eventData[i]['time'])).toLocaleTimeString();
+            let axisTime = (new Date(eventData[i]['time'])).toTimeString();
             let xTime = axisTime.substring(0,5);
             inAct[i] = eventData[i]['inCount'];
             limitAct[i] = eventData[i]['limitCount'];

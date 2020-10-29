@@ -113,7 +113,7 @@ else
                     <div class="menu_section">
                         <h3>Dashboard</h3>
                         <ul class="nav side-menu">
-                            <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnLine </a></li>
+                            <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnSite </a></li>
                             <li><a href="/index.php/dashboard/bigdata"><i class="fa fa-database"></i> BigData </a></li>
                             <li><a href="/index.php/dashboard/hotspot"><i class="fa fa-wifi"></i> HotSpot </a></li>
                             <li><a href="/index.php/dashboard/smartpoke"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
@@ -174,43 +174,32 @@ else
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col <?php echo $span; ?>" role="main">
-            <!-- Begin Content -->
-            <jdoc:include type="modules" name="topcenter" style="none" />
-            <div class="row col-md-12 col-sm-12">
-                <div class="col-md-12 col-sm-12">
-                    <div class="x_title">
-                        <h2></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Settings 1</a>
-                                    <a class="dropdown-item" href="#">Settings 2</a>
-                                </div>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
+        <div class="row-fluid right_col">
+            <main id="content" role="main" class="<?php echo $span; ?>" style="min-height: 1375px;">
+                <!-- Begin Content -->
+                <jdoc:include type="modules" name="topcenter" style="none" />
+                <div class="row col-md-12 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="x_title">
+                            <h2></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="x_content">
+                        <jdoc:include type="component" />
                     </div>
                 </div>
-                <div class="x_content">
-                    <jdoc:include type="component" />
+                <jdoc:include type="modules" name="breadcrumbs" style="none" />
+                <!-- End Content -->
+            </main>
+            <?php if ($rightModuleCount) : ?>
+                <div id="aside" class="span3">
+                    <!-- Begin Right Sidebar -->
+                    <jdoc:include type="modules" name="right" style="well" />
+                    <!-- End Right Sidebar -->
                 </div>
-            </div>
-            <jdoc:include type="modules" name="breadcrumbs" style="none" />
-            <!-- End Content -->
+            <?php endif; ?>
         </div>
-        <?php if ($rightModuleCount) : ?>
-            <div id="aside" class="span3">
-                <!-- Begin Right Sidebar -->
-                <jdoc:include type="modules" name="right" style="well" />
-                <!-- End Right Sidebar -->
-            </div>
-        <?php endif; ?>
         <!-- /page content -->
     </div>
     <!-- footer content -->

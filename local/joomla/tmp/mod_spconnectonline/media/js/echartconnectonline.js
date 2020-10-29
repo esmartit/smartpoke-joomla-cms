@@ -107,111 +107,6 @@ let theme = {
             }
         }
     },
-    map: {
-        itemStyle: {
-            normal: {
-                areaStyle: {
-                    color: '#ddd'
-                },
-                label: {
-                    textStyle: {
-                        color: '#c12e34'
-                    }
-                }
-            },
-            emphasis: {
-                areaStyle: {
-                    color: '#99d2dd'
-                },
-                label: {
-                    textStyle: {
-                        color: '#c12e34'
-                    }
-                }
-            }
-        }
-    },
-    force: {
-        itemStyle: {
-            normal: {
-                linkStyle: {
-                    strokeColor: '#408829'
-                }
-            }
-        }
-    },
-    chord: {
-        padding: 4,
-        itemStyle: {
-            normal: {
-                lineStyle: {
-                    width: 1,
-                    color: 'rgba(128, 128, 128, 0.5)'
-                },
-                chordStyle: {
-                    lineStyle: {
-                        width: 1,
-                        color: 'rgba(128, 128, 128, 0.5)'
-                    }
-                }
-            },
-            emphasis: {
-                lineStyle: {
-                    width: 1,
-                    color: 'rgba(128, 128, 128, 0.5)'
-                },
-                chordStyle: {
-                    lineStyle: {
-                        width: 1,
-                        color: 'rgba(128, 128, 128, 0.5)'
-                    }
-                }
-            }
-        }
-    },
-    gauge: {
-        startAngle: 225,
-        endAngle: -45,
-        axisLine: {
-            show: true,
-            lineStyle: {
-                color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
-                width: 8
-            }
-        },
-        axisTick: {
-            splitNumber: 10,
-            length: 12,
-            lineStyle: {
-                color: 'auto'
-            }
-        },
-        axisLabel: {
-            textStyle: {
-                color: 'auto'
-            }
-        },
-        splitLine: {
-            length: 18,
-            lineStyle: {
-                color: 'auto'
-            }
-        },
-        pointer: {
-            length: '90%',
-            color: 'auto'
-        },
-        title: {
-            textStyle: {
-                color: '#333'
-            }
-        },
-        detail: {
-            textStyle: {
-                color: 'auto'
-            }
-        }
-    },
     textStyle: {
         fontFamily: 'Arial, Verdana, sans-serif'
     }
@@ -327,21 +222,21 @@ function evtSourceConnectOnline(dateS, dateE, timeS, timeE, country, state, city
     }
     switch (group) {
         case "BY_DAY":
-            let d1 = new Date(dateS + 'Z12:00:00');
-            let d2 = new Date(dateE + 'Z12:00:00');
+            let d1 = new Date(dateS);
+            let d2 = new Date(dateE);
             let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
             for (let i=0; i<=days; i++) {
                 let month = '' + (d1.getMonth() + 1);
                 let day = '' + d1.getDate();
                 if (month.length < 2) month = '0' + month;
                 if (day.length < 2) day =  '0' + day;
-                axisOnline[i] = [month, day].join('/');
+                axisOnline[i] = [month, day].join('-');
                 d1 = new Date(d1.setDate(d1.getDate() + 1));
             }
             break;
         case "BY_WEEK":
-            let dw1 = new Date(dateS + 'Z12:00:00');
-            let dw2 = new Date(dateE + 'Z12:00:00');
+            let dw1 = new Date(dateS);
+            let dw2 = new Date(dateE);
             let weeks = Math.round((dw2 - dw1) / (1000 * 3600 * 24 * 7));
             let week = dw1.getWeek();
             for (let i=0; i<=weeks; i++) {
@@ -365,7 +260,7 @@ function evtSourceConnectOnline(dateS, dateE, timeS, timeE, country, state, city
             for (let i=0; i<=months; i++) {
                 registered[i] = 0;
                 connected[i] = 0;
-                axisOnline[i] = date1.toLocaleString('default', {month: 'short'});
+                axisOnline[i] = date1.toString('default', {month: 'short'});
                 date1 = new Date(date1.setMonth(date1.getMonth() + 1));
             }
             break;
@@ -413,7 +308,7 @@ function evtSourceConnectOnline(dateS, dateE, timeS, timeE, country, state, city
                 axisGroup = group_x.substr(group_x.length -2,group_x.length);
                 break;
             case "BY_MONTH":
-                month = new Date(group_x+'/'+'01');
+                month = new Date(group_x+'-'+'01');
                 axisGroup = month.toLocaleString('default', {month: 'short'});
                 break;
             case "BY_YEAR":

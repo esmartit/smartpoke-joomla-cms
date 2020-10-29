@@ -28,22 +28,22 @@ function evtSourceUniqueBigData(dateS, dateE, timeS, timeE, country, state, city
     }
     switch (group) {
         case "BY_DAY":
-            let d1 = new Date(dateS + 'Z12:00:00');
-            let d2 = new Date(dateE + 'Z12:00:00');
+            let d1 = new Date(dateS);
+            let d2 = new Date(dateE);
             let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
             for (let i=0; i<=days; i++) {
                 let month = '' + (d1.getMonth() + 1);
                 let day = '' + d1.getDate();
                 if (month.length < 2) month = '0' + month;
                 if (day.length < 2) day =  '0' + day;
-                bigDataR[i] = [month, day].join('/');
+                bigDataR[i] = [month, day].join('-');
                 devUniqueBigData[i] = 0;
                 d1 = new Date(d1.setDate(d1.getDate() + 1));
             }
             break;
         case "BY_WEEK":
-            let dw1 = new Date(dateS + 'Z12:00:00');
-            let dw2 = new Date(dateE + 'Z12:00:00');
+            let dw1 = new Date(dateS);
+            let dw2 = new Date(dateE);
             let weeks = Math.round((dw2 - dw1) / (1000 * 3600 * 24 * 7));
             let week = dw1.getWeek();
             for (let i=0; i<=weeks; i++) {
@@ -115,7 +115,7 @@ function evtSourceUniqueBigData(dateS, dateE, timeS, timeE, country, state, city
                 axisGroup = group_x.substr(group_x.length -2,group_x.length);
                 break;
             case "BY_MONTH":
-                month = new Date(group_x+'/'+'01');
+                month = new Date(group_x+'-'+'01');
                 axisGroup = month.toLocaleString('default', {month: 'short'});
                 break;
             case "BY_YEAR":
