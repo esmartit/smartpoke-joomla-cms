@@ -497,7 +497,7 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
         bigDataPresenceIN[i] = '';
     }
 
-    sePresenceIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/find?"+
+    sePresenceIN = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/listbyuser?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
@@ -518,8 +518,7 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
         if (eventData.body != null) {
             let bodyData = eventData.body;
             let username = bodyData.username;
-            let status = bodyData.status;
-            let group_x = new Date(bodyData.seenTime);
+            let group_x = new Date(bodyData.groupDate);
 
             let month = '' + (group_x.getMonth() + 1);
             let day = '' + group_x.getDate();
