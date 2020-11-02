@@ -412,7 +412,7 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
-        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_MINUTE");
 
     tableDetail = $('#datatable-buttons').DataTable({
         "destroy": true,
@@ -468,7 +468,7 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
                         bodyData.spotId,
                         bodyData.sensorId,
                         bodyData.clientMac,
-                        bodyData.seenTime,
+                        bodyData.groupDate,
                         bodyData.rssi,
                         bodyData.status,
                         bodyData.countryId,

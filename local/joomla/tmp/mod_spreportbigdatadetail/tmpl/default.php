@@ -199,7 +199,6 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         <thead>
                         <tr class="headings">
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_SPOT'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_LOCATION'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_SENSOR'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_DEVICE'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAIL_DATE'); ?></th>
