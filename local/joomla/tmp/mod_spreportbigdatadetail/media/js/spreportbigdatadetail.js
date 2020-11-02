@@ -456,6 +456,8 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
 
     NProgress.start();
     NProgress.set(0,4);
+    tableDetail.clear();
+
     seActivityBigData.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;

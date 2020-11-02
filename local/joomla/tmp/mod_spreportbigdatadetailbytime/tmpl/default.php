@@ -23,6 +23,10 @@ $document->addStyleSheet('/templates/smartpokex/vendors/datatables.net-scroller-
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
+
+// NProgress
+$document->addScript('/templates/smartpokex/vendors/nprogress/nprogress.js');
+
 // bootstrap-daterangepicker
 $document->addScript('/templates/smartpokex/vendors/moment/min/moment.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/daterangepicker.js');
@@ -152,22 +156,22 @@ $dateend = date("Y-m-d", strtotime($currDate));
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <br/>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div id="selRadioGroup" class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" value="0" id="radio15m" name="radioGroup"> <?php echo JText::_('By 15min.'); ?>
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" value="1" id="radio30m" name="radioGroup"> <?php echo JText::_('By 30min.'); ?>
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" value="2" id="radio60m" name="radioGroup"> <?php echo JText::_('By 1Hr.'); ?>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="col-md-12 col-sm-12 col-xs-12">-->
+<!--                        <br/>-->
+<!--                        <div class="col-md-4 col-sm-4 col-xs-12">-->
+<!--                            <div id="selRadioGroup" class="btn-group btn-group-toggle" data-toggle="buttons">-->
+<!--                                <label class="btn btn-secondary active">-->
+<!--                                    <input type="radio" value="0" id="radio15m" name="radioGroup"> --><?php //echo JText::_('By 15min.'); ?>
+<!--                                </label>-->
+<!--                                <label class="btn btn-secondary">-->
+<!--                                    <input type="radio" value="1" id="radio30m" name="radioGroup"> --><?php //echo JText::_('By 30min.'); ?>
+<!--                                </label>-->
+<!--                                <label class="btn btn-secondary">-->
+<!--                                    <input type="radio" value="2" id="radio60m" name="radioGroup"> --><?php //echo JText::_('By 1Hr.'); ?>
+<!--                                </label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <!-- / select -->
                     <!-- filters -->
                     <!-- /filters -->
@@ -209,12 +213,12 @@ $dateend = date("Y-m-d", strtotime($currDate));
                 <div class="card-box table-responsive">
                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                         <thead>
-                        <tr class="headings">
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_DATE'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_HOURS'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_SENSOR'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_TOTAL'); ?></th>
-                        </tr>
+                            <tr class="headings">
+                                <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_SPOT'); ?></th>
+                                <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_SENSOR'); ?></th>
+                                <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_DATE'); ?></th>
+                                <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_TOTAL'); ?></th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>
