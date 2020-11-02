@@ -2,7 +2,7 @@ let seAvgTimeBigData = '';
 let avgtimeBigData = 0;
 
 $(document).ready( function() {
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    // let userTimeZone = document.getElementById('userTimeZone').innerText;
     // seAvgTimeBigData = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/average-presence?timezone="+userTimeZone);
     //
     // seAvgTimeBigData.onmessage = function (event) {
@@ -27,8 +27,8 @@ function gettime2str(val) {
         data: request
     })
         .success(function(response){
-            let object = response.data;
-            document.getElementById("avgtimebigdata").innerHTML = object;
+            // let object = response.data;
+            document.getElementById("avgtimebigdata").innerHTML = response.data;
         });
 }
 
@@ -48,7 +48,7 @@ function evtSourceAvgTimeBigData(dateS, dateE, timeS, timeE, country, state, cit
 
     seAvgTimeBigData.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
-        avgtimeBigData = eventData.value * 100;
+        avgtimeBigData = eventData.value;
         avgtimeBigData = parseInt(avgtimeBigData);
         let last = eventData.isLast;
 
