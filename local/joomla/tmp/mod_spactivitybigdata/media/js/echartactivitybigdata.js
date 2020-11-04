@@ -3,8 +3,18 @@ let seActivityBigDataC = '';
 let spChartBigDataR = '';
 let spChartBigDataC = '';
 
-// let optionR = "";
-// let optionC = "";
+let seAvgTimeBigDataR = '';
+let avgtimeBigDataR = 0;
+let seAvgTimeBigDataC = '';
+let avgtimeBigDataC = 0;
+
+let seUniqueBigDataR = '';
+let devUniqueBigDataR = [];
+let bigDataR = [];
+
+let seUniqueBigDataC = '';
+let devUniqueBigDataC = [];
+let bigDataC = [];
 
 let inBigDataR = [];
 let limitBigDataR = [];
@@ -366,6 +376,25 @@ let optionC = {
     ]
 };
 
+function gettime2str(val, opt) {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spactivitybigdata',  // to target: mod_spavgtimebigdata
+        method       : 'time2str',  // to target: function time2strAjax in class ModSPAvgTimeBigDataHelper
+        format       : 'json',
+        data         : val
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            if (opt == 'r') document.getElementById("avgtimebigdata_r").innerHTML = response.data;
+            else document.getElementById("avgtimebigdata_c").innerHTML = response.data;
+
+        });
+}
+
 Date.prototype.getWeek = function() {
     let onejan = new Date(this.getFullYear(),0,1);
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
@@ -500,12 +529,105 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
         outBigDataR[pos] = out_x;
         deviceBigDataR[pos] = in_x + limit_x + out_x;
 
+        document.getElementById("totalVisits_r").innerHTML = Intl.NumberFormat().format(deviceBigDataR[pos]);
+        document.getElementById("inVisits_r").innerHTML = Intl.NumberFormat().format(in_x);
+        document.getElementById("limitVisits_r").innerHTML = Intl.NumberFormat().format(limit_x);
+        document.getElementById("outVisits_r").innerHTML = Intl.NumberFormat().format(out_x);
+
         spChartBigDataR.setOption(optionR);
         if (last) {
             seActivityBigDataR.close();
+
+            let total_r = 0;
+            let in_r = 0;
+            let limit_r = 0;
+            let out_r = 0;
+            for (let i = 0, len = deviceBigDataR.length; i < len; i++) {
+                total_r += deviceBigDataR[i];
+                in_r += inBigDataR[i];
+                limit_r += limitBigDataR[i];
+                out_r += outBigDataR[i];
+                document.getElementById("totalVisits_r").innerHTML = Intl.NumberFormat().format(total_r);
+                document.getElementById("inVisits_r").innerHTML = Intl.NumberFormat().format(in_r);
+                document.getElementById("limitVisits_r").innerHTML = Intl.NumberFormat().format(limit_r);
+                document.getElementById("outVisits_r").innerHTML = Intl.NumberFormat().format(out_r);
+            }
             NProgress.done();
         }
     }
+}
+
+function countRegisteredBigDataR(dateS, dateE, country, state, city, zipcode, spot, ageS, ageE, sex, zipcodes, member) {
+
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spactivitybigdata',  // to target: mod_spactivitybigdata
+        method       : 'getUsersRegistered',  // to target: function getUsersRegisteredAjax in class ModSPDevRegisteredBigDataHelper
+        format       : 'json',
+        data         : { "dateStart": dateS, "dateEnd": dateE,
+            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode,
+            "spotId": spot,
+            "ageStart": ageS, "ageEnd": ageE, "gender": sex, "zipCode": zipcodes, "memberShip": member
+        }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let data = response.data;
+            document.getElementById("registeredbigdata_r").innerHTML = Intl.NumberFormat().format(data);
+        });
+}
+
+function evtSourceAvgTimeBigDataR(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+                                  zipcodes, member, userTZ, group) {
+
+    seAvgTimeBigDataR = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/average-presence?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    seAvgTimeBigDataR.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        avgtimeBigDataR = eventData.value;
+        avgtimeBigDataR = parseInt(avgtimeBigDataR);
+        let last = eventData.isLast;
+
+        if (avgtimeBigDataR > 0) {
+            gettime2str(avgtimeBigDataR, 'r');
+        }
+        if (last) {
+            seAvgTimeBigDataR.close();
+        }
+    }
+}
+
+function evtSourceUniqueBigDataR(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+                                 zipcodes, member, userTZ, group) {
+    // seUniqueBigDataR = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
+    //     "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+    //     "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+    //     "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+    //     "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+    //     "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    let uniqueBigDataR = 15;
+    // seUniqueBigDataR.onmessage = function (event) {
+    //
+    //     uniqueBigDataR = 0;
+    //
+    document.getElementById("totalvisitorsbigdata_r").innerHTML = Intl.NumberFormat().format(uniqueBigDataR);
+    //     if (last) {
+    //         for(var i = 0, len = devUniqueBigDataR.length; i < len; i++) {
+    //             uniqueBigDataR += 10;
+    //             document.getElementById("totalvisitorsbigdata_r").innerHTML = Intl.NumberFormat().format(uniqueBigDataR);
+    //         }
+    //         seUniqueBigDataR.close();
+    //     }
+    // }
 }
 
 function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
@@ -636,10 +758,105 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
         outBigDataC[pos] = out_x;
         deviceBigDataC[pos] = in_x + limit_x + out_x;
 
+        document.getElementById("totalVisits_c").innerHTML = Intl.NumberFormat().format(deviceBigDataC[pos]);
+        document.getElementById("inVisits_c").innerHTML = Intl.NumberFormat().format(in_x);
+        document.getElementById("limitVisits_c").innerHTML = Intl.NumberFormat().format(limit_x);
+        document.getElementById("outVisits_c").innerHTML = Intl.NumberFormat().format(out_x);
+
         spChartBigDataC.setOption(optionC);
         if (last) {
             seActivityBigDataC.close();
-        }
 
+            let total_c = 0;
+            let in_c = 0;
+            let limit_c = 0;
+            let out_c = 0;
+            for (let i = 0, len = deviceBigDataC.length; i < len; i++) {
+                total_c += deviceBigDataC[i];
+                in_c += inBigDataC[i];
+                limit_c += limitBigDataC[i];
+                out_c += outBigDataC[i];
+                document.getElementById("totalVisits_c").innerHTML = Intl.NumberFormat().format(total_c);
+                document.getElementById("inVisits_c").innerHTML = Intl.NumberFormat().format(in_c);
+                document.getElementById("limitVisits_c").innerHTML = Intl.NumberFormat().format(limit_c);
+                document.getElementById("outVisits_c").innerHTML = Intl.NumberFormat().format(out_c);
+            }
+        }
     }
 }
+
+function evtSourceUniqueBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+                                 zipcodes, member, userTZ, group) {
+    // seUniqueBigDataC = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
+    //     "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+    //     "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+    //     "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+    //     "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+    //     "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    let uniqueBigDataC = 10;
+    // seUniqueBigDataC.onmessage = function (event) {
+    //
+    //     uniqueBigDataC = 10;
+    //
+    document.getElementById("totalvisitorsbigdata_c").innerHTML = Intl.NumberFormat().format(uniqueBigDataC);
+    //     if (last) {
+    //         for(var i = 0, len = devUniqueBigDataC.length; i < len; i++) {
+    //             uniqueBigDataC += 10;
+    //             document.getElementById("totalvisitorsbigdata_c").innerHTML = Intl.NumberFormat().format(uniqueBigDataC);
+    //         }
+    //         seUniqueBigDataC.close();
+    //     }
+    // }
+}
+
+function countRegisteredBigDataC(dateS, dateE, country, state, city, zipcode, spot, ageS, ageE, sex, zipcodes, member) {
+
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spactivitybigdata',  // to target: mod_spactivitybigdata
+        method       : 'getUsersRegistered',  // to target: function getUsersRegisteredAjax in class ModSPDevRegisteredBigDataHelper
+        format       : 'json',
+        data         : { "dateStart": dateS, "dateEnd": dateE,
+            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode,
+            "spotId": spot,
+            "ageStart": ageS, "ageEnd": ageE, "gender": sex, "zipCode": zipcodes, "memberShip": member
+        }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let data = response.data;
+            document.getElementById("registeredbigdata_c").innerHTML = Intl.NumberFormat().format(data);
+        });
+}
+
+function evtSourceAvgTimeBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+                                  zipcodes, member, userTZ, group) {
+
+    seAvgTimeBigDataC = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/average-presence?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    seAvgTimeBigDataC.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        avgtimeBigDataC = eventData.value;
+        avgtimeBigDataC = parseInt(avgtimeBigDataC);
+        let last = eventData.isLast;
+
+        if (avgtimeBigDataC > 0) {
+            gettime2str(avgtimeBigDataC, 'c');
+        }
+        if (last) {
+            seAvgTimeBigDataC.close();
+        }
+    }
+}
+
+
+
