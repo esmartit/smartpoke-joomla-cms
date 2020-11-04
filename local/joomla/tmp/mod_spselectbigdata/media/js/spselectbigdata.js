@@ -512,6 +512,34 @@ function sendForm() {
         userTimeZone, t_groupBy
     );
 
+    evtSourceUniqueBigDataR
+    (
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
+        t_brands, t_status, t_presence,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy
+    );
+
+    countRegisteredBigDataR
+    (
+        t_dateS, t_dateE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member
+    );
+
+    evtSourceAvgTimeBigDataR
+    (
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
+        t_brands, t_status, t_presence,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy
+    );
+
     if (t_range == '1') {
         evtSourceActivityBigDataC
         (
@@ -522,34 +550,34 @@ function sendForm() {
             t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
             userTimeZone, t_groupBy
         );
+
+        evtSourceUniqueBigDataC
+        (
+            t_dateS2, t_dateE2, t_timeS, t_timeE,
+            t_country, t_state, t_city, t_zipcode,
+            t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
+            t_brands, t_status, t_presence,
+            t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+            userTimeZone, t_groupBy
+        );
+
+        countRegisteredBigDataC
+        (
+            t_dateS2, t_dateE2,
+            t_country, t_state, t_city, t_zipcode,
+            t_spot,
+            t_ageS, t_ageE, t_sex, t_zipcodes, t_member
+        );
+
+        evtSourceAvgTimeBigDataC
+        (
+            t_dateS2, t_dateE2, t_timeS, t_timeE,
+            t_country, t_state, t_city, t_zipcode,
+            t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
+            t_brands, t_status, t_presence,
+            t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+            userTimeZone, t_groupBy
+        );
     }
-
-    evtSourceUniqueBigData
-    (
-        t_dateS, t_dateE, t_timeS, t_timeE,
-        t_country, t_state, t_city, t_zipcode,
-        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
-        t_brands, t_status, t_presence,
-        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
-        userTimeZone, t_groupBy
-    );
-
-    countRegisteredBigData
-    (
-        t_dateS, t_dateE,
-        t_country, t_state, t_city, t_zipcode,
-        t_spot,
-        t_ageS, t_ageE, t_sex, t_zipcodes, t_member
-    );
-
-    evtSourceAvgTimeBigData
-    (
-        t_dateS, t_dateE, t_timeS, t_timeE,
-        t_country, t_state, t_city, t_zipcode,
-        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
-        t_brands, t_status, t_presence,
-        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
-        userTimeZone, t_groupBy
-    );
 
 }
