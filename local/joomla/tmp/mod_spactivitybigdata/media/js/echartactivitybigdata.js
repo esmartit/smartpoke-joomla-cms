@@ -607,27 +607,25 @@ function evtSourceAvgTimeBigDataR(dateS, dateE, timeS, timeE, country, state, ci
 
 function evtSourceUniqueBigDataR(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                  zipcodes, member, userTZ, group) {
-    // seUniqueBigDataR = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
-    //     "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
-    //     "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-    //     "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-    //     "%26brands="+brands+"%26status="+status+"%26presence="+presence+
-    //     "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+    seUniqueBigDataR = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/count-unique-devices?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
-    let uniqueBigDataR = 15;
-    // seUniqueBigDataR.onmessage = function (event) {
-    //
-    //     uniqueBigDataR = 0;
-    //
-    document.getElementById("totalvisitorsbigdata_r").innerHTML = Intl.NumberFormat().format(uniqueBigDataR);
-    //     if (last) {
-    //         for(var i = 0, len = devUniqueBigDataR.length; i < len; i++) {
-    //             uniqueBigDataR += 10;
-    //             document.getElementById("totalvisitorsbigdata_r").innerHTML = Intl.NumberFormat().format(uniqueBigDataR);
-    //         }
-    //         seUniqueBigDataR.close();
-    //     }
-    // }
+    seUniqueBigDataR.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        devUniqueBigDataR = eventData.count;
+        let last = eventData.isLast;
+
+        if (devUniqueBigDataR > 0) {
+            document.getElementById("totalvisitorsbigdata_r").innerHTML = Intl.NumberFormat().format(devUniqueBigDataR);
+        }
+        if (last) {
+            seUniqueBigDataR.close();
+        }
+    }
 }
 
 function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
@@ -787,27 +785,25 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
 
 function evtSourceUniqueBigDataC(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                  zipcodes, member, userTZ, group) {
-    // seUniqueBigDataC = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/find?"+
-    //     "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
-    //     "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-    //     "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-    //     "%26brands="+brands+"%26status="+status+"%26presence="+presence+
-    //     "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+    seUniqueBigDataC = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/count-unique-devices?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
-    let uniqueBigDataC = 10;
-    // seUniqueBigDataC.onmessage = function (event) {
-    //
-    //     uniqueBigDataC = 10;
-    //
-    document.getElementById("totalvisitorsbigdata_c").innerHTML = Intl.NumberFormat().format(uniqueBigDataC);
-    //     if (last) {
-    //         for(var i = 0, len = devUniqueBigDataC.length; i < len; i++) {
-    //             uniqueBigDataC += 10;
-    //             document.getElementById("totalvisitorsbigdata_c").innerHTML = Intl.NumberFormat().format(uniqueBigDataC);
-    //         }
-    //         seUniqueBigDataC.close();
-    //     }
-    // }
+    seUniqueBigDataC.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        devUniqueBigDataC = eventData.count;
+        let last = eventData.isLast;
+
+        if (devUniqueBigDataC > 0) {
+            document.getElementById("totalvisitorsbigdata_c").innerHTML = Intl.NumberFormat().format(devUniqueBigDataC);
+        }
+        if (last) {
+            seUniqueBigDataC.close();
+        }
+    }
 }
 
 function countRegisteredBigDataC(dateS, dateE, country, state, city, zipcode, spot, ageS, ageE, sex, zipcodes, member) {
@@ -857,6 +853,3 @@ function evtSourceAvgTimeBigDataC(dateS, dateE, timeS, timeE, country, state, ci
         }
     }
 }
-
-
-
