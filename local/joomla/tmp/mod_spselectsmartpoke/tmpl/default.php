@@ -68,10 +68,10 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <div id="selRadioSP" class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                    <input type="radio" value="0" id="spOnline" name="radioSmartpoke"> <?php echo JText::_('OnSite'); ?>
+                                    <input type="radio" value="0" id="spOnline" name="radioSmartpoke"> <?php echo JText::_('Online'); ?>
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" value="1" id="spOffline" name="radioSmartpoke"> <?php echo JText::_('OffSite'); ?>
+                                    <input type="radio" value="1" id="spOffline" name="radioSmartpoke"> <?php echo JText::_('OffLine'); ?>
                                 </label>
                                 <label class="btn btn-secondary">
                                     <input type="radio" value="2" id="spDataBase" name="radioSmartpoke"> <?php echo JText::_('Data Base'); ?>
@@ -91,7 +91,6 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         </div>
                         <div id="rangeDate" class="col-md-3 col-sm-3 col-xs-12" style="display: none;">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <!--                            <label>--><?php //echo JText::_('Dates');?><!--</label>-->
                                 <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                     <i class="glyphicon glyphicon-th fa fa-calendar"></i>
                                     <span>October 24, 1971 - October 24, 1971</span><b class="caret"></b>
@@ -139,7 +138,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <div id="spotSelect" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selSpot" class="form-control" name="spot" onblur="getSensorZoneList()">
+                                <select id="selSpot" class="form-control" name="spot" onblur="getSensorZoneHotSpotList()">
                                     <option value="" selected><?php echo JText::_('All Data Lakes'); ?></option>
                                 </select>
                             </div>
@@ -157,6 +156,14 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 <br/>
                                 <select id="selZone" class="form-control" name="zone">
                                     <option value="" selected><?php echo JText::_('All Zones'); ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <div id="hotspotSelect" class="col-md-12 col-sm-12 col-xs-12" style="display: block;">
+                                <br/>
+                                <select id="selHotSpot" class="form-control" name="zone">
+                                    <option value="" selected><?php echo JText::_('All HotSpots'); ?></option>
                                 </select>
                             </div>
                         </div>
