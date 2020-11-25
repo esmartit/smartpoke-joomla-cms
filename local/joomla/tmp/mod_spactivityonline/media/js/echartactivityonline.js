@@ -191,7 +191,7 @@ function echartActivityOnline(hoursAct, deviceAct, inAct, limitAct, outAct) {
         xAxis: [
             {
                 type: 'category',
-                boundaryGap: true,
+                boundaryGap: false,
                 data: [
                     hoursAct[0], hoursAct[1], hoursAct[2], hoursAct[3], hoursAct[4], hoursAct[5],
                     hoursAct[6], hoursAct[7], hoursAct[8], hoursAct[9], hoursAct[10], hoursAct[11],
@@ -203,10 +203,7 @@ function echartActivityOnline(hoursAct, deviceAct, inAct, limitAct, outAct) {
         yAxis: [
             {
                 type: 'value',
-                scale: true,
-                name: 'Devices',
-                min: 0,
-                boundaryGap: [1, 1]
+                name: 'Visitors'
             }
         ],
         series: [

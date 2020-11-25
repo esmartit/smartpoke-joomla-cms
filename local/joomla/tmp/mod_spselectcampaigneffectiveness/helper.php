@@ -106,18 +106,20 @@ class ModSPSelectCampaignEffectivenessHelper
     {
         $data = $_REQUEST['data'];
         $campaignId = $data['campaignId'];
-        $username = $data['username'];
+        //$username = $data['username'];
 
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('COUNT(*)');
+        //$query->select('COUNT(*)');
+        $query->select('username');
         $query->from($db->quoteName('#__spmessage_message'));
         $query->where($db->quoteName('campaign_id') ." = ". $db->quote($campaignId));
-        $query->where($db->quoteName('username') ." = ". $db->quote($username));
+        //$query->where($db->quoteName('username') ." = ". $db->quote($username));
 
         $db->setQuery($query);
-        $presenceUsersTarget = $db->loadResult();
+        //$presenceUsersTarget = $db->loadResult();
+        $presenceUsersTarget = $db->loadColumn();
 
         return $presenceUsersTarget;
     }

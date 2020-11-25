@@ -11,6 +11,10 @@ defined('_JEXEC') or die;
 $document = JFactory::getDocument();
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
+
+// NProgress
+$document->addScript('/templates/smartpokex/vendors/nprogress/nprogress.js');
+
 $document->addScript('/media/mod_sptraffichotspot/js/traffichotspot.js');
 
 ?>

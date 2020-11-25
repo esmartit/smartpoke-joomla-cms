@@ -5,6 +5,7 @@ let tableDB = '';
 let tableFile = '';
 let campaignId = '';
 let msgType = '1';
+let userInfo = [];
 
 let t_devicesIn = [];
 let t_devicesEx = [];
@@ -446,7 +447,7 @@ function showOnlineOpt(){
     document.getElementById("selbrands").style.display = 'block';
     document.getElementById("selposition").style.display = 'block';
     document.getElementById("selpresence").style.display = 'block';
-    document.getElementById("datepresence").style.display = 'block';
+    document.getElementById("datepresence").style.display = 'none';
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
@@ -471,7 +472,7 @@ function showOfflineOpt(){
     document.getElementById("selbrands").style.display = 'block';
     document.getElementById("selposition").style.display = 'block';
     document.getElementById("selpresence").style.display = 'block';
-    document.getElementById("datepresence").style.display = 'block';
+    document.getElementById("datepresence").style.display = 'none';
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
     document.getElementById("selcampaigns").style.display = 'block';
@@ -699,9 +700,18 @@ function sendForm() {
     let formFile = '';
     let formFileJson = '';
     let userTimeZone = document.getElementById('userTimeZone').innerText;
+    let t_group = 'BY_DAY';
     campaignId = $('#selCampaign').val();
+    getInfoUsers
+    (
+        t_country, t_state, t_city, t_zipcode,
+        t_spot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member
+    );
 
     if (smartpokeOpt == '1' || smartpokeOpt == '2') {  // Online and Offline option
+        t_dateS = $('#datestart').val();
+        t_dateE = $('#dateend').val();
         t_timeS = $('#timestart').val();
         t_timeE = $('#timeend').val();
         t_sensor = $('#selSensor').val();
@@ -712,8 +722,8 @@ function sendForm() {
         t_brands = $('#selBrand').val();
         t_status = $('#selStatus').val();
         t_presence = $('#presence').val();
-        t_dateS2 = $('#datestart2').val();
-        t_dateE2 = $('#dateend2').val();
+        // t_dateS2 = $('#datestart2').val();
+        // t_dateE2 = $('#dateend2').val();
 
         switch (t_type) {
             case '0':
@@ -747,16 +757,16 @@ function sendForm() {
         }
     }
 
-    if (campaignId != '') {
+    if (campaignId != null) {
         switch (smartpokeOpt) {
             case '1':
                 smartpokeOnline
                 (
-                    t_dateS, t_dateE, t_timeS, t_timeE,
+                    t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
                     t_country, t_state, t_city, t_zipcode,
-                    t_spot, t_sensor, t_zone, t_hotpsot, t_devicesIn, t_devicesEx,
+                    t_spot, t_sensor, t_zone, t_hotspot, '1', t_devicesIn, t_devicesEx,
                     t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
-                    userTimeZone
+                    userTimeZone, t_group
                 );
                 break;
             case '2':
@@ -764,9 +774,9 @@ function sendForm() {
                 (
                     t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
                     t_country, t_state, t_city, t_zipcode,
-                    t_spot, t_sensor,  t_zone, t_hotspot, t_devicesIn, t_devicesEx,
+                    t_spot, t_sensor,  t_zone, t_hotspot, '1', t_devicesIn, t_devicesEx,
                     t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
-                    userTimeZone
+                    userTimeZone, t_group
                 );
                 break;
             case '3':
@@ -782,36 +792,224 @@ function sendForm() {
                 break;
         }
 
-        let dataForm =
-            {
-                "dateStart": t_dateS, "dateEnd": t_dateE, "startTime": t_timeS, "endTime": t_timeE,
-                "dateStart2": t_dateS2, "dateEnd2": t_dateE2,
-                "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-                "spotId": t_spot, "sensorId": t_sensor, "zoneId": t_zone, "hotspotId": t_hotspot,
-                "brands": t_brands, "status": t_status, "presence": t_presence,
-                "ageStart": t_ageS, "ageEnd": t_ageE, "gender": t_sex, "zipCode": t_zipcodes, "memberShip": t_member,
-                "file": formFileJson,
-                "timeZone": userTimeZone
-            }
-
     } else {
         Joomla.renderMessages({'warning': ['Select a campaign, please!']});
     }
 }
 
-function smartpokeOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, ageS, ageE, sex,
-                         zipcodes, member, userTZ) {
+function getInfoUsers(country, state, city, zipcode, spot, ageS, ageE, sex, zipcodes, member) {
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method       : 'getUserList',  // to target: function getUserListAjax in class ModSPSelectSmartPokeHelper
+        format       : 'json',
+        data         : {
+            "countryId": country, "stateId": state, "cityId": city, "zipcodeId": zipcode,
+            "spotId": spot,
+            "ageStart": ageS, "ageEnd": ageE, "gender": sex, "zipCode": zipcodes, "memberShip": member
+        }
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            userInfo = response.data;
+            // let object = response.data;
+            // let len = object.length;
+            // userInfo = [];
+            //
+            // for (let i = 0; i<len; i++) {
+            //     userInfo[i]['firstname'] = object[i]['firstname'];
+            //     userInfo[i]['laststname'] = object[i]['lastname'];
+            //     userInfo[i]['mobile_phone'] = object[i]['mobile_phone'];
+            //     userInfo[i]['email'] = object[i]['email'];
+            //     userInfo[i]['username'] = object[i]['username'];
+            // }
 
-    console.log(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, ageS, ageE, sex,
-        zipcodes, member, userTZ);
-
+        })
 }
 
-function smartpokeOffline(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
+                         zipcodes, member, userTZ, group) {
+
+    let seSmartPokeOn = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/find?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26ssid="+hotspot+"%26isConnected="+connected+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    tableOn = $('#datatable-online').DataTable({
+        "destroy": true,
+        "columnDefs": [
+            {
+                "targets": 0,
+                "bSortable": false,
+                "searchable": false,
+                "orderable": false,
+                "className": 'dt-body-center',
+                "render": function (data, type, row, meta) {
+                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                }
+            },
+            {"targets": 1,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['1'] + "</div>";
+                }
+            },
+            {"targets": 2,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['2'] + "</div>";
+                }
+            },
+            {"targets": 3,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['3'] + "</div>";
+                }
+            },
+            {"targets": 4,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['4'] + "</div>";
+                }
+            },
+            {"targets": 5,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['5'] + "</div>";
+                }
+            },
+            {"targets": 6,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['6'] + "</div>";
+                }
+            },
+            {"targets": 7,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['7'] + "</div>";
+                }
+            }
+        ],
+        "responsive": true
+    });
+
+    NProgress.start();
+    NProgress.set(0,4);
+    tableOn.clear();
+
+    seSmartPokeOn.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        let last = eventData.isLast;
+        if (!last) {
+            // let pos = userInfo['username'].indexOf(eventData.userName);
+            let userName = eventData.userName;
+            let obj = userInfo.find(o => o.username === userName);
+            tableOn.row.add(
+                [
+                    '',
+                    obj['firstname'],
+                    obj['lastname'],
+                    obj['mobile_phone'],
+                    obj['email'],
+                    eventData.userName,
+                    eventData.spot,
+                    eventData.sensor
+                ]).draw(false);
+        } else {
+            seSmartPokeOn.close();
+            NProgress.done();
+        }
+    }
+}
+
+function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                           zipcodes, member, userTZ, group) {
 
-    console.log(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, t_hotspot, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
-        zipcodes, member, userTZ, group);
+    let seSmartPokeOff = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/find?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26ssid="+hotspot+"%26isConnected="+connected+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    tableOff = $('#datatable-offline').DataTable({
+        "destroy": true,
+        "columnDefs": [
+            {
+                "targets": 0,
+                "bSortable": false,
+                "searchable": false,
+                "orderable": false,
+                "className": 'dt-body-center',
+                "render": function (data, type, row, meta) {
+                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                }
+            },
+            {"targets": 1,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['1'] + "</div>";
+                }
+            },
+            {"targets": 2,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['2'] + "</div>";
+                }
+            },
+            {"targets": 3,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['3'] + "</div>";
+                }
+            },
+            {"targets": 4,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['4'] + "</div>";
+                }
+            },
+            {"targets": 5,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['5'] + "</div>";
+                }
+            },
+            {"targets": 6,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['6'] + "</div>";
+                }
+            },
+            {"targets": 7,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['7'] + "</div>";
+                }
+            }
+        ],
+        "responsive": true
+    });
+
+    NProgress.start();
+    NProgress.set(0,4);
+    tableOff.clear();
+
+    seSmartPokeOff.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        let last = eventData.isLast;
+        if (!last) {
+            // let pos = userInfo['username'].indexOf(eventData.userName);
+            let userName = eventData.userName;
+            let obj = userInfo.find(o => o.username === userName);
+            tableOff.row.add(
+                [
+                    '',
+                    obj['firstname'],
+                    obj['lastname'],
+                    obj['mobile_phone'],
+                    obj['email'],
+                    eventData.userName,
+                    eventData.spot,
+                    eventData.sensor
+                ]).draw(false);
+        } else {
+            seSmartPokeOff.close();
+            NProgress.done();
+        }
+    }
 }
 
 function smartpokeDB(country, state, city, zipcode, spot, ageS, ageE, sex, zipcodes, member) {
@@ -953,6 +1151,48 @@ function smartpokeFile() {
 
 $(document).ready(function() {
     // Handle click on "Select all" control
+    $('#smartpoke_select_all_on').on('click', function(){
+        // Check/uncheck all checkboxes in the table
+        let rows = tableOn.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    });
+
+    // Handle click on checkbox to set state of "Select all" control
+    $('#datatable-online tbody').on('change', 'input[type="checkbox"]', function(){
+        // If checkbox is not checked
+        if(!this.checked){
+            let el = $('#smartpoke_select_all_on').get(0);
+            // If "Select all" control is checked and has 'indeterminate' property
+            if(el && el.checked && ('indeterminate' in el)){
+                // Set visual state of "Select all" control
+                // as 'indeterminate'
+                el.indeterminate = true;
+            }
+        }
+    });
+
+    // Handle click on "Select all" control
+    $('#smartpoke_select_all_off').on('click', function(){
+        // Check/uncheck all checkboxes in the table
+        let rows = tableOff.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    });
+
+    // Handle click on checkbox to set state of "Select all" control
+    $('#datatable-offline tbody').on('change', 'input[type="checkbox"]', function(){
+        // If checkbox is not checked
+        if(!this.checked){
+            let el = $('#smartpoke_select_all_off').get(0);
+            // If "Select all" control is checked and has 'indeterminate' property
+            if(el && el.checked && ('indeterminate' in el)){
+                // Set visual state of "Select all" control
+                // as 'indeterminate'
+                el.indeterminate = true;
+            }
+        }
+    });
+
+    // Handle click on "Select all" control
     $('#smartpoke_select_all_db').on('click', function(){
         // Check/uncheck all checkboxes in the table
         let rows = tableDB.rows({ 'search': 'applied' }).nodes();
@@ -999,9 +1239,41 @@ $(document).ready(function() {
 
         switch (smartpokeOpt) {
             case "1": {
+                // Iterate over all checkboxes in the table
+                tableOn.$('input[type="checkbox"]').each(function(){
+                    // If checkbox doesn't exist in DOM
+                    if(!$.contains(document, this)){
+                        // If checkbox is checked
+                        if (this.checked) {
+                            // Create a hidden element
+                            $(form).append(
+                                $('<input>')
+                                    .attr('type', 'hidden')
+                                    .attr('name', this.name)
+                                    .val(this.value)
+                            );
+                        }
+                    }
+                });
                 break;
             }
             case "2": {
+                // Iterate over all checkboxes in the table
+                tableOff.$('input[type="checkbox"]').each(function(){
+                    // If checkbox doesn't exist in DOM
+                    if(!$.contains(document, this)){
+                        // If checkbox is checked
+                        if (this.checked) {
+                            // Create a hidden element
+                            $(form).append(
+                                $('<input>')
+                                    .attr('type', 'hidden')
+                                    .attr('name', this.name)
+                                    .val(this.value)
+                            );
+                        }
+                    }
+                });
                 break;
             }
             case "3": {

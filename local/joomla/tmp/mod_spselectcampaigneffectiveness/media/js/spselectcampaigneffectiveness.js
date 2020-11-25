@@ -8,6 +8,10 @@ let totalTarget = 0;
 let totalIN = 0;
 let percentIN = 0;
 
+let uniqueIN = 0;
+let axisGroup = '';
+
+
 
 $(document).ready( function() {
     userTimeZone = document.getElementById('userTimeZone').innerText;
@@ -190,6 +194,8 @@ $(document).ready(function () {
     $('#selCampaign').on('change', function () {
         getExpCampaign();
         getSmsEmailTotal();
+        document.getElementById("totalIn").innerHTML = Intl.NumberFormat().format(0);
+        document.getElementById("percentageIN").innerHTML = Intl.NumberFormat().format(0)+' %';
     });
 });
 
@@ -505,30 +511,31 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
     let pos = 0;
-    let uniqueIN = 0;
+    uniqueIN = 0;
     let t_campaign = $('#selCampaign').val();
+    getPresenceUsersCampaign(t_campaign);
 
     NProgress.start();
     NProgress.set(0,4);
 
     sePresenceIN.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
-        let axisGroup = '';
-        let last = eventData.isLast;
-        if (eventData.body != null) {
-            let bodyData = eventData.body;
-            let username = bodyData.username;
-            let group_x = new Date(bodyData.groupDate);
+        let len = eventData.length;
+        axisGroup = '';
+        for (let x=0; x<len; x++) {
+            let last = eventData[x].isLast;
+            if (eventData[x].body != null) {
+                let bodyData = eventData[x].body;
+                let username = bodyData.username;
+                let group_x = new Date(bodyData.groupDate);
 
-            let month = '' + (group_x.getMonth() + 1);
-            let day = '' + group_x.getDate();
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day =  '0' + day;
-            axisGroup = [month, day].join('-') + ' ' + username;
-            getPresenceUsersCampaign(t_campaign, username);
+                let month = '' + (group_x.getMonth() + 1);
+                let day = '' + group_x.getDate();
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+                axisGroup = [month, day].join('-') + ' ' + username;
 
-            if (existIN == 1) {
-                if (status == 'IN') {
+                if (existIN.includes(username)) {
                     pos = bigDataPresenceIN.indexOf(axisGroup);
                     if (pos == -1) {
                         bigDataPresenceIN.push(axisGroup);
@@ -538,12 +545,13 @@ function evtSourceUniqueIN(dateS, dateE, timeS, timeE, country, state, city, zip
                         percentageIN();
                     }
                 }
-            }
-        } else {
-            if (last) {
-                updateValueCampaign(t_campaign, uniqueIN, percentIN);
-                sePresenceIN.close();
-                NProgress.done();
+
+            } else {
+                if (last) {
+                    updateValueCampaign(t_campaign, uniqueIN, percentIN);
+                    sePresenceIN.close();
+                    NProgress.done();
+                }
             }
         }
     }

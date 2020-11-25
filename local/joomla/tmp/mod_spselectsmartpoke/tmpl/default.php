@@ -37,6 +37,9 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/bui
 // Ion.RangeSlider
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
 
+// NProgress
+$document->addScript('/templates/smartpokex/vendors/nprogress/nprogress.js');
+
 // DataTables
 $document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dataTables.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
@@ -46,7 +49,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
 $document->addScript('/media/mod_spselectsmartpoke/js/spselectsmartpoke.js');
 
 $currDate = date('Y-m-d H:i:s');
-$datestart = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
+$datestart = date("Y-m-d", strtotime($currDate));
 $dateend = date("Y-m-d", strtotime($currDate));
 
 $datestart2 = date("Y-m-d", strtotime("-29 day", strtotime($currDate)));
@@ -68,10 +71,10 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <div id="selRadioSP" class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-secondary active">
-                                    <input type="radio" value="0" id="spOnline" name="radioSmartpoke"> <?php echo JText::_('Online'); ?>
+                                    <input type="radio" value="0" id="spOnline" name="radioSmartpoke"> <?php echo JText::_('OnSite'); ?>
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" value="1" id="spOffline" name="radioSmartpoke"> <?php echo JText::_('OffLine'); ?>
+                                    <input type="radio" value="1" id="spOffline" name="radioSmartpoke"> <?php echo JText::_('OffSite'); ?>
                                 </label>
                                 <label class="btn btn-secondary">
                                     <input type="radio" value="2" id="spDataBase" name="radioSmartpoke"> <?php echo JText::_('Data Base'); ?>
@@ -162,7 +165,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-2 col-sm-2 col-xs-12">
                             <div id="hotspotSelect" class="col-md-12 col-sm-12 col-xs-12" style="display: block;">
                                 <br/>
-                                <select id="selHotSpot" class="form-control" name="zone">
+                                <select id="selHotSpot" class="form-control" name="hotspot">
                                     <option value="" selected><?php echo JText::_('All HotSpots'); ?></option>
                                 </select>
                             </div>
@@ -335,7 +338,10 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <thead>
                         <tr>
                             <th><input type='checkbox' name= 'select_all_on' id='smartpoke_select_all_on' value='1' /></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_DEVICE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_FIRSTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_LASTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_MOBILE PHONE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_EMAIL'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_USERNAME'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SENSOR'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SPOT'); ?></th>
@@ -348,7 +354,10 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                         <thead>
                         <tr>
                             <th><input type='checkbox' name= 'select_all_off' id='smartpoke_select_all_off' value='1' /></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_DEVICE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_FIRSTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_LASTNAME'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_MOBILE PHONE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_EMAIL'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_USERNAME'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SENSOR'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPSELECTSMARTPOKE_SPOT'); ?></th>

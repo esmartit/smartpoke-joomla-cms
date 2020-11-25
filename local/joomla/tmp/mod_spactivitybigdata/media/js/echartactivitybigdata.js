@@ -182,17 +182,14 @@ let optionR = {
     xAxis: [
         {
             type: 'category',
-            boundaryGap: true,
+            boundaryGap: false,
             data: axisBigDataR
         }
     ],
     yAxis: [
         {
             type: 'value',
-            scale: true,
-            name: 'Devices',
-            min: 0,
-            boundaryGap: [1, 1]
+            name: 'Visitors'
         }
     ],
     series: [
@@ -302,17 +299,14 @@ let optionC = {
     xAxis: [
         {
             type: 'category',
-            boundaryGap: true,
+            boundaryGap: false,
             data: axisBigDataC
         }
     ],
     yAxis: [
         {
             type: 'value',
-            scale: true,
-            name: 'Devices',
-            min: 0,
-            boundaryGap: [1, 1]
+            name: 'Visitors'
         }
     ],
     series: [
@@ -398,6 +392,36 @@ function gettime2str(val, opt) {
 Date.prototype.getWeek = function() {
     let onejan = new Date(this.getFullYear(),0,1);
     return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+};
+
+function getWeekNumber(d) {
+    // Copy date so don't modify original
+    d = new Date(+d);
+    d.setHours(0, 0, 0, 0);
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    // Get first day of year
+    let yearStart = new Date(d.getFullYear(), 0, 1);
+    // Calculate full weeks to nearest Thursday
+    let weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
+    // Return array of year and week number
+    return [d.getFullYear(), weekNo];
+}
+
+function weeksInYear(year) {
+    let month = 11,
+        day = 31,
+        week;
+
+    // Find week that 31 Dec is in. If is first week, reduce date until
+    // get previous week.
+    do {
+        d = new Date(year, month, day--);
+        week = getWeekNumber(d)[1];
+    } while (week == 1);
+
+    return week;
 }
 
 function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
@@ -434,14 +458,21 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
             let dw2 = new Date(dateE);
             let weeks = Math.round((dw2 - dw1) / (1000 * 3600 * 24 * 7));
             let week = dw1.getWeek();
+            let weekYear = weeksInYear(dw1.getFullYear());
+            let newWeek = 0;
             for (let i=0; i<=weeks; i++) {
                 inBigDataR[i] = 0;
                 limitBigDataR[i] = 0;
                 outBigDataR[i] = 0;
                 deviceBigDataR[i] = 0;
-                axisBigDataR[i] = week.toString();
-                if (week < 10) {
-                    axisBigDataR[i] = '0' + week.toString();
+                if (week > weekYear) {
+                    newWeek = week - weekYear;
+                } else {
+                    newWeek = week;
+                }
+                axisBigDataR[i] = newWeek.toString();
+                if (newWeek < 10) {
+                    axisBigDataR[i] = '0' + newWeek.toString();
                 }
                 week += 1;
             }
@@ -459,7 +490,7 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
                 limitBigDataR[i] = 0;
                 outBigDataR[i] = 0;
                 deviceBigDataR[i] = 0;
-                axisBigDataR[i] = date1.toString('default', {month: 'short'});
+                axisBigDataR[i] = date1.toLocaleString('default', {month: 'short'});
                 date1 = new Date(date1.setMonth(date1.getMonth() + 1));
             }
             break;
@@ -506,36 +537,37 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
         let out_x = eventData.outCount;
         let last = eventData.isLast;
 
-        switch (group) {
-            case "BY_DAY":
-                axisGroup = group_x.substr(group_x.length -5,group_x.length);
-                break;
-            case "BY_WEEK":
-                axisGroup = group_x.substr(group_x.length -2,group_x.length);
-                break;
-            case "BY_MONTH":
-                month = new Date(group_x+'-'+'01');
-                axisGroup = month.toLocaleString('default', {month: 'short'});
-                break;
-            case "BY_YEAR":
-                axisGroup = group_x;
-                break;
-        }
+        if (!last) {
+            switch (group) {
+                case "BY_DAY":
+                    axisGroup = group_x.substr(group_x.length -5,group_x.length);
+                    break;
+                case "BY_WEEK":
+                    axisGroup = group_x.substr(group_x.length -2,group_x.length);
+                    break;
+                case "BY_MONTH":
+                    month = new Date(group_x+'-'+'01');
+                    axisGroup = month.toLocaleString('default', {month: 'short'});
+                    break;
+                case "BY_YEAR":
+                    axisGroup = group_x;
+                    break;
+            }
 
-        pos = axisBigDataR.indexOf(axisGroup);
+            pos = axisBigDataR.indexOf(axisGroup);
 
-        inBigDataR[pos] = in_x;
-        limitBigDataR[pos] = limit_x;
-        outBigDataR[pos] = out_x;
-        deviceBigDataR[pos] = in_x + limit_x + out_x;
+            inBigDataR[pos] = in_x;
+            limitBigDataR[pos] = limit_x;
+            outBigDataR[pos] = out_x;
+            deviceBigDataR[pos] = in_x + limit_x + out_x;
 
-        document.getElementById("totalVisits_r").innerHTML = Intl.NumberFormat().format(deviceBigDataR[pos]);
-        document.getElementById("inVisits_r").innerHTML = Intl.NumberFormat().format(in_x);
-        document.getElementById("limitVisits_r").innerHTML = Intl.NumberFormat().format(limit_x);
-        document.getElementById("outVisits_r").innerHTML = Intl.NumberFormat().format(out_x);
+            document.getElementById("totalVisits_r").innerHTML = Intl.NumberFormat().format(deviceBigDataR[pos]);
+            document.getElementById("inVisits_r").innerHTML = Intl.NumberFormat().format(in_x);
+            document.getElementById("limitVisits_r").innerHTML = Intl.NumberFormat().format(limit_x);
+            document.getElementById("outVisits_r").innerHTML = Intl.NumberFormat().format(out_x);
 
-        spChartBigDataR.setOption(optionR);
-        if (last) {
+            spChartBigDataR.setOption(optionR);
+        } else {
             seActivityBigDataR.close();
 
             let total_r = 0;
@@ -663,14 +695,21 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
             let dw2 = new Date(dateE);
             let weeks = Math.round((dw2 - dw1) / (1000 * 3600 * 24 * 7));
             let week = dw1.getWeek();
+            let weekYear = weeksInYear(dw1.getFullYear());
+            let newWeek = 0;
             for (let i=0; i<=weeks; i++) {
                 inBigDataC[i] = 0;
                 limitBigDataC[i] = 0;
                 outBigDataC[i] = 0;
                 deviceBigDataC[i] = 0;
-                axisBigDataC[i] = week.toString();
-                if (week < 10) {
-                    axisBigDataC[i] = '0' + week.toString();
+                if (week > weekYear) {
+                    newWeek = week - weekYear;
+                } else {
+                    newWeek = week;
+                }
+                axisBigDataC[i] = newWeek.toString();
+                if (newWeek < 10) {
+                    axisBigDataC[i] = '0' + newWeek.toString();
                 }
                 week += 1;
             }
@@ -733,36 +772,37 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
         let out_x = eventData.outCount;
         let last = eventData.isLast;
 
-        switch (group) {
-            case "BY_DAY":
-                axisGroup = group_x.substr(group_x.length -5,group_x.length);
-                break;
-            case "BY_WEEK":
-                axisGroup = group_x.substr(group_x.length -2,group_x.length);
-                break;
-            case "BY_MONTH":
-                month = new Date(group_x+'-'+'01');
-                axisGroup = month.toLocaleString('default', {month: 'short'});
-                break;
-            case "BY_YEAR":
-                axisGroup = group_x;
-                break;
-        }
+        if (!last) {
+            switch (group) {
+                case "BY_DAY":
+                    axisGroup = group_x.substr(group_x.length -5,group_x.length);
+                    break;
+                case "BY_WEEK":
+                    axisGroup = group_x.substr(group_x.length -2,group_x.length);
+                    break;
+                case "BY_MONTH":
+                    month = new Date(group_x+'-'+'01');
+                    axisGroup = month.toLocaleString('default', {month: 'short'});
+                    break;
+                case "BY_YEAR":
+                    axisGroup = group_x;
+                    break;
+            }
 
-        pos = axisBigDataC.indexOf(axisGroup);
+            pos = axisBigDataC.indexOf(axisGroup);
 
-        inBigDataC[pos] = in_x;
-        limitBigDataC[pos] = limit_x;
-        outBigDataC[pos] = out_x;
-        deviceBigDataC[pos] = in_x + limit_x + out_x;
+            inBigDataC[pos] = in_x;
+            limitBigDataC[pos] = limit_x;
+            outBigDataC[pos] = out_x;
+            deviceBigDataC[pos] = in_x + limit_x + out_x;
 
-        document.getElementById("totalVisits_c").innerHTML = Intl.NumberFormat().format(deviceBigDataC[pos]);
-        document.getElementById("inVisits_c").innerHTML = Intl.NumberFormat().format(in_x);
-        document.getElementById("limitVisits_c").innerHTML = Intl.NumberFormat().format(limit_x);
-        document.getElementById("outVisits_c").innerHTML = Intl.NumberFormat().format(out_x);
+            document.getElementById("totalVisits_c").innerHTML = Intl.NumberFormat().format(deviceBigDataC[pos]);
+            document.getElementById("inVisits_c").innerHTML = Intl.NumberFormat().format(in_x);
+            document.getElementById("limitVisits_c").innerHTML = Intl.NumberFormat().format(limit_x);
+            document.getElementById("outVisits_c").innerHTML = Intl.NumberFormat().format(out_x);
 
-        spChartBigDataC.setOption(optionC);
-        if (last) {
+            spChartBigDataC.setOption(optionC);
+        } else {
             seActivityBigDataC.close();
 
             let total_c = 0;

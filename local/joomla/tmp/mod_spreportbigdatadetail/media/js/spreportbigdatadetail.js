@@ -463,7 +463,7 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
         let len = eventData.length;
         for (let x=0; x<len; x++) {
             let last = eventData[x].isLast;
-            if (eventData[x].body != null) {
+            if (!last) {
                 let bodyData = eventData[x].body;
                 tableDetail.row.add(
                     [
@@ -479,10 +479,8 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
                         bodyData.zipCode
                     ]).draw(false);
             } else {
-                if (last) {
-                    seActivityBigData.close();
-                    NProgress.done();
-                }
+                seActivityBigData.close();
+                NProgress.done();
             }
         }
     }

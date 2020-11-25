@@ -1,5 +1,29 @@
+let tableDetail = '';
+
 $(document).ready( function() {
+
     getCountryList();
+
+    if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
+    console.log('init_IonRangeSlider');
+
+    $("#range_age").ionRangeSlider({
+        type: "double",
+        min: 0,
+        max: 100,
+        from: 18,
+        to: 85,
+        grid: true,
+        grid_num: 10,
+        grid_snap: false,
+        onChange: function(data) {
+            $('#from_value').val(data.from);
+            $('#to_value').val(data.to);
+        }
+    });
+
+    document.getElementById("timestart").value = '00:00:00';
+    document.getElementById("timeend").value = '23:59:59';
 
 });
 
@@ -56,7 +80,7 @@ function getStateList() {
 
                 $("#selStateS").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getHotSpotList();
+            getSpotList();
         });
 
 }
@@ -122,7 +146,7 @@ function getZipCodeList() {
         });
 }
 
-function getHotSpotList() {
+function getSpotList() {
     let countryId = $('#selCountryS').val();
     let stateId = $('#selStateS').val();
     let cityId = $('#selCityS').val();
@@ -130,10 +154,39 @@ function getHotSpotList() {
 
     let request = {
         option       : 'com_ajax',
-        module       : 'spselecthotspot',  // to target: mod_spselecthotspot
-        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectHotSpotHelper
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectOnlineHelper
         format       : 'json',
         data         : {'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selSpot").empty();
+            $("#selSpot").append("<option value=''>All Spots</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            // showTableColumns();
+        });
+}
+
+function getHotSpotList() {
+    let spotid = $('#selSpot').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectSmartPokeeHelper
+        format       : 'json',
+        data         : spotid
     };
     $.ajax({
         method: 'GET',
@@ -146,29 +199,11 @@ function getHotSpotList() {
             $("#selHotSpot").empty();
             $("#selHotSpot").append("<option value=''>All HotSpots</option>");
             for (let i = 0; i<len; i++) {
-                let id = object[i][0];
+                let id = object[i][1];
                 let name = object[i][1];
 
                 $("#selHotSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
-        });
-}
-
-function getHotSpotDetail(dstart, dend, city, hotspot){
-    let request = {
-        option       : 'com_ajax',
-        module       : 'spreporthotspotdetail',  // to target: mod_spreporthotspotdetail
-        method       : 'getHotSpotDetail',  // to target: function getHotSpotDetail in class ModSPReportHotSpotDetailHelper
-        format       : 'json',
-        data         : { "dateStart": dstart, "dateEnd": dend, "cityId": city, "hotspotId": hotspot }
-    };
-    $.ajax({
-        method: 'GET',
-        data: request
-    })
-        .success(function(response){
-            let object = response.data
-            console.log(object);
         });
 }
 
@@ -251,16 +286,115 @@ $(document).ready(function() {
 function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
+    let t_timeS = $('#timestart').val();
+    let t_timeE = $('#timeend').val();
     let t_country = $('#selCountryS').val();
     let t_state = $('#selStateS').val();
     let t_city = $('#selCityS').val();
     let t_zipcode = $('#selZipCodeS').val();
-    let t_spot = $('#selHotSpot').val();
+    let t_spot = $('#selSpot').val();
+    let t_hotspot = $('#selHotSpot').val();
+    // let t_ageS = $('#from_value').val();
+    // let t_ageE = $('#to_value').val();
+    // let t_sex = $('#selSex').val();
+    // let t_zipcodes = $('#selZipCode').val();
+    // let t_member = $('#selMembership').val();
+    let t_ageS = '';
+    let t_ageE = '';
+    let t_sex = '';
+    let t_zipcodes = '';
+    let t_member = '';
     let userTimeZone = document.getElementById('userTimeZone').innerText;
+    let t_groupBy = 'BY_DAY';
+    let t_isConnected = 1;
 
-    let dataForm = {
-        "dateStart": t_dateS, "dateEnd": t_dateE,
-        "countryId": t_country, "stateId": t_state, "cityId": t_city, "zipcodeId": t_zipcode,
-        "spotId": t_spot,
-        "timeZone": userTimeZone }
-    console.log(dataForm);}
+    evtSourceDetailHotSpot(
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_hotspot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy, t_isConnected
+    )
+}
+
+function evtSourceDetailHotSpot(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, hotspot, ageS, ageE, sex,
+                                zipcodes, member, userTZ, group, connected) {
+
+    let seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/list-radius?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26ssid="+hotspot+"%26isConnected="+connected+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
+    tableDetail = $('#datatable-buttons').DataTable({
+        "destroy": true,
+        "column": [
+            {"data": "calledStationId"},
+            {"data": "username"},
+            {"data": "eventTimeStamp"},
+            {"data": "session"},
+            {"data": "inputOct"},
+            {"data": "outputOct"},
+            {"data": "statusType"},
+            {"data": "serviceType"},
+            {"data": "acctTerminateCause"},
+            {"data": "callingStationId"}
+        ],
+        "dom": 'Bfrtip',
+        "buttons": [
+            {
+                "extend": 'copy',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'csv',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'excel',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'pdfHtml5',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'print',
+                "className": 'btn-sm'
+            },
+        ],
+        "responsive": true
+    });
+
+    NProgress.start();
+    NProgress.set(0,4);
+    tableDetail.clear();
+
+    seActivityHotSpot.onmessage = function (event) {
+        let eventData = JSON.parse(event.data);
+        let len = eventData.length;
+        for (let x=0; x<len; x++) {
+            let last = eventData[x].isLast;
+            if (!last) {
+                let bodyData = eventData[x].body;
+                let hotspot = bodyData.calledStationId;
+                tableDetail.row.add(
+                    [
+                        hotspot.substr(18, hotspot.length),
+                        bodyData.userName,
+                        bodyData.eventTimeStamp,
+                        bodyData.session,
+                        bodyData.inputOct,
+                        bodyData.outputOct,
+                        bodyData.statusType,
+                        bodyData.serviceType,
+                        bodyData.acctTerminateCause,
+                        bodyData.callingStationId
+                    ]).draw(false);
+            } else {
+                seActivityHotSpot.close();
+                NProgress.done();
+            }
+        }
+    }
+}
