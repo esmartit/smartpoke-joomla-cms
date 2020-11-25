@@ -11,6 +11,8 @@ defined('_JEXEC') or die;
 
 $document = JFactory::getDocument();
 
+// Switchery
+$document->addStyleSheet('/templates/smartpokex/vendors/switchery/dist/switchery.min.css');
 // bootstrap-daterangepicker
 $document->addStyleSheet('/templates/smartpokex/vendors/bootstrap-daterangepicker/daterangepicker.css');
 // bootstrap-datetimepicker
@@ -22,6 +24,9 @@ $document->addStyleSheet('/templates/smartpokex/vendors/ion.rangeSlider/css/ion.
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
+
+// Switchery
+$document->addScript('/templates/smartpokex/vendors/switchery/dist/switchery.min.js');
 // bootstrap-daterangepicker
 $document->addScript('/templates/smartpokex/vendors/moment/min/moment.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/daterangepicker.js');
@@ -50,7 +55,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <label><?php echo JText::_('Dates Range');?></label>
+                                <label><?php echo JText::_('Range');?></label>
                                 <div id="daterange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                     <i class="glyphicon glyphicon-th fa fa-calendar"></i>
                                     <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
@@ -107,7 +112,15 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-2 col-sm-2 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selHotSpot" class="form-control" name="hotspot">
+                                <select id="selSpot" class="form-control" name="spot" onblur="getHotSpotList()">
+                                    <option value="" selected><?php echo JText::_('All Spots'); ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <br/>
+                                <select id="selHotSpot" class="form-control" name="zone">
                                     <option value="" selected><?php echo JText::_('All HotSpots'); ?></option>
                                 </select>
                             </div>
@@ -117,14 +130,15 @@ $dateend = date("Y-m-d", strtotime($currDate));
                     <!-- filters -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="ln_solid"></div>
-                        <h2><?php echo JText::_('Filters');?> <small></small></h2>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <h2><?php echo JText::_('Filters');?>
+                            <input id="checkFilter" type="checkbox" class="js-switch" /></h2>
+                        <div id="filterAge" class="col-md-4 col-sm-4 col-xs-12" style="display: none">
                             <label><?php echo JText::_('Range Age'); ?></label>
                             <input type="text" id="range_age" value="" name="range" />
                             <input type="hidden" id="from_value" value="18" name="from_value" />
                             <input type="hidden" id="to_value" value="85" name="to_value" />
                         </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div id="filterSex" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <label><?php echo JText::_('Sex'); ?></label>
                                 <select id="selSex" class="form-control" name="sex">
@@ -134,7 +148,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div id="filterZipCode" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <label><?php echo JText::_('ZipCodes');?></label>
                                 <select id="selZipCode" class="form-control" name="zipcode" multiple="multiple">
@@ -145,7 +159,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div id="filterMember" class="col-md-2 col-sm-2 col-xs-12" style="display: none">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <label><?php echo JText::_('Membership');?></label>
                                 <select id="selMembership" class="form-control" name="membership">

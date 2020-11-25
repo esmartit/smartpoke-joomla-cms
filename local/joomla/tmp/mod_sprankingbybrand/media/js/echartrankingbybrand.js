@@ -11,7 +11,7 @@ $(document).ready( function() {
         ],
 
         title: {
-            itemGap: 8,
+            itemGap: 4,
             textStyle: {
                 fontWeight: 'normal',
                 color: '#408829'
@@ -39,8 +39,9 @@ $(document).ready( function() {
                 {
                     name: 'Brand',
                     type: 'pie',
-                    radius: '50%',
-                    center: ['50%', '37%'],
+                    radius: ['50%', '57%'],
+                    center: ['50%', '42%'],
+                    avoidLabelOverlap: true,
                     label: {
                         show: false,
                         position: 'center'
@@ -48,10 +49,8 @@ $(document).ready( function() {
                     emphasis: {
                         label: {
                             show: true,
-                            fontSize: '9',
-                            fontWeight: 'bold',
-                            formatter: '({d}%)'
-
+                            fontSize: '10',
+                            fontWeight: 'bold'
                         }
                     },
                     labelLine: {

@@ -29,6 +29,10 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-daterangepicker/da
 // bootstrap-datetimepicker
 $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js');
 
+// NProgress
+$document->addScript('/templates/smartpokex/vendors/nprogress/nprogress.js');
+
+// DataTables
 $document->addScript('/templates/smartpokex/vendors/datatables.net/js/jquery.dataTables.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js');
 $document->addScript('/templates/smartpokex/vendors/datatables.net-buttons/js/dataTables.buttons.min.js');
@@ -58,30 +62,13 @@ $dateend = date("Y-m-d", strtotime($currDate));
     </p>
     <div class="collapse" id="collapseSelect">
         <div class="x_panel">
-            <!--        <div class="x_title">-->
-            <!--            <h2>--><?php //echo JText::_('MOD_SPREPORTHOTSPOTDETAIL');?><!-- <small></small></h2>-->
-            <!--            <ul class="nav navbar-right panel_toolbox">-->
-            <!--                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>-->
-            <!--                </li>-->
-            <!--                <li class="dropdown">-->
-            <!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>-->
-            <!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-            <!--                        <a class="dropdown-item" href="#">Settings 1</a>-->
-            <!--                        <a class="dropdown-item" href="#">Settings 2</a>-->
-            <!--                    </div>-->
-            <!--                </li>-->
-            <!--                <li><a class="close-link"><i class="fa fa-close"></i></a>-->
-            <!--                </li>-->
-            <!--            </ul>-->
-            <!--            <div class="clearfix"></div>-->
-            <!--        </div>-->
             <div class="x_content">
                 <form id="hotspotdetail_report_form" class="form-horizontal form-label-left" method="POST">
                     <!-- select -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-4 col-sm-4 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <label><?php echo JText::_('Dates Range');?></label>
+                                <label><?php echo JText::_('Range');?></label>
                                 <div id="daterange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                     <i class="glyphicon glyphicon-th fa fa-calendar"></i>
                                     <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
@@ -90,6 +77,14 @@ $dateend = date("Y-m-d", strtotime($currDate));
                             <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
                             <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                             <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <input id="timestart" type="hidden" name="timestart" class="form-control"/>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <input id="timeend" type="hidden" name="timeend" class="form-control"/>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -130,7 +125,15 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-2 col-sm-2 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selHotSpot" class="form-control" name="hotspot">
+                                <select id="selSpot" class="form-control" name="spot" onblur="getHotSpotList()">
+                                    <option value="" selected><?php echo JText::_('All Spots'); ?></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <br/>
+                                <select id="selHotSpot" class="form-control" name="zone">
                                     <option value="" selected><?php echo JText::_('All HotSpots'); ?></option>
                                 </select>
                             </div>
@@ -180,12 +183,14 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         <tr class="headings">
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_HOTSPOT'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_USERNAME'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_DEVICE'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_TIMESTART'); ?></th>
-                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_TIMESTOP'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_TOTALTIME'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_UPLOAD'); ?></th>
                             <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_DOWNLOAD'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_STATUSTYPE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_SERVICETYPE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_TERMINATECAUSE'); ?></th>
+                            <th class='column-title'><?php echo JText::_('MOD_SPREPORTHOTSPOTDETAIL_DEVICE'); ?></th>
                         </tr>
                         </thead>
                         <tbody>

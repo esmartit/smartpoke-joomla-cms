@@ -1,8 +1,8 @@
 let seConnectOnline = '';
 let spChartConnectedOnline = '';
 
-let connected = [];
-let registered = [];
+let arrConnected = [];
+let arrRegistered = [];
 let axisOnline = [];
 
 let theme = {
@@ -112,7 +112,7 @@ let theme = {
     }
 };
 
-let option = {
+let optionOL = {
     title: {
         text: '',
         subtext: ''
@@ -165,10 +165,7 @@ let option = {
     yAxis: [
         {
             type: 'value',
-            scale: true,
-            name: 'Users',
-            min: 0,
-            boundaryGap: [1, 1]
+            name: 'Users'
         }
     ],
     series: [
@@ -183,12 +180,7 @@ let option = {
                     }
                 }
             },
-            data: registered,
-            markLine : {
-                data : [
-                    {type : 'average', name: 'Avg'}
-                ]
-            }
+            data: arrRegistered
         },
         {
             name: 'Connected',
@@ -201,129 +193,68 @@ let option = {
                     }
                 }
             },
-            data: connected
+            data: arrConnected
         }
     ]
 };
 
-Date.prototype.getWeek = function() {
-    let onejan = new Date(this.getFullYear(),0,1);
-    return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-}
-
-function evtSourceConnectOnline(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, ageS, ageE, sex,
-                                   zipcodes, member, userTZ, group) {
+function evtSourceConnectOnline(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, hotspot, ageS, ageE, sex,
+                                   zipcodes, member, userTZ, group, connected) {
     let len = axisOnline.length;
     for (let i=0; i<len; i++) {
-        option.series[0].data.shift();
-        option.series[1].data.shift();
-        option.xAxis[0].data.shift();
-        spChartConnectedOnline.setOption(option);
+        optionOL.series[0].data.shift();
+        optionOL.series[1].data.shift();
+        optionOL.xAxis[0].data.shift();
+        spChartConnectedOnline.setOption(optionOL);
     }
-    switch (group) {
-        case "BY_DAY":
-            let d1 = new Date(dateS);
-            let d2 = new Date(dateE);
-            let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
-            for (let i=0; i<=days; i++) {
-                let month = '' + (d1.getMonth() + 1);
-                let day = '' + d1.getDate();
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day =  '0' + day;
-                axisOnline[i] = [month, day].join('-');
-                d1 = new Date(d1.setDate(d1.getDate() + 1));
-            }
-            break;
-        case "BY_WEEK":
-            let dw1 = new Date(dateS);
-            let dw2 = new Date(dateE);
-            let weeks = Math.round((dw2 - dw1) / (1000 * 3600 * 24 * 7));
-            let week = dw1.getWeek();
-            for (let i=0; i<=weeks; i++) {
-                registered[i] = 0;
-                connected[i] = 0;
-                axisOnline[i] = week.toString();
-                if (week < 10) {
-                    axisOnline[i] = '0' + week.toString();
-                }
-                week += 1;
-            }
-            break;
-        case "BY_MONTH":
-            let months;
-            let date1 = new Date(dateS);
-            let date2 = new Date(dateE);
-            months = (date2.getFullYear() - date1.getFullYear()) * 12;
-            months -= date1.getMonth();
-            months += date2.getMonth();
-            months <= 0 ? 0 : months;
-            for (let i=0; i<=months; i++) {
-                registered[i] = 0;
-                connected[i] = 0;
-                axisOnline[i] = date1.toString('default', {month: 'short'});
-                date1 = new Date(date1.setMonth(date1.getMonth() + 1));
-            }
-            break;
-        case "BY_YEAR":
-            let yearObj1 = new Date(dateS);
-            let yearObj2 = new Date(dateE);
-            let y1 = yearObj1.getFullYear();
-            let y2 = yearObj2.getFullYear();
-            registered[0] = 0;
-            connected[0] = 0;
-            axisOnline[0] = y2.toString();
-            registered[1] = 0;
-            connected[1] = 0;
-            axisOnline[1] = y1.toString();
-            if (y1 == y2) {
-                y1 -= 1;
-                axisOnline[1] = y1.toString();
-            }
-            break;
+
+    let d1 = new Date(dateS);
+    let d2 = new Date(dateE);
+    let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
+    for (let i=0; i<=days; i++) {
+        let month = '' + (d1.getMonth() + 1);
+        let day = '' + d1.getDate();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day =  '0' + day;
+        axisOnline[i] = [month, day].join('-');
+        d1 = new Date(d1.setDate(d1.getDate() + 1));
     }
 
     spChartConnectedOnline = echarts.init(document.getElementById('echart_connect_online'), theme);
-    spChartConnectedOnline.setOption(option);
+    spChartConnectedOnline.setOption(optionOL);
 
     seConnectOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/connected-registered?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-        "%26spotId="+spot+
-        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_DAY");
+        "%26spotId="+spot+"%26ssid="+hotspot+"%26isConnected="+connected+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
     let pos = 0;
 
+    NProgress.start();
+    NProgress.set(0,4);
     seConnectOnline.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
-        let axisGroup = '';
-        let group_x = eventData.time;
-        let connected_x = eventData.connected;
-        let registered_x = eventData.registered;
-        let last = eventData.isLast;
+        let len = eventData.length;
+        for (let x = 0; x < len; x++) {
+            let last = eventData[x].isLast;
+            if (!last) {
+                let bodyData = eventData[x].body;
+                let axisGroup = '';
+                let group_x = bodyData.date;
+                let connected_x = bodyData.connected;
+                let registered_x = bodyData.registered;
 
-        switch (group) {
-            case "BY_DAY":
-                axisGroup = group_x.substr(group_x.length -5,group_x.length);
-                break;
-            case "BY_WEEK":
-                axisGroup = group_x.substr(group_x.length -2,group_x.length);
-                break;
-            case "BY_MONTH":
-                month = new Date(group_x+'-'+'01');
-                axisGroup = month.toLocaleString('default', {month: 'short'});
-                break;
-            case "BY_YEAR":
-                axisGroup = group_x;
-                break;
-        }
+                axisGroup = group_x.substr(group_x.length - 5, group_x.length);
+                pos = axisOnline.indexOf(axisGroup);
 
-        pos = axisOnline.indexOf(axisGroup);
+                arrRegistered[pos] = registered_x;
+                arrConnected[pos] = connected_x;
 
-        registered[pos] = registered_x;
-        connected[pos] = connected_x;
-
-        spChartConnectedOnline.setOption(option);
-        if (last) {
-            seConnectOnline.close();
+                spChartConnectedOnline.setOption(optionOL);
+            } else {
+                seConnectOnline.close();
+                NProgress.done();
+            }
         }
     }
 }

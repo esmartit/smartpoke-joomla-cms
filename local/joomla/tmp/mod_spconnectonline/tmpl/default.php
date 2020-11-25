@@ -12,6 +12,10 @@ $document = JFactory::getDocument();
 
 $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/bootstrap/dist/js/bootstrap.bundle.min.js');
+
+// NProgress
+$document->addScript('/templates/smartpokex/vendors/nprogress/nprogress.js');
+
 $document->addScript('/templates/smartpokex/vendors/echarts/dist/echarts.min.js');
 $document->addScript('/media/mod_spconnectonline/js/echartconnectonline.js');
 

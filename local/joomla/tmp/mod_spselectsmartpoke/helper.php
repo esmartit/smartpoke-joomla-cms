@@ -218,6 +218,26 @@ class ModSPSelectSmartPokeHelper
     }
 
     /**
+     * Returns the UserInfo
+     * @return mixed
+     */
+    public static function getUserInfoAjax() {
+        $username = $_REQUEST['data'];
+
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query->select(array('firstname', 'lastname', 'mobile_phone', 'email'));
+        $query->from($db->quoteName('#__spcustomer_customer'));
+        $query->where($db->quoteName('username'). " = " .$db->quote($username));
+
+        $db->setQuery($query);
+        $userInfo = $db->loadObjectList();
+
+        return $userInfo;
+    }
+
+    /**
      * Returns the UserList
      * @return mixed
      */
@@ -282,7 +302,7 @@ class ModSPSelectSmartPokeHelper
         if ($sex != "") {
             $query->where($db->quoteName('sex') . " = " . $db->quote($sex));
         }
-        if (!empty($zipCode[0])) {
+        if (!empty($zipCode)) {
             $query->where('c.zipcode' . " IN (" . $zipCode . ")");
         }
         if ($member != "") {

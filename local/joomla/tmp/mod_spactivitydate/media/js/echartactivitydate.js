@@ -164,7 +164,7 @@ $(document).ready( function() {
         xAxis: [
             {
                 type: 'category',
-                boundaryGap: true,
+                boundaryGap: false,
                 data: axisAct
             }
         ],
@@ -172,7 +172,7 @@ $(document).ready( function() {
             {
                 type: 'value',
                 scale: true,
-                name: 'Devices',
+                name: 'Visitors',
                 min: 0,
                 boundaryGap: [1, 1]
             }

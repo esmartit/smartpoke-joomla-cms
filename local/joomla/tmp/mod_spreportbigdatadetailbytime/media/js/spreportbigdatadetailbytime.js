@@ -272,28 +272,6 @@ function getDeviceExList() {
         });
 }
 
-// $(document).ready(function () {
-//     let type = '';
-//     $('#radio15m').on('change', function () {
-//         type = $('#radio15m').val();
-//         $('input[name="radioGroup"]:radio:checked').val(type);
-//         showGroup($('#radio15m').val())
-//     });
-//
-//     $('#radio30m').on('change', function () {
-//         type = $('#radio30m').val();
-//         $('input[name="radioGroup"]:radio:checked').val(type);
-//         showGroup($('#radio30m').val())
-//     });
-//
-//     $('#radio60m').on('change', function () {
-//         type = $('#radio60m').val();
-//         $('input[name="radioGroup"]:radio:checked').val(type);
-//         showGroup($('#radio60m').val())
-//     });
-//
-// });
-
 $(document).ready(function() {
 
     let datestart = moment().startOf('month');
@@ -475,7 +453,7 @@ function evtSourceDetailbyTimeBigData(dateS, dateE, timeS, timeE, country, state
         let len = eventData.length;
         for (let x=0; x<len; x++) {
             let last = eventData[x].isLast;
-            if (eventData[x].body != null) {
+            if (!last) {
                 let bodyData = eventData[x].body;
                 tableDetail.row.add(
                     [
@@ -485,10 +463,8 @@ function evtSourceDetailbyTimeBigData(dateS, dateE, timeS, timeE, country, state
                         bodyData.total
                     ]).draw(false);
             } else {
-                if (last) {
-                    seActivityBigData.close();
-                    NProgress.done();
-                }
+                seActivityBigData.close();
+                NProgress.done();
             }
         }
     }

@@ -9,48 +9,6 @@
 
 class ModSPSelectHotSpotHelper
 {
-
-    /**
-     * Returns the HotSpotList
-     * @return mixed
-     */
-    public static function getHotSpotsAjax()
-    {
-        $data = $_REQUEST['data'];
-        $countryId = $data['countryId'];
-        $stateId = $data['stateId'];
-        $cityId = $data['cityId'];
-        $zipcode = implode(",", $data['zipcodeId']);
-
-        $db = JFactory::getDbo();
-
-        $query = $db->getQuery(true);
-
-        $query->select($db->quoteName(array('spot_id', 'name')));
-        $query->from($db->quoteName('#__spspot_spot'));
-
-        if (!empty($countryId)) {
-            $query->where($db->quoteName('country'). " = " .$db->quote($countryId));
-        }
-
-        if (!empty($stateId)) {
-            $query->where($db->quoteName('state'). " = " .$db->quote($stateId));
-        }
-
-        if (!empty($cityId)) {
-            $query->where($db->quoteName('city'). " = " .$db->quote($cityId));
-        }
-
-        if (!empty($zipcode[0])) {
-            $query->where('zipcode' . " IN (" . $zipcode . ")");
-        }
-
-        $db->setQuery($query);
-        $spotList = $db->loadRowList();
-
-        return $spotList;
-    }
-
     /**
      * Returns the ZipcodeList
      * @return mixed

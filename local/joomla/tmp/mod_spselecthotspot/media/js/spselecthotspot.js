@@ -78,7 +78,7 @@ function getStateList() {
 
                 $("#selStateS").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getHotSpotList();
+            getSpotList();
         });
 
 }
@@ -144,7 +144,7 @@ function getZipCodeList() {
         });
 }
 
-function getHotSpotList() {
+function getSpotList() {
     let countryId = $('#selCountryS').val();
     let stateId = $('#selStateS').val();
     let cityId = $('#selCityS').val();
@@ -152,10 +152,39 @@ function getHotSpotList() {
 
     let request = {
         option       : 'com_ajax',
-        module       : 'spselecthotspot',  // to target: mod_spselecthotspot
-        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectHotSpotHelper
+        module       : 'spselectonline',  // to target: mod_spselectonline
+        method       : 'getSpots',  // to target: function getSpotsAjax in class ModSPSelectOnlineHelper
         format       : 'json',
         data         : {'countryId': countryId, 'stateId': stateId, 'cityId': cityId, 'zipcodeId': zipcodeId}
+    };
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function(response){
+            let object = response.data;
+            let len = object.length;
+
+            $("#selSpot").empty();
+            $("#selSpot").append("<option value=''>All Spots</option>");
+            for (let i = 0; i<len; i++) {
+                let id = object[i][0];
+                let name = object[i][1];
+
+                $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
+            }
+            // showTableColumns();
+        });
+}
+
+function getHotSpotList() {
+    let spotid = $('#selSpot').val();
+    let request = {
+        option       : 'com_ajax',
+        module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method       : 'getHotSpots',  // to target: function getHotSpotsAjax in class ModSPSelectSmartPokeeHelper
+        format       : 'json',
+        data         : spotid
     };
     $.ajax({
         method: 'GET',
@@ -168,7 +197,7 @@ function getHotSpotList() {
             $("#selHotSpot").empty();
             $("#selHotSpot").append("<option value=''>All HotSpots</option>");
             for (let i = 0; i<len; i++) {
-                let id = object[i][0];
+                let id = object[i][1];
                 let name = object[i][1];
 
                 $("#selHotSpot").append("<option value='"+id+"'>"+name+"</option>");
@@ -252,6 +281,26 @@ $(document).ready(function() {
 
 });
 
+$(document).ready(function () {
+    $('#checkFilter').on('change', function () {
+        filters();
+    });
+
+});
+
+function filters() {
+    document.getElementById("filterAge").style.display = 'none';
+    document.getElementById("filterSex").style.display = 'none';
+    document.getElementById("filterZipCode").style.display = 'none';
+    document.getElementById("filterMember").style.display = 'none';
+    if (document.getElementById("checkFilter").checked) {
+        document.getElementById("filterAge").style.display = 'block';
+        document.getElementById("filterSex").style.display = 'block';
+        document.getElementById("filterZipCode").style.display = 'block';
+        document.getElementById("filterMember").style.display = 'block';
+    }
+}
+
 function sendForm() {
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
@@ -261,22 +310,45 @@ function sendForm() {
     let t_state = $('#selStateS').val();
     let t_city = $('#selCityS').val();
     let t_zipcode = $('#selZipCodeS').val();
-    let t_spot = $('#selHotSpot').val();
-    let t_ageS = $('#from_value').val();
-    let t_ageE = $('#to_value').val();
-    let t_sex = $('#selSex').val();
-    let t_zipcodes = $('#selZipCode').val();
-    let t_member = $('#selMembership').val();
+    let t_spot = $('#selSpot').val();
+    let t_hotspot = $('#selHotSpot').val();
+    let t_ageS = '';
+    let t_ageE = '';
+    let t_sex = '';
+    let t_zipcodes = '';
+    let t_member = '';
     let userTimeZone = document.getElementById('userTimeZone').innerText;
     let t_groupBy = 'BY_DAY';
-    // let t_groupBy = $('#selRadioGraph input:radio:checked').val();
+    let t_isConnected = 1;
+
+    if (document.getElementById("checkFilter").checked) {
+        t_ageS = $('#from_value').val();
+        t_ageE = $('#to_value').val();
+        t_sex = $('#selSex').val();
+        t_zipcodes = $('#selZipCode').val();
+        t_member = $('#selMembership').val();
+    }
 
     evtSourceConnectOnline(
         t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
-        t_spot,
-        '', '', t_sex, t_zipcodes, t_member,
-        userTimeZone, t_groupBy
+        t_spot, t_hotspot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy, t_isConnected
+    );
+    evtSourceTrafficHotSpot(
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_hotspot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy, t_isConnected
+    );
+    evtSourceConnectTime(
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_hotspot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy, t_isConnected
     );
     // console.log(t_dateS, t_dateE, t_country, t_state, t_city, t_zipcode, t_spot, t_ageS, t_ageE, t_sex, t_zipcodes, t_member, userTimeZone);
 }
