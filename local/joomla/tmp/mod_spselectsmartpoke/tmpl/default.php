@@ -213,7 +213,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 </div>
                             </div>
                         </div>
-                        <div id="datepresence" class="col-md-3 col-sm-3 col-xs-12" style="display: block;">
+                        <div id="datepresence" class="col-md-3 col-sm-3 col-xs-12" style="display: none;">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
                                 <label><?php echo JText::_('Days');?></label>
