@@ -815,18 +815,6 @@ function getInfoUsers(country, state, city, zipcode, spot, ageS, ageE, sex, zipc
     })
         .success(function(response){
             userInfo = response.data;
-            // let object = response.data;
-            // let len = object.length;
-            // userInfo = [];
-            //
-            // for (let i = 0; i<len; i++) {
-            //     userInfo[i]['firstname'] = object[i]['firstname'];
-            //     userInfo[i]['laststname'] = object[i]['lastname'];
-            //     userInfo[i]['mobile_phone'] = object[i]['mobile_phone'];
-            //     userInfo[i]['email'] = object[i]['email'];
-            //     userInfo[i]['username'] = object[i]['username'];
-            // }
-
         })
 }
 
@@ -903,17 +891,19 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
             // let pos = userInfo['username'].indexOf(eventData.userName);
             let userName = eventData.userName;
             let obj = userInfo.find(o => o.username === userName);
-            tableOn.row.add(
-                [
-                    '',
-                    obj['firstname'],
-                    obj['lastname'],
-                    obj['mobile_phone'],
-                    obj['email'],
-                    eventData.userName,
-                    eventData.spot,
-                    eventData.sensor
-                ]).draw(false);
+            if (obj != null) {
+                tableOn.row.add(
+                    [
+                        '',
+                        obj['firstname'],
+                        obj['lastname'],
+                        obj['mobile_phone'],
+                        obj['email'],
+                        eventData.userName,
+                        eventData.spot,
+                        eventData.sensor
+                    ]).draw(false);
+            }
         } else {
             seSmartPokeOn.close();
             NProgress.done();
@@ -994,17 +984,19 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
             // let pos = userInfo['username'].indexOf(eventData.userName);
             let userName = eventData.userName;
             let obj = userInfo.find(o => o.username === userName);
-            tableOff.row.add(
-                [
-                    '',
-                    obj['firstname'],
-                    obj['lastname'],
-                    obj['mobile_phone'],
-                    obj['email'],
-                    eventData.userName,
-                    eventData.spot,
-                    eventData.sensor
-                ]).draw(false);
+            if (obj != null) {
+                tableOn.row.add(
+                    [
+                        '',
+                        obj['firstname'],
+                        obj['lastname'],
+                        obj['mobile_phone'],
+                        obj['email'],
+                        eventData.userName,
+                        eventData.spot,
+                        eventData.sensor
+                    ]).draw(false);
+            }
         } else {
             seSmartPokeOff.close();
             NProgress.done();
