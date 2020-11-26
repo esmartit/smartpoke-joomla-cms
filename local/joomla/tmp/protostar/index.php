@@ -30,11 +30,11 @@ $sitename = htmlspecialchars($app->get('sitename'), ENT_QUOTES, 'UTF-8');
 
 if ($task === 'edit' || $layout === 'form')
 {
-	$fullWidth = 1;
+    $fullWidth = 1;
 }
 else
 {
-	$fullWidth = 0;
+    $fullWidth = 0;
 }
 
 // Add JavaScript Frameworks
@@ -52,13 +52,13 @@ JHtml::_('stylesheet', 'template.css', array('version' => 'auto', 'relative' => 
 // Use of Google Font
 if ($this->params->get('googleFont'))
 {
-	$font = $this->params->get('googleFontName');
+    $font = $this->params->get('googleFontName');
 
-	// Handle fonts with selected weights and styles, e.g. Source+Sans+Condensed:400,400i
-	$fontStyle = str_replace('+', ' ', strstr($font, ':', true) ?: $font);
+    // Handle fonts with selected weights and styles, e.g. Source+Sans+Condensed:400,400i
+    $fontStyle = str_replace('+', ' ', strstr($font, ':', true) ?: $font);
 
-	JHtml::_('stylesheet', 'https://fonts.googleapis.com/css?family=' . $font);
-	$this->addStyleDeclaration("
+    JHtml::_('stylesheet', 'https://fonts.googleapis.com/css?family=' . $font);
+    $this->addStyleDeclaration("
 	h1, h2, h3, h4, h5, h6, .site-title {
 		font-family: '" . $fontStyle . "', sans-serif;
 	}");
@@ -67,7 +67,7 @@ if ($this->params->get('googleFont'))
 // Template color
 if ($this->params->get('templateColor'))
 {
-	$this->addStyleDeclaration('
+    $this->addStyleDeclaration('
 	body.site {
 		border-top: 3px solid ' . $this->params->get('templateColor') . ';
 		background-color: ' . $this->params->get('templateBackgroundColor') . ';
@@ -102,131 +102,133 @@ $position8ModuleCount = $this->countModules('position-8');
 
 if ($position7ModuleCount && $position8ModuleCount)
 {
-	$span = 'span6';
+    $span = 'span6';
 }
 elseif ($position7ModuleCount && !$position8ModuleCount)
 {
-	$span = 'span9';
+    $span = 'span9';
 }
 elseif (!$position7ModuleCount && $position8ModuleCount)
 {
-	$span = 'span9';
+    $span = 'span9';
 }
 else
 {
-	$span = 'span12';
+    $span = 'span12';
 }
 
 // Logo file or site title param
 if ($this->params->get('logoFile'))
 {
-	$logo = '<img src="' . htmlspecialchars(JUri::root() . $this->params->get('logoFile'), ENT_QUOTES) . '" alt="' . $sitename . '" />';
+    $logo = '<img src="' . htmlspecialchars(JUri::root() . $this->params->get('logoFile'), ENT_QUOTES) . '" alt="' . $sitename . '" />';
 }
 elseif ($this->params->get('sitetitle'))
 {
-	$logo = '<span class="site-title" title="' . $sitename . '">' . htmlspecialchars($this->params->get('sitetitle'), ENT_COMPAT, 'UTF-8') . '</span>';
+    $logo = '<span class="site-title" title="' . $sitename . '">' . htmlspecialchars($this->params->get('sitetitle'), ENT_COMPAT, 'UTF-8') . '</span>';
 }
 else
 {
-	$logo = '<span class="site-title" title="' . $sitename . '">' . $sitename . '</span>';
-}
-if ($user->id > 0) {
-    // redirect here
-    $app->redirect('index.php/homepage');
+    $logo = '<span class="site-title" title="' . $sitename . '">' . $sitename . '</span>';
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<jdoc:include type="head" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <jdoc:include type="head" />
 </head>
 <body class="site <?php echo $option
-	. ' view-' . $view
-	. ($layout ? ' layout-' . $layout : ' no-layout')
-	. ($task ? ' task-' . $task : ' no-task')
-	. ($itemid ? ' itemid-' . $itemid : '')
-	. ($params->get('fluidContainer') ? ' fluid' : '')
-	. ($this->direction === 'rtl' ? ' rtl' : '');
+    . ' view-' . $view
+    . ($layout ? ' layout-' . $layout : ' no-layout')
+    . ($task ? ' task-' . $task : ' no-task')
+    . ($itemid ? ' itemid-' . $itemid : '')
+    . ($params->get('fluidContainer') ? ' fluid' : '')
+    . ($this->direction === 'rtl' ? ' rtl' : '');
 ?>">
-	<!-- Body -->
-	<div class="body" id="top">
-		<div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
-			<!-- Header -->
-			<header class="header" role="banner">
-				<div class="header-inner clearfix">
-					<a class="brand pull-left" href="<?php echo $this->baseurl; ?>/">
-						<?php echo $logo; ?>
-						<?php if ($this->params->get('sitedescription')) : ?>
-							<?php echo '<div class="site-description">' . htmlspecialchars($this->params->get('sitedescription'), ENT_COMPAT, 'UTF-8') . '</div>'; ?>
-						<?php endif; ?>
-					</a>
-					<div class="header-search pull-right">
-						<jdoc:include type="modules" name="position-0" style="none" />
-					</div>
-				</div>
-			</header>
-			<?php if ($this->countModules('position-1')) : ?>
-				<nav class="navigation" role="navigation">
-					<div class="navbar pull-left">
-						<a class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-							<span class="element-invisible"><?php echo JTEXT::_('TPL_PROTOSTAR_TOGGLE_MENU'); ?></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</a>
-					</div>
-					<div class="nav-collapse">
-						<jdoc:include type="modules" name="position-1" style="none" />
-					</div>
-				</nav>
-			<?php endif; ?>
-			<jdoc:include type="modules" name="banner" style="xhtml" />
-			<div class="row-fluid">
-				<?php if ($position8ModuleCount) : ?>
-					<!-- Begin Sidebar -->
-					<div id="sidebar" class="span3">
-						<div class="sidebar-nav">
-							<jdoc:include type="modules" name="position-8" style="xhtml" />
-						</div>
-					</div>
-					<!-- End Sidebar -->
-				<?php endif; ?>
-				<main id="content" role="main" class="<?php echo $span; ?>">
-					<!-- Begin Content -->
-					<jdoc:include type="modules" name="position-3" style="xhtml" />
-					<jdoc:include type="message" />
-					<jdoc:include type="component" />
-					<div class="clearfix"></div>
-					<jdoc:include type="modules" name="position-2" style="none" />
-					<!-- End Content -->
-				</main>
-				<?php if ($position7ModuleCount) : ?>
-					<div id="aside" class="span3">
-						<!-- Begin Right Sidebar -->
-						<jdoc:include type="modules" name="position-7" style="well" />
-						<!-- End Right Sidebar -->
-					</div>
-				<?php endif; ?>
-			</div>
-		</div>
-	</div>
-	<!-- Footer -->
-	<footer class="footer" role="contentinfo">
-		<div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
-			<hr />
-			<jdoc:include type="modules" name="footer" style="none" />
-			<p class="pull-right">
-				<a href="#top" id="back-top">
-					<?php echo JText::_('TPL_PROTOSTAR_BACKTOTOP'); ?>
-				</a>
-			</p>
-			<p>
-				&copy; <?php echo date('Y'); ?> <?php echo $sitename; ?>
-			</p>
-		</div>
-	</footer>
-	<jdoc:include type="modules" name="debug" style="none" />
+<!-- Body -->
+<div class="body" id="top">
+    <div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
+        <!-- Header -->
+        <header class="header" role="banner">
+            <div class="header-inner clearfix">
+                <a class="brand pull-left" href="<?php echo $this->baseurl; ?>/">
+                    <?php echo $logo; ?>
+                    <?php if ($this->params->get('sitedescription')) : ?>
+                        <?php echo '<div class="site-description">' . htmlspecialchars($this->params->get('sitedescription'), ENT_COMPAT, 'UTF-8') . '</div>'; ?>
+                    <?php endif; ?>
+                </a>
+                <div class="header-search pull-right">
+                    <jdoc:include type="modules" name="position-0" style="none" />
+                </div>
+            </div>
+        </header>
+        <?php if ($user->id): ?>
+            <?php header("Location: /homepage");; ?>
+
+        <?php else: ?>
+
+            <?php if ($this->countModules('position-1')) : ?>
+                <nav class="navigation" role="navigation">
+                    <div class="navbar pull-left">
+                        <a class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="element-invisible"><?php echo JTEXT::_('TPL_PROTOSTAR_TOGGLE_MENU'); ?></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                    </div>
+                    <div class="nav-collapse">
+                        <jdoc:include type="modules" name="position-1" style="none" />
+                    </div>
+                </nav>
+            <?php endif; ?>
+            <jdoc:include type="modules" name="banner" style="xhtml" />
+            <div class="row-fluid">
+                <?php if ($position8ModuleCount) : ?>
+                    <!-- Begin Sidebar -->
+                    <div id="sidebar" class="span3">
+                        <div class="sidebar-nav">
+                            <jdoc:include type="modules" name="position-8" style="xhtml" />
+                        </div>
+                    </div>
+                    <!-- End Sidebar -->
+                <?php endif; ?>
+                <main id="content" role="main" class="<?php echo $span; ?>">
+                    <!-- Begin Content -->
+                    <jdoc:include type="modules" name="position-3" style="xhtml" />
+                    <jdoc:include type="message" />
+                    <jdoc:include type="component" />
+                    <div class="clearfix"></div>
+                    <jdoc:include type="modules" name="position-2" style="none" />
+                    <!-- End Content -->
+                </main>
+                <?php if ($position7ModuleCount) : ?>
+                    <div id="aside" class="span3">
+                        <!-- Begin Right Sidebar -->
+                        <jdoc:include type="modules" name="position-7" style="well" />
+                        <!-- End Right Sidebar -->
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+    <div class="container<?php echo ($params->get('fluidContainer') ? '-fluid' : ''); ?>">
+        <hr />
+        <jdoc:include type="modules" name="footer" style="none" />
+        <p class="pull-right">
+            <a href="#top" id="back-top">
+                <?php echo JText::_('TPL_PROTOSTAR_BACKTOTOP'); ?>
+            </a>
+        </p>
+        <p>
+            &copy; <?php echo date('Y'); ?> <?php echo $sitename; ?>
+        </p>
+    </div>
+</footer>
+<jdoc:include type="modules" name="debug" style="none" />
 </body>
 </html>
