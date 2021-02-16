@@ -416,6 +416,7 @@ function evtSourceDetailbyTimeBigData(dateS, dateE, timeS, timeE, country, state
             {"data": "spotId"},
             {"data": "sensorId"},
             {"data": "groupDate"},
+            {"data": "groupTime"},
             {"data": "total"}
         ],
         "dom": 'Bfrtip',
@@ -460,6 +461,7 @@ function evtSourceDetailbyTimeBigData(dateS, dateE, timeS, timeE, country, state
                         bodyData.spotId,
                         bodyData.sensorId,
                         bodyData.groupDate,
+                        bodyData.groupTime,
                         bodyData.total
                     ]).draw(false);
             } else {
