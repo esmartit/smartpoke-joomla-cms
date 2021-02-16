@@ -217,6 +217,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                                 <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_SPOT'); ?></th>
                                 <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_SENSOR'); ?></th>
                                 <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_DATE'); ?></th>
+                                <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_HOUR'); ?></th>
                                 <th class='column-title'><?php echo JText::_('MOD_SPREPORTBIGDATADETAILBYTIME_TOTAL'); ?></th>
                             </tr>
                         </thead>
