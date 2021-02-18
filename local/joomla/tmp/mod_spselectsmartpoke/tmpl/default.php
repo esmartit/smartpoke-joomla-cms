@@ -88,8 +88,11 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                             <div id="hourstart" class="col-md-4 col-sm-4 col-xs-12" style="display: block;">
                                 <input id="timestart" type="text" name="timestart" class="form-control"/>
                             </div>
-                            <div id="hourend" class="col-md-4 col-sm-4 col-xs-12" style="display: block;">
+                            <div id="hourend" class="col-md-4 col-sm-4 col-xs-12" style="display: none;">
                                 <input id="timeend" type="text" name="timeend" disabled class="form-control"/>
+                            </div>
+                            <div id="hourendOL" class="col-md-4 col-sm-4 col-xs-12" style="display: block;">
+                                <input id="timeendOL" type="text" name="timeendOL" disabled class="form-control"/>
                             </div>
                         </div>
                         <div id="rangeDate" class="col-md-3 col-sm-3 col-xs-12" style="display: none;">

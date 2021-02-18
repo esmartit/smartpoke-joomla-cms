@@ -34,10 +34,10 @@ $(document).ready( function() {
 
     function objTimer() {
 
-        ActualDateTime = new Date()
-        Actualhour = ActualDateTime.getHours()
-        Actualminute = ActualDateTime.getMinutes()
-        Actualsecond = ActualDateTime.getSeconds()
+        ActualDateTime = new Date();
+        Actualhour = ActualDateTime.getHours();
+        Actualminute = ActualDateTime.getMinutes();
+        Actualsecond = ActualDateTime.getSeconds();
 
         var strTime = "";
         h = '0' + Actualhour;
@@ -45,7 +45,7 @@ $(document).ready( function() {
         s = '0' + Actualsecond;
         strTime += h.substring(h.length - 2, h.length) + ':' + m.substring(m.length - 2, m.length) + ':'+ s.substring(s.length - 2, s.length);
 
-        var checksec = (Actualsecond / 30)
+        var checksec = (Actualsecond / 1);
         if (checksec % 1 == 0) {
             showTimeEnd(strTime);
         }
