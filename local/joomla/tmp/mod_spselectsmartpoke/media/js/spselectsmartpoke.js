@@ -37,6 +37,11 @@ $(document).ready( function() {
 
     document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
+
+    function showTimeEnd(time) {
+        document.getElementById("timeendOL").value = time;
+    }
+
     getCampaigns();
 
     $('#datatable-online').DataTable({responsive: true});
@@ -44,7 +49,31 @@ $(document).ready( function() {
     $('#datatable-database').DataTable({responsive: true});
     $('#datatable-file').DataTable({responsive: true});
     // showTableColumns();
+
+    function objTimer() {
+
+        ActualDateTime = new Date();
+        Actualhour = ActualDateTime.getHours();
+        Actualminute = ActualDateTime.getMinutes();
+        Actualsecond = ActualDateTime.getSeconds();
+
+        var strTime = "";
+        h = '0' + Actualhour;
+        m = '0' + Actualminute;
+        s = '0' + Actualsecond;
+        strTime += h.substring(h.length - 2, h.length) + ':' + m.substring(m.length - 2, m.length) + ':'+ s.substring(s.length - 2, s.length);
+
+        var checksec = (Actualsecond / 1);
+        if (checksec % 1 == 0) {
+            showTimeEnd(strTime);
+        }
+    }
+    setInterval(objTimer, 1000);
+    objTimer();
+
 });
+
+
 
 function getCountryList() {
     let request = {
@@ -435,7 +464,8 @@ $(document).ready(function () {
 
 function showOnlineOpt(){
     document.getElementById("hourstart").style.display = 'block';
-    document.getElementById("hourend").style.display = 'block';
+    document.getElementById("hourend").style.display = 'none';
+    document.getElementById("hourendOL").style.display = 'block';
     $('#timeend').prop('disabled', true);
     document.getElementById("rangeDate").style.display = 'none';
     document.getElementById("selUbiGeo").style.display = 'block';
@@ -461,6 +491,7 @@ function showOnlineOpt(){
 function showOfflineOpt(){
     document.getElementById("hourstart").style.display = 'block';
     document.getElementById("hourend").style.display = 'block';
+    document.getElementById("hourendOL").style.display = 'none';
     $('#timeend').prop('disabled', false);
     document.getElementById("rangeDate").style.display = 'block';
     document.getElementById("selUbiGeo").style.display = 'block';
@@ -486,6 +517,7 @@ function showOfflineOpt(){
 function showDataBaseOpt(){
     document.getElementById("hourstart").style.display = 'none';
     document.getElementById("hourend").style.display = 'none';
+    document.getElementById("hourendOL").style.display = 'none';
     document.getElementById("rangeDate").style.display = 'none';
     document.getElementById("selUbiGeo").style.display = 'block';
     document.getElementById("spotSelect").style.display = 'block';
@@ -510,6 +542,7 @@ function showDataBaseOpt(){
 function showFileOpt() {
     document.getElementById("hourstart").style.display = 'none';
     document.getElementById("hourend").style.display = 'none';
+    document.getElementById("hourendOL").style.display = 'none';
     document.getElementById("rangeDate").style.display = 'none';
     document.getElementById("selUbiGeo").style.display = 'none';
     document.getElementById("spotSelect").style.display = 'none';
