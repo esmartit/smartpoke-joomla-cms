@@ -82,7 +82,7 @@ class SplashpageViewRegister extends JViewLegacy
             $senderSMS = $hotspot_name;
 
             $resultSMS = 'OK';
-//            $resultSMS = trim($model->sendWorldLine($phoneSMS, $messageSMS, $senderSMS)); // WorldLine Web SMS
+//            $resultSMS = trim($model->sendWorldLine($phoneSMS, urlencode(utf8_decode($messageSMS)), $senderSMS)); // WorldLine Web SMS
 
             $status = 0;
             if (substr($resultSMS, 0, 2) == 'OK') $status = 1;
