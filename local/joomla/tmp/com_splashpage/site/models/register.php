@@ -132,6 +132,7 @@ class SplashpageModelRegister extends JModelItem
             '&passwd=P45_m61X'.
             '&gsm=%2B'.$phone.
             '&type=plus'.
+            '&unicode=true'.
             '&msg='.$message.
             '&sender='.$sender;
 
