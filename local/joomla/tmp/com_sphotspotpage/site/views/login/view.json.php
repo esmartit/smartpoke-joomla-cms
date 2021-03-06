@@ -77,7 +77,7 @@ class SpHotSpotPageViewLogin extends JViewLegacy
                         $messageSMS = urlencode(utf8_decode($messageSMS));
                     }
                     $resultSMS = 'OK';
-//                    $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode)); // WorldLine Web SMS
+//                    $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', '', $unicode)); // WorldLine Web SMS
 
                     $status = 0;
                     if (substr($resultSMS, 0, 2) == 'OK') $status = 1;
