@@ -316,6 +316,17 @@ class ModSPSelectSmartPokeHelper
     }
 
     /**
+     * Returns True if found special character in the message
+     * @return boolean
+     */
+    public static function specialChars($string) {
+        if (preg_match('/#$%&+@^`~ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿/', $string) == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns the SendSMS
      * @return mixed
      */
@@ -350,9 +361,16 @@ class ModSPSelectSmartPokeHelper
                 $phoneSMS = $msgMobile;
                 // $messageSMS = $msgDesc;
                 $messageSMS = trim($msgName).', '.$messageCampaign;
+                $unicode = 'false';
+                $concatenate = 1;
+                if (self::specialChars($messageSMS)) {
+                    $unicode = 'true';
+                    $concatenate = 5;
+                    $messageSMS = urlencode(utf8_decode($messageSMS));
+                }
 
                 $status = 0;
-                $resultSMS = trim(self::sendWorldLine($phoneSMS, urlencode(utf8_decode($messageSMS)), 'SmartPoke', $deferreddate)); // WorldLine Web SMS
+                $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode, $concatenate)); // WorldLine Web SMS
                 if (substr($resultSMS, 0, 2) == 'OK') {
                     $status = 1;
                     $ok = $ok + 1;
@@ -371,7 +389,7 @@ class ModSPSelectSmartPokeHelper
      * Returns the SendWorlLineSMS
      * @return mixed
      */
-    public static function sendWorldLine($phone, $message, $sender, $deferred) {
+    public static function sendWorldLine($phone, $message, $sender, $deferred, $unicode, $concatenate) {
 
         //  certificado pem extraido de un pkcs12 con la ruta completa absoluta
         $cert = '/bitnami/joomla/certs_sms/esmartit.pem';
@@ -385,7 +403,8 @@ class ModSPSelectSmartPokeHelper
             '&passwd=P45_m61X'.
             '&gsm=%2B'.$phone.
             '&type=plus'.
-            '&unicode=true'.
+            '&unicode='.$unicode.
+            '&concatenate='.$concatenate.
             '&msg='.$message.
             '&sender='.$sender;
         if ($deferred != '') {

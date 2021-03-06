@@ -71,6 +71,13 @@ class SpHotSpotPageViewLogin extends JViewLegacy
                     $messageSMS = $campaign_description." ".$newpwd;
                     $senderSMS = $hotspot_name;
 
+                    $unicode = 'false';
+                    $concatenate = 1;
+                    if ($this->specialChars($messageSMS)) {
+                        $unicode = 'true';
+                        $concatenate = 5;
+                        $messageSMS = urlencode(utf8_decode($messageSMS));
+                    }
                     $resultSMS = 'OK';
 //                    $resultSMS = (trim($model->sendWorldLine($phoneSMS, urlencode(utf8_decode($messageSMS)), $senderSMS)); // WorldLine Web SMS
 
@@ -90,6 +97,17 @@ class SpHotSpotPageViewLogin extends JViewLegacy
             }
         }
         echo new JResponseJson($arr_result);
+    }
+
+    /**
+     * Returns True if found special character in the message
+     * @return boolean
+     */
+    protected function specialChars($string) {
+        if (preg_match('/#$%&+@^`~ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿/', $string) == 1) {
+            return true;
+        }
+        return false;
     }
 
     protected function validateMobile($code, $number) {
