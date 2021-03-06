@@ -362,15 +362,13 @@ class ModSPSelectSmartPokeHelper
                 // $messageSMS = $msgDesc;
                 $messageSMS = trim($msgName).', '.$messageCampaign;
                 $unicode = 'false';
-                $concatenate = 1;
                 if (self::specialChars($messageSMS)) {
                     $unicode = 'true';
-                    $concatenate = 5;
                     $messageSMS = urlencode(utf8_decode($messageSMS));
                 }
 
                 $status = 0;
-                $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode, $concatenate)); // WorldLine Web SMS
+                $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode)); // WorldLine Web SMS
                 if (substr($resultSMS, 0, 2) == 'OK') {
                     $status = 1;
                     $ok = $ok + 1;
@@ -389,7 +387,7 @@ class ModSPSelectSmartPokeHelper
      * Returns the SendWorlLineSMS
      * @return mixed
      */
-    public static function sendWorldLine($phone, $message, $sender, $deferred, $unicode, $concatenate) {
+    public static function sendWorldLine($phone, $message, $sender, $deferred, $unicode) {
 
         //  certificado pem extraido de un pkcs12 con la ruta completa absoluta
         $cert = '/bitnami/joomla/certs_sms/esmartit.pem';
@@ -404,24 +402,17 @@ class ModSPSelectSmartPokeHelper
             '&gsm=%2B'.$phone.
             '&type=plus'.
             '&unicode='.$unicode.
-            '&concatenate='.$concatenate.
+            '&concatenate=5'.
             '&msg='.$message.
             '&sender='.$sender;
         if ($deferred != '') {
             $param .= '&deferred='.$deferred;
         }
 
-        //    $url = 'https://push.tempos21.com/mdirectnx-trust/send?'; Ruta con IP
         $url = 'https://push.tempos21.com/mdirectnx/send?';
         $ch = curl_init();
 
-        //  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        //  curl_setopt($ch, CURLOPT_URL, $url);
-        //  curl_setopt($ch, CURLOPT_POST, 1);
-        //  curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
-
         curl_setopt($ch, CURLOPT_URL, $url);
-        // curl_setopt($ch, CURLOPT_SSLVERSION, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSLCERT, $cert);
