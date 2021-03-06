@@ -62,7 +62,7 @@ class SplashpageModelRegister extends JModelItem
         $db    = JFactory::getDBO();
         $query = $db
             ->getQuery(true)
-            ->select('id, name, message_sms')
+            ->select('name, message_sms, message_email, deferred, deferreddate')
             ->from('#__spcampaign_campaign')
             ->where($db->quoteName('smsemail') . " = " . $db->quote($smsemail), 'and')
             ->where($db->quoteName('type') . " = " . $db->quote($type))
@@ -118,7 +118,7 @@ class SplashpageModelRegister extends JModelItem
         return;
     }
 
-    public function sendWorldLine($phone, $message, $sender) {
+    public function sendWorldLine($phone, $message, $sender, $deferred, $unicode) {
 
         //  certificado pem extraido de un pkcs12 con la ruta completa absoluta
         $cert = '/bitnami/joomla/certs_sms/esmartit.pem';
@@ -132,9 +132,13 @@ class SplashpageModelRegister extends JModelItem
             '&passwd=P45_m61X'.
             '&gsm=%2B'.$phone.
             '&type=plus'.
-            '&unicode=true'.
+            '&unicode='.$unicode.
+            '&concatenate=5'.
             '&msg='.$message.
             '&sender='.$sender;
+        if ($deferred != '') {
+            $param .= '&deferred='.$deferred;
+        }
 
         //    $url = 'https://push.tempos21.com/mdirectnx-trust/send?'; Ruta con IP
         $url = 'https://push.tempos21.com/mdirectnx/send?';

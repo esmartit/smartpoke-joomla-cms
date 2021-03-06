@@ -71,20 +71,23 @@ class SpHotSpotPageViewRegister extends JViewLegacy
         if ($campaign_id != '') {
             $campaign_description = $campaign['message_sms'];
             $campaign_name = $campaign['name'];
+            $deferred = $campaign['deferred'];
+            $deferreddate = '';
+            if ($deferred == '1') {
+                $deferreddate = $campaign['deferreddate'];
+            }
             // Call API to send a campaign
             $phoneSMS = $mobilephone;
             $messageSMS = $campaign_description;
             $senderSMS = $hotspot_name;
 
             $unicode = 'false';
-            $concatenate = 1;
             if ($this->specialChars($messageSMS)) {
                 $unicode = 'true';
-                $concatenate = 5;
                 $messageSMS = urlencode(utf8_decode($messageSMS));
             }
             $resultSMS = 'OK';
-//            $resultSMS = trim($model->sendWorldLine($phoneSMS, urlencode(utf8_decode($messageSMS)), $senderSMS)); // WorldLine Web SMS
+//            $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode)); // WorldLine Web SMS
 
             $status = 0;
             if (substr($resultSMS, 0, 2) == 'OK') $status = 1;
