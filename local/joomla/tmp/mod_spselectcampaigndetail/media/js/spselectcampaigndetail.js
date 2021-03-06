@@ -281,16 +281,16 @@ function getSmsEmailSent(dstart, dend, type){
             let len = object.length;
             for (let i = 0; i<len; i++) {
                 let status = object[i][0];
-                let count = object[i][1];
+                let desc = object[i][1];
 
                 if (status == '0') {
-                    nok = parseInt(count);
+                    nok += parseInt(1);
                 }
                 if (status == '1') {
-                    ok =parseInt(count);
+                    ok += parseInt((desc.match(/ | /g) || []).length/2);
                 }
-                sent += parseInt(count);
             }
+            sent = nok + ok;
             monthly -= sent;
             document.getElementById('total_smsemail').innerHTML = Intl.NumberFormat().format(monthly);
             document.getElementById('total_smsemail_sent').innerHTML = Intl.NumberFormat().format(sent);
@@ -320,16 +320,16 @@ function getCampaignSent(dstart, dend, campaign, country, state, city, zipcode, 
             let len = object.length;
             for (let i = 0; i<len; i++) {
                 let status = object[i][0];
-                let count = object[i][1];
+                let desc = object[i][1];
 
                 if (status == '0') {
-                    nok = parseInt(count);
+                    nok += parseInt(1);
                 }
                 if (status == '1') {
-                    ok =parseInt(count);
+                    ok += parseInt((desc.match(/ | /g) || []).length/2);
                 }
-                sent += parseInt(count);
             }
+            sent = nok + ok;
             document.getElementById('smsemail_sent').innerHTML = Intl.NumberFormat().format(sent);
             document.getElementById('smsemail_ok').innerHTML = Intl.NumberFormat().format(ok);
             document.getElementById('smsemail_nok').innerHTML = Intl.NumberFormat().format(nok);

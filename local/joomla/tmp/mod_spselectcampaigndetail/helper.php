@@ -73,14 +73,13 @@ class ModSPSelectCampaignDetailHelper
         $query = $db->getQuery(true);
 
         $query
-            ->select(array('status', 'COUNT(*)'))
+            ->select(array('status', 'description'))
             ->from($db->quoteName('#__spmessage_message', 'a'))
             ->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'))
             ->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'))
             ->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart))
             ->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd))
-            ->where($db->quoteName('c.smsemail'). " = ". $db->quote($smsemail))
-            ->group($db->quoteName('status'));
+            ->where($db->quoteName('c.smsemail'). " = ". $db->quote($smsemail));
         $db->setQuery($query);
         $statusList = $db->loadRowList();
 
@@ -108,7 +107,7 @@ class ModSPSelectCampaignDetailHelper
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select(array('status', 'COUNT(*)'));
+        $query->select(array('status', 'description'));
         $query->from($db->quoteName('#__spmessage_message', 'a'));
         $query->join('LEFT', $db->quoteName('#__spcustomer_customer', 'b') . ' ON ' . $db->quoteName('b.username'). ' = ' . $db->quoteName('a.username'));
         $query->join('INNER', $db->quoteName('#__spcampaign_campaign', 'c') . ' ON ' . $db->quoteName('c.id'). ' = ' . $db->quoteName('campaign_id'));
@@ -136,7 +135,6 @@ class ModSPSelectCampaignDetailHelper
         if (!empty($spotId)) {
             $query->where($db->quoteName('spot'). " = ". $db->quote($spotId));
         }
-        $query->group($db->quoteName('status'));
 
         $db->setQuery($query);
         $statusList = $db->loadRowList();
