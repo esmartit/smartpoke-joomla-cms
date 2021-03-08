@@ -146,7 +146,7 @@ class SphotspotModelListhotspot extends JModelList
         if ($option == 'C') {
             $objTable->id = null;
             $objTable->created_by = $this->userId;
-            $objTable->created = date("Y-m-d h:i:sa");
+            $objTable->created = date("Y-m-d H:i:s");
             $objTable->access = 1;
             $objTable->params = '';
             $objTable->metakey= '';
@@ -157,7 +157,7 @@ class SphotspotModelListhotspot extends JModelList
             if ($option == 'U') {
                 $objTable->id = $values['id'];
                 $objTable->modified_by = $this->userId;
-                $objTable->modified = date("Y-m-d h:i:sa");
+                $objTable->modified = date("Y-m-d H:i:s");
                 $result = $db->updateObject('#__sphotspot_hotspot', $objTable, 'id');
             } else {
                 $query = $db->getQuery(true);

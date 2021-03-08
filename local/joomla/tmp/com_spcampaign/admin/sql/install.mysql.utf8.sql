@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `#__spcampaign_campaign` (
 	`deferred` TINYINT(1) NOT NULL DEFAULT 0,
 	`deferreddate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 	`message_email` LONGTEXT NOT NULL,
-	`message_sms` VARCHAR(160) NOT NULL DEFAULT '',
+	`message_sms` VARCHAR(800) NOT NULL DEFAULT '',
 	`name` VARCHAR(255) NOT NULL DEFAULT '',
 	`percent` FLOAT(7) NOT NULL DEFAULT 0,
 	`smsemail` TINYINT(1) NOT NULL DEFAULT 0,
