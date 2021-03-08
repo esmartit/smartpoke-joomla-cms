@@ -109,10 +109,10 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <td class=" last">
                                         <a type="button" class="open-hotspotModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#hotspotModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "name":"<?php echo $item->name; ?>", "tags":"<?php echo $item->tags; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
                                         <?php if ($canDo->get('core.edit')): ?>
-                                            <a type="button" class="open-hotpsotModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#hotspotModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "name":"<?php echo $item->name; ?>", "tags":"<?php echo $item->tags; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                            <a type="button" class="open-hotspotModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#hotspotModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "name":"<?php echo $item->name; ?>", "tags":"<?php echo $item->tags; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
                                         <?php endif; ?>
                                         <?php if ($canDo->get('core.delete')): ?>
-                                            <a type="button" class="open-hotspotModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#hotspotModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "name":"<?php echo $item->name; ?>", "tags":"<?php echo $item->tags; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                            <a type="button" class="open-hotspotModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#hotspotModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "name":"<?php echo $item->name; ?>", "tags":"<?php echo $item->tags; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

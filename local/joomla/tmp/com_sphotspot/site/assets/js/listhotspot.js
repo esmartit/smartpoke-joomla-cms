@@ -28,37 +28,6 @@ function closeModal() {
     }
 }
 
-jQuery(document).ready(function() {
-    if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
-    console.log('init_IonRangeSlider');
-
-    $("#range_pwrIn").ionRangeSlider({
-        min: -99,
-        max: -2,
-        from: -45,
-        grid: true,
-        grid_num: 10,
-        grid_snap: false
-    });
-    $("#range_pwrLimit").ionRangeSlider({
-        min: -99,
-        max: -2,
-        from: -48,
-        grid: true,
-        grid_num: 10,
-        grid_snap: false
-    });
-    $("#range_pwrOut").ionRangeSlider({
-        min: -99,
-        max: -2,
-        from: -65,
-        grid: true,
-        grid_num: 10,
-        grid_snap: false
-    });
-
-});
-
 jQuery(document).ready(function(){
     jQuery('#modalForm').submit(function(e) {
         hotspotAction();
