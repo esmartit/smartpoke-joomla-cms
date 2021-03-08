@@ -114,9 +114,14 @@ class SplashpageViewRegister extends JViewLegacy
      * Returns True if found special character in the message
      * @return boolean
      */
-    protected function specialChars($string) {
-        if (preg_match('/#$%&+@^`~ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿/', $string) == 1) {
-            return true;
+    public static function specialChars($string) {
+        $special = '#$%&+@^`~ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿€';
+        for ($i=0; $i<strlen($string); $i++) {
+            $char = substr($string, $i, 1);
+            $pattern = '/'.$char.'/';
+            if (preg_match($pattern, $special) == 1)
+                return true;
+
         }
         return false;
     }
