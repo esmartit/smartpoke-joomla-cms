@@ -41,7 +41,7 @@ class SpcampaignViewListcampaign extends JViewLegacy
         $deferreddate = "";
         if ($deferred == "1") {
             $deferreddate = $input->getString('deferredDate');
-            $defdate = date('Y-m-d h:i', strtotime($deferreddate));
+            //$defdate = date('Y-m-d h:i:s', strtotime($deferreddate));
         }
         $type = $input->getString('type');
 
@@ -59,7 +59,7 @@ class SpcampaignViewListcampaign extends JViewLegacy
             "smsemail" => $smsemail,
             "messagetype" => $messagetype,
             "deferred" => $deferred,
-            "defdate" => $defdate,
+            "defdate" => $deferreddate,
             "type" => $type,
             "publish" => $publish
         );
