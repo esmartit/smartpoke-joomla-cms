@@ -98,7 +98,9 @@ class SpsensorViewListsensor extends JViewLegacy
             "apMac" => $apMac,
             "tags" => $tags
         );
-        $return = $model->saveSensorSettings($data, $opt);
+
+        $url = $model->getSelfUrl($apMac);
+        $return = $model->saveSensorSettings($data, $opt, $url);
         if ($return) {
             $status = $model->saveSensor($values, $opt);
             if ($status) {

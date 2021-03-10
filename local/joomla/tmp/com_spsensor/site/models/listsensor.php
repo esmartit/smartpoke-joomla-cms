@@ -192,12 +192,45 @@ class SpsensorModelListsensor extends JModelList
         return $result;
     }
 
-    public function saveSensorSettings($data = null, $option = null)
+    public function getSelfUrl($macaddress)
+    {
+        $this->plugin = JPluginHelper::getPlugin('system', 'backend_plugin');
+        $base_uri = json_decode($this->plugin->params, true);
+
+        $dir_req = $base_uri['ms_data'].'/sensor-settings/search/findByApMac?apMac='.$macaddress;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+        $arrHttpCode = array(200, 201, 204);
+        curl_setopt($ch, CURLOPT_URL, $dir_req);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $headers = array();
+        $headers[] = "Content-Type: application/json";
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $res = curl_exec($ch);
+        $result = json_decode($res, true);
+        $httpCode = curl_getinfo ($ch,CURLINFO_HTTP_CODE);
+
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+
+        if (in_array($httpCode, $arrHttpCode)) {
+            return $result['_links']['self']['href'];
+        }
+        return '';
+    }
+
+
+    public function saveSensorSettings($data = null, $option = null, $url = '')
     {
         $this->plugin = JPluginHelper::getPlugin('system', 'backend_plugin');
         $base_uri = json_decode($this->plugin->params, true);
 
         $id = $data['id'];
+        $mac = $data['apMac'];
         $ch = curl_init();
 
         $dir_req = $base_uri['ms_data'].'/sensor-settings';
@@ -207,12 +240,12 @@ class SpsensorModelListsensor extends JModelList
                 curl_setopt($ch, CURLOPT_POST, 1);
                 break;
             case 'U':
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
-                $dir_req .= '/'.$id;
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                $dir_req = $url;
                 break;
             case 'D':
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-                $dir_req .= '/'.$id;
+                $dir_req = $url;
                 break;
         }
 
@@ -229,12 +262,12 @@ class SpsensorModelListsensor extends JModelList
 
         $res = curl_exec($ch);
         $result = json_decode($res);
-        $httpCode = curl_getinfo ( $ch , CURLINFO_HTTP_CODE);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if (curl_errno($ch)) {
             echo 'Error:' . curl_error($ch);
         }
-        curl_close ($ch);
+        curl_close($ch);
 
         if (in_array($httpCode, $arrHttpCode)) {
             return true;

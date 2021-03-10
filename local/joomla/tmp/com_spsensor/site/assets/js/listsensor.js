@@ -166,6 +166,7 @@ jQuery(document).on("click", ".open-sensorModal", function () {
             break;
         case "U":
             document.getElementById( 'btnSave' ).textContent = 'Save';
+            $("#apMac").prop( 'disabled', true );
             break;
         case "D":
             $("#selSpot").prop( 'disabled', true );
