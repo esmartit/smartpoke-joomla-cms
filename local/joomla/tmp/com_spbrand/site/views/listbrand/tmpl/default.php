@@ -113,7 +113,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 </button>
             </div>
             <div class="modal-body">
-                <form id="modalForm" class="form-horizontal form-label-left>
+                <form id="modalForm" class="form-horizontal form-label-left">
                     <div class="item form-group">
                         <div class="col-md-6 col-sm-6">
                             <input type="hidden" class="form-control" id="id">

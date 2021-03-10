@@ -99,47 +99,47 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($this->items as $item): ?>
-                                <?php
-                                $canCheckin = $this->user->authorise('core.manage', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
-                                $userChkOut = JFactory::getUser($item->checked_out);
-                                $canDo = SpcustomerHelper::getActions('customer',$item,'customers');
-                                ?>
-                                <tr>
-                                    <td class="a-right a-right "><?php echo $item->username; ?></td>
-                                    <td class="a-right a-right "><?php echo $item->firstname; ?></td>
-                                    <td class="a-right a-right "><?php echo $item->lastname; ?></td>
-                                    <td class="a-right a-right "><?php echo $item->mobile_phone; ?></td>
-                                    <td class="a-right a-right "><?php echo $item->email; ?></td>
-                                    <td class="a-right a-right "><?php echo $item->dateofbirth; ?></td>
-                                    <?php if ($item-> sex == 0): ?>
-                                        <td class="" align="center"><span class='fa fa-male'></td>
-                                    <?php else : ?>
-                                        <td class="" align="center"><span class='fa fa-female'></td>
-                                    <?php endif; ?>
-                                    <td class="" align="center"><?php echo $item->zipcode; ?></td>
-                                    <td class="a-right a-right "><?php echo $item->spot_name; ?></td>
-                                    <?php if ($item-> membership == 0): ?>
-                                        <td class="" align="center"><span class='glyphicon glyphicon-remove' style='color:#FF0000'></td>
-                                    <?php else : ?>
-                                        <td class="" align="center"><span class='glyphicon glyphicon-ok' style='color:#00FF00'></td>
-                                    <?php endif; ?>
-                                    <?php if ($item-> communication == 0): ?>
-                                        <td class="" align="center"><span class='glyphicon glyphicon-remove' style='color:#FF0000'></td>
-                                    <?php else : ?>
-                                        <td class="" align="center"><span class='glyphicon glyphicon-ok' style='color:#00FF00'></td>
-                                    <?php endif; ?>
-                                    <td class=" last">
-                                        <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
-                                        <?php if ($canDo->get('core.edit')): ?>
-                                            <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                <?php foreach ($this->items as $item): ?>
+                                    <?php
+                                    $canCheckin = $this->user->authorise('core.manage', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
+                                    $userChkOut = JFactory::getUser($item->checked_out);
+                                    $canDo = SpcustomerHelper::getActions('customer',$item,'customers');
+                                    ?>
+                                    <tr>
+                                        <td class="a-right a-right "><?php echo $item->username; ?></td>
+                                        <td class="a-right a-right "><?php echo $item->firstname; ?></td>
+                                        <td class="a-right a-right "><?php echo $item->lastname; ?></td>
+                                        <td class="a-right a-right "><?php echo $item->mobile_phone; ?></td>
+                                        <td class="a-right a-right "><?php echo $item->email; ?></td>
+                                        <td class="a-right a-right "><?php echo $item->dateofbirth; ?></td>
+                                        <?php if ($item-> sex == 0): ?>
+                                            <td class="" align="center"><span class='fa fa-male'></td>
+                                        <?php else : ?>
+                                            <td class="" align="center"><span class='fa fa-female'></td>
                                         <?php endif; ?>
-                                        <?php if ($canDo->get('core.delete')): ?>
-                                            <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                        <td class="" align="center"><?php echo $item->zipcode; ?></td>
+                                        <td class="a-right a-right "><?php echo $item->spot_name; ?></td>
+                                        <?php if ($item-> membership == 0): ?>
+                                            <td class="" align="center"><span class='glyphicon glyphicon-remove' style='color:#FF0000'></td>
+                                        <?php else : ?>
+                                            <td class="" align="center"><span class='glyphicon glyphicon-ok' style='color:#00FF00'></td>
                                         <?php endif; ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
+                                        <?php if ($item-> communication == 0): ?>
+                                            <td class="" align="center"><span class='glyphicon glyphicon-remove' style='color:#FF0000'></td>
+                                        <?php else : ?>
+                                            <td class="" align="center"><span class='glyphicon glyphicon-ok' style='color:#00FF00'></td>
+                                        <?php endif; ?>
+                                        <td class=" last">
+                                            <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
+                                            <?php if ($canDo->get('core.edit')): ?>
+                                                <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                            <?php endif; ?>
+                                            <?php if ($canDo->get('core.delete')): ?>
+                                                <a type="button" class="open-customerModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#customerModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "spot":"<?php echo $item->spot; ?>", "userName":"<?php echo $item->username; ?>", "firstName":"<?php echo $item->firstname; ?>", "lastName":"<?php echo $item->lastname; ?>", "mobilePhone":"<?php echo $item->mobile_phone; ?>", "email":"<?php echo $item->email; ?>", "birthDate":"<?php echo $item->dateofbirth; ?>",  "sex":"<?php echo $item->sex; ?>", "zipcode":"<?php echo $item->zipcode; ?>", "memberShip":"<?php echo $item->membership; ?>", "communication":"<?php echo $item->communication; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -147,7 +147,6 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">

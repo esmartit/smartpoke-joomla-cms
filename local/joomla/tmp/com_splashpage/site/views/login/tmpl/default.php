@@ -13,6 +13,7 @@ defined('_JEXEC') or die;
 
 // What is the request state?
 $isLoginRequest = $this->ap_mac;
+$isLoginRequest = 'mac address';
 $isLoginError = isset($_REQUEST['error_message']);
 $isLoggedIn = isset($_COOKIE['LogoutURL']);
 
@@ -27,13 +28,19 @@ if ($isLoginRequest) {
     // Access Point Info
     $data['ap']['mac'] = $this->ap_mac;
     $data['ap']['name'] = $this->ap_name;
-    $data['ap']['tags'] = explode(" ", $_REQUEST['ap_tags']);
+    $data['ap']['tags'] = '';
 
-    $groupname = substr($data['ap']['tags'][0], strpos($data['ap']['tags'][0], ':')+1, strlen($data['ap']['tags'][0]));
-    $hotspot_name = substr($data['ap']['tags'][1], strpos($data['ap']['tags'][1], ':')+1, strlen($data['ap']['tags'][1]));
-    $schema = substr($data['ap']['tags'][2], strpos($data['ap']['tags'][2], ':')+1, strlen($data['ap']['tags'][2]));
-    $sensorname = substr($data['ap']['tags'][3], strpos($data['ap']['tags'][3], ':')+1, strlen($data['ap']['tags'][3]));
-    $spot_id = substr($data['ap']['tags'][4], strpos($data['ap']['tags'][4], ':')+1, strlen($data['ap']['tags'][4]));
+    $groupname = 'E1';
+    $hotspot_title = 'Demo SmartPoke';
+    $hotspot_name = 'eSmartIT';
+    $spot_id = 'esmartit-001';
+
+//    $data['ap']['tags'] = explode(" ", $_REQUEST['ap_tags']);
+//    $groupname = substr($data['ap']['tags'][0], strpos($data['ap']['tags'][0], ':')+1, strlen($data['ap']['tags'][0]));
+//    $hotspot_name = substr($data['ap']['tags'][1], strpos($data['ap']['tags'][1], ':')+1, strlen($data['ap']['tags'][1]));
+//    $schema = substr($data['ap']['tags'][2], strpos($data['ap']['tags'][2], ':')+1, strlen($data['ap']['tags'][2]));
+//    $sensorname = substr($data['ap']['tags'][3], strpos($data['ap']['tags'][3], ':')+1, strlen($data['ap']['tags'][3]));
+//    $spot_id = substr($data['ap']['tags'][4], strpos($data['ap']['tags'][4], ':')+1, strlen($data['ap']['tags'][4]));
 
     // Client Info
     $data['client']['mac'] = $_REQUEST['client_mac'];

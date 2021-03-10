@@ -45,62 +45,61 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo JText::_('COM_SPNAS_LIST_OF_NASES'); ?><small></small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <?php if ($this->user->authorise('core.create', 'com_spnas')): ?>
-                <button type="button" class="open-nasModal btn btn-light" data-toggle="modal" data-target="#nasModal" data-title="New" data-info='{"id":"", "name":"", "shortName":"", "type":"", "secret":"", "ports":"", "server":"", "community":"",  "description":"", "option":"C"}'><?php echo JText::_('COM_SPNAS_NEW_NAS'); ?></button>
-                <br />
-            <?php endif; ?>
-            <div class="x_content">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card-box table-responsive">
-                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                <thead>
-                                <tr class="headings">
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_NAS_NAMEIP'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_SHORTNAME'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_TYPE'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_SECRET'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_PORTS'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_SERVER'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_COMMUNITY'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPNAS_DESCRIPTION'); ?></th>
-                                    <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPNAS_ACTION'); ?></span></th>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <?php if ($this->user->authorise('core.create', 'com_spnas')): ?>
+            <button type="button" class="open-nasModal btn btn-light" data-toggle="modal" data-target="#nasModal" data-title="New" data-info='{"id":"", "name":"", "shortName":"", "type":"", "secret":"", "ports":"", "server":"", "community":"",  "description":"", "option":"C"}'><?php echo JText::_('COM_SPNAS_NEW_NAS'); ?></button>
+            <br />
+        <?php endif; ?>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="headings">
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_NAS_NAMEIP'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_SHORTNAME'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_TYPE'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_SECRET'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_PORTS'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_SERVER'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_COMMUNITY'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPNAS_DESCRIPTION'); ?></th>
+                                <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPNAS_ACTION'); ?></span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($this->items as $item): ?>
+                                <tr>
+                                    <td class="a-right a-right"><?php echo $item->name; ?></td>
+                                    <td class="a-right a-righ"><?php echo $item->shortName; ?></td>
+                                    <td class="a-right a-right"><?php echo $item->type; ?></td>
+                                    <td class="a-right a-right"><input type="password" disabled value="<?php echo $item->secret; ?>"></td>
+                                    <td class="a-right a-right"><?php echo $item->ports; ?></td>
+                                    <td class="a-right a-right"><?php echo $item->server; ?></td>
+                                    <td class="a-right a-right"><?php echo $item->community; ?></td>
+                                    <td class="a-right a-right"><?php echo $item->description; ?></td>
+                                    <td class=" last">
+                                        <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
+                                        <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                        <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($this->items as $item): ?>
-                                    <tr>
-                                        <td class="a-right a-right"><?php echo $item->name; ?></td>
-                                        <td class="a-right a-righ"><?php echo $item->shortName; ?></td>
-                                        <td class="a-right a-right"><?php echo $item->type; ?></td>
-                                        <td class="a-right a-right"><input type="password" disabled value="<?php echo $item->secret; ?>"></td>
-                                        <td class="a-right a-right"><?php echo $item->ports; ?></td>
-                                        <td class="a-right a-right"><?php echo $item->server; ?></td>
-                                        <td class="a-right a-right"><?php echo $item->community; ?></td>
-                                        <td class="a-right a-right"><?php echo $item->description; ?></td>
-                                        <td class=" last">
-                                            <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
-                                            <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
-                                            <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
