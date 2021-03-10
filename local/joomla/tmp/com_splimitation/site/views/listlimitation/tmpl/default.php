@@ -45,67 +45,66 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo JText::_('COM_SPLIMITATION_LIST_OF_LIMITATIONS'); ?><small></small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <?php if ($this->user->authorise('core.create', 'com_splimitation')): ?>
-                <button type="button" class="open-limitationModal btn btn-light" data-toggle="modal" data-target="#limitationModal" data-title="New" data-info='{"name":"", "maxUpload":"", "upload":"", "maxDownload":"", "download":"", "maxTraffic":"", "traffic":"", "urlRedirect":"", "accessPeriod":"", "period":"", "dailySession":"", "session":"", "option":"C"}'><?php echo JText::_('COM_SPLIMITATION_NEW_LIMITATION'); ?></button>
-                <br />
-            <?php endif; ?>
-            <div class="x_content">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card-box table-responsive">
-                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                <thead>
-                                <tr class="headings">
-                                    <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_NAME'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_MAX_UPLOAD'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_MAX_DOWNLOAD'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_MAX_TRAFFIC'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_URL_REDIRECT'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_ACCESS_PERIOD'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_DAILY_SESSION'); ?></th>
-                                    <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPLIMITATION_ACTION'); ?></span></th>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <?php if ($this->user->authorise('core.create', 'com_splimitation')): ?>
+            <button type="button" class="open-limitationModal btn btn-light" data-toggle="modal" data-target="#limitationModal" data-title="New" data-info='{"name":"", "maxUpload":"", "upload":"", "maxDownload":"", "download":"", "maxTraffic":"", "traffic":"", "urlRedirect":"", "accessPeriod":"", "period":"", "dailySession":"", "session":"", "option":"C"}'><?php echo JText::_('COM_SPLIMITATION_NEW_LIMITATION'); ?></button>
+            <br />
+        <?php endif; ?>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="headings">
+                                <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_NAME'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_MAX_UPLOAD'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_MAX_DOWNLOAD'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_MAX_TRAFFIC'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_URL_REDIRECT'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_ACCESS_PERIOD'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPLIMITATION_DAILY_SESSION'); ?></th>
+                                <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPLIMITATION_ACTION'); ?></span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($this->items as $item): ?>
+                                <?php
+                                $canDo = SplimitationHelper::getActions('limitation',$item,'limitations');
+                                ?>
+                                <tr>
+                                    <td class="a-right a-right "><?php echo $item->name; ?></td>
+                                    <td class="a-right a-right "><?php echo $item->maxUpload->value.' '.$item->maxUpload->rate; ?></td>
+                                    <td class="a-right a-right "><?php echo $item->maxDownload->value.' '.$item->maxDownload->rate; ?></td>
+                                    <td class="a-right a-right "><?php echo $item->maxTraffic->value.' '.$item->maxTraffic->traffic; ?></td>
+                                    <td class="a-right a-right "><?php echo $item->urlRedirect; ?></td>
+                                    <td class="a-right a-right "><?php echo $item->accessPeriod->value.' '.$item->accessPeriod->period; ?></td>
+                                    <td class="a-right a-right "><?php echo $item->dailySession->value.' '.$item->dailySession->period; ?></td>
+                                    <td class=" last">
+                                        <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="View" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
+                                        <?php if ($canDo->get('core.edit')): ?>
+                                            <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="Edit" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                        <?php endif; ?>
+                                        <?php if ($canDo->get('core.delete')): ?>
+                                            <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="Delete" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($this->items as $item): ?>
-                                    <?php
-                                        $canDo = SplimitationHelper::getActions('limitation',$item,'limitations');
-                                    ?>
-                                    <tr>
-                                        <td class="a-right a-right "><?php echo $item->name; ?></td>
-                                        <td class="a-right a-right "><?php echo $item->maxUpload->value.' '.$item->maxUpload->rate; ?></td>
-                                        <td class="a-right a-right "><?php echo $item->maxDownload->value.' '.$item->maxDownload->rate; ?></td>
-                                        <td class="a-right a-right "><?php echo $item->maxTraffic->value.' '.$item->maxTraffic->traffic; ?></td>
-                                        <td class="a-right a-right "><?php echo $item->urlRedirect; ?></td>
-                                        <td class="a-right a-right "><?php echo $item->accessPeriod->value.' '.$item->accessPeriod->period; ?></td>
-                                        <td class="a-right a-right "><?php echo $item->dailySession->value.' '.$item->dailySession->period; ?></td>
-                                        <td class=" last">
-                                            <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="View" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
-                                            <?php if ($canDo->get('core.edit')): ?>
-                                                <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="Edit" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
-                                            <?php endif; ?>
-                                            <?php if ($canDo->get('core.delete')): ?>
-                                                <a type="button" class="open-limitationModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#limitationModal" data-title="Delete" data-info='{"name":"<?php echo $item->name; ?>", "maxUpload":"<?php echo $item->maxUpload->value; ?>", "upload":"<?php echo $item->maxUpload->rate; ?>", "maxDownload":"<?php echo $item->maxDownload->value; ?>", "download":"<?php echo $item->maxDownload->rate; ?>", "maxTraffic":"<?php echo $item->maxTraffic->value; ?>", "traffic":"<?php echo $item->maxTraffic->traffic; ?>", "urlRedirect":"<?php echo $item->urlRedirect; ?>", "accessPeriod":"<?php echo $item->accessPeriod->value; ?>", "period":"<?php echo $item->accessPeriod->period; ?>", "dailySession":"<?php echo $item->dailySession->value; ?>", "session":"<?php echo $item->dailySession->period; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -188,8 +187,8 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="accessPeriod"><?php echo JText::_('COM_SPLIMITATION_ACCESS_PERIOD'); ?></label>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <input type="text" id="accessPeriod" class="form-control">
-                         </div>
-                         <div class="col-md-3 col-sm-3 col-xs-12">
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             <select id="selPeriod" class="btn btn-default" name="period">
                                 <option value="" selected disabled><?php echo JText::_('COM_SPLIMITATION_SELECT_PERIOD'); ?></option>
                                 <option value="MINUTES">MINUTES</option>

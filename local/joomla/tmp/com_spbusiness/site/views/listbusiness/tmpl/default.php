@@ -44,24 +44,24 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo JText::_('COM_SPBUSINESS_LIST_OF_BUSINESS'); ?><small></small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <?php if ($this->user->authorise('core.create', 'com_spbusiness')): ?>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <?php if ($this->user->authorise('core.create', 'com_spbusiness')): ?>
             <button type="button" class="open-businessModal btn btn-light" data-toggle="modal" data-target="#businessModal" data-title="New" data-info='{"id":"", "business":"", "option":"C"}'><?php echo JText::_('COM_SPBUSINESS_NEW_BUSINESS'); ?></button>
-                <br />
-            <?php endif; ?>
-            <div class="x_content">
+            <br />
+        <?php endif; ?>
+        <div class="x_content">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
@@ -98,7 +98,6 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 
@@ -112,24 +111,25 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 </button>
             </div>
             <div class="modal-body">
-                <form id="modalForm" class="form-horizontal form-label-left>
-                <div class="item form-group">
-                <div class="col-md-6 col-sm-6">
-                    <input type="hidden" class="form-control" id="id">
-                    <input type="hidden" class="form-control" id="option">
-                </div>
+                <form id="modalForm" class="form-horizontal form-label-left">
+                    <div class="item form-group">
+                        <div class="col-md-6 col-sm-6">
+                            <input type="hidden" class="form-control" id="id">
+                            <input type="hidden" class="form-control" id="option">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label for="business" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPBUSINESS_BUSINESS'); ?><span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text" class="form-control" id="business" required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"><?php echo JText::_('COM_SPBUSINESS_CLOSE'); ?></button>
+                        <button type="submit" class="btn btn-success" id="btnSave"><?php echo JText::_('COM_SPBUSINESS_SAVE'); ?></button>
+                    </div>
+                </form>
             </div>
-            <div class="item form-group">
-                <label for="business" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPBUSINESS_BUSINESS'); ?><span class="required">*</span></label>
-                <div class="col-md-6 col-sm-6">
-                    <input type="text" class="form-control" id="business" required="required">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"><?php echo JText::_('COM_SPBUSINESS_CLOSE'); ?></button>
-                <button type="submit" class="btn btn-success" id="btnSave"><?php echo JText::_('COM_SPBUSINESS_SAVE'); ?></button>
-            </div>
-            </form>
         </div>
     </div>
 </div><!--[/JCBGUI$$$$]-->

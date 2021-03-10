@@ -71,42 +71,42 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
     <div class="x_panel">
         <div class="x_title">
             <h2><?php echo JText::_('COM_SPCAMPAIGN_LIST_OF_CAMPAIGN'); ?><small></small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <?php if ($this->user->authorise('core.create', 'com_spcampaign')): ?>
-                <button type="button" class="open-campaignModal btn btn-light" data-toggle="modal" data-target="#campaignModal" data-title="New" data-info='{"id":"", "name":"", "validDate":"", "smsEmail":"", "messageSms":"", "messageEmail":"", "type":"", "deferred":"",  "deferredDate":"", "option":"C"}'><?php echo JText::_('COM_SPCAMPAIGN_NEW_CAMPAIGN'); ?></button>
-                <br />
-            <?php endif; ?>
-            <div class="x_content">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card-box table-responsive">
-                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-                                <thead>
-                                <tr class="headings">
-                                    <th class='column-title'><?php echo JText::_('Id'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_VALID_DATE'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_PERCENT'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED'); ?></th>
-                                    <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED_DATE'); ?></th>
-                                    <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPCAMPAIGN_ACTION'); ?></span></th>
-                                </tr>
-                                </thead>
-                                <tbody>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Settings 1</a>
+                        <a class="dropdown-item" href="#">Settings 2</a>
+                    </div>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <?php if ($this->user->authorise('core.create', 'com_spcampaign')): ?>
+            <button type="button" class="open-campaignModal btn btn-light" data-toggle="modal" data-target="#campaignModal" data-title="New" data-info='{"id":"", "name":"", "validDate":"", "smsEmail":"", "messageSms":"", "messageEmail":"", "type":"", "deferred":"",  "deferredDate":"", "option":"C"}'><?php echo JText::_('COM_SPCAMPAIGN_NEW_CAMPAIGN'); ?></button>
+            <br />
+        <?php endif; ?>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                            <thead>
+                            <tr class="headings">
+                                <th class='column-title'><?php echo JText::_('Id'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_CAMPAIGN'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_VALID_DATE'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_TYPE'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_PERCENT'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED'); ?></th>
+                                <th class='column-title'><?php echo JText::_('COM_SPCAMPAIGN_DEFERRED_DATE'); ?></th>
+                                <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPCAMPAIGN_ACTION'); ?></span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
                                 <?php foreach ($this->items as $item): ?>
                                     <?php
                                         $canCheckin = $this->user->authorise('core.manage', 'com_checkin') || $item->checked_out == $this->user->id || $item->checked_out == 0;
@@ -142,9 +142,8 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

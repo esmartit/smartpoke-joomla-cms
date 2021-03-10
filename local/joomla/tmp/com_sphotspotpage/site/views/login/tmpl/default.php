@@ -12,7 +12,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 defined('_JEXEC') or die;
 
 // What is the request state?
-$isLoginRequest = 'cxx';
+$isLoginRequest = $this->ap_mac;
+$isLoginRequest = 'mac address';
 $isLoginError = isset($_REQUEST['error_message']);
 $isLoggedIn = isset($_COOKIE['LogoutURL']);
 

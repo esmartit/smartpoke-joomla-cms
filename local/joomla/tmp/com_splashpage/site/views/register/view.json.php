@@ -72,7 +72,7 @@ class SplashpageViewRegister extends JViewLegacy
         $campaign = $model->getCampaign($smsemail = 1, $type = "REGISTER");
         $campaign_id = $campaign['id'];
 
-        $status = 0;
+        $status = 1;
         if ($campaign_id != '') {
             $campaign_description = $campaign['message_sms'];
             $campaign_name = $campaign['name'];
@@ -95,14 +95,13 @@ class SplashpageViewRegister extends JViewLegacy
             $resultSMS = 'OK';
 //            $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode)); // WorldLine Web SMS
 
-            $status = 0;
-            if (substr($resultSMS, 0, 2) == 'OK') $status = 1;
+            if (substr($resultSMS, 0, 2) != 'OK') $status = 0;
 
             // Call a method to Insert the success message sent
             $values = array($campaign_id, $clientMac, $username, $currDate, $status, $resultSMS);
             $model->saveMessage($values);
         }
-        if ($status == 1) {
+        if ($status != 0) {
             $arr_result[] = array("section" => "go", "data" => $password);
         } else {
             $arr_result[] = array("section" => "error", "data" => Jtext::_('COM_SPLASPAGE_ERROR_PHONE'));

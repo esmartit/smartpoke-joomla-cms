@@ -125,7 +125,6 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
         </div>
     </div>
 </div>
-</div>
 
 <div class="modal fade" id="hotspotModal" tabindex="-1" role="dialog" aria-labelledby="hotspotModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
@@ -137,44 +136,45 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                 </button>
             </div>
             <div class="modal-body">
-                <form id="modalForm" class="form-horizontal form-label-left>
+                <form id="modalForm" class="form-horizontal form-label-left">
                     <div class="item form-group">
-                <div class="col-md-6 col-sm-6">
-                    <input type="hidden" class="form-control" id="id">
-                    <input type="hidden" class="form-control" id="option">
-                </div>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="hidden" class="form-control" id="id">
+                            <input type="hidden" class="form-control" id="option">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label for="spotId" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPHOTSPOT_SPOT'); ?><span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6">
+                            <select id="selSpot" class="form-control" name="spotId"">
+                            <option value="" selected disabled><?php echo JText::_('COM_SPHOTSPOT_SELECT_SPOT'); ?></option>
+                            <?php $selSpot = $this->getSpotList();
+                            foreach ($selSpot as $item) {
+                                echo "<option value=".$item[0].">".$item[1]."</option>";
+                            }
+                            ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label for="name" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPHOTSPOT_NAME'); ?><span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6">
+                            <input type="text" class="form-control" id="name" required="required">
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPHOTSPOT_TAGS'); ?></label>
+                        <div class="col-md-9 col-sm-9">
+                            <input id="tags_1" type="text" class="tags form-control" value="" />
+                            <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"><?php echo JText::_('COM_SPHOTSPOT_CLOSE'); ?></button>
+                        <button type="submit" class="btn btn-success" id="btnSave"><?php echo JText::_('COM_SPHOTSPOT_SAVE'); ?></button>
+                    </div>
+                </form>
             </div>
-            <div class="item form-group">
-                <label for="spotId" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPHOTSPOT_SPOT'); ?><span class="required">*</span></label>
-                <div class="col-md-6 col-sm-6">
-                    <select id="selSpot" class="form-control" name="spotId"">
-                    <option value="" selected disabled><?php echo JText::_('COM_SPHOTSPOT_SELECT_SPOT'); ?></option>
-                    <?php $selSpot = $this->getSpotList();
-                    foreach ($selSpot as $item) {
-                        echo "<option value=".$item[0].">".$item[1]."</option>";
-                    }
-                    ?>
-                    </select>
-                </div>
-            </div>
-            <div class="item form-group">
-                <label for="name" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPHOTSPOT_NAME'); ?><span class="required">*</span></label>
-                <div class="col-md-6 col-sm-6">
-                    <input type="text" class="form-control" id="name" required="required">
-                </div>
-            </div>
-            <div class="item form-group">
-                <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPHOTSPOT_TAGS'); ?></label>
-                <div class="col-md-9 col-sm-9">
-                    <input id="tags_1" type="text" class="tags form-control" value="" />
-                    <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()"><?php echo JText::_('COM_SPHOTSPOT_CLOSE'); ?></button>
-                <button type="submit" class="btn btn-success" id="btnSave"><?php echo JText::_('COM_SPHOTSPOT_SAVE'); ?></button>
-            </div>
-            </form>
         </div>
     </div>
 </div><!--[/JCBGUI$$$$]-->
