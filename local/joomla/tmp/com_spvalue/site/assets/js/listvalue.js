@@ -97,7 +97,7 @@ jQuery(document).on("click", ".open-valueModal", function () {
             document.getElementById( 'btnSave' ).textContent = 'Save';
             $("#name").prop( 'disabled', true );
             $("#code").prop( 'disabled', true );
-            if (code == 'daily_goal_device' || code == 'daily_goal_registered') {
+            if (code != 'total_email_month' || code != 'total_sms_month') {
                 $("#value").prop( 'disabled', false );
             }
             break;

@@ -132,12 +132,12 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                             <td align="center"><?php echo $item->deferreddate; ?></td>
                                         <?php endif; ?>
                                         <td class=" last">
-                                            <a type="button" class="open-campaignModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#campaignModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "validDate":"<?php echo $item->validdate; ?>", "smsEmail":"<?php echo $item->smsemail; ?>", "messageSms":"<?php echo $item->message_sms; ?>", "messageEmail":"<?php echo $item->message_email; ?>", "type":"<?php echo $item->type; ?>", "deferred":"<?php echo $item->deferred; ?>",  "deferredDate":"<?php echo $item->deferreddate; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
+                                            <a type="button" class="open-campaignModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#campaignModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "validDate":"<?php echo $item->validdate; ?>", "smsEmail":"<?php echo $item->smsemail; ?>", "unSubscribe":"<?php echo $item->unsubscribe; ?>", "messageSms":"<?php echo $item->message_sms; ?>", "messageEmail":"<?php echo $item->message_email; ?>", "type":"<?php echo $item->type; ?>", "deferred":"<?php echo $item->deferred; ?>",  "deferredDate":"<?php echo $item->deferreddate; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
                                             <?php if ($canDo->get('core.edit')): ?>
-                                                <a type="button" class="open-campaignModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#campaignModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "validDate":"<?php echo $item->validdate; ?>", "smsEmail":"<?php echo $item->smsemail; ?>", "messageSms":"<?php echo $item->message_sms; ?>", "messageEmail":"<?php echo $item->message_email; ?>", "type":"<?php echo $item->type; ?>", "deferred":"<?php echo $item->deferred; ?>",  "deferredDate":"<?php echo $item->deferreddate; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                                <a type="button" class="open-campaignModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#campaignModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "validDate":"<?php echo $item->validdate; ?>", "smsEmail":"<?php echo $item->smsemail; ?>", "unSubscribe":"<?php echo $item->unsubscribe; ?>", "messageSms":"<?php echo $item->message_sms; ?>", "messageEmail":"<?php echo $item->message_email; ?>", "type":"<?php echo $item->type; ?>", "deferred":"<?php echo $item->deferred; ?>",  "deferredDate":"<?php echo $item->deferreddate; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
                                             <?php endif; ?>
                                             <?php if ($canDo->get('core.delete')): ?>
-                                                <a type="button" class="open-campaignModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#campaignModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "validDate":"<?php echo $item->validdate; ?>", "smsEmail":"<?php echo $item->smsemail; ?>", "messageSms":"<?php echo $item->message_sms; ?>", "messageEmail":"<?php echo $item->message_email; ?>", "type":"<?php echo $item->type; ?>", "deferred":"<?php echo $item->deferred; ?>",  "deferredDate":"<?php echo $item->deferreddate; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                                <a type="button" class="open-campaignModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#campaignModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "validDate":"<?php echo $item->validdate; ?>", "smsEmail":"<?php echo $item->smsemail; ?>", "unSubscribe":"<?php echo $item->unsubscribe; ?>", "messageSms":"<?php echo $item->message_sms; ?>", "messageEmail":"<?php echo $item->message_email; ?>", "type":"<?php echo $item->type; ?>", "deferred":"<?php echo $item->deferred; ?>",  "deferredDate":"<?php echo $item->deferreddate; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -185,7 +185,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                     </div>
                     <div class="item form-group">
                         <label for="smsEmail" class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCAMPAIGN_SMSEMAIL'); ?><span class="required">*</span></label>
-                        <div class="col-md-6 col-sm-6">
+                        <div class="col-md-3 col-sm-3">
                             <div class="btn-group btn-group-toggle selSmsEmail" data-toggle="buttons">
                                 <label class="btn btn-secondary">
                                     <input type="radio" value="1" id="radioSMS" name="radioCampaign"> <?php echo JText::_('SMS'); ?>
@@ -193,6 +193,12 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                 <label class="btn btn-success">
                                     <input type="radio" value="0" id="radioEmail" name="radioCampaign"> <?php echo JText::_('COM_SPCAMPAIGN_EMAIL'); ?>
                                 </label>
+                            </div>
+                        </div>
+                        <label class="col-form-label col-md-3 col-sm-3 label-align"><?php echo JText::_('COM_SPCAMPAIGN_UNSUBSCRIBE'); ?></label>
+                        <div class="col-md-3 col-sm-3">
+                            <div class="checkbox">
+                                <input id="unsubscribe" name="unsubscribe" type="checkbox" class="flat">
                             </div>
                         </div>
                     </div>

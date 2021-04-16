@@ -61,6 +61,16 @@ jQuery(document).ready(function () {
         $('#deferred').val(status);
     });
 
+    $('input[name="unsubscribe"]').on('ifChanged', function () {
+        let baja = $('#unsubscribe').val()
+        if (baja == 0)  {
+            baja = 1;
+        } else {
+            baja = 0;
+        }
+        $('#unsubscribe').val(baja);
+    });
+
     $('#validD').datetimepicker({
         ignoreReadonly: true,
         allowInputToggle: true,
@@ -79,6 +89,16 @@ jQuery(document).ready(function () {
         format: 'YYYY-MM-DD HH:mm'
     });
 });
+
+function checkSubscribe(val = 0) {
+    if (val == 0) {
+        $('input[name=unsubscribe]').iCheck('uncheck');
+        $("#unsubscribe").val(0);
+    } else {
+        $('input[name=unsubscribe]').iCheck('check');
+        $("#unsubscribe").val(1);
+    }
+}
 
 function showDeferredDate(status = null) {
     if (status == 0) {
@@ -99,6 +119,7 @@ function campaignAction() {
             opt: $(".modal-body #option").val(),
             name: $("#name").val(),
             validDate: $("#validDate").val(),
+            unSubscribe: $("#unsubscribe").val(),
             smsEmail: $('input[name="radioCampaign"]:radio:checked').val(),
             messageType: document.getElementById("msgType").innerHTML,
             deferred: $("#deferred").val(),
@@ -132,6 +153,7 @@ jQuery(document).on("click", ".open-campaignModal", function () {
     let name = $(this).data('info').name;
     let validDate = $(this).data('info').validDate;
     let smsEmail = $(this).data('info').smsEmail;
+    let unSubscribe = $(this).data('info').unSubscribe;
     let messageSms = $(this).data('info').messageSms;
     let messageEmail = $(this).data('info').messageEmail;
     let type = $(this).data('info').type;
@@ -143,6 +165,7 @@ jQuery(document).on("click", ".open-campaignModal", function () {
     $(".modal-body #option").val(option);
     $("#name").val(name);
     $("#validDate").val(validDate);
+    checkSubscribe(unSubscribe);
     $('input[name="radioCampaign"]:radio:checked').val(smsEmail);
     if (smsEmail == 1) {
         document.getElementById("msgType").innerHTML = messageSms;
@@ -156,6 +179,7 @@ jQuery(document).on("click", ".open-campaignModal", function () {
     $("#name").prop('disabled', false);
     $("#validDate").prop('disabled', false);
     $('input[name="radioCampaign"]').prop("disabled", false);
+    $('input[name="unsubscribe"]').prop("disabled", false);
     $("#messageText").prop('disabled', false);
     $("#msgType").prop('contenteditable', true);
     $('input[type="checkbox"]').attr('disabled', false);
@@ -172,6 +196,7 @@ jQuery(document).on("click", ".open-campaignModal", function () {
             $("#name").prop('disabled', true);
             $("#validDate").prop('disabled', true);
             $('input[name="radioCampaign"]').prop("disabled", true);
+            $('input[name="unsubscribe"]').prop("disabled", true);
             $("#messageText *").attr('disabled', 'disabled').off('click');
             $("#msgType").attr('contenteditable',false);
             $('input[type="checkbox"]').attr('disabled', true);
@@ -185,6 +210,7 @@ jQuery(document).on("click", ".open-campaignModal", function () {
             $("#name").prop('disabled', true);
             $("#validDate").prop('disabled', true);
             $('input[name="radioCampaign"]').prop("disabled", true);
+            $('input[name="unsubscribe"]').prop("disabled", true);
             $("#messageText *").attr('disabled', 'disabled').off('click');
             $("#msgType").attr('contenteditable',false);
             $('input[type="checkbox"]').attr('disabled', true);

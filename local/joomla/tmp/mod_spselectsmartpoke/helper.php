@@ -160,7 +160,7 @@ class ModSPSelectSmartPokeHelper
         $db = JFactory::getDbo();
 
         $query = $db->getQuery(true);
-        $query->select(array('name', 'message_sms', 'message_email', 'deferred', 'deferreddate'));
+        $query->select(array('name', 'message_sms', 'message_email', 'unsubscribe', 'deferred', 'deferreddate'));
         $query->from($db->quoteName('#__spcampaign_campaign'));
         $query->where($db->quoteName('id'). " = ". $db->quote($campaignId));
         $db->setQuery($query);
@@ -332,6 +332,27 @@ class ModSPSelectSmartPokeHelper
     }
 
     /**
+     * Returns the getUnsubscribe
+     * @return mixed
+     */
+    public static function getUnsubscribe() {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query
+            ->select($db->quoteName('value'))
+            ->from($db->quoteName('#__spvalue_value'))
+            ->where($db->quoteName('code_value') . ' = ' . $db->quote('unsubscribe'));
+
+        $db->setQuery($query);
+        $baja = $db->loadResult();
+
+        return $baja;
+
+    }
+
+
+    /**
      * Returns the SendSMS
      * @return mixed
      */
@@ -350,6 +371,11 @@ class ModSPSelectSmartPokeHelper
         if ($deferred == '1') {
             $deferreddate = $arrCampaign['deferreddate'];
         }
+        $unsubscribe = $arrCampaign['unsubscribe'];
+        $unsubscribeTxt = '';
+        if ($unsubscribe == '1') {
+            $unsubscribeTxt = self::getUnsubscribe();
+        }
 
         for ($i=0; $i<count($list); $i++) {
             $field = $list[$i]['name'];
@@ -365,7 +391,7 @@ class ModSPSelectSmartPokeHelper
 
                 $phoneSMS = $msgMobile;
                 // $messageSMS = $msgDesc;
-                $messageSMS = trim($msgName).', '.$messageCampaign;
+                $messageSMS = trim($msgName).', '.$messageCampaign.trim(' '.$unsubscribeTxt);
                 $unicode = 'false';
                 if (self::specialChars($messageSMS)) {
                     $unicode = 'true';
