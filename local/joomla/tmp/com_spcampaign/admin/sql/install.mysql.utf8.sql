@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `#__spcampaign_campaign` (
 	`percent` FLOAT(7) NOT NULL DEFAULT 0,
 	`smsemail` TINYINT(1) NOT NULL DEFAULT 0,
     `type` VARCHAR(255) NOT NULL DEFAULT '',
+	`unsubscribe` TINYINT(1) NOT NULL DEFAULT 0,
 	`validdate` DATE NOT NULL DEFAULT '0000-00-00',
 	`valuein` VARCHAR(100) NOT NULL DEFAULT 0,
 	`params` text NOT NULL,

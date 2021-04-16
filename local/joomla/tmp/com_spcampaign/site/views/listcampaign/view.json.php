@@ -36,6 +36,7 @@ class SpcampaignViewListcampaign extends JViewLegacy
         $validDate = $input->getString('validDate');
         $valdate = date('Y-m-d', strtotime($validDate));
         $smsemail = $input->get('smsEmail');
+        $unsubscribe = $input->getString('unSubscribe');
         $messagetype = $input->getString('messageType');
         $deferred = $input->getString('deferred');
         $deferreddate = "";
@@ -52,11 +53,11 @@ class SpcampaignViewListcampaign extends JViewLegacy
 
         $model = $this->getModel();
 
-//        $values = array($id, $campaign, $valdate, $smsemail, $messagetype, $deferred, $defdate, $type, $publish);
         $values = array("id" => $id,
             "campaign" => $campaign,
             "validdate" => $valdate,
             "smsemail" => $smsemail,
+            "unsubscribe" => $unsubscribe,
             "messagetype" => $messagetype,
             "deferred" => $deferred,
             "defdate" => $deferreddate,

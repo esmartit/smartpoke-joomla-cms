@@ -40,6 +40,7 @@ class SpcampaignModelCampaign extends JModelAdmin
 			'left' => array(
                 'smsemail',
                 'message_sms',
+                'unsubscribe',
                 'type',
                 'valuein',
                 'percent'

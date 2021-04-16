@@ -69,8 +69,8 @@ class SpcampaignModelListcampaign extends JModelList
 
 		// Get from #__spcampaign_campaign as a
         $query->select($db->quoteName(
-            array('a.id','a.smsemail','a.message_sms','a.deferred','a.deferreddate','a.message_email','a.type','a.name','a.percent','a.alias','a.validdate','a.valuein','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
-            array('id','smsemail','message_sms','deferred','deferreddate','message_email','type','name','percent','alias','validdate','valuein','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
+            array('a.id','a.smsemail','a.message_sms','a.deferred','a.deferreddate','a.message_email','a.type','a.name','a.percent','a.alias','a.unsubscribe','a.validdate','a.valuein','a.published','a.created_by','a.created','a.version','a.hits','a.ordering','a.checked_out','a.checked_out_time'),
+            array('id','smsemail','message_sms','deferred','deferreddate','message_email','type','name','percent','alias','unsubscribe','validdate','valuein','published','created_by','created','version','hits','ordering','checked_out','checked_out_time')));
         $query->from($db->quoteName('#__spcampaign_campaign', 'a'));
         // Get where a.published is 1
         $query->where('a.published = 1');
@@ -141,6 +141,7 @@ class SpcampaignModelListcampaign extends JModelList
         $objTable->name = $values['campaign'];
         $objTable->validdate = $values['validdate'];
         $objTable->smsemail = $values['smsemail'];
+        $objTable->unsubscribe = $values['unsubscribe'];
         if ($values['smsemail'] == '1') {
             $objTable->message_sms = $values['messagetype'];
             $objTable->message_email = '';
@@ -215,4 +216,5 @@ class SpcampaignModelListcampaign extends JModelList
         return $value;
 
     }
+
 }

@@ -37,6 +37,7 @@ $fields_tab_layout = 'fields_' . $layout_path_array[1];
 $fields = $displayData->get($fields_tab_layout) ?: array(
 	'smsemail',
 	'message_sms',
+	'unsubscribe',
 	'type',
 	'valuein',
 	'percent'

@@ -126,6 +126,17 @@
                         <option value="1">COM_SPCAMPAIGN_CAMPAIGN_SMS</option>
                         <option value="0">COM_SPCAMPAIGN_CAMPAIGN_EMAIL</option>
                 </field>
+                <!-- Unsubscribe Field. Type: Radio. (joomla)-->
+                <field type="radio"
+                   name="unsubscribe"
+                   label="COM_SPCAMPAIGN_CAMPAIGN_UNSUBSCRIBE_LABEL"
+                   class="btn-group btn-group-yesno"
+                   default="0"
+                   required="true">
+                    <!-- Option Set.-->
+                    <option value="1">COM_SPCAMPAIGN_CAMPAIGN_YES</option>
+                    <option value="0">COM_SPCAMPAIGN_CAMPAIGN_NO</option>
+                </field>
                 <!-- Type Field. Type: List. (joomla)-->
                 <field type="list"
                        name="type"
