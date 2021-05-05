@@ -80,7 +80,7 @@ jQuery(document).on("click", ".open-valueModal", function () {
     $("#value").val(value);
     $("#name").prop( 'disabled', false );
     $("#code").prop( 'disabled', false );
-    $("#value").prop( 'disabled', true );
+    $("#value").prop( 'disabled', false );
     document.getElementById( 'btnSave' ).style.display = 'block';
     document.getElementById( 'btnSave' ).textContent = title;
     switch (option) {
@@ -97,8 +97,9 @@ jQuery(document).on("click", ".open-valueModal", function () {
             document.getElementById( 'btnSave' ).textContent = 'Save';
             $("#name").prop( 'disabled', true );
             $("#code").prop( 'disabled', true );
-            if (code != 'total_email_month' || code != 'total_sms_month') {
-                $("#value").prop( 'disabled', false );
+            $("#value").prop( 'disabled', false );
+            if (code == 'total_email_month' || code == 'total_sms_month') {
+                $("#value").prop( 'disabled', true );
             }
             break;
         case "D":
