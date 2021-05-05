@@ -82,6 +82,9 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                             </thead>
                             <tbody>
                             <?php foreach ($this->items as $item): ?>
+                                <?php
+//                                $canDo = SpnasHelper::getActions('nas',$item,'nases');
+                                ?>
                                 <tr>
                                     <td class="a-right a-right"><?php echo $item->name; ?></td>
                                     <td class="a-right a-righ"><?php echo $item->shortName; ?></td>
@@ -93,8 +96,12 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                     <td class="a-right a-right"><?php echo $item->description; ?></td>
                                     <td class=" last">
                                         <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
-                                        <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
-                                        <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                        <?php if ($this->user->authorise('core.edit', 'com_spnas')): ?>
+                                            <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Edit" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"U"}'><i class="fa fa-edit"></i></a>
+                                        <?php endif; ?>
+                                        <?php if ($this->user->authorise('core.delete', 'com_spnas')): ?>
+                                            <a type="button" class="open-nasModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#nasModal" data-title="Delete" data-info='{"id":"<?php echo $item->id; ?>", "name":"<?php echo $item->name; ?>", "shortName":"<?php echo $item->shortName; ?>", "type":"<?php echo $item->type; ?>", "secret":"<?php echo $item->secret; ?>", "ports":"<?php echo $item->ports; ?>", "server":"<?php echo $item->server; ?>", "community":"<?php echo $item->community; ?>", "description":"<?php echo $item->description; ?>", "option":"D"}'><i class="fa fa-trash"></i></a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
