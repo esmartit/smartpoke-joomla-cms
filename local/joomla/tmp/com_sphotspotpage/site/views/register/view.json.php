@@ -73,7 +73,7 @@ class SpHotSpotPageViewRegister extends JViewLegacy
             $campaign_name = $campaign['name'];
             $deferred = $campaign['deferred'];
             $deferreddate = '';
-            if ($deferred == '1') {
+            if ($deferred == 1) {
                 $deferreddate = $campaign['deferreddate'];
             }
             // Call API to send a campaign
@@ -87,7 +87,7 @@ class SpHotSpotPageViewRegister extends JViewLegacy
                 $messageSMS = urlencode(utf8_decode($messageSMS));
             }
             $resultSMS = 'OK';
-//            $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode)); // WorldLine Web SMS
+//            $resultSMS = trim($model->sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode)); // WorldLine Web SMS
 
             if (substr($resultSMS, 0, 2) != 'OK') $status = 0;
 
@@ -95,12 +95,6 @@ class SpHotSpotPageViewRegister extends JViewLegacy
             $values = array($campaign_id, $clientMac, $username, $currDate, $status, $resultSMS);
             $model->saveMessage($values);
         }
-        if ($status != 0) {
-            $arr_result[] = array("section" => "go", "data" => $password);
-        } else {
-            $arr_result[] = array("section" => "error", "data" => Jtext::_('COM_SPLASPAGE_ERROR_PHONE'));
-        }
-
         $arr_result[] = array("section" => "go", "data" => $password);
 
         echo new JResponseJson($arr_result);
