@@ -57,13 +57,16 @@ class SplashpageModelRegister extends JModelItem
         return $result;
     }
 
-    public function getCampaign($smsemail = null, $type = null)
+    public function getCampaign($smsemail = 1, $type = "REGISTER")
     {
+        $currDate = date('Y-m-d');
+
         $db    = JFactory::getDBO();
         $query = $db
             ->getQuery(true)
-            ->select('name, message_sms, message_email, deferred, deferreddate')
+            ->select('id, name, message_sms, message_email, deferred, deferreddate')
             ->from('#__spcampaign_campaign')
+            ->where($db->quoteName('validdate'). " >= " . $db->quote($currDate), 'and')
             ->where($db->quoteName('smsemail') . " = " . $db->quote($smsemail), 'and')
             ->where($db->quoteName('type') . " = " . $db->quote($type))
             ->setLimit(1);
@@ -118,56 +121,56 @@ class SplashpageModelRegister extends JModelItem
         return;
     }
 
-    public function sendWorldLine($phone, $message, $sender, $deferred, $unicode) {
-
-        //  certificado pem extraido de un pkcs12 con la ruta completa absoluta
-        $cert = '/bitnami/joomla/certs_sms/esmartit.pem';
-        $key = '/bitnami/joomla/certs_sms/esmartit_key.pem';
-
-        //  password del certificado pem
-        $passwd = "Te2pp2so";
-
-        $param='user=ESMARTIT'.
-            '&company=ESMARTIT'.
-            '&passwd=P45_m61X'.
-            '&gsm=%2B'.$phone.
-            '&type=plus'.
-            '&unicode='.$unicode.
-            '&concatenate=5'.
-            '&msg='.$message.
-            '&sender='.$sender;
-        if ($deferred != '') {
-            $param .= '&deferred='.$deferred;
-        }
-
-        //    $url = 'https://push.tempos21.com/mdirectnx-trust/send?'; Ruta con IP
-        $url = 'https://push.tempos21.com/mdirectnx/send?';
-        $ch = curl_init();
-
-        //  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        //  curl_setopt($ch, CURLOPT_URL, $url);
-        //  curl_setopt($ch, CURLOPT_POST, 1);
-        //  curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        // curl_setopt($ch, CURLOPT_SSLVERSION, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSLCERT, $cert);
-        curl_setopt($ch, CURLOPT_SSLKEY, $key);
-        curl_setopt($ch, CURLOPT_SSLCERTPASSWD, $passwd);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $output = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            $output = 'Error:' . curl_error($ch);
-        }
-        curl_close($ch);
-
-        return $output;
-    }
+//    public function sendWorldLine($phone, $message, $sender, $deferred, $unicode) {
+//
+//        //  certificado pem extraido de un pkcs12 con la ruta completa absoluta
+//        $cert = '/bitnami/joomla/certs_sms/esmartit.pem';
+//        $key = '/bitnami/joomla/certs_sms/esmartit_key.pem';
+//
+//        //  password del certificado pem
+//        $passwd = "Te2pp2so";
+//
+//        $param='user=ESMARTIT'.
+//            '&company=ESMARTIT'.
+//            '&passwd=P45_m61X'.
+//            '&gsm=%2B'.$phone.
+//            '&type=plus'.
+//            '&unicode='.$unicode.
+//            '&concatenate=5'.
+//            '&msg='.$message.
+//            '&sender='.$sender;
+//        if ($deferred != '') {
+//            $param .= '&deferred='.$deferred;
+//        }
+//
+//        //    $url = 'https://push.tempos21.com/mdirectnx-trust/send?'; Ruta con IP
+//        $url = 'https://push.tempos21.com/mdirectnx/send?';
+//        $ch = curl_init();
+//
+//        //  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        //  curl_setopt($ch, CURLOPT_URL, $url);
+//        //  curl_setopt($ch, CURLOPT_POST, 1);
+//        //  curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+//
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        // curl_setopt($ch, CURLOPT_SSLVERSION, 1);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+//        curl_setopt($ch, CURLOPT_SSLCERT, $cert);
+//        curl_setopt($ch, CURLOPT_SSLKEY, $key);
+//        curl_setopt($ch, CURLOPT_SSLCERTPASSWD, $passwd);
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+//
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        $output = curl_exec($ch);
+//
+//        if (curl_errno($ch)) {
+//            $output = 'Error:' . curl_error($ch);
+//        }
+//        curl_close($ch);
+//
+//        return $output;
+//    }
 
 }

@@ -85,7 +85,7 @@ class SplashpageModelLogin extends JModelItem
         return $result;
     }
 
-    public function getCampaign($smsemail = null, $type = null)
+    public function getCampaign($smsemail = 1, $type = "LOGIN")
     {
         $db    = JFactory::getDBO();
         $query = $db

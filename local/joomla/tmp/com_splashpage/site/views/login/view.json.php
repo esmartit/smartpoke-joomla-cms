@@ -65,7 +65,7 @@ class SplashpageViewLogin extends JViewLegacy
                 $campaign = $model->getCampaign($smsemail = 1, $type = "LOGIN");
                 $campaign_id = $campaign['id'];
 
-                $status = 0;
+                $status = 1;
                 if ($campaign_id != '') {
 
                     $campaign_description = $campaign['message_sms'];
@@ -81,7 +81,7 @@ class SplashpageViewLogin extends JViewLegacy
                         $messageSMS = urlencode(utf8_decode($messageSMS));
                     }
                     $resultSMS = 'OK';
-//                    $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', '', $unicode)); // WorldLine Web SMS
+//                    $resultSMS = trim($model->sendWorldLine($phoneSMS, $messageSMS, 'SmartPoke', '', $unicode)); // WorldLine Web SMS
 
                     $status = 0;
                     if (substr($resultSMS, 0, 2) == 'OK') $status = 1;

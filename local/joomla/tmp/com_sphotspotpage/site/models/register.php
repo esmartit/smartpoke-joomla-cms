@@ -57,16 +57,16 @@ class SpHotSpotPageModelRegister extends JModelItem
         return $result;
     }
 
-    public function getCampaign($smsemail = null, $type = null)
+    public function getCampaign($smsemail = 1, $type = "REGISTER")
     {
         $currDate = date('Y-m-d');
 
         $db    = JFactory::getDBO();
         $query = $db
             ->getQuery(true)
-            ->select('name, message_sms, message_email, deferred, deferreddate')
+            ->select('id, name, message_sms, message_email, deferred, deferreddate')
             ->from('#__spcampaign_campaign')
-            ->where($db->quoteName('validdate'). " < " . $db->quote($currDate), 'and')
+            ->where($db->quoteName('validdate'). " >= " . $db->quote($currDate), 'and')
             ->where($db->quoteName('smsemail') . " = " . $db->quote($smsemail), 'and')
             ->where($db->quoteName('type') . " = " . $db->quote($type))
             ->setLimit(1);
