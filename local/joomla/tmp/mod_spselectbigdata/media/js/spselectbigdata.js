@@ -1,6 +1,6 @@
 let t_devicesIn = [];
 let t_devicesEx = [];
-let t_devices = [];
+let t_groupBy = 'BY_DAY';
 
 $(document).ready( function() {
 
@@ -306,6 +306,24 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $('#radioDay').on('change', function () {
+        t_groupBy = 'BY_DAY';
+    });
+
+    $('#radioWeek').on('change', function () {
+        t_groupBy = 'BY_WEEK';
+    });
+
+    $('#radioMonth').on('change', function () {
+        t_groupBy = 'BY_MONTH';
+    });
+
+    $('#radioYear').on('change', function () {
+        t_groupBy = 'BY_YEAR';
+    });
+});
+
 function showDaterange(){
     document.getElementById("rangeDate").style.display = 'block';
     document.getElementById("graphCompare").style.display = 'block';
@@ -479,7 +497,8 @@ function sendForm() {
     let t_zipcodes = '';
     let t_member = '';
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    let t_groupBy = $('#selRadioGraph input:radio:checked').val();
+    //t_groupBy = $('#selRadioGraph input:radio:checked').val();
+
 
     if (document.getElementById("checkFilter").checked) {
         t_ageS = $('#from_value').val();
