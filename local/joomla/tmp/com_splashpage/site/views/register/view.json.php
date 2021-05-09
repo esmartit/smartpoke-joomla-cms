@@ -37,8 +37,8 @@ class SplashpageViewRegister extends JViewLegacy
         $communication = '1';
         $bdate = $input->get('bdate', '0000-00-00');
         $email_cli = $input->get('email_cli',  '', 'STRING');
-        $firstname = $input->get('firstname', 'STRING');
-        $lastname = $input->get('lastname', 'STRING');
+        $firstname = $input->get('firstname', '', 'STRING');
+        $lastname = $input->get('lastname', '', 'STRING');
         $sex = $input->get('sex');
         $membership = $input->get('membership');
         $zipcode = $input->get('zipcode', 'STRING');
