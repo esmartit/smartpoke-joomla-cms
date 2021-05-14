@@ -11,11 +11,19 @@ let t_devicesIn = [];
 let t_devicesEx = [];
 let t_devices = [];
 
+let validSMS = false;
+let mobile = '';
+let pin = '';
+let message = '';
+
 $(document).ready( function() {
 
     getCountryList();
     getDeviceInList();
     getDeviceExList();
+
+    smsSupervisor();
+    pin = Math.floor(1000 + Math.random() * 9000);
 
     if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
     console.log('init_IonRangeSlider');
@@ -1174,6 +1182,62 @@ function smartpokeFile() {
         });
 }
 
+function smsAction() {
+
+    var code = prompt("Please enter PIN CODE:", "");
+    if (code == null) {
+        validSMS = false;
+    } else {
+        if (code == "" || code != pin) {
+            alert("Wrong PIN CODE, try again!");
+            validSMS = false
+            smsAction();
+        } else {
+            validSMS = true;
+        }
+    }
+}
+
+function smsSupervisor() {
+
+    let request = '';
+    request = {
+        option: 'com_ajax',
+        module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method: 'getSMSSupervisor',  // to target: function getSMSSupervisorAjax in class ModSPSelectSmartPokeHelper
+        format: 'json'
+    }
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function (response) {
+            mobile = response.data
+        });
+
+    return mobile;
+
+}
+
+function sendSMSsupervisor(mobile) {
+
+    let request = '';
+    request = {
+        option: 'com_ajax',
+        module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+        method: 'sendSMSSupervisor',  // to target: function sendSMSSupervisorAjax in class ModSPSelectSmartPokeHelper
+        format: 'json',
+        data: {'mobile': mobile, 'pin': pin}
+    }
+    $.ajax({
+        method: 'GET',
+        data: request
+    })
+        .success(function (response) {
+            message = response.data
+        });
+}
+
 $(document).ready(function() {
     // Handle click on "Select all" control
     $('#smartpoke_select_all_on').on('click', function(){
@@ -1262,120 +1326,131 @@ $(document).ready(function() {
     $('#smartpoke_form').on('submit', function(e){
         let form = this;
 
-        switch (smartpokeOpt) {
-            case "1": {
-                // Iterate over all checkboxes in the table
-                tableOn.$('input[type="checkbox"]').each(function(){
-                    // If checkbox doesn't exist in DOM
-                    if(!$.contains(document, this)){
-                        // If checkbox is checked
-                        if (this.checked) {
-                            // Create a hidden element
-                            $(form).append(
-                                $('<input>')
-                                    .attr('type', 'hidden')
-                                    .attr('name', this.name)
-                                    .val(this.value)
-                            );
-                        }
-                    }
-                });
-                break;
-            }
-            case "2": {
-                // Iterate over all checkboxes in the table
-                tableOff.$('input[type="checkbox"]').each(function(){
-                    // If checkbox doesn't exist in DOM
-                    if(!$.contains(document, this)){
-                        // If checkbox is checked
-                        if (this.checked) {
-                            // Create a hidden element
-                            $(form).append(
-                                $('<input>')
-                                    .attr('type', 'hidden')
-                                    .attr('name', this.name)
-                                    .val(this.value)
-                            );
-                        }
-                    }
-                });
-                break;
-            }
-            case "3": {
-                // Iterate over all checkboxes in the table
-                tableDB.$('input[type="checkbox"]').each(function(){
-                    // If checkbox doesn't exist in DOM
-                    if(!$.contains(document, this)){
-                        // If checkbox is checked
-                        if (this.checked) {
-                            // Create a hidden element
-                            $(form).append(
-                                $('<input>')
-                                    .attr('type', 'hidden')
-                                    .attr('name', this.name)
-                                    .val(this.value)
-                            );
-                        }
-                    }
-                });
-                break;
-            }
-            case "4": {
-                // Iterate over all checkboxes in the table
-                tableFile.$('input[type="checkbox"]').each(function(){
-                    // If checkbox doesn't exist in DOM
-                    if(!$.contains(document, this)){
-                        // If checkbox is checked
-                        if (this.checked) {
-                            // Create a hidden element
-                            $(form).append(
-                                $('<input>')
-                                    .attr('type', 'hidden')
-                                    .attr('name', this.name)
-                                    .val(this.value)
-                            );
-                        }
-                    }
-                });
-                break;
-            }
-        }
+        if (mobile != 0) {
 
-        // Output form data to a console
-        let str = JSON.parse(JSON.stringify($(form).serializeArray()));
-        let request = '';
-        if (msgType == '1') {
-            request = {
-                option       : 'com_ajax',
-                module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
-                method       : 'sendSMS',  // to target: function sendSMSAjax in class ModSPSelectSmartPokeHelper
-                format       : 'json',
-                data         : {str, 'campaign': campaignId }
-            };
+            sendSMSsupervisor(mobile);
+            smsAction();
         } else {
-            request = {
-                option       : 'com_ajax',
-                module       : 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
-                method       : 'sendEmail',  // to target: function sendEmailAjax in class ModSPSelectSmartPokeHelper
-                format       : 'json',
-                data         : {str, 'campaign': campaignId }
-            };
+            validSMS = true;
         }
 
-        $.ajax({
-            method: 'GET',
-            data: request
-        })
-            .success(function(response){
-                let object = response.data
-                Joomla.renderMessages({'success': [object]});
-            });
+        if (validSMS) {
 
-        $('#example-console').text($(form).serialize());
-        console.log("Form submission", $(form).serialize());
+            switch (smartpokeOpt) {
+                case "1": {
+                    // Iterate over all checkboxes in the table
+                    tableOn.$('input[type="checkbox"]').each(function () {
+                        // If checkbox doesn't exist in DOM
+                        if (!$.contains(document, this)) {
+                            // If checkbox is checked
+                            if (this.checked) {
+                                // Create a hidden element
+                                $(form).append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', this.name)
+                                        .val(this.value)
+                                );
+                            }
+                        }
+                    });
+                    break;
+                }
+                case "2": {
+                    // Iterate over all checkboxes in the table
+                    tableOff.$('input[type="checkbox"]').each(function () {
+                        // If checkbox doesn't exist in DOM
+                        if (!$.contains(document, this)) {
+                            // If checkbox is checked
+                            if (this.checked) {
+                                // Create a hidden element
+                                $(form).append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', this.name)
+                                        .val(this.value)
+                                );
+                            }
+                        }
+                    });
+                    break;
+                }
+                case "3": {
+                    // Iterate over all checkboxes in the table
+                    tableDB.$('input[type="checkbox"]').each(function () {
+                        // If checkbox doesn't exist in DOM
+                        if (!$.contains(document, this)) {
+                            // If checkbox is checked
+                            if (this.checked) {
+                                // Create a hidden element
+                                $(form).append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', this.name)
+                                        .val(this.value)
+                                );
+                            }
+                        }
+                    });
+                    break;
+                }
+                case "4": {
+                    // Iterate over all checkboxes in the table
+                    tableFile.$('input[type="checkbox"]').each(function () {
+                        // If checkbox doesn't exist in DOM
+                        if (!$.contains(document, this)) {
+                            // If checkbox is checked
+                            if (this.checked) {
+                                // Create a hidden element
+                                $(form).append(
+                                    $('<input>')
+                                        .attr('type', 'hidden')
+                                        .attr('name', this.name)
+                                        .val(this.value)
+                                );
+                            }
+                        }
+                    });
+                    break;
+                }
+            }
 
-        // Prevent actual form submission
-        e.preventDefault();
-        document.getElementById("smartpoke_form").reset();
+            // Output form data to a console
+            let str = JSON.parse(JSON.stringify($(form).serializeArray()));
+            let request = '';
+            if (msgType == '1') {
+                request = {
+                    option: 'com_ajax',
+                    module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+                    method: 'sendSMS',  // to target: function sendSMSAjax in class ModSPSelectSmartPokeHelper
+                    format: 'json',
+                    data: {str, 'campaign': campaignId}
+                };
+            } else {
+                request = {
+                    option: 'com_ajax',
+                    module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+                    method: 'sendEmail',  // to target: function sendEmailAjax in class ModSPSelectSmartPokeHelper
+                    format: 'json',
+                    data: {str, 'campaign': campaignId}
+                };
+            }
+
+            $.ajax({
+                method: 'GET',
+                data: request
+            })
+                .success(function (response) {
+                    let object = response.data
+                    Joomla.renderMessages({'success': [object]});
+                });
+
+            $('#example-console').text($(form).serialize());
+            console.log("Form submission", $(form).serialize());
+
+            // Prevent actual form submission
+            e.preventDefault();
+            document.getElementById("smartpoke_form").reset();
+        }
     });
 });

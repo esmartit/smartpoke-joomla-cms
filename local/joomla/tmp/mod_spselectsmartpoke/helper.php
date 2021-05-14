@@ -351,6 +351,63 @@ class ModSPSelectSmartPokeHelper
 
     }
 
+    /**
+     * Returns the getUnsubscribe
+     * @return mixed
+     */
+    public static function getSMSSupervisorAjax() {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        $query
+            ->select($db->quoteName('value'))
+            ->from($db->quoteName('#__spvalue_value'))
+            ->where($db->quoteName('code_value') . ' = ' . $db->quote('mobile_sms_supervisor'));
+
+        $db->setQuery($query);
+        $mobile = $db->loadResult();
+
+        return $mobile;
+
+    }
+
+    /**
+     * Returns the SendSMS
+     * @return mixed
+     */
+    public static function sendSMSSupervisorAjax() {
+        $arrSend = $_REQUEST['data'];
+        $phoneSMS = $arrSend['mobile'];
+        $pinCode = $arrSend['pin'];
+
+        $campaignId = 1;
+        $messageCampaign = 'PIN CODE: '.$pinCode;
+        $deferred = '0';
+        $deferreddate = '';
+        $unsubscribe = '';
+        $unsubscribeTxt = '';
+
+        // $messageSMS = $msgDesc;
+        $messageSMS = $messageCampaign;
+        $unicode = 'false';
+        if (self::specialChars($messageSMS)) {
+            $unicode = 'true';
+            $messageSMS = urlencode(utf8_decode($messageSMS));
+        }
+
+        $status = 0;
+        $resultSMS = trim(self::sendWorldLine($phoneSMS,  $messageSMS, 'SmartPoke', $deferreddate, $unicode)); // WorldLine Web SMS
+        if (substr($resultSMS, 0, 2) == 'OK') {
+            $status = 1;
+            $message = "PINCODE sent Ok";
+        } else $message = "PINCODE sent not Ok";
+        $currDate = date('Y-m-d H:i:s');
+
+        $values = array($campaignId, '', $phoneSMS, $currDate, $status, $resultSMS);
+        self::saveMessage($values);
+
+        return $message;
+    }
 
     /**
      * Returns the SendSMS
@@ -483,6 +540,11 @@ class ModSPSelectSmartPokeHelper
         if ($deferred == '1') {
             $deferreddate = $arrCampaign['$deferreddate'];
         }
+        $unsubscribe = $arrCampaign['unsubscribe'];
+        $unsubscribeTxt = '';
+        if ($unsubscribe == '1') {
+            $unsubscribeTxt = self::getUnsubscribe();
+        }
 
         for ($i=0; $i<count($list); $i++) {
             $field = $list[$i]['name'];
@@ -495,7 +557,7 @@ class ModSPSelectSmartPokeHelper
                 $strUsername = substr($data, (strpos($data, "/") + 1), (strlen($data) - strpos($data, "/")));
                 $msgUsername = substr($strUsername, 0, strpos($strUsername, "|"));
                 $userEmail = substr($data, (strpos($data, "|") + 1), (strlen($data) - strpos($data, "|")));
-                $messageEmail = trim($msgName).", \n".$messageCampaign;
+                $messageEmail = trim($msgName).", \n".$messageCampaign.", \n".$unsubscribeTxt;
 
                 $status = 0;
                 $result = trim(self::sendJoomlaEmail($userEmail, $messageTitle, $messageEmail, 'SmartPoke')); // WorldLine Web SMS
