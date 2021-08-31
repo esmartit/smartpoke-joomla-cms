@@ -955,7 +955,7 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
 function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                           zipcodes, member, userTZ, group) {
 
-    let seSmartPokeOff = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/find?"+
+    let seSmartPokeOff = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/v2/find-offline?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26ssid="+hotspot+"%26isConnected="+connected+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
@@ -1026,7 +1026,7 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
             let userName = eventData.userName;
             let obj = userInfo.find(o => o.username === userName);
             if (obj != null) {
-                tableOn.row.add(
+                tableOff.row.add(
                     [
                         '',
                         obj['firstname'],
