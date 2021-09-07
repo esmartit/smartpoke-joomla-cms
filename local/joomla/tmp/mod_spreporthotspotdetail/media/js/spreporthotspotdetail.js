@@ -307,6 +307,7 @@ function sendForm() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
     let t_groupBy = 'BY_DAY';
     let t_isConnected = 1;
+    t_hotspot = t_hotspot.split(' ').join('%7F');
 
     evtSourceDetailHotSpot(
         t_dateS, t_dateE, t_timeS, t_timeE,

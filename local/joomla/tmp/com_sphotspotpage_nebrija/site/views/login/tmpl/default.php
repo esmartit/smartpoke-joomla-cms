@@ -30,10 +30,10 @@ if ($isLoginRequest) {
     $data['ap']['name'] = $this->ap_name;
     $data['ap']['tags'] = '';
 
-    $groupname = 'E1';
+    $groupname = 'N1';
     $hotspot_title = '';
-    $hotspot_name = 'eSmartIT';
-    $spot_id = 'estamrtit-001';
+    $hotspot_name = 'Nebrija 01';
+    $spot_id = 'nebrija-001';
 
     // Client Info
     $data['client']['mac'] = $_REQUEST['client_mac'];
@@ -133,7 +133,7 @@ if ($isLoggedIn) {
                             </tr>
                             <tr>
                                 <td align="left"><?php echo JText::_('Zip Code'); ?></td>
-                                <td><input type="text" id="zipcode" name="zipcode" class="form-control"></td>
+                                <td><input type="text" id="zipcode" name="zipcode" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
                             </tr>
                             <tr>
                                 <td align="left"><?php echo JText::_('Birth Date'); ?><span class="required">*</span></td>
@@ -142,8 +142,8 @@ if ($isLoggedIn) {
                             <tr>
                                 <!--<td align="left"><?php echo JText::_('Sex'); ?></td>
                                 <td>
-                                    <select id="sex" name="sex" class="form-control">
-                                        <option value="1" selected="selected"><?php echo JText::_('Woman'); ?></option>
+                                    <select id="sex" name="sex" required disabled="disabled" class="form-control">
+                                        <option value="" selected="selected"><?php echo JText::_(''); ?></option>
                                         <option value="0"><?php echo JText::_('Man'); ?></option>
                                         <option value="1"><?php echo JText::_('Woman'); ?></option>
                                     </select>
@@ -204,7 +204,7 @@ if ($isLoggedIn) {
             </div>
             <div align="center" class="modal-body">
                 <!--                <iframe id="adsVideo" width="100%" height="auto" src="//www.youtube.com/embed/fsBDbOUGwWQ?autoplay=1" frameborder="0" allowfullscreen></iframe>-->
-                <video class="video-fluid z-depth-1" autoplay controls muted style="width: 50%; height:auto;">
+                <video class="video-fluid z-depth-1" autoplay controls muted style="width: 50%; height:100px;">
                     <source src="../images/videos/ads_video.mp4" type="video/mp4" />
                 </video>
             </div>
@@ -219,7 +219,7 @@ if ($isLoggedIn) {
             <div class="modal-header">
                 <h5 class="modal-title" id="tcModalTitle">Términos y Condiciones</h5>
             </div>
-            <div class="modal-body" style="height: 250px; overflow-y: auto;">
+            <div class="modal-body" style="height: 100px; overflow-y: auto;">
                 <p>Al acceder y utilizar la red WI-FI de la Universidad Nebrija, usted declara que ha leído, entendido y acepta los términos y condiciones para su utilización. Si usted no está de acuerdo con esta norma, no podrá acceder a este servicio.</p>
                 <p>Usted acepta y reconoce que hay riesgos potenciales a través de un servicio WI-FI. Aunque la infraestructura WiFi garantiza los estándares habituales de seguridad, debe tener cuidado al transmitir datos como: número de tarjeta de crédito, contraseñas u otra información personal sensible a través de redes WI-FI. Universidad Nebrija no puede y no garantiza la privacidad y seguridad de sus datos y de las comunicaciones al utilizar este servicio.</p>
                 <p>Universidad Nebrija no garantiza un nivel 100% de funcionamiento de la red WI-FI. El servicio puede no estar disponible o ser limitado en cualquier momento y por cualquier motivo, incluyendo emergencias, sobre carga de conexiones, fallo del enlace, problemas en equipos de red, interferencias o fuerza de la señal. Universidad Nebrija no se responsabiliza por datos, mensajes o páginas perdidas, no guardadas o retrasos por interrupciones o problemas de rendimiento con el servicio.</p>
@@ -294,7 +294,7 @@ if ($isLoggedIn) {
             <div class="modal-header">
                 <h5 class="modal-title" id="autModalTitle">Acepto comunicación comercial</h5>
             </div>
-            <div class="modal-body" style="height: 250px; overflow-y: auto;">
+            <div class="modal-body" style="height: 100px; overflow-y: auto;">
                 <table border = "1" style="width:100%">
                     <tr>
                         <th colspan="2">INFORMACIÓN BÁSICA SOBRE PROTECCIÓN DE DATOS</th>

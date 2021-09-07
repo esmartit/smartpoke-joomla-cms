@@ -320,6 +320,7 @@ function sendForm() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
     let t_groupBy = 'BY_DAY';
     let t_isConnected = 1;
+    t_hotspot = t_hotspot.split(' ').join('%7F');
 
     if (document.getElementById("checkFilter").checked) {
         t_ageS = $('#from_value').val();

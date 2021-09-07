@@ -765,6 +765,7 @@ function sendForm() {
         t_presence = $('#presence').val();
         // t_dateS2 = $('#datestart2').val();
         // t_dateE2 = $('#dateend2').val();
+        t_hotspot = t_hotspot.split(' ').join('%7F');
 
         switch (t_type) {
             case '0':

@@ -135,7 +135,7 @@ else
                     <div class="menu_section">
                         <h3>BigData Reports</h3>
                         <ul class="nav side-menu">
-                            <li><a href="/index.php/bigdata-reports/report-bigdata-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>
+<!--                            <li><a href="/index.php/bigdata-reports/report-bigdata-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>-->
                             <li><a href="/index.php/bigdata-reports/report-bigdata-detailed-daily"><i class="fa fa-list-ul"></i> Detailed Daily</a></li>
                             <li><a href="/index.php/bigdata-reports/report-bigdata-detailed-by-time"><i class="fa fa-clock-o"></i> Detailed by Time </a></li>
                         </ul>
@@ -144,7 +144,7 @@ else
                         <h3>HotSpot Reports</h3>
                         <ul class="nav side-menu">
                             <li><a href="/index.php/hotspot-reports/report-hotspot-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>
-                            <li><a href="/index.php/hotspot-reports/report-hotspot-comparative"><i class="fa fa-list"></i> Comparative </a></li>
+<!--                            <li><a href="/index.php/hotspot-reports/report-hotspot-comparative"><i class="fa fa-list"></i> Comparative </a></li>-->
                         </ul>
                     </div>
 

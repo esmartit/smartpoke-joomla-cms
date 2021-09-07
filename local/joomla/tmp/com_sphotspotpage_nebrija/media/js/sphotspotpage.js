@@ -10,6 +10,7 @@ function show(){
     jQuery('#email_cli').prop('readonly', false);
     jQuery('#firstname').prop('readonly', false);
     jQuery('#bdate').prop('readonly', false);
+    // jQuery('#sex').prop('disabled', false);
     jQuery('#chkboxAge').prop('readonly', false);
     jQuery('#chkboxAut').prop('readonly', false);
     jQuery('#chkboxTC').prop('readonly', false);
@@ -25,6 +26,7 @@ function hide(){
     jQuery('#email_cli').prop('readonly', true);
     jQuery('#firstname').prop('readonly', true);
     jQuery('#bdate').prop('readonly', true);
+    // jQuery('#sex').prop('disabled', true);
     jQuery('#chkboxAge').prop('readonly', true);
     jQuery('#chkboxAut').prop('readonly', true);
     jQuery('#chkboxTC').prop('readonly', true);
@@ -199,6 +201,15 @@ function validate() {
         document.getElementById("email_cli").focus();
         return false;
     }
+}
+
+function zipCode(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
 }
 
 function setUser(username, password) {
