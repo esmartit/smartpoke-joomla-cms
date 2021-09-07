@@ -10,8 +10,9 @@ function show(){
     jQuery('#email_cli').prop('readonly', false);
     jQuery('#firstname').prop('readonly', false);
     jQuery('#bdate').prop('readonly', false);
-    jQuery('#chkboxAge').prop('readonly', false);
-    jQuery('#chkboxAut').prop('readonly', false);
+    jQuery('#sex').prop('disabled', false);
+    // jQuery('#chkboxAge').prop('readonly', false);
+    // jQuery('#chkboxAut').prop('readonly', false);
     jQuery('#chkboxTC').prop('readonly', false);
     document.getElementById("btnlogin").style.display = 'none';
     document.getElementById("btnregister").style.display = 'block';
@@ -25,8 +26,9 @@ function hide(){
     jQuery('#email_cli').prop('readonly', true);
     jQuery('#firstname').prop('readonly', true);
     jQuery('#bdate').prop('readonly', true);
-    jQuery('#chkboxAge').prop('readonly', true);
-    jQuery('#chkboxAut').prop('readonly', true);
+    jQuery('#sex').prop('disabled', true);
+    // jQuery('#chkboxAge').prop('readonly', true);
+    // jQuery('#chkboxAut').prop('readonly', true);
     jQuery('#chkboxTC').prop('readonly', true);
     document.getElementById("btnlogin").style.display = 'block';
     document.getElementById("btnregister").style.display = 'none';
@@ -146,7 +148,8 @@ function userRegister() {
             console.log(response);
             let object = response.data[0];
             let section = object['section'];
-            let data = object['data'];
+            let pass = object['pass'];
+            let message = object['msg'];
             let user = jQuery('#selCountryCode option:selected').text()+jQuery("#mobilephone").val();
             let loginUrl = jQuery("#loginUrl").val();
 
@@ -154,7 +157,8 @@ function userRegister() {
                 jQuery("#errorPhone").text(data);
                 document.getElementById("errorPhone").style.display = 'block';
             } else {
-                setUser(user, data);
+                setUser(user, pass);
+                alert(message);
                 if (section == "go") {
                     document.getElementById("login_form").action = loginUrl;
                     document.getElementById("login_form").submit();
@@ -201,10 +205,16 @@ function validate() {
     }
 }
 
+function zipCode(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
 function setUser(username, password) {
     jQuery('input[name=username]').val(username);
     jQuery('input[name=password]').val(password);
 }
-
-
-

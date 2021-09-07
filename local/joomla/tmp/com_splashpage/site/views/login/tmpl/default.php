@@ -142,10 +142,10 @@ if ($isLoggedIn) {
                             <td><input type="date" name="bdate" id="bdate" value=<?php echo ''; ?>></td>
                         </tr>
                         <tr>
-                            <td align="left"><?php echo JText::_('Sex'); ?></td>
+                            <td align="left"><?php echo JText::_('Sex'); ?><span class="required">*</span></td>
                             <td>
-                                <select id="sex" name="sex" class="form-control">
-                                    <option value="1" selected="selected"><?php echo JText::_('Woman'); ?></option>
+                                <select id="sex" name="sex" required disabled="disabled" class="form-control">
+                                    <option value="" selected="selected"><?php echo JText::_(''); ?></option>
                                     <option value="0"><?php echo JText::_('Man'); ?></option>
                                     <option value="1"><?php echo JText::_('Woman'); ?></option>
                                 </select>
@@ -153,17 +153,20 @@ if ($isLoggedIn) {
                         </tr>
                         <tr>
                             <td align="left"><?php echo JText::_('Zip Code'); ?></td>
-                            <td><input type="text" id="zipcode" name="zipcode" class="form-control"></td>
+                            <td><input type="text" id="zipcode" name="zipcode" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
                         </tr>
                         <tr>
                             <td align="left"><?php echo JText::_('Membership'); ?></td>
                             <td>
                                 <select id="membership" name="membership" class="form-control">
-                                    <option value="0" selected="selected"><?php echo JText::_('No'); ?></option>
+                                    <option value="0" selected="selected"><?php echo JText::_(''); ?></option>
                                     <option value="1"><?php echo JText::_('Yes'); ?></option>
                                     <option value="0"><?php echo JText::_('No'); ?></option>
                                 </select>
                             </td>
+                            <!--                                <td>-->
+                            <!--                                    <input type="hidden" id="membership" name="membership" value="0">-->
+                            <!--                                </td>-->
                         </tr>
                         <tr>
                             <td align="right" padding-right="5"><input type="checkbox" id="chkboxTC" class="form-control" name="chkboxTC" required readonly="true"></td>
@@ -195,7 +198,7 @@ if ($isLoggedIn) {
             </div>
             <div align="center" class="modal-body">
                 <!--                <iframe id="adsVideo" width="100%" height="auto" src="//www.youtube.com/embed/fsBDbOUGwWQ?autoplay=1" frameborder="0" allowfullscreen></iframe>-->
-                <video class="video-fluid z-depth-1" autoplay controls muted style="width: 50%; height:auto;">
+                <video class="video-fluid z-depth-1" autoplay controls muted style="width: 50%; height:100px;">
                     <source src="../images/videos/ads_video.mp4" type="video/mp4" />
                 </video>
             </div>
@@ -210,7 +213,7 @@ if ($isLoggedIn) {
             <div class="modal-header">
                 <h5 class="modal-title" id="tcModalTitle">Terms and Conditions</h5>
             </div>
-            <div class="modal-body" style="height: 250px; overflow-y: auto;">
+            <div class="modal-body" style="height: 100px; overflow-y: auto;">
                 <p>Al acceder y utilizar la red WI-FI, usted declara que ha leído, entendido y acepta los términos y condiciones para su utilización. Si usted no está de acuerdo con esta norma, no podrá acceder a este servicio.</p>
                 <p>La red WI-FI está destinada únicamente para el uso exclusivo de los clientes. Usted acepta y reconoce que hay riesgos potenciales a través de un servicio WI-FI. Debe tener cuidado al transmitir datos como: número de tarjeta de crédito, contraseñas u otra información personal sensible a través de redes WI-FI.</p>
                 <p><b>SmartPoke</b> no puede y no garantiza la privacidad y seguridad de sus datos y de las comunicaciones al utilizar este servicio.</p>
