@@ -147,7 +147,7 @@ if ($isLoggedIn) {
                             </tr>
                             <tr>
                                 <td align="left"><?php echo JText::_('Zip Code'); ?></td>
-                                <td><input type="text" id="zipcode" name="zipcode" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
+                                <td><input type="text" id="zipcode" name="zipcode" minlength="5" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
                             </tr>
                             <tr>
                                 <td align="left"><?php echo JText::_('Membership'); ?></td>

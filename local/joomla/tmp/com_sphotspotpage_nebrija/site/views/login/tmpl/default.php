@@ -19,6 +19,7 @@ $isLoggedIn = isset($_COOKIE['LogoutURL']);
 
 $data = array();
 $data['rootUrl'] = "https://" . $_SERVER['SERVER_NAME'];
+$date16 = date('Y-m-d', strtotime('-16 years'));
 
 if ($isLoginRequest) {
     // URLs
@@ -133,11 +134,11 @@ if ($isLoggedIn) {
                             </tr>
                             <tr>
                                 <td align="left"><?php echo JText::_('Zip Code'); ?></td>
-                                <td><input type="text" id="zipcode" name="zipcode" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
+                                <td><input type="text" id="zipcode" name="zipcode" minlength="5" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
                             </tr>
                             <tr>
                                 <td align="left"><?php echo JText::_('Birth Date'); ?><span class="required">*</span></td>
-                                <td><input type="date" id="bdate" name="bdate"  readonly="true" required></td>
+                                <td><input type="date" id="bdate" name="bdate" onblur=checkAge() value=<?php echo $date16; ?>> readonly="true" required></td>
                             </tr>
                             <tr>
                                 <!--<td align="left"><?php echo JText::_('Sex'); ?></td>
