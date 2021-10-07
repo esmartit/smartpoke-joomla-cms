@@ -111,31 +111,32 @@ else
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
-                        <h3>Dashboard</h3>
+                        <h3>Analytics</h3>
                         <ul class="nav side-menu">
-                            <li><a href="/index.php/dashboard/online"><i class="fa fa-plug"></i> OnSite </a></li>
-                            <li><a href="/index.php/dashboard/bigdata"><i class="fa fa-database"></i> BigData </a></li>
-                            <li><a href="/index.php/dashboard/hotspot"><i class="fa fa-wifi"></i> HotSpot </a></li>
-                            <li><a href="/index.php/dashboard/smartpoke"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
+                            <li><a href="/index.php/analytics/online"><i class="fa fa-plug"></i> OnSite </a></li>
+                            <li><a href="/index.php/analytics/bigdata"><i class="fa fa-database"></i> BigData </a></li>
+                            <li><a href="/index.php/analytics/hotspot"><i class="fa fa-wifi"></i> HotSpot </a></li>
                         </ul>
                     </div>
                     <div class="menu_section">
-                        <h3>Configuration</h3>
+                        <h3>Marketing</h3>
                         <ul class="nav side-menu">
-                            <li><a href="/index.php/configurations/campaigns"><i class="fa fa-send"></i> Campaign </a></li>
+                            <li><a href="<?php echo 'https://cms-webui-dev-env.cluster.smartpoke.es/'.$user->name.'|'.$app->get('MetaDesc');?>"><i class="fa fa-edit"></i> Content Management </a></li>
+                            <li><a href="/index.php/marketing/campaign-editor"><i class="fa fa-send"></i> Campaign Editor</a></li>
+                            <li><a href="/index.php/marketing/smartpoke"><i class="fa fa-comments-o"></i> SmartPoke </a></li>
                         </ul>
                     </div>
                     <div class="menu_section">
-                        <h3>Communication</h3>
+                        <h3>Performance</h3>
                         <ul class="nav side-menu">
-                            <li><a href="/index.php/communication/campaign-detailed"><i class="fa fa-list-alt"></i> Campaign Detailed </a></li>
-                            <li><a href="/index.php/communication/campaign-effectiveness"><i class="fa fa-check-circle-o"></i> Campaign Effectiveness </a></li>
+                            <li><a href="/index.php/performance/campaign-detailed"><i class="fa fa-list-alt"></i> Campaign Detailed </a></li>
+                            <li><a href="/index.php/performance/campaign-effectiveness"><i class="fa fa-check-circle-o"></i> Campaign Effectiveness </a></li>
                         </ul>
                     </div>
                     <div class="menu_section">
                         <h3>BigData Reports</h3>
                         <ul class="nav side-menu">
-<!--                            <li><a href="/index.php/bigdata-reports/report-bigdata-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>-->
+                            <!--                            <li><a href="/index.php/bigdata-reports/report-bigdata-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>-->
                             <li><a href="/index.php/bigdata-reports/report-bigdata-detailed-daily"><i class="fa fa-list-ul"></i> Detailed Daily</a></li>
                             <li><a href="/index.php/bigdata-reports/report-bigdata-detailed-by-time"><i class="fa fa-clock-o"></i> Detailed by Time </a></li>
                         </ul>
@@ -144,7 +145,7 @@ else
                         <h3>HotSpot Reports</h3>
                         <ul class="nav side-menu">
                             <li><a href="/index.php/hotspot-reports/report-hotspot-detailed"><i class="fa fa-list-ol"></i> Detailed </a></li>
-<!--                            <li><a href="/index.php/hotspot-reports/report-hotspot-comparative"><i class="fa fa-list"></i> Comparative </a></li>-->
+                            <!--                            <li><a href="/index.php/hotspot-reports/report-hotspot-comparative"><i class="fa fa-list"></i> Comparative </a></li>-->
                         </ul>
                     </div>
 

@@ -10,9 +10,9 @@ function show(){
     jQuery('#email_cli').prop('readonly', false);
     jQuery('#firstname').prop('readonly', false);
     jQuery('#bdate').prop('readonly', false);
-    // jQuery('#sex').prop('disabled', false);
-    jQuery('#chkboxAge').prop('readonly', false);
-    jQuery('#chkboxAut').prop('readonly', false);
+    jQuery('#sex').prop('disabled', false);
+    // jQuery('#chkboxAge').prop('readonly', false);
+    // jQuery('#chkboxAut').prop('readonly', false);
     jQuery('#chkboxTC').prop('readonly', false);
     document.getElementById("btnlogin").style.display = 'none';
     document.getElementById("btnregister").style.display = 'block';
@@ -26,9 +26,9 @@ function hide(){
     jQuery('#email_cli').prop('readonly', true);
     jQuery('#firstname').prop('readonly', true);
     jQuery('#bdate').prop('readonly', true);
-    // jQuery('#sex').prop('disabled', true);
-    jQuery('#chkboxAge').prop('readonly', true);
-    jQuery('#chkboxAut').prop('readonly', true);
+    jQuery('#sex').prop('disabled', true);
+    // jQuery('#chkboxAge').prop('readonly', true);
+    // jQuery('#chkboxAut').prop('readonly', true);
     jQuery('#chkboxTC').prop('readonly', true);
     document.getElementById("btnlogin").style.display = 'block';
     document.getElementById("btnregister").style.display = 'none';
@@ -106,11 +106,13 @@ function userLogin() {
             } else {
                 setUser(user, data);
                 if (section == "go") {
-                    document.getElementById("login_form").action = loginUrl;
+                    let url = loginUrl+'username='+user+'&password='+data;
+                    document.getElementById("login_form").method = "GET";
+                    document.getElementById("login_form").action = url;
                     document.getElementById("login_form").submit();
                 } else {
                     document.getElementById("errorPhone").style.display = 'none';
-                    alert('Recibirá un SMS con el PIN CODE');
+                    alert('Recibirá un SMS con el PIN CODE'+': '+data);
                     show();
                 }
             }
@@ -148,7 +150,8 @@ function userRegister() {
             console.log(response);
             let object = response.data[0];
             let section = object['section'];
-            let data = object['data'];
+            let pass = object['pass'];
+            let message = object['msg'];
             let user = jQuery('#selCountryCode option:selected').text()+jQuery("#mobilephone").val();
             let loginUrl = jQuery("#loginUrl").val();
 
@@ -156,9 +159,12 @@ function userRegister() {
                 jQuery("#errorPhone").text(data);
                 document.getElementById("errorPhone").style.display = 'block';
             } else {
-                setUser(user, data);
+                setUser(user, pass);
+                alert(message);
                 if (section == "go") {
-                    document.getElementById("login_form").action = loginUrl;
+                    let url = loginUrl+'username='+user+'&password='+pass;
+                    document.getElementById("login_form").method = "GET";
+                    document.getElementById("login_form").action = url;
                     document.getElementById("login_form").submit();
                 }
             }
@@ -212,26 +218,7 @@ function zipCode(evt) {
     return true;
 }
 
-function checkAge() {
-    var birthDate = new Date(document.getElementById("bdate").value);
-    var year = new Date();
-    var yearDoB = new Date(birthDate.getFullYear());
-
-    if (birthDate.getFullYear() >= year.getFullYear() - 16) {
-        alert('Debes ser mayor a 16 años');
-        document.getElementById("bdate").focus();
-        document.getElementById("chkboxAge").checked = false;
-        return false
-    } else {
-        document.getElementById("chkboxAge").checked = true;
-    }
-    return true
-}
-
 function setUser(username, password) {
     jQuery('input[name=username]').val(username);
     jQuery('input[name=password]').val(password);
 }
-
-
-

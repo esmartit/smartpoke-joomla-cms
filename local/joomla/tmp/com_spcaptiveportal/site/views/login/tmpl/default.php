@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     SmartPoke.Site
- * @subpackage  com_splashpage
+ * @subpackage  com_spcaptiveportal
  *
  * @copyright   Copyright (C) 2020 eSmartIT. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -13,17 +13,28 @@ defined('_JEXEC') or die;
 
 // What is the request state?
 $isLoginRequest = $this->ap_mac;
-$isLoginRequest = 'mac address';
+//$isLoginRequest = 'mac address';
 $isLoginError = isset($_REQUEST['error_message']);
 $isLoggedIn = isset($_COOKIE['LogoutURL']);
 
 $data = array();
-$data['rootUrl'] = "https://" . $_SERVER['SERVER_NAME'];
+$data['rootUrl'] = $_SERVER['PHP_SELF'];
 
 if ($isLoginRequest) {
     // URLs
-    $data['loginUrl'] = urldecode($_REQUEST['login_url']);
-    $data['nextUrl'] = urldecode($_REQUEST['continue']);
+    $data['userUrl'] = urldecode($_REQUEST['userurl']);
+    //$data['loginUrl'] = urldecode($_REQUEST['loginUrl']);
+    $data['nextUrl'] = urldecode($_REQUEST['continue_url']);
+
+    // Galgus Info
+    $data['ap']['res'] = $this->res;
+    $data['ap']['challenge'] = $this->challenge;
+    //$data['ap']['uamip'] = $this->uamip;
+    //$data['ap']['uamport'] = $this->uamport;
+    $data['ap']['uamip'] = $_REQUEST['uamip'];
+    $data['ap']['uamport'] = $_REQUEST['uamport'];
+    $data['ap']['reply'] = $this->reply;
+    $data['ap']['timeleft'] = $this->timeleft;
 
     // Access Point Info
     $data['ap']['mac'] = $this->ap_mac;
@@ -31,20 +42,16 @@ if ($isLoginRequest) {
     $data['ap']['tags'] = '';
 
     $groupname = 'E1';
-    $hotspot_title = 'Demo SmartPoke';
-    $hotspot_name = 'eSmartIT';
-    $spot_id = 'esmartit-001';
-
-//    $data['ap']['tags'] = explode(" ", $_REQUEST['ap_tags']);
-//    $groupname = substr($data['ap']['tags'][0], strpos($data['ap']['tags'][0], ':')+1, strlen($data['ap']['tags'][0]));
-//    $hotspot_name = substr($data['ap']['tags'][1], strpos($data['ap']['tags'][1], ':')+1, strlen($data['ap']['tags'][1]));
-//    $schema = substr($data['ap']['tags'][2], strpos($data['ap']['tags'][2], ':')+1, strlen($data['ap']['tags'][2]));
-//    $sensorname = substr($data['ap']['tags'][3], strpos($data['ap']['tags'][3], ':')+1, strlen($data['ap']['tags'][3]));
-//    $spot_id = substr($data['ap']['tags'][4], strpos($data['ap']['tags'][4], ':')+1, strlen($data['ap']['tags'][4]));
+    $hotspot_title = 'SmartPoke Captive Portal';
+    $hotspot_name = 'Sede Lab LR';
+    $spot_id = 'sede_SP002';
 
     // Client Info
-    $data['client']['mac'] = $_REQUEST['client_mac'];
-    $data['client']['ip'] = $_REQUEST['client_ip'];
+    $data['client']['mac'] = $_REQUEST['mac'];
+    $data['client']['ip'] = $_REQUEST['ip'];
+
+    $data['loginUrl'] = urldecode('http://'.$data['ap']['uamip'].':'.$data['ap']['uamport'].'/login?');
+    //$data['loginUrl'] = urldecode('http://192.168.10.105:'.$data['ap']['uamport'].'/login?');
 }
 
 if ($isLoginError) {
@@ -58,20 +65,30 @@ if ($isLoggedIn) {
 }
 
 ?>
-<form id="login_form" class="form-signin" role="form" method="POST">
+<form id="login_form" class="form-signin" role="form">
     <?php if ($isLoginRequest) { ?>
         <div class="span12">
             <div class="span4"></div>
             <div class="span4" align="center">
-                <h2 class="form-signin-heading">Demo eSmartIT</h2>
-                <h4>HotSpot Name</h4>
+                <h2 class="form-signin-heading"><?php echo $hotspot_title; ?></h2>
+                <h4><?php echo $hotspot_name; ?></h4>
+                <!--                <h2 class="form-signin-heading">Demo eSmartIT</h2>-->
+                <!--                <h4>HotSpot Name</h4>-->
                 <br/>
 
-                <input type="hidden" id="hotspotmac" name="hotspotmac" value="<?php echo $sensorname; ?>">
+                <input type="hidden" id="hotspotmac" name="hotspotmac" value="<?php echo $data['ap']['mac']; ?>">
                 <input type="hidden" id="hotspot_name" name="hotspot_name" value="<?php echo $hotspot_name; ?>">
+                <input type="hidden" id="res" name="res" value="<?php echo $data['ap']['res']; ?>">
+                <input type="hidden" id="challenge" name="challenge" value="<?php echo $data['ap']['challenge']; ?>">
+                <input type="hidden" id="uamip" name="uamip" value="<?php echo $data['ap']['uamip']; ?>">
+                <input type="hidden" id="uamport" name="uamport" value="<?php echo $data['ap']['uamport']; ?>">
+                <input type="hidden" id="reply" name="reply" value="<?php echo $data['ap']['reply']; ?>">
+                <input type="hidden" id="timeleft" name="timeleft" value="<?php echo $data['ap']['timeleft']; ?>">
                 <input type="hidden" id="spot_id" name="spot_id" value="<?php echo $spot_id; ?>">
                 <input type="hidden" id="groupname" name="groupname" value="<?php echo $groupname; ?>">
+                <input type="hidden" id="userUrl" name="userUrl" value="<?= $data['userUrl']; ?>">
                 <input type="hidden" id="loginUrl" name="loginUrl" value="<?= $data['loginUrl']; ?>">
+                <input type="hidden" id="rootUrl" name="loginUrl" value="<?= $data['rootUrl']; ?>">
                 <input type="hidden" id="client_mac" name="client_mac" value="<?= $data['client']['mac']; ?>">
                 <input type="hidden" id="client_ip" name="client_ip" value="<?= $data['client']['ip']; ?>">
 
@@ -153,7 +170,7 @@ if ($isLoggedIn) {
                         </tr>
                         <tr>
                             <td align="left"><?php echo JText::_('Zip Code'); ?></td>
-                            <td><input type="text" id="zipcode" name="zipcode" minlength="5" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
+                            <td><input type="text" id="zipcode" name="zipcode" maxlength="5" onkeypress="return zipCode(event)" class="form-control"></td>
                         </tr>
                         <tr>
                             <td align="left"><?php echo JText::_('Membership'); ?></td>
