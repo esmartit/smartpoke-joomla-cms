@@ -317,6 +317,7 @@ $(document).ready(function () {
     $('#checkFilter').on('change', function () {
         filters();
     });
+    sendForm();
 });
 
 function filters() {
@@ -381,7 +382,7 @@ function sendForm() {
         t_dateS, t_dateE,
         t_country, t_state, t_city, t_zipcode,
         t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
-        t_brands, t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        encodeURIComponent(t_brands), t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone
     );
 
@@ -390,7 +391,7 @@ function sendForm() {
         t_dateS, t_dateE,
         t_country, t_state, t_city, t_zipcode,
         t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
-        t_brands, t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        encodeURIComponent(t_brands), t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone
     );
 
@@ -399,7 +400,7 @@ function sendForm() {
         t_dateS, t_dateE,
         t_country, t_state, t_city, t_zipcode,
         t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
-        t_brands, t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        encodeURIComponent(t_brands), t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone
     );
 

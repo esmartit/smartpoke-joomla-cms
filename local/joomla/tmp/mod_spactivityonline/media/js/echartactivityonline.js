@@ -123,25 +123,25 @@ $(document).ready( function() {
         }
     };
 
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?timezone="+userTimeZone);
+    // let userTimeZone = document.getElementById('userTimeZone').innerText;
+    // seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?timezone="+userTimeZone);
     spChartOnline = echarts.init(document.getElementById('echart_activity_online'), theme);
-    seActivityOnline.onmessage = function (event) {
-        let eventData = JSON.parse(event.data);
-        let dataHours = (new Date(eventData.time)).getHours();
-        let in_x = eventData.inCount;
-        let limit_x = eventData.limitCount;
-        let out_x = eventData.outCount;
-
-        inOnline[dataHours] = in_x;
-        limitOnline[dataHours] = limit_x;
-        outOnline[dataHours] = out_x;
-        deviceOnline[dataHours] = in_x + limit_x + out_x;
-        hoursOnline[dataHours] = dataHours;
-
-        echartActivityOnline(hoursOnline, deviceOnline, inOnline, limitOnline, outOnline);
-        // console.log(dataHours, device_x, in_x, limit_x, out_x);
-    }
+    // seActivityOnline.onmessage = function (event) {
+    //     let eventData = JSON.parse(event.data);
+    //     let dataHours = (new Date(eventData.time)).getHours();
+    //     let in_x = eventData.inCount;
+    //     let limit_x = eventData.limitCount;
+    //     let out_x = eventData.outCount;
+    //
+    //     inOnline[dataHours] = in_x;
+    //     limitOnline[dataHours] = limit_x;
+    //     outOnline[dataHours] = out_x;
+    //     deviceOnline[dataHours] = in_x + limit_x + out_x;
+    //     hoursOnline[dataHours] = dataHours;
+    //
+    //     echartActivityOnline(hoursOnline, deviceOnline, inOnline, limitOnline, outOnline);
+    //     // console.log(dataHours, device_x, in_x, limit_x, out_x);
+    // }
 })
 
 function echartActivityOnline(hoursAct, deviceAct, inAct, limitAct, outAct) {
@@ -291,14 +291,14 @@ function echartActivityOnline(hoursAct, deviceAct, inAct, limitAct, outAct) {
 
 function evtSourceActivityOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
                                  zipcodes, member, userTZ) {
-    if (seActivityOnline.readyState != 2) {
-        seActivityOnline.close();
-    }
+    // if (seActivityOnline.readyState != 2) {
+    //     seActivityOnline.close();
+    // }
 
     seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
         "timezone="+userTZ+"%26startTime="+dateS+"%26endTime="+dateE+"%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
 
     for (let x = 0; x < 24; x++) {
         inOnline[x] = 0;

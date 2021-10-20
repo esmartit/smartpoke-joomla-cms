@@ -123,25 +123,25 @@ $(document).ready( function() {
         }
     };
 
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/today-connected?timezone="+userTimeZone);
+    // let userTimeZone = document.getElementById('userTimeZone').innerText;
+    // seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/today-connected?timezone="+userTimeZone);
     spChartHotSpot = echarts.init(document.getElementById('echart_activity_hotspot'), theme);
-    seActivityHotSpot.onmessage = function (event) {
-        let eventData = JSON.parse(event.data);
-        let dataHours = (new Date(eventData.time)).getHours();
-        let in_x = eventData.inCount;
-        let limit_x = eventData.limitCount;
-        let out_x = eventData.outCount;
-
-        inHotSpot[dataHours] = in_x;
-        limitHotSpot[dataHours] = limit_x;
-        outHotSpot[dataHours] = out_x;
-        deviceHotSpot[dataHours] = in_x + limit_x + out_x;
-        hoursHotSpot[dataHours] = dataHours;
-
-        echartActivityHotSpot(hoursHotSpot, deviceHotSpot, inHotSpot, limitHotSpot, outHotSpot);
-        // console.log(dataHours, device_x, in_x, limit_x, out_x);
-    }
+    // seActivityHotSpot.onmessage = function (event) {
+    //     let eventData = JSON.parse(event.data);
+    //     let dataHours = (new Date(eventData.time)).getHours();
+    //     let in_x = eventData.inCount;
+    //     let limit_x = eventData.limitCount;
+    //     let out_x = eventData.outCount;
+    //
+    //     inHotSpot[dataHours] = in_x;
+    //     limitHotSpot[dataHours] = limit_x;
+    //     outHotSpot[dataHours] = out_x;
+    //     deviceHotSpot[dataHours] = in_x + limit_x + out_x;
+    //     hoursHotSpot[dataHours] = dataHours;
+    //
+    //     echartActivityHotSpot(hoursHotSpot, deviceHotSpot, inHotSpot, limitHotSpot, outHotSpot);
+    //     // console.log(dataHours, device_x, in_x, limit_x, out_x);
+    // }
 })
 
 function echartActivityHotSpot(hoursAct, deviceAct, inAct, limitAct, outAct) {
@@ -291,14 +291,14 @@ function echartActivityHotSpot(hoursAct, deviceAct, inAct, limitAct, outAct) {
 
 function evtSourceActivityHotSpot(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
                                   zipcodes, member, userTZ) {
-    if (seActivityHotSpot.readyState != 2) {
-        seActivityHotSpot.close();
-    }
+    // if (seActivityHotSpot.readyState != 2) {
+    //     seActivityHotSpot.close();
+    // }
 
     seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/today-connected?" +
         "timezone="+userTZ+"%26startTime="+dateS+"%26endTime="+dateE+"%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
 
     for (let x = 0; x < 24; x++) {
         inHotSpot[x] = 0;

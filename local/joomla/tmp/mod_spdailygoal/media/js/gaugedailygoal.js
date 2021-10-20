@@ -1,5 +1,9 @@
 $(document).ready( function() {
 
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    let brands = encodeURIComponent("Apple,Huawei,LG,Motorola,Oppo,Others,Samsung,Sony Ericsson,Xiaomi,ZTE,MAC Dynamic");
+    let seDailyGoal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected-count?timezone="+userTimeZone+"%26brands="+encodeURIComponent(brands));
+
     if (typeof (Gauge) === 'undefined') { return; }
 
     console.log('init_gauge [' + $('.gauge-chart').length + ']');
@@ -21,8 +25,6 @@ $(document).ready( function() {
         generateGradient: true
     };
 
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    let seDailyGoal = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected-count?timezone="+userTimeZone);
     let dailyGoal = 0;
     let dailyGoalMaxValue = document.getElementById('dailygoalMaxValue').innerText;
 
@@ -58,6 +60,6 @@ $(document).ready( function() {
                 }
             }
         }
-//        console.log('Date', dailyGoal, dailyGoalMaxValue);
+        //console.log('Date', dailyGoal, dailyGoalMaxValue);
     }
 });
