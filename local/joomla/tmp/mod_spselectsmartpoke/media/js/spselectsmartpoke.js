@@ -807,7 +807,7 @@ function sendForm() {
                     t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
                     t_country, t_state, t_city, t_zipcode,
                     t_spot, t_sensor, t_zone, t_hotspot, '1', t_devicesIn, t_devicesEx,
-                    t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+                    encodeURIComponent(t_brands), t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
                     userTimeZone, t_group
                 );
                 break;
@@ -817,7 +817,7 @@ function sendForm() {
                     t_dateS, t_dateE, t_timeS, t_timeE, t_dateS2, t_dateE2,
                     t_country, t_state, t_city, t_zipcode,
                     t_spot, t_sensor,  t_zone, t_hotspot, '1', t_devicesIn, t_devicesEx,
-                    t_brands, t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+                    encodeURIComponent(t_brands), t_status, t_presence, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
                     userTimeZone, t_group
                 );
                 break;
@@ -867,7 +867,7 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26ssid="+hotspot+"%26isConnected="+connected+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
     tableOn = $('#datatable-online').DataTable({
@@ -960,7 +960,7 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26ssid="+hotspot+"%26isConnected="+connected+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
     tableOff = $('#datatable-offline').DataTable({

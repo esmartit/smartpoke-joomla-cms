@@ -522,7 +522,7 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
     let pos = 0;
 
@@ -619,7 +619,7 @@ function evtSourceAvgTimeBigDataR(dateS, dateE, timeS, timeE, country, state, ci
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
     seAvgTimeBigDataR.onmessage = function (event) {
@@ -643,7 +643,7 @@ function evtSourceUniqueBigDataR(dateS, dateE, timeS, timeE, country, state, cit
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
     seUniqueBigDataR.onmessage = function (event) {
@@ -759,7 +759,7 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
     let pos = 0;
 
@@ -829,7 +829,7 @@ function evtSourceUniqueBigDataC(dateS, dateE, timeS, timeE, country, state, cit
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
     seUniqueBigDataC.onmessage = function (event) {
@@ -876,7 +876,7 @@ function evtSourceAvgTimeBigDataC(dateS, dateE, timeS, timeE, country, state, ci
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
-        "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+        "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
     seAvgTimeBigDataC.onmessage = function (event) {

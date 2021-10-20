@@ -134,9 +134,13 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
                                 <select id="selBrand" class="form-control" name="brand" multiple="multiple">
-                                    <option value="" selected><?php echo JText::_('All Brands'); ?></option>
+                                    <!--<option value="" selected><?php echo JText::_('All Brands'); ?></option>-->
                                     <?php foreach ($brands as $item): ?>
-                                        <option value="<?php echo $item->name; ?>"><?php echo $item->name; ?></option>
+                                        <?php if ($item->name != "Unknown"): ?>
+                                            <option value="<?php echo $item->name; ?>" selected><?php echo $item->name; ?></option>
+                                        <?php else: ?>
+                                            <option value="<?php echo $item->name; ?>"><?php echo $item->name; ?></option>
+                                        <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
