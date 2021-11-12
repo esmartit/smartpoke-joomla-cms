@@ -67,6 +67,7 @@ class SpHotSpotPageViewRegister extends JViewLegacy
         $campaign_id = $campaign['id'];
 
         $status = 1;
+        $messageSMS = '';
         if ($campaign_id != '') {
             $campaign_description = $campaign['message_sms'];
             $campaign_name = $campaign['name'];

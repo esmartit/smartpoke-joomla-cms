@@ -67,35 +67,36 @@ class SpHotSpotPageViewRegister extends JViewLegacy
         $campaign_id = $campaign['id'];
 
         $status = 1;
+        $messageSMS = '';
         if ($campaign_id != '') {
             $campaign_description = $campaign['message_sms'];
             $campaign_name = $campaign['name'];
-//            $deferred = $campaign['deferred'];
-//            $deferreddate = '';
-//            if ($deferred == 1) {
-//                $deferreddate = $campaign['deferreddate'];
-//            }
+            //$deferred = $campaign['deferred'];
+            //$deferreddate = '';
+            //if ($deferred == 1) {
+            //    $deferreddate = $campaign['deferreddate'];
+            //}
             // Call API to send a campaign
             $phoneSMS = $mobilephone;
             $messageSMS = $firstname.", ".$campaign_description;
             $senderSMS = $hotspot_name;
 
-            $unicode = 'false';
-            if ($this->specialChars($messageSMS)) {
-                $unicode = 'true';
-                $messageSMS = urlencode(utf8_decode($messageSMS));
-            }
+            //$unicode = 'false';
+            //if ($this->specialChars($messageSMS)) {
+            //	$unicode = 'true';
+            //    $messageSMS = urlencode(utf8_decode($messageSMS));
+            //}
             //            $resultSMS = 'OK';
-            $resultSMS = trim($model->sendWorldLine($phoneSMS,  $messageSMS, $senderSMS, '', $unicode)); // WorldLine Web SMS
+            //$resultSMS = $model->sendWorldLine($phoneSMS, $messageSMS, $senderSMS, '', $unicode); // WorldLine Web SMS
 
-            if (substr($resultSMS, 0, 2) != 'OK') $status = 0;
+            //if (substr($resultSMS, 0, 2) != 'OK') $status = 0;
 
             // Call a method to Insert the success message sent
-            $currDate = date('Y-m-d H:i:s');
-            $values = array($campaign_id, $clientMac, $username, $currDate, $status, $resultSMS);
-            $model->saveMessage($values);
+            //$currDate = date('Y-m-d H:i:s');
+            //$values = array($campaign_id, $clientMac, $username, $currDate, $status, $resultSMS);
+            //$model->saveMessage($values);
         }
-        $arr_result[] = array("section" => "go", "data" => $password);
+        $arr_result[] = array("section" => "go", "pass" => $password, "msg" => $messageSMS);
 
         echo new JResponseJson($arr_result);
     }

@@ -11,7 +11,7 @@ function show(){
     jQuery('#firstname').prop('readonly', false);
     jQuery('#bdate').prop('readonly', false);
     jQuery('#sex').prop('disabled', false);
-    // jQuery('#chkboxAge').prop('readonly', false);
+    jQuery('#chkboxAge').prop('readonly', false);
     // jQuery('#chkboxAut').prop('readonly', false);
     jQuery('#chkboxTC').prop('readonly', false);
     document.getElementById("btnlogin").style.display = 'none';
@@ -27,7 +27,7 @@ function hide(){
     jQuery('#firstname').prop('readonly', true);
     jQuery('#bdate').prop('readonly', true);
     jQuery('#sex').prop('disabled', true);
-    // jQuery('#chkboxAge').prop('readonly', true);
+    jQuery('#chkboxAge').prop('readonly', true);
     // jQuery('#chkboxAut').prop('readonly', true);
     jQuery('#chkboxTC').prop('readonly', true);
     document.getElementById("btnlogin").style.display = 'block';
@@ -160,7 +160,9 @@ function userRegister() {
                 document.getElementById("errorPhone").style.display = 'block';
             } else {
                 setUser(user, pass);
-                alert(message);
+                if (message != '') {
+                    alert(message);
+                }
                 if (section == "go") {
                     let url = loginUrl+'username='+user+'&password='+pass;
                     document.getElementById("login_form").method = "GET";
@@ -216,6 +218,21 @@ function zipCode(evt) {
         return false;
     }
     return true;
+}
+
+function checkAge(age) {
+    var birthDate = new Date(document.getElementById("bdate").value);
+    var year = new Date();
+
+    if (birthDate.getFullYear() >= year.getFullYear() - age) {
+        alert('Debes ser mayor a '+age+' años');
+        document.getElementById("bdate").focus();
+        document.getElementById("chkboxAge").checked = false;
+        return false
+    } else {
+        document.getElementById("chkboxAge").checked = true;
+    }
+    return true
 }
 
 function setUser(username, password) {
