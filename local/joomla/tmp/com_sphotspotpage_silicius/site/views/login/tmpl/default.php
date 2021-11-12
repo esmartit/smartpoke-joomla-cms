@@ -19,6 +19,7 @@ $isLoggedIn = isset($_COOKIE['LogoutURL']);
 
 $data = array();
 $data['rootUrl'] = "https://" . $_SERVER['SERVER_NAME'];
+$dateVal = date('Y-m-d', strtotime('-14 years'));
 
 if ($isLoginRequest) {
     // URLs
@@ -132,8 +133,8 @@ if ($isLoggedIn) {
                                 <td><input type="text" id="lastname" name="lastname" class="form-control"></td>
                             </tr>
                             <tr>
-                                <td align="left"><?php echo JText::_('Fecha Nac.'); ?></td>
-                                <td><input type="date" name="bdate" id="bdate" value=<?php echo ''; ?>></td>
+                                <td align="left"><?php echo JText::_('Fecha Nac.'); ?><span class="required">*</span></td>
+                                <td><input type="date" id="bdate" name="bdate" onblur=checkAge(14) value=<?php echo $dateVal; ?> readonly="true" required></td>
                             </tr>
                             <tr>
                                 <td align="left"><?php echo JText::_('Sexo'); ?><span class="required">*</span></td>
@@ -161,6 +162,10 @@ if ($isLoggedIn) {
                                 <td>
                                     <input type="hidden" id="membership" name="membership" value="0">
                                 </td>
+                            </tr>
+                            <tr>
+                                <td align="right" padding-right="5"><input type="checkbox" id="chkboxAge" class="form-control" name="chkboxAge" readonly="true" required></td>
+                                <td><button type="button" class="btn btn-primary"><?php echo JText::_('Soy mayor de 14 años'); ?></button></td>
                             </tr>
                             <tr>
                                 <td align="right" padding-right="5"><input type="checkbox" id="chkboxTC" class="form-control" name="chkboxTC" required readonly="true"></td>

@@ -148,7 +148,8 @@ function userRegister() {
             console.log(response);
             let object = response.data[0];
             let section = object['section'];
-            let data = object['data'];
+            let pass = object['pass'];
+            let message = object['msg'];
             let user = jQuery('#selCountryCode option:selected').text()+jQuery("#mobilephone").val();
             let loginUrl = jQuery("#loginUrl").val();
 
@@ -156,7 +157,10 @@ function userRegister() {
                 jQuery("#errorPhone").text(data);
                 document.getElementById("errorPhone").style.display = 'block';
             } else {
-                setUser(user, data);
+                setUser(user, pass);
+                if (message != '') {
+                    alert(message);
+                }
                 if (section == "go") {
                     document.getElementById("login_form").action = loginUrl;
                     document.getElementById("login_form").submit();
@@ -212,13 +216,12 @@ function zipCode(evt) {
     return true;
 }
 
-function checkAge() {
+function checkAge(age) {
     var birthDate = new Date(document.getElementById("bdate").value);
     var year = new Date();
-    var yearDoB = new Date(birthDate.getFullYear());
 
-    if (birthDate.getFullYear() >= year.getFullYear() - 16) {
-        alert('Debes ser mayor a 16 años');
+    if (birthDate.getFullYear() >= year.getFullYear() - age) {
+        alert('Debes ser mayor a '+age+' años');
         document.getElementById("bdate").focus();
         document.getElementById("chkboxAge").checked = false;
         return false

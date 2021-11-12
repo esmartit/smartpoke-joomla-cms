@@ -72,7 +72,8 @@ class SpCaptivePortalViewRegister extends JViewLegacy
         $campaign_id = $campaign['id'];
 
         $status = 1;
-        if ($campaign_id != '') {
+        $messageSMS = '';
+        if ($campaign_id != '' ) {
             $campaign_description = $campaign['message_sms'];
             $campaign_name = $campaign['name'];
             //$deferred = $campaign['deferred'];
