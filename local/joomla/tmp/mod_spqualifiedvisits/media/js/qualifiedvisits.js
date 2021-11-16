@@ -52,9 +52,9 @@ let outDataAnt = 0;
 
 function evtSourceQualifiedVisits(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
                                   zipcodes, member, userTZ) {
-    // if (seQualifiedVisits.readyState != 2) {
-    //     seQualifiedVisits.close();
-    // }
+    if (seQualifiedVisits.readyState == 1 ) {
+        seQualifiedVisits.close();
+    }
 
     seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
         "timezone="+userTZ+"%26startTime="+dateS+"%26endTime="+dateE+"%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
