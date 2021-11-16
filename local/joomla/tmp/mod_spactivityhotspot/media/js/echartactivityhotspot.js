@@ -291,9 +291,9 @@ function echartActivityHotSpot(hoursAct, deviceAct, inAct, limitAct, outAct) {
 
 function evtSourceActivityHotSpot(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
                                   zipcodes, member, userTZ) {
-    // if (seActivityHotSpot.readyState != 2) {
-    //     seActivityHotSpot.close();
-    // }
+    if (seActivityHotSpot.readyState == 1) {
+        seActivityHotSpot.close();
+    }
 
     seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/today-connected?" +
         "timezone="+userTZ+"%26startTime="+dateS+"%26endTime="+dateE+"%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+

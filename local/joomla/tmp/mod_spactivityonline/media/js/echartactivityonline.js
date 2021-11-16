@@ -291,9 +291,9 @@ function echartActivityOnline(hoursAct, deviceAct, inAct, limitAct, outAct) {
 
 function evtSourceActivityOnline(dateS, dateE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, ageS, ageE, sex,
                                  zipcodes, member, userTZ) {
-    // if (seActivityOnline.readyState != 2) {
-    //     seActivityOnline.close();
-    // }
+    if (seActivityOnline.readyState == 1) {
+        seActivityOnline.close();
+    }
 
     seActivityOnline = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
         "timezone="+userTZ+"%26startTime="+dateS+"%26endTime="+dateE+"%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
