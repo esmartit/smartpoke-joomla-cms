@@ -71,7 +71,7 @@ $(document).ready( function() {
         const index = deviceBrand.findIndex(brand => brand.name === 'Unknown' );
         deviceBrand.splice(index, 1)
         echartBrands(deviceBrand)
-        console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
+        // console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
     }
 });
 
