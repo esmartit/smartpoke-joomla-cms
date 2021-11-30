@@ -415,7 +415,9 @@ class ModSPSelectSmartPokeHelper
      */
     public static function sendSMSAjax() {
         $arrlist = $_REQUEST['data'];
-        $list = ($arrlist['str']);
+        $list = ($arrlist['arrStr']);
+        $total = ($arrlist['total']);
+        $sent = ($arrlist['sent']);
 
         $ok = 0;
         $nok = 0;
@@ -467,8 +469,9 @@ class ModSPSelectSmartPokeHelper
                 self::saveMessage($values);
             }
         }
-        $message = "Total SMS Ok: ".$ok." Total SMS NOk: ".$nok;
+        $message = "Total Messages: ".$sent." / ".$total." SMS Ok: ".$ok." SMS NOk: ".$nok;
         return $message;
+
     }
 
     /**
@@ -526,7 +529,9 @@ class ModSPSelectSmartPokeHelper
      */
     public static function sendEmailAjax() {
         $arrlist = $_REQUEST['data'];
-        $list = ($arrlist['str']);
+        $list = ($arrlist['arrStr']);
+        $total = ($arrlist['total']);
+        $sent = ($arrlist['sent']);
 
         $ok = 0;
         $nok = 0;
@@ -575,7 +580,7 @@ class ModSPSelectSmartPokeHelper
                 self::saveMessage($values);
             }
         }
-        $message = "Total eMail(s) Ok: ".$ok." Total eMail(s) NOk: ".$nok;
+        $message = "Total eMail(s): ".$sent." / ".$total." eMail(s) Ok: ".$ok." eMail(s) NOk: ".$nok;
         return $message;
     }
 

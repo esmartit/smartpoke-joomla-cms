@@ -484,7 +484,7 @@ function showOnlineOpt(){
     document.getElementById("typeSelect").style.display = 'block';
     document.getElementById("selbrands").style.display = 'block';
     document.getElementById("selposition").style.display = 'block';
-    document.getElementById("selpresence").style.display = 'block';
+    document.getElementById("selpresence").style.display = 'none';
     document.getElementById("datepresence").style.display = 'none';
     document.getElementById("filters").style.display = 'block';
     document.getElementById("selfile").style.display = 'none';
@@ -497,8 +497,8 @@ function showOnlineOpt(){
 }
 
 function showOfflineOpt(){
-    document.getElementById("hourstart").style.display = 'block';
-    document.getElementById("hourend").style.display = 'block';
+    document.getElementById("hourstart").style.display = 'none';
+    document.getElementById("hourend").style.display = 'none';
     document.getElementById("hourendOL").style.display = 'none';
     $('#timeend').prop('disabled', false);
     document.getElementById("rangeDate").style.display = 'block';
@@ -1418,14 +1418,62 @@ $(document).ready(function() {
 
             // Output form data to a console
             let str = JSON.parse(JSON.stringify($(form).serializeArray()));
+            let arrStr = [];
             let request = '';
+            let x = 0;
+            let sms = 0;
+            let len = str.length - 4;
+
+            for (let i=0; i<str.length; i++) {
+                if (str[i].name == 'id[]') {
+                    if ( x < 30) {
+                        arrStr[x] = str[i];
+                        x++;
+                        sms++;
+                    } else {
+                        if (msgType == '1') {
+                            request = {
+                                option: 'com_ajax',
+                                module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+                                method: 'sendSMS',  // to target: function sendSMSAjax in class ModSPSelectSmartPokeHelper
+                                format: 'json',
+                                data: {arrStr, 'campaign': campaignId, 'total': len, 'sent': sms}
+                            };
+                        } else {
+                            request = {
+                                option: 'com_ajax',
+                                module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
+                                method: 'sendEmail',  // to target: function sendEmailAjax in class ModSPSelectSmartPokeHelper
+                                format: 'json',
+                                data: {arrStr, 'campaign': campaignId, 'total': len, 'sent': sms}
+                            };
+                        }
+
+                        $.ajax({
+                            method: 'GET',
+                            data: request
+                        })
+                            .success(function (response) {
+                                let object = response.data
+                                Joomla.renderMessages({'success': [object]});
+                            });
+
+                        x = 1;
+                        sms = sms + x;
+                        arrStr = [];
+                        arrStr[0] = str[i];
+                    }
+                }
+            }
+            // console.log('arr', arrPhone);
+
             if (msgType == '1') {
                 request = {
                     option: 'com_ajax',
                     module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
                     method: 'sendSMS',  // to target: function sendSMSAjax in class ModSPSelectSmartPokeHelper
                     format: 'json',
-                    data: {str, 'campaign': campaignId}
+                    data: {arrStr, 'campaign': campaignId, 'total': len, 'sent': sms}
                 };
             } else {
                 request = {
@@ -1433,7 +1481,7 @@ $(document).ready(function() {
                     module: 'spselectsmartpoke',  // to target: mod_spselectsmartpoke
                     method: 'sendEmail',  // to target: function sendEmailAjax in class ModSPSelectSmartPokeHelper
                     format: 'json',
-                    data: {str, 'campaign': campaignId}
+                    data: {arrStr, 'campaign': campaignId, 'total': len, 'sent': sms}
                 };
             }
 
