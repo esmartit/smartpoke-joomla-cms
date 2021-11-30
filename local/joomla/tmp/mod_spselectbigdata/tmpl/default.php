@@ -67,10 +67,10 @@ $dateend2 = date("Y-m-d", strtotime("-1 day", strtotime($datestart)));
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-xs-12" style="display: none;">
                                 <input id="timestart" type="text" name="timestart" class="form-control"/>
                             </div>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-xs-12" style="display: none;">
                                 <input id="timeend" type="text" name="timeend" class="form-control"/>
                             </div>
                         </div>

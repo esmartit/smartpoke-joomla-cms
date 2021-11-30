@@ -211,7 +211,7 @@ $dateend2 = date("Y-m-d", strtotime($currDate));
                                 </select>
                             </div>
                         </div>
-                        <div id="selpresence" class="col-md-2 col-sm-2 col-xs-12" style="display: block;">
+                        <div id="selpresence" class="col-md-2 col-sm-2 col-xs-12" style="display: none;">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
                                 <label class="col-md-6 col-sm-6 col-xs-12"><?php echo JText::_('Presence');?></label>
