@@ -69,6 +69,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                             <tr class="headings">
+                                <th class='column-title'><?php echo JText::_('JGLOBAL_FIELD_ID_LABEL'); ?></th>
                                 <th class='column-title'><?php echo JText::_('COM_SPZONE_ZONE'); ?></th>
                                 <th class="column-title no-link last"><span class="nobr"><?php echo JText::_('COM_SPZONE_ACTION'); ?></span></th>
                             </tr>
@@ -81,6 +82,7 @@ $document->addScript('/templates/smartpokex/vendors/datatables.net-responsive-bs
                                 $canDo = SpzoneHelper::getActions('zone',$item,'zones');
                                 ?>
                                 <tr>
+                                    <td class=""><?php echo $item->id; ?></td>
                                     <td class=""><?php echo $item->name; ?></td>
                                     <td class=" last">
                                         <a type="button" class="open-zoneModal btn-sm btn-outline-secondary" data-toggle="modal" data-target="#zoneModal" data-title="View" data-info='{"id":"<?php echo $item->id; ?>", "zone":"<?php echo $item->name; ?>", "option":"R"}'><i class="fa fa-eye"></i></a>
