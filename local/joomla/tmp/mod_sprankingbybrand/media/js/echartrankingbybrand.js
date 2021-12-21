@@ -68,7 +68,7 @@ $(document).ready( function() {
         deviceBrand = JSON.parse(event.data);
 
         deviceBrand.sort(compareValues('value', 'desc'));
-        const index = deviceBrand.findIndex(brand => brand.name === 'Unknown' );
+        const index = deviceBrand.findIndex(brand => brand.name === 'Others' );
         deviceBrand.splice(index, 1)
         echartBrands(deviceBrand)
         // console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
