@@ -36,6 +36,11 @@ $document->addScript('/templates/smartpokex/vendors/bootstrap-datetimepicker/bui
 $document->addScript('/templates/smartpokex/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js');
 $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
 
+
+$currDate = date('Y-m-d H:i:s');
+$datestart = date("Y-m-d", strtotime($currDate));
+$dateend = date("Y-m-d", strtotime($currDate));
+
 ?>
 <div class="col-md-12 col-sm-12 ">
     <p>
@@ -56,6 +61,8 @@ $document->addScript('/media/mod_spselectonline/js/spselectonline.js');
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <input id="timeend" type="text" name="timeend" disabled class="form-control"/>
                             </div>
+                            <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+                            <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                             <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                         </div>
                     </div>

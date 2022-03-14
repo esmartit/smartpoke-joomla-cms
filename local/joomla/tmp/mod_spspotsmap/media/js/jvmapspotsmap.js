@@ -6,7 +6,11 @@ let countryList = [];
 $(document).ready( function() {
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    seRankingCountry = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-countries?timezone="+userTimeZone);
+    let dateS = $('#datestart').val();
+    let dateE = $('#dateend').val();
+    let brands = encodeURIComponent("Apple,Huawei,LG,Motorola,Oppo,BQ,Samsung,Sony Ericsson,Xiaomi,ZTE,MAC Dynamic");
+    seRankingCountry = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/today-countries?timezone="+userTimeZone+"%26startDate="+dateS+"%26endDate="+dateE+"%26brands="+encodeURIComponent(brands));
+    // seRankingCountry = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-countries?timezone="+userTimeZone);
     getCountryList();
 
     function spotMap(dataCountries) {

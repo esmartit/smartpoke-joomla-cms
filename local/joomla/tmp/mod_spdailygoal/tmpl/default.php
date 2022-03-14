@@ -15,6 +15,10 @@ $document->addScript('templates/smartpokex/vendors/gauge.js/dist/gauge.min.js');
 $document->addScript('/media/mod_spdailygoal/js/gaugedailygoal.js');
 $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
 
+$currDate = date('Y-m-d H:i:s');
+$datestart = date("Y-m-d", strtotime($currDate));
+$dateend = date("Y-m-d", strtotime($currDate));
+
 ?>
 <div class="col-md-4 col-sm-4 ">
     <div class="x_panel tile fixed_height_320">
@@ -37,6 +41,8 @@ $document->addScript('/media/mod_spdailygoal/js/gaugedailygoalreg.js');
         </div>
         <div class="x_content">
             <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
+            <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+            <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
             <div class="dashboard-widget-content">
                 <div class="sidebar-widget">
                     <h4>Registered</h4>

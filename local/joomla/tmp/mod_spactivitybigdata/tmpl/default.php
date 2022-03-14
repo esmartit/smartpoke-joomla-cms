@@ -37,7 +37,7 @@ $document->addScript('/media/mod_spactivitybigdata/js/echartactivitybigdata.js')
             </div>
             <div class="col-md-4 col-sm-4  tile_stats_count">
                 <span class="count_top"> <i class="fa fa-clock-o"></i> <?php echo JText::_('MOD_SPAVGTIMEBIGDATA_RANGE'); ?></span>
-                <div id="avgtimebigdata_r" class="count">0</div>
+                <div id="avgtimebigdata_r" class="count">00:00:00</div>
             </div>
         </div>
 
@@ -54,18 +54,30 @@ $document->addScript('/media/mod_spactivitybigdata/js/echartactivitybigdata.js')
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-bar-chart"></i> TOTAL</span>
                     <div id="totalVisits_r" class="count">0</div>
+                    <span class="count_bottom">
+						<div id="rateTotal_r" class="grey">100%</div>
+					</span>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-download"></i> IN</span>
                     <div id="inVisits_r" class="count green">0</div>
+                    <span class="count_bottom">
+						<div id="rateIn_r" class="green">0%</div>
+					</span>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-minus"></i> LIMIT</span>
                     <div id="limitVisits_r" class="count blue">0</div>
+                    <span class="count_bottom">
+						<div id="rateLimit_r" class="blue">0%</div>
+					</span>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-upload"></i> OUT</span>
                     <div id="outVisits_r" class="count red">0</div>
+                    <span class="count_bottom">
+						<div id="rateOut_r" class="red">0%</div>
+					</span>
                 </div>
             </div>
         </div>
@@ -95,7 +107,7 @@ $document->addScript('/media/mod_spactivitybigdata/js/echartactivitybigdata.js')
             </div>
             <div class="col-md-4 col-sm-4  tile_stats_count">
                 <span class="count_top"> <i class="fa fa-clock-o"></i> <?php echo JText::_('MOD_SPAVGTIMEBIGDATA_COMPARE'); ?></span>
-                <div id="avgtimebigdata_c" class="count">0</div>
+                <div id="avgtimebigdata_c" class="count">00:00:00</div>
             </div>
         </div>
 
@@ -112,18 +124,30 @@ $document->addScript('/media/mod_spactivitybigdata/js/echartactivitybigdata.js')
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-bar-chart"></i> TOTAL</span>
                     <div id="totalVisits_c" class="count">0</div>
+                    <span class="count_bottom">
+						<div id="rateTotal_c" class="grey">100%</div>
+					</span>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-download"></i> IN</span>
                     <div id="inVisits_c" class="count green">0</div>
+                    <span class="count_bottom">
+						<div id="rateIn_c" class="green">0%</div>
+					</span>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-minus"></i> LIMIT</span>
                     <div id="limitVisits_c" class="count blue">0</div>
+                    <span class="count_bottom">
+						<div id="rateLimit_c" class="blue">0%</div>
+					</span>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12 tile_stats_count">
                     <span class="count_top"><i class="fa fa-upload"></i> OUT</span>
                     <div id="outVisits_c" class="count red">0</div>
+                    <span class="count_bottom">
+						<div id="rateOut_c" class="red">0%</div>
+					</span>
                 </div>
             </div>
         </div>

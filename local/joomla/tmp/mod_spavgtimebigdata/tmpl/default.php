@@ -16,7 +16,7 @@ $document->addScript('/media/mod_spavgtimebigdata/js/avgtimebigdata.js');
 
 ?>
 <div class="tile_count">
-    <div class="col-md-4 col-sm-4  tile_stats_count">
+    <div class="col-md-6 col-sm-4  tile_stats_count">
         <span class="count_top"> <i class="fa fa-mobile-phone"></i> <?php echo JText::_('MOD_SPAVGTIMEBIGDATA'); ?></span>
         <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
         <div id="avgtimebigdata" class="count">0</div>

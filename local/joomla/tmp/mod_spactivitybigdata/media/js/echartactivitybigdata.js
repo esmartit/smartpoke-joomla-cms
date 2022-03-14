@@ -22,12 +22,21 @@ let outBigDataR = [];
 let deviceBigDataR = [];
 let axisBigDataR = [];
 
+let rateIn_r = 0;
+let rateLimit_r = 0;
+let rateOut_r = 0;
+
+
 // Arrays to compare
 let inBigDataC = [];
 let limitBigDataC = [];
 let outBigDataC = [];
 let deviceBigDataC = [];
 let axisBigDataC = [];
+
+let rateIn_c = 0;
+let rateLimit_c = 0;
+let rateOut_c = 0;
 
 let theme = {
     color: [
@@ -566,6 +575,22 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
             document.getElementById("limitVisits_r").innerHTML = Intl.NumberFormat().format(limit_x);
             document.getElementById("outVisits_r").innerHTML = Intl.NumberFormat().format(out_x);
 
+
+            document.getElementById("rateIn_r").innerHTML = Intl.NumberFormat().format(in_x) + '%';
+            document.getElementById("rateLimit_r").innerHTML = Intl.NumberFormat().format(limit_x) + '%';
+            document.getElementById("rateOut_r").innerHTML = Intl.NumberFormat().format(out_x) + '%';
+            if (deviceBigDataR[pos] > 0) {
+                rateIn_r = (parseInt(in_x)/parseInt(deviceBigDataR[pos]))*100;
+                rateIn_r = Math.round(rateIn_r * 1) / 1;
+                rateLimit_r = (parseInt(limit_x)/parseInt(deviceBigDataR[pos]))*100;
+                rateLimit_r = Math.round(rateLimit_r * 1) / 1;
+                rateOut_r = (parseInt(out_x)/parseInt(deviceBigDataR[pos]))*100;
+                rateOut_r = Math.round(rateOut_r * 1) / 1;
+                document.getElementById("rateIn_r").innerHTML = Intl.NumberFormat().format(rateIn_r) + '%';
+                document.getElementById("rateLimit_r").innerHTML = Intl.NumberFormat().format(rateLimit_r) + '%';
+                document.getElementById("rateOut_r").innerHTML = Intl.NumberFormat().format(rateOut_r) + '%';
+            }
+
             spChartBigDataR.setOption(optionR);
         } else {
             seActivityBigDataR.close();
@@ -583,6 +608,22 @@ function evtSourceActivityBigDataR(dateS, dateE, timeS, timeE, country, state, c
                 document.getElementById("inVisits_r").innerHTML = Intl.NumberFormat().format(in_r);
                 document.getElementById("limitVisits_r").innerHTML = Intl.NumberFormat().format(limit_r);
                 document.getElementById("outVisits_r").innerHTML = Intl.NumberFormat().format(out_r);
+
+                document.getElementById("rateIn_r").innerHTML = Intl.NumberFormat().format(in_r) + '%';
+                document.getElementById("rateLimit_r").innerHTML = Intl.NumberFormat().format(limit_r) + '%';
+                document.getElementById("rateOut_r").innerHTML = Intl.NumberFormat().format(out_r) + '%';
+                if (total_r > 0) {
+                    rateIn_r = (parseInt(in_r)/parseInt(total_r))*100;
+                    rateIn_r = Math.round(rateIn_r * 1) / 1;
+                    rateLimit_r = (parseInt(limit_r)/parseInt(total_r))*100;
+                    rateLimit_r = Math.round(rateLimit_r * 1) / 1;
+                    rateOut_r = (parseInt(out_r)/parseInt(total_r))*100;
+                    rateOut_r = Math.round(rateOut_r * 1) / 1;
+
+                    document.getElementById("rateIn_r").innerHTML = Intl.NumberFormat().format(rateIn_r) + '%';
+                    document.getElementById("rateLimit_r").innerHTML = Intl.NumberFormat().format(rateLimit_r) + '%';
+                    document.getElementById("rateOut_r").innerHTML = Intl.NumberFormat().format(rateOut_r) + '%';
+                }
             }
             NProgress.done();
         }
@@ -622,6 +663,7 @@ function evtSourceAvgTimeBigDataR(dateS, dateE, timeS, timeE, country, state, ci
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
+    document.getElementById("avgtimebigdata_r").innerHTML = '00:00:00';
     seAvgTimeBigDataR.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         avgtimeBigDataR = eventData.value;
@@ -646,6 +688,7 @@ function evtSourceUniqueBigDataR(dateS, dateE, timeS, timeE, country, state, cit
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
+    document.getElementById("totalvisitorsbigdata_r").innerHTML = 0;
     seUniqueBigDataR.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         devUniqueBigDataR = eventData.count;
@@ -801,6 +844,21 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
             document.getElementById("limitVisits_c").innerHTML = Intl.NumberFormat().format(limit_x);
             document.getElementById("outVisits_c").innerHTML = Intl.NumberFormat().format(out_x);
 
+            document.getElementById("rateIn_r").innerHTML = Intl.NumberFormat().format(in_x) + '%';
+            document.getElementById("rateLimit_r").innerHTML = Intl.NumberFormat().format(limit_x) + '%';
+            document.getElementById("rateOut_r").innerHTML = Intl.NumberFormat().format(out_x) + '%';
+            if (deviceBigDataC[pos] > 0) {
+                rateIn_c = (parseInt(in_x)/parseInt(deviceBigDataC[pos]))*100;
+                rateIn_c = Math.round(rateIn_c * 1) / 1;
+                rateLimit_c = (parseInt(limit_x)/parseInt(deviceBigDataC[pos]))*100;
+                rateLimit_c = Math.round(rateLimit_c * 1) / 1;
+                rateOut_c = (parseInt(out_x)/parseInt(deviceBigDataC[pos]))*100;
+                rateOut_c = Math.round(rateOut_c * 1) / 1;
+                document.getElementById("rateIn_c").innerHTML = Intl.NumberFormat().format(rateIn_c) + '%';
+                document.getElementById("rateLimit_c").innerHTML = Intl.NumberFormat().format(rateLimit_c) + '%';
+                document.getElementById("rateOut_c").innerHTML = Intl.NumberFormat().format(rateOut_c) + '%';
+            }
+
             spChartBigDataC.setOption(optionC);
         } else {
             seActivityBigDataC.close();
@@ -818,6 +876,21 @@ function evtSourceActivityBigDataC(dateS, dateE, timeS, timeE, country, state, c
                 document.getElementById("inVisits_c").innerHTML = Intl.NumberFormat().format(in_c);
                 document.getElementById("limitVisits_c").innerHTML = Intl.NumberFormat().format(limit_c);
                 document.getElementById("outVisits_c").innerHTML = Intl.NumberFormat().format(out_c);
+
+                document.getElementById("rateIn_c").innerHTML = Intl.NumberFormat().format(in_c) + '%';
+                document.getElementById("rateLimit_c").innerHTML = Intl.NumberFormat().format(limit_c) + '%';
+                document.getElementById("rateOut_c").innerHTML = Intl.NumberFormat().format(out_c) + '%';
+                if (total_c > 0) {
+                    rateIn_c = (parseInt(in_c)/parseInt(total_c))*100;
+                    rateIn_c = Math.round(rateIn_c * 1) / 1;
+                    rateLimit_c = (parseInt(limit_c)/parseInt(total_c))*100;
+                    rateLimit_c = Math.round(rateLimit_c * 1) / 1;
+                    rateOut_c = (parseInt(out_c)/parseInt(total_c))*100;
+                    rateOut_c = Math.round(rateOut_c * 1) / 1;
+                    document.getElementById("rateIn_c").innerHTML = Intl.NumberFormat().format(rateIn_c) + '%';
+                    document.getElementById("rateLimit_c").innerHTML = Intl.NumberFormat().format(rateLimit_c) + '%';
+                    document.getElementById("rateOut_c").innerHTML = Intl.NumberFormat().format(rateOut_c) + '%';
+                }
             }
         }
     }
@@ -832,6 +905,7 @@ function evtSourceUniqueBigDataC(dateS, dateE, timeS, timeE, country, state, cit
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
+    document.getElementById("totalvisitorsbigdata_c").innerHTML = 0;
     seUniqueBigDataC.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         devUniqueBigDataC = eventData.count;
@@ -879,6 +953,7 @@ function evtSourceAvgTimeBigDataC(dateS, dateE, timeS, timeE, country, state, ci
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
+    document.getElementById("avgtimebigdata_c").innerHTML = '00:00:00';
     seAvgTimeBigDataC.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         avgtimeBigDataC = eventData.value;

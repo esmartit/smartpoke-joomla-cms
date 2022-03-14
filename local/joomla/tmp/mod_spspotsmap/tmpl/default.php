@@ -19,6 +19,10 @@ $document->addScript('/media/mod_spspotsmap/js/jquery.vmap.europe.js');
 $document->addScript('/media/mod_spspotsmap/js/jquery.vmap.world.js');
 $document->addScript('/media/mod_spspotsmap/js/jvmapspotsmap.js');
 
+$currDate = date('Y-m-d H:i:s');
+$datestart = date("Y-m-d", strtotime($currDate));
+$dateend = date("Y-m-d", strtotime($currDate));
+
 ?>
 
 <div class="col-md-8 col-sm-8 ">
@@ -44,6 +48,8 @@ $document->addScript('/media/mod_spspotsmap/js/jvmapspotsmap.js');
             <div class="dashboard-widget-content">
                 <div class="col-md-4 hidden-small">
                     <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
+                    <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+                    <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                     <div><p>Countries</p></div>
                     <div id="countries"></div>
                 </div>

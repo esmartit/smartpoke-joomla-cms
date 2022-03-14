@@ -14,6 +14,10 @@ $document->addScript('/templates/smartpokex/vendors/jquery/dist/jquery.min.js');
 $document->addScript('/templates/smartpokex/vendors/echarts/dist/echarts.min.js');
 $document->addScript('/media/mod_sprankingbybrand/js/echartrankingbybrand.js');
 
+$currDate = date('Y-m-d H:i:s');
+$datestart = date("Y-m-d", strtotime($currDate));
+$dateend = date("Y-m-d", strtotime($currDate));
+
 ?>
 <div class="col-md-4 col-sm-4 ">
     <div class="x_panel tile fixed_height_320 overflow_hidden">
@@ -36,6 +40,8 @@ $document->addScript('/media/mod_sprankingbybrand/js/echartrankingbybrand.js');
         </div>
         <div class="x_content">
             <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
+            <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+            <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
             <div id="echart_rankingby_brand" style="height:350px;"></div>
         </div>
     </div>
