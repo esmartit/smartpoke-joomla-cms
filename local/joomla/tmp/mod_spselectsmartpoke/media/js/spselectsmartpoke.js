@@ -687,6 +687,122 @@ $(document).ready(function() {
         $('#daterange_right').data('daterangepicker').remove();
     });
 
+    tableOn = $('#datatable-online').DataTable({
+        "destroy": true,
+        "columnDefs": [
+            {
+                "targets": 0,
+                "bSortable": false,
+                "searchable": false,
+                "orderable": false,
+                "className": 'dt-body-center',
+                "render": function (data, type, row, meta) {
+                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                }
+            },
+            {
+                "targets": 1,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['1'] + "</div>";
+                }
+            },
+            {
+                "targets": 2,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['2'] + "</div>";
+                }
+            },
+            {
+                "targets": 3,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['3'] + "</div>";
+                }
+            },
+            {
+                "targets": 4,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['4'] + "</div>";
+                }
+            },
+            {
+                "targets": 5,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['5'] + "</div>";
+                }
+            },
+            {
+                "targets": 6,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['6'] + "</div>";
+                }
+            },
+            {
+                "targets": 7,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['7'] + "</div>";
+                }
+            }
+        ],
+        "responsive": true
+    });
+    tableOff = $('#datatable-offline').DataTable({
+        "destroy": true,
+        "columnDefs": [
+            {
+                "targets": 0,
+                "bSortable": false,
+                "searchable": false,
+                "orderable": false,
+                "className": 'dt-body-center',
+                "render": function (data, type, row, meta) {
+                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                }
+            },
+            {
+                "targets": 1,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['1'] + "</div>";
+                }
+            },
+            {
+                "targets": 2,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['2'] + "</div>";
+                }
+            },
+            {
+                "targets": 3,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['3'] + "</div>";
+                }
+            },
+            {
+                "targets": 4,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['4'] + "</div>";
+                }
+            },
+            {
+                "targets": 5,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['5'] + "</div>";
+                }
+            },
+            {
+                "targets": 6,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['6'] + "</div>";
+                }
+            },
+            {
+                "targets": 7,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['7'] + "</div>";
+                }
+            }
+        ],
+        "responsive": true
+    });
 });
 
 $(document).ready(function () {
@@ -862,6 +978,7 @@ function getInfoUsers(country, state, city, zipcode, spot, ageS, ageE, sex, zipc
 
 function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                          zipcodes, member, userTZ, group) {
+    let dataRows = [];
 
     let seSmartPokeOn = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
@@ -869,64 +986,13 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26ssid="+hotspot+"%26isConnected="+connected+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
-
-    tableOn = $('#datatable-online').DataTable({
-        "destroy": true,
-        "columnDefs": [
-            {
-                "targets": 0,
-                "bSortable": false,
-                "searchable": false,
-                "orderable": false,
-                "className": 'dt-body-center',
-                "render": function (data, type, row, meta) {
-                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
-                }
-            },
-            {"targets": 1,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['1'] + "</div>";
-                }
-            },
-            {"targets": 2,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['2'] + "</div>";
-                }
-            },
-            {"targets": 3,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['3'] + "</div>";
-                }
-            },
-            {"targets": 4,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['4'] + "</div>";
-                }
-            },
-            {"targets": 5,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['5'] + "</div>";
-                }
-            },
-            {"targets": 6,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['6'] + "</div>";
-                }
-            },
-            {"targets": 7,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['7'] + "</div>";
-                }
-            }
-        ],
-        "responsive": true
-    });
-
+    
     NProgress.start();
     NProgress.set(0,4);
     tableOn.clear();
+    tableOn.draw(true);
 
-    seSmartPokeOn.onmessage = function (event) {
+    seSmartPokeOn.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
         if (!last) {
@@ -934,7 +1000,7 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
             let userName = eventData.userName;
             let obj = userInfo.find(o => o.username === userName);
             if (obj != null) {
-                tableOn.row.add(
+                dataRows.push(
                     [
                         '',
                         obj['firstname'],
@@ -944,9 +1010,61 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
                         eventData.userName,
                         eventData.spot,
                         eventData.sensor
-                    ]).draw(false);
+                    ]);
             }
         } else {
+            tableOn = $('#datatable-online').DataTable({
+                "destroy": true,
+                data: dataRows,
+                "columnDefs": [
+                    {
+                        "targets": 0,
+                        "bSortable": false,
+                        "searchable": false,
+                        "orderable": false,
+                        "className": 'dt-body-center',
+                        "render": function (data, type, row, meta) {
+                            return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                        }
+                    },
+                    {"targets": 1,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['1'] + "</div>";
+                        }
+                    },
+                    {"targets": 2,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['2'] + "</div>";
+                        }
+                    },
+                    {"targets": 3,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['3'] + "</div>";
+                        }
+                    },
+                    {"targets": 4,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['4'] + "</div>";
+                        }
+                    },
+                    {"targets": 5,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['5'] + "</div>";
+                        }
+                    },
+                    {"targets": 6,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['6'] + "</div>";
+                        }
+                    },
+                    {"targets": 7,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['7'] + "</div>";
+                        }
+                    }
+                ],
+                "responsive": true
+            });
             seSmartPokeOn.close();
             NProgress.done();
         }
@@ -955,6 +1073,7 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
 
 function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                           zipcodes, member, userTZ, group) {
+    let dataRows = [];
 
     let seSmartPokeOff = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/v2/find-offline?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
@@ -963,63 +1082,12 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
-    tableOff = $('#datatable-offline').DataTable({
-        "destroy": true,
-        "columnDefs": [
-            {
-                "targets": 0,
-                "bSortable": false,
-                "searchable": false,
-                "orderable": false,
-                "className": 'dt-body-center',
-                "render": function (data, type, row, meta) {
-                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
-                }
-            },
-            {"targets": 1,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['1'] + "</div>";
-                }
-            },
-            {"targets": 2,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['2'] + "</div>";
-                }
-            },
-            {"targets": 3,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['3'] + "</div>";
-                }
-            },
-            {"targets": 4,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['4'] + "</div>";
-                }
-            },
-            {"targets": 5,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['5'] + "</div>";
-                }
-            },
-            {"targets": 6,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['6'] + "</div>";
-                }
-            },
-            {"targets": 7,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['7'] + "</div>";
-                }
-            }
-        ],
-        "responsive": true
-    });
-
     NProgress.start();
     NProgress.set(0,4);
     tableOff.clear();
+    tableOff.draw(true);
 
-    seSmartPokeOff.onmessage = function (event) {
+    seSmartPokeOff.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
         if (!last) {
@@ -1027,7 +1095,7 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
             let userName = eventData.userName;
             let obj = userInfo.find(o => o.username === userName);
             if (obj != null) {
-                tableOff.row.add(
+                dataRows.push(
                     [
                         '',
                         obj['firstname'],
@@ -1037,9 +1105,61 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
                         eventData.userName,
                         eventData.spot,
                         eventData.sensor
-                    ]).draw(false);
+                    ]);
             }
         } else {
+            tableOff = $('#datatable-offline').DataTable({
+                "destroy": true,
+                data: dataRows,
+                "columnDefs": [
+                    {
+                        "targets": 0,
+                        "bSortable": false,
+                        "searchable": false,
+                        "orderable": false,
+                        "className": 'dt-body-center',
+                        "render": function (data, type, row, meta) {
+                            return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                        }
+                    },
+                    {"targets": 1,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['1'] + "</div>";
+                        }
+                    },
+                    {"targets": 2,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['2'] + "</div>";
+                        }
+                    },
+                    {"targets": 3,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['3'] + "</div>";
+                        }
+                    },
+                    {"targets": 4,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['4'] + "</div>";
+                        }
+                    },
+                    {"targets": 5,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['5'] + "</div>";
+                        }
+                    },
+                    {"targets": 6,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['6'] + "</div>";
+                        }
+                    },
+                    {"targets": 7,
+                        "render": function (data, type, row, meta) {
+                            return "<div>" + row['7'] + "</div>";
+                        }
+                    }
+                ],
+                "responsive": true
+            });
             seSmartPokeOff.close();
             NProgress.done();
         }

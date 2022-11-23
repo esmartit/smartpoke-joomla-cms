@@ -207,7 +207,7 @@ function getHotSpotList() {
         });
 }
 
-$(document).ready(function() {
+$(document).ready(() => {
 
     let datestart = moment().startOf('month');
     let dateend = moment();
@@ -281,52 +281,6 @@ $(document).ready(function() {
         $('#daterange').data('daterangepicker').remove();
     });
 
-});
-
-function sendForm() {
-    let t_dateS = $('#datestart').val();
-    let t_dateE = $('#dateend').val();
-    let t_timeS = $('#timestart').val();
-    let t_timeE = $('#timeend').val();
-    let t_country = $('#selCountryS').val();
-    let t_state = $('#selStateS').val();
-    let t_city = $('#selCityS').val();
-    let t_zipcode = $('#selZipCodeS').val();
-    let t_spot = $('#selSpot').val();
-    let t_hotspot = $('#selHotSpot').val();
-    // let t_ageS = $('#from_value').val();
-    // let t_ageE = $('#to_value').val();
-    // let t_sex = $('#selSex').val();
-    // let t_zipcodes = $('#selZipCode').val();
-    // let t_member = $('#selMembership').val();
-    let t_ageS = '';
-    let t_ageE = '';
-    let t_sex = '';
-    let t_zipcodes = '';
-    let t_member = '';
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
-    let t_groupBy = 'BY_DAY';
-    let t_isConnected = 1;
-    t_hotspot = t_hotspot.split(' ').join('%7F');
-
-    evtSourceDetailHotSpot(
-        t_dateS, t_dateE, t_timeS, t_timeE,
-        t_country, t_state, t_city, t_zipcode,
-        t_spot, t_hotspot,
-        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
-        userTimeZone, t_groupBy, t_isConnected
-    )
-}
-
-function evtSourceDetailHotSpot(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, hotspot, ageS, ageE, sex,
-                                zipcodes, member, userTZ, group, connected) {
-
-    let seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/list-radius?"+
-        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
-        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
-        "%26spotId="+spot+"%26ssid="+hotspot+"%26isConnected="+connected+
-        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
-
     tableDetail = $('#datatable-buttons').DataTable({
         "destroy": true,
         "column": [
@@ -366,12 +320,60 @@ function evtSourceDetailHotSpot(dateS, dateE, timeS, timeE, country, state, city
         ],
         "responsive": true
     });
+});
+
+function sendForm() {
+    let t_dateS = $('#datestart').val();
+    let t_dateE = $('#dateend').val();
+    let t_timeS = $('#timestart').val();
+    let t_timeE = $('#timeend').val();
+    let t_country = $('#selCountryS').val();
+    let t_state = $('#selStateS').val();
+    let t_city = $('#selCityS').val();
+    let t_zipcode = $('#selZipCodeS').val();
+    let t_spot = $('#selSpot').val();
+    let t_hotspot = $('#selHotSpot').val();
+    // let t_ageS = $('#from_value').val();
+    // let t_ageE = $('#to_value').val();
+    // let t_sex = $('#selSex').val();
+    // let t_zipcodes = $('#selZipCode').val();
+    // let t_member = $('#selMembership').val();
+    let t_ageS = '';
+    let t_ageE = '';
+    let t_sex = '';
+    let t_zipcodes = '';
+    let t_member = '';
+    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    let t_groupBy = 'BY_DAY';
+    let t_isConnected = 1;
+    t_hotspot = t_hotspot.split(' ').join('%7F');
+
+    evtSourceDetailHotSpot(
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_hotspot,
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy, t_isConnected
+    )
+}
+
+function evtSourceDetailHotSpot(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, hotspot, ageS, ageE, sex,
+                                zipcodes, member, userTZ, group, connected) {
+    let dataRows = [];
+
+    let seActivityHotSpot = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/list-radius?"+
+        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+        "%26spotId="+spot+"%26ssid="+hotspot+"%26isConnected="+connected+
+        "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
+
 
     NProgress.start();
     NProgress.set(0,4);
     tableDetail.clear();
+    tableDetail.draw(true);
 
-    seActivityHotSpot.onmessage = function (event) {
+    seActivityHotSpot.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;
         for (let x=0; x<len; x++) {
@@ -379,7 +381,7 @@ function evtSourceDetailHotSpot(dateS, dateE, timeS, timeE, country, state, city
             if (!last) {
                 let bodyData = eventData[x].body;
                 let hotspot = bodyData.calledStationId;
-                tableDetail.row.add(
+                dataRows.push(
                     [
                         hotspot.substr(18, hotspot.length),
                         bodyData.userName,
@@ -391,8 +393,48 @@ function evtSourceDetailHotSpot(dateS, dateE, timeS, timeE, country, state, city
                         bodyData.serviceType,
                         bodyData.acctTerminateCause,
                         bodyData.callingStationId
-                    ]).draw(false);
+                    ]);
             } else {
+                tableDetail = $('#datatable-buttons').DataTable({
+                    "destroy": true,
+                    data: dataRows,
+                    "column": [
+                        {"data": "calledStationId"},
+                        {"data": "username"},
+                        {"data": "eventTimeStamp"},
+                        {"data": "session"},
+                        {"data": "inputOct"},
+                        {"data": "outputOct"},
+                        {"data": "statusType"},
+                        {"data": "serviceType"},
+                        {"data": "acctTerminateCause"},
+                        {"data": "callingStationId"}
+                    ],
+                    "dom": 'Bfrtip',
+                    "buttons": [
+                        {
+                            "extend": 'copy',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'csv',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'excel',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'pdfHtml5',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'print',
+                            "className": 'btn-sm'
+                        },
+                    ],
+                    "responsive": true
+                });
                 seActivityHotSpot.close();
                 NProgress.done();
             }

@@ -3,6 +3,8 @@ let t_devicesEx = [];
 
 let tableDetailDaily = '';
 
+
+
 $(document).ready( function() {
 
     getCountryList();
@@ -275,7 +277,7 @@ function getDeviceExList() {
         });
 }
 
-$(document).ready(function() {
+$(document).ready(() => {
 
     let datestart = moment().startOf('month');
     let dateend = moment();
@@ -348,7 +350,51 @@ $(document).ready(function() {
     $('#destroy').click(function () {
         $('#daterange').data('daterangepicker').remove();
     });
-
+    tableDetailDaily = $('#datatable-buttons').DataTable({
+        "destroy": true,
+        "column": [
+            {"data": "spotId"},
+            {"data": "sensorId"},
+            {"data": "clientMac"},
+            {"data": "username"},
+            {"data": "dateAtZone"},
+            {"data": "minTime"},
+            {"data": "maxTime"},
+            {"data": "status"},
+            {"data": "totalTime"},
+            {"data": "gender"},
+            {"data": "age"},
+            {"data": "userZipCode"},
+            {"data": "countryId"},
+            {"data": "stateId"},
+            {"data": "cityId"},
+            {"data": "zipCode"}
+        ],
+        "dom": 'Bfrtip',
+        "buttons": [
+            {
+                "extend": 'copy',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'csv',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'excel',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'pdfHtml5',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'print',
+                "className": 'btn-sm'
+            },
+        ],
+        "responsive": true
+    });
 });
 
 function sendForm() {
@@ -436,6 +482,7 @@ function toHHMMSS(milis){
 
 function evtSourceDetailBigDataDaily(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                 zipcodes, member, userTZ) {
+    let dataRows = [];
 
     let seActivityBigDataDaily = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/v2/list?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
@@ -444,57 +491,12 @@ function evtSourceDetailBigDataDaily(dateS, dateE, timeS, timeE, country, state,
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_DAY");
 
-    tableDetailDaily = $('#datatable-buttons').DataTable({
-        "destroy": true,
-        "column": [
-            {"data": "spotId"},
-            {"data": "sensorId"},
-            {"data": "clientMac"},
-            {"data": "username"},
-            {"data": "dateAtZone"},
-            {"data": "minTime"},
-            {"data": "maxTime"},
-            {"data": "status"},
-            {"data": "totalTime"},
-            {"data": "gender"},
-            {"data": "age"},
-            {"data": "userZipCode"},
-            {"data": "countryId"},
-            {"data": "stateId"},
-            {"data": "cityId"},
-            {"data": "zipCode"}
-        ],
-        "dom": 'Bfrtip',
-        "buttons": [
-            {
-                "extend": 'copy',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'csv',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'excel',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'pdfHtml5',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'print',
-                "className": 'btn-sm'
-            },
-        ],
-        "responsive": true
-    });
-
     NProgress.start();
     NProgress.set(0,4);
     tableDetailDaily.clear();
+    tableDetailDaily.draw(true);
 
-    seActivityBigDataDaily.onmessage = function (event) {
+    seActivityBigDataDaily.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;
         for (let x=0; x<len; x++) {
@@ -525,26 +527,71 @@ function evtSourceDetailBigDataDaily(dateS, dateE, timeS, timeE, country, state,
                 if (cityId == null) cityId = '';
                 if (zipCode == null) zipCode = '';
 
-                tableDetailDaily.row.add(
-                    [
-                        bodyData.spotId,
-                        bodyData.sensorId,
-                        bodyData.clientMac.substr(-8)+'-'+hashFnv32a(bodyData.clientMac, true, 'eSmartIT'),
-                        userName,
-                        bodyData.groupDate,
-                        minTime,
-                        maxTime,
-                        timeHHMMSS,
-                        bodyData.status,
-                        gender,
-                        age,
-                        userZipCode,
-                        countryId,
-                        stateId,
-                        cityId,
-                        zipCode
-                    ]).draw(false);
+                dataRows.push([
+                    bodyData.spotId,
+                    bodyData.sensorId,
+                    bodyData.clientMac.substr(-8)+'-'+hashFnv32a(bodyData.clientMac, true, 'eSmartIT'),
+                    userName,
+                    bodyData.groupDate,
+                    minTime,
+                    maxTime,
+                    timeHHMMSS,
+                    bodyData.status,
+                    gender,
+                    age,
+                    userZipCode,
+                    countryId,
+                    stateId,
+                    cityId,
+                    zipCode
+                ]);
             } else {
+                tableDetailDaily = $('#datatable-buttons').DataTable({
+                    "destroy": true,
+                    data: dataRows,
+                    "column": [
+                        {"data": "spotId"},
+                        {"data": "sensorId"},
+                        {"data": "clientMac"},
+                        {"data": "username"},
+                        {"data": "dateAtZone"},
+                        {"data": "minTime"},
+                        {"data": "maxTime"},
+                        {"data": "status"},
+                        {"data": "totalTime"},
+                        {"data": "gender"},
+                        {"data": "age"},
+                        {"data": "userZipCode"},
+                        {"data": "countryId"},
+                        {"data": "stateId"},
+                        {"data": "cityId"},
+                        {"data": "zipCode"}
+                    ],
+                    "dom": 'Bfrtip',
+                    "buttons": [
+                        {
+                            "extend": 'copy',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'csv',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'excel',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'pdfHtml5',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'print',
+                            "className": 'btn-sm'
+                        },
+                    ],
+                    "responsive": true
+                });
                 seActivityBigDataDaily.close();
                 NProgress.done();
             }

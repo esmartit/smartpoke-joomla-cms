@@ -276,7 +276,7 @@ function getDeviceExList() {
         });
 }
 
-$(document).ready(function() {
+$(document).ready(() =>{
 
     let datestart = moment().startOf('month');
     let dateend = moment();
@@ -350,6 +350,45 @@ $(document).ready(function() {
         $('#daterange').data('daterangepicker').remove();
     });
 
+    tableDetail = $('#datatable-buttons').DataTable({
+        "destroy": true,
+        "column": [
+            {"data": "spotId"},
+            {"data": "sensorId"},
+            {"data": "clientMac"},
+            {"data": "seenTime"},
+            {"data": "rssi"},
+            {"data": "status"},
+            {"data": "countryId"},
+            {"data": "stateId"},
+            {"data": "cityId"},
+            {"data": "zipCode"}
+        ],
+        "dom": 'Bfrtip',
+        "buttons": [
+            {
+                "extend": 'copy',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'csv',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'excel',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'pdfHtml5',
+                "className": 'btn-sm'
+            },
+            {
+                "extend": 'print',
+                "className": 'btn-sm'
+            },
+        ],
+        "responsive": true
+    });
 });
 
 function sendForm() {
@@ -422,6 +461,7 @@ function hashFnv32a(str, asString, seed) {
 
 function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                 zipcodes, member, userTZ) {
+    let dataRows = [];
 
     let seActivityBigData = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/list?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
@@ -430,58 +470,20 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_MINUTE");
 
-    tableDetail = $('#datatable-buttons').DataTable({
-        "destroy": true,
-        "column": [
-            {"data": "spotId"},
-            {"data": "sensorId"},
-            {"data": "clientMac"},
-            {"data": "seenTime"},
-            {"data": "rssi"},
-            {"data": "status"},
-            {"data": "countryId"},
-            {"data": "stateId"},
-            {"data": "cityId"},
-            {"data": "zipCode"}
-        ],
-        "dom": 'Bfrtip',
-        "buttons": [
-            {
-                "extend": 'copy',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'csv',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'excel',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'pdfHtml5',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'print',
-                "className": 'btn-sm'
-            },
-        ],
-        "responsive": true
-    });
 
     NProgress.start();
     NProgress.set(0,4);
     tableDetail.clear();
+    tableDetail.draw(true);
 
-    seActivityBigData.onmessage = function (event) {
+    seActivityBigData.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;
         for (let x=0; x<len; x++) {
             let last = eventData[x].isLast;
             if (!last) {
                 let bodyData = eventData[x].body;
-                tableDetail.row.add(
+                dataRows.push(
                     [
                         bodyData.spotId,
                         bodyData.sensorId,
@@ -493,8 +495,48 @@ function evtSourceDetailBigData(dateS, dateE, timeS, timeE, country, state, city
                         bodyData.stateId,
                         bodyData.cityId,
                         bodyData.zipCode
-                    ]).draw(false);
+                    ]);
             } else {
+                tableDetail = $('#datatable-buttons').DataTable({
+                    "destroy": true,
+                    data: dataRows,
+                    "column": [
+                        {"data": "spotId"},
+                        {"data": "sensorId"},
+                        {"data": "clientMac"},
+                        {"data": "seenTime"},
+                        {"data": "rssi"},
+                        {"data": "status"},
+                        {"data": "countryId"},
+                        {"data": "stateId"},
+                        {"data": "cityId"},
+                        {"data": "zipCode"}
+                    ],
+                    "dom": 'Bfrtip',
+                    "buttons": [
+                        {
+                            "extend": 'copy',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'csv',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'excel',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'pdfHtml5',
+                            "className": 'btn-sm'
+                        },
+                        {
+                            "extend": 'print',
+                            "className": 'btn-sm'
+                        },
+                    ],
+                    "responsive": true
+                });
                 seActivityBigData.close();
                 NProgress.done();
             }
