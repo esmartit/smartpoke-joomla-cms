@@ -2,6 +2,12 @@ let t_devicesIn = [];
 let t_devicesEx = [];
 let t_devices = [];
 
+let tableDetail = '';
+let isSelected = false;
+let modeExport = 'csv';
+let exportData = [];
+let exportDirect = false;
+
 $(document).ready( function() {
 
     getCountryList();
@@ -358,28 +364,17 @@ $(document).ready(() => {
         "dom": 'Bfrtip',
         "buttons": [
             {
-                "extend": 'copy',
-                "className": 'btn-sm'
-            },
-            {
                 "extend": 'csv',
                 "className": 'btn-sm'
             },
             {
                 "extend": 'excel',
                 "className": 'btn-sm'
-            },
-            {
-                "extend": 'pdfHtml5',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'print',
-                "className": 'btn-sm'
-            },
+            }
         ],
         "responsive": true
     });
+    $("#littleProgressBox").hide();
 });
 
 function sendForm() {
@@ -434,6 +429,25 @@ function sendForm() {
     );
 }
 
+function downloadTextFile(text, name) {
+    const a = document.createElement('a');
+    const type = name.split(".").pop();
+    a.href = URL.createObjectURL( new Blob([text], { type:`text/${type === "txt" ? "plain" : type}` }) );
+    a.download = name;
+    a.click();
+}
+function convertToCSVFile(data){
+    let csv = '"Spot","Sensor","Date","Hour","Total Devices"';
+    csv += "\n";
+    for(let i = 0; i < data.length; i++){
+        csv += '"' + data[i][0] + '"';
+        csv += ',"' + data[i][1] + '"';
+        csv += ',"' + data[i][2] + '"';
+        csv += ',"' + data[i][3] + '"';
+        csv += ',"' + data[i][4] + '"' + "\n";
+    }
+    return csv;
+}
 function evtSourceDetailbyTimeBigData(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                 zipcodes, member, userTZ) {
     let dataRows = [];
@@ -449,10 +463,20 @@ function evtSourceDetailbyTimeBigData(dateS, dateE, timeS, timeE, country, state
     NProgress.set(0,4);
     tableDetail.clear();
     tableDetail.draw(true);
+    isSelected = false;
+    exportData = [];
+    exportDirect = false;
+    $("#littleProgressBox").show();
+    $("#littleProgress").text("Searching ...");
 
     seActivityBigData.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;
+        if (dataRows.length >= 80000 && isSelected === false && exportDirect === false){
+            $("#myModal").show();
+            exportDirect = true;
+        }
+        $("#littleProgress").text("receiving " + dataRows.length + " ...");
         for (let x=0; x<len; x++) {
             let last = eventData[x].isLast;
             if (!last) {
@@ -466,44 +490,70 @@ function evtSourceDetailbyTimeBigData(dateS, dateE, timeS, timeE, country, state
                         bodyData.total
                     ]);
             } else {
-                tableDetail = $('#datatable-buttons').DataTable({
-                    "destroy": true,
-                    data: dataRows,
-                    "column": [
-                        {"data": "spotId"},
-                        {"data": "sensorId"},
-                        {"data": "groupDate"},
-                        {"data": "groupTime"},
-                        {"data": "total"}
-                    ],
-                    "dom": 'Bfrtip',
-                    "buttons": [
-                        {
-                            "extend": 'copy',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'csv',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'excel',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'pdfHtml5',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'print',
-                            "className": 'btn-sm'
-                        },
-                    ],
-                    "responsive": true
-                });
+                if (exportDirect === false){
+                    tableDetail = $('#datatable-buttons').DataTable({
+                        "destroy": true,
+                        data: dataRows,
+                        "column": [
+                            {"data": "spotId"},
+                            {"data": "sensorId"},
+                            {"data": "groupDate"},
+                            {"data": "groupTime"},
+                            {"data": "total"}
+                        ],
+                        "dom": 'Bfrtip',
+                        "buttons": [
+                            {
+                                "extend": 'copy',
+                                "className": 'btn-sm'
+                            },
+                            {
+                                "extend": 'csv',
+                                "className": 'btn-sm'
+                            },
+                            {
+                                "extend": 'excel',
+                                "className": 'btn-sm'
+                            }
+                        ],
+                        "responsive": true
+                    });
+                }else{
+                    if (isSelected){
+                        if (modeExport === 'csv'){
+                            downloadTextFile(convertToCSVFile(dataRows), 'Export Big Data Detail By Time.csv');
+                        }else if(modeExport === 'json'){
+                            downloadTextFile(JSON.stringify(dataRows), 'Export Big Data Detail By Time.json');
+                        }else{
+                            downloadTextFile(convertToCSVFile(dataRows), 'Export Big Data Detail By Time.csv');
+                        }
+                    }else{
+                        $("#littleProgressBox").show();
+                        exportData = dataRows;
+                    }
+                }
+                $("#littleProgressBox").hide();
                 seActivityBigData.close();
                 NProgress.done();
             }
+        }
+    }
+}
+function goToExport(type){
+    if(type === 'csv' || type === 'json'){
+        modeExport = type;
+    }else{
+        modeExport = 'csv';
+    }
+    isSelected = true;
+    $("#myModal").hide();
+    if(exportData.length !== 0){
+        if (modeExport === 'csv'){
+            downloadTextFile(convertToCSVFile(exportData), 'Export Big Data Detail By Time.csv');
+        }else if(modeExport === 'json'){
+            downloadTextFile(JSON.stringify(exportData), 'Export Big Data Detail By Time.json');
+        }else{
+            downloadTextFile(convertToCSVFile(exportData), 'Export Big Data Detail By Time.csv');
         }
     }
 }

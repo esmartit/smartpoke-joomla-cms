@@ -2,6 +2,10 @@ let t_devicesIn = [];
 let t_devicesEx = [];
 
 let tableDetailDaily = '';
+let isSelected = false;
+let modeExport = 'csv';
+let exportData = [];
+let exportDirect = false;
 
 
 
@@ -373,28 +377,17 @@ $(document).ready(() => {
         "dom": 'Bfrtip',
         "buttons": [
             {
-                "extend": 'copy',
-                "className": 'btn-sm'
-            },
-            {
                 "extend": 'csv',
                 "className": 'btn-sm'
             },
             {
                 "extend": 'excel',
                 "className": 'btn-sm'
-            },
-            {
-                "extend": 'pdfHtml5',
-                "className": 'btn-sm'
-            },
-            {
-                "extend": 'print',
-                "className": 'btn-sm'
-            },
+            }
         ],
         "responsive": true
     });
+    $("#littleProgressBox").hide();
 });
 
 function sendForm() {
@@ -479,6 +472,36 @@ function toHHMMSS(milis){
     return hours+':'+minutes+':'+seconds;
 }
 
+function downloadTextFile(text, name) {
+    const a = document.createElement('a');
+    const type = name.split(".").pop();
+    a.href = URL.createObjectURL( new Blob([text], { type:`text/${type === "txt" ? "plain" : type}` }) );
+    a.download = name;
+    a.click();
+}
+function convertToCSVFile(data){
+    let csv = '"SpotId","SensorId","Device","UserName","Date","First Time","Last Time","Total Time","Status","Sex","Age","ZipCode","CountryId","StateId","CityId","ZipCode"';
+    csv += "\n";
+    for(let i = 0; i < data.length; i++){
+        csv += '"' + data[i][0] + '"';
+        csv += ',"' + data[i][1] + '"';
+        csv += ',"' + data[i][2] + '"';
+        csv += ',"' + data[i][3] + '"';
+        csv += ',"' + data[i][4] + '"';
+        csv += ',"' + data[i][5] + '"';
+        csv += ',"' + data[i][6] + '"';
+        csv += ',"' + data[i][7] + '"';
+        csv += ',"' + data[i][8] + '"';
+        csv += ',"' + data[i][9] + '"';
+        csv += ',"' + data[i][10] + '"';
+        csv += ',"' + data[i][11] + '"';
+        csv += ',"' + data[i][12] + '"';
+        csv += ',"' + data[i][13] + '"';
+        csv += ',"' + data[i][14] + '"';
+        csv += ',"' + data[i][15] + '"' + "\n";
+    }
+    return csv;
+}
 
 function evtSourceDetailBigDataDaily(dateS, dateE, timeS, timeE, country, state, city, zipcode, spot, sensor, zone, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                                 zipcodes, member, userTZ) {
@@ -495,10 +518,20 @@ function evtSourceDetailBigDataDaily(dateS, dateE, timeS, timeE, country, state,
     NProgress.set(0,4);
     tableDetailDaily.clear();
     tableDetailDaily.draw(true);
+    isSelected = false;
+    exportData = [];
+    exportDirect = false;
+    $("#littleProgressBox").show();
+    $("#littleProgress").text("Searching ...");
 
     seActivityBigDataDaily.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;
+        if (dataRows.length >= 80000 && isSelected === false && exportDirect === false){
+            $("#myModal").show();
+            exportDirect = true;
+        }
+        $("#littleProgress").text("receiving " + dataRows.length + " ...");
         for (let x=0; x<len; x++) {
             let last = eventData[x].isLast;
             if (!last) {
@@ -546,55 +579,78 @@ function evtSourceDetailBigDataDaily(dateS, dateE, timeS, timeE, country, state,
                     zipCode
                 ]);
             } else {
-                tableDetailDaily = $('#datatable-buttons').DataTable({
-                    "destroy": true,
-                    data: dataRows,
-                    "column": [
-                        {"data": "spotId"},
-                        {"data": "sensorId"},
-                        {"data": "clientMac"},
-                        {"data": "username"},
-                        {"data": "dateAtZone"},
-                        {"data": "minTime"},
-                        {"data": "maxTime"},
-                        {"data": "status"},
-                        {"data": "totalTime"},
-                        {"data": "gender"},
-                        {"data": "age"},
-                        {"data": "userZipCode"},
-                        {"data": "countryId"},
-                        {"data": "stateId"},
-                        {"data": "cityId"},
-                        {"data": "zipCode"}
-                    ],
-                    "dom": 'Bfrtip',
-                    "buttons": [
-                        {
-                            "extend": 'copy',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'csv',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'excel',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'pdfHtml5',
-                            "className": 'btn-sm'
-                        },
-                        {
-                            "extend": 'print',
-                            "className": 'btn-sm'
-                        },
-                    ],
-                    "responsive": true
-                });
+                if (exportDirect === false){
+                    tableDetailDaily = $('#datatable-buttons').DataTable({
+                        "destroy": true,
+                        data: dataRows,
+                        "column": [
+                            {"data": "spotId"},
+                            {"data": "sensorId"},
+                            {"data": "clientMac"},
+                            {"data": "username"},
+                            {"data": "dateAtZone"},
+                            {"data": "minTime"},
+                            {"data": "maxTime"},
+                            {"data": "status"},
+                            {"data": "totalTime"},
+                            {"data": "gender"},
+                            {"data": "age"},
+                            {"data": "userZipCode"},
+                            {"data": "countryId"},
+                            {"data": "stateId"},
+                            {"data": "cityId"},
+                            {"data": "zipCode"}
+                        ],
+                        "dom": 'Bfrtip',
+                        "buttons": [
+                            {
+                                "extend": 'csv',
+                                "className": 'btn-sm'
+                            },
+                            {
+                                "extend": 'excel',
+                                "className": 'btn-sm'
+                            }
+                        ],
+                        "responsive": true
+                    });
+                }else{
+                    if (isSelected){
+                        if (modeExport === 'csv'){
+                            downloadTextFile(convertToCSVFile(dataRows), 'Export Big Data Detail Daily.csv');
+                        }else if(modeExport === 'json'){
+                            downloadTextFile(JSON.stringify(dataRows), 'Export Big Data Detail Daily.json');
+                        }else{
+                            downloadTextFile(convertToCSVFile(dataRows), 'Export Big Data Detail Daily.csv');
+                        }
+                    }else{
+                        $("#littleProgressBox").show();
+                        exportData = dataRows;
+                    }
+                }
+                $("#littleProgressBox").hide();
                 seActivityBigDataDaily.close();
                 NProgress.done();
             }
+        }
+    }
+}
+
+function goToExport(type){
+    if(type === 'csv' || type === 'json'){
+        modeExport = type;
+    }else{
+        modeExport = 'csv';
+    }
+    isSelected = true;
+    $("#myModal").hide();
+    if(exportData.length !== 0){
+        if (modeExport === 'csv'){
+            downloadTextFile(convertToCSVFile(exportData), 'Export Big Data Detail Daily.csv');
+        }else if(modeExport === 'json'){
+            downloadTextFile(JSON.stringify(exportData), 'Export Big Data Detail Daily.json');
+        }else{
+            downloadTextFile(convertToCSVFile(exportData), 'Export Big Data Detail Daily.csv');
         }
     }
 }

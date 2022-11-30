@@ -16,6 +16,11 @@ let mobile = '';
 let pin = '';
 let message = '';
 
+let isSelected = false;
+let modeExport = 'csv';
+let exportData = [];
+let exportDirect = false;
+
 $(document).ready( function() {
 
     getCountryList();
@@ -803,6 +808,7 @@ $(document).ready(function() {
         ],
         "responsive": true
     });
+    $("#littleProgressBox").hide();
 });
 
 $(document).ready(function () {
@@ -976,6 +982,27 @@ function getInfoUsers(country, state, city, zipcode, spot, ageS, ageE, sex, zipc
         })
 }
 
+function downloadTextFile(text, name) {
+    const a = document.createElement('a');
+    const type = name.split(".").pop();
+    a.href = URL.createObjectURL( new Blob([text], { type:`text/${type === "txt" ? "plain" : type}` }) );
+    a.download = name;
+    a.click();
+}
+function convertToCSVFile(data){
+    let csv = '"First Name","Last Name","Mobile Phone","Email","Username","Sensor","Spot"';
+    csv += "\n";
+    for(let i = 0; i < data.length; i++){
+        csv += '"' + data[i][0] + '"';
+        csv += ',"' + data[i][1] + '"';
+        csv += ',"' + data[i][2] + '"';
+        csv += ',"' + data[i][3] + '"';
+        csv += ',"' + data[i][4] + '"';
+        csv += ',"' + data[i][5] + '"';
+        csv += ',"' + data[i][6] + '"' + "\n";
+    }
+    return csv;
+}
 function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                          zipcodes, member, userTZ, group) {
     let dataRows = [];
@@ -991,10 +1018,20 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
     NProgress.set(0,4);
     tableOn.clear();
     tableOn.draw(true);
+    isSelected = false;
+    exportData = [];
+    exportDirect = false;
+    $("#littleProgressBox").show();
+    $("#littleProgress").text("Searching ...");
 
     seSmartPokeOn.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
+        if (dataRows.length >= 80000 && isSelected === false && exportDirect === false){
+            $("#myModal").show();
+            exportDirect = true;
+        }
+        $("#littleProgress").text("receiving " + dataRows.length + " ...");
         if (!last) {
             // let pos = userInfo['username'].indexOf(eventData.userName);
             let userName = eventData.userName;
@@ -1013,58 +1050,74 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
                     ]);
             }
         } else {
-            tableOn = $('#datatable-online').DataTable({
-                "destroy": true,
-                data: dataRows,
-                "columnDefs": [
-                    {
-                        "targets": 0,
-                        "bSortable": false,
-                        "searchable": false,
-                        "orderable": false,
-                        "className": 'dt-body-center',
-                        "render": function (data, type, row, meta) {
-                            return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+            if (exportDirect === false){
+                tableOn = $('#datatable-online').DataTable({
+                    "destroy": true,
+                    data: dataRows,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "bSortable": false,
+                            "searchable": false,
+                            "orderable": false,
+                            "className": 'dt-body-center',
+                            "render": function (data, type, row, meta) {
+                                return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                            }
+                        },
+                        {"targets": 1,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['1'] + "</div>";
+                            }
+                        },
+                        {"targets": 2,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['2'] + "</div>";
+                            }
+                        },
+                        {"targets": 3,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['3'] + "</div>";
+                            }
+                        },
+                        {"targets": 4,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['4'] + "</div>";
+                            }
+                        },
+                        {"targets": 5,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['5'] + "</div>";
+                            }
+                        },
+                        {"targets": 6,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['6'] + "</div>";
+                            }
+                        },
+                        {"targets": 7,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['7'] + "</div>";
+                            }
                         }
-                    },
-                    {"targets": 1,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['1'] + "</div>";
-                        }
-                    },
-                    {"targets": 2,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['2'] + "</div>";
-                        }
-                    },
-                    {"targets": 3,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['3'] + "</div>";
-                        }
-                    },
-                    {"targets": 4,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['4'] + "</div>";
-                        }
-                    },
-                    {"targets": 5,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['5'] + "</div>";
-                        }
-                    },
-                    {"targets": 6,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['6'] + "</div>";
-                        }
-                    },
-                    {"targets": 7,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['7'] + "</div>";
-                        }
+                    ],
+                    "responsive": true
+                });
+            }else{
+                if (isSelected){
+                    if (modeExport === 'csv'){
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
+                    }else if(modeExport === 'json'){
+                        downloadTextFile(JSON.stringify(dataRows), 'Export Marketing SmartPoke.json');
+                    }else{
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
                     }
-                ],
-                "responsive": true
-            });
+                }else{
+                    $("#littleProgressBox").show();
+                    exportData = dataRows;
+                }
+            }
+            $("#littleProgressBox").hide();
             seSmartPokeOn.close();
             NProgress.done();
         }
@@ -1086,10 +1139,20 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
     NProgress.set(0,4);
     tableOff.clear();
     tableOff.draw(true);
+    isSelected = false;
+    exportData = [];
+    exportDirect = false;
+    $("#littleProgressBox").show();
+    $("#littleProgress").text("Searching ...");
 
     seSmartPokeOff.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
+        if (dataRows.length >= 80000 && isSelected === false && exportDirect === false){
+            $("#myModal").show();
+            exportDirect = true;
+        }
+        $("#littleProgress").text("receiving " + dataRows.length + " ...");
         if (!last) {
             // let pos = userInfo['username'].indexOf(eventData.userName);
             let userName = eventData.userName;
@@ -1108,60 +1171,95 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
                     ]);
             }
         } else {
-            tableOff = $('#datatable-offline').DataTable({
-                "destroy": true,
-                data: dataRows,
-                "columnDefs": [
-                    {
-                        "targets": 0,
-                        "bSortable": false,
-                        "searchable": false,
-                        "orderable": false,
-                        "className": 'dt-body-center',
-                        "render": function (data, type, row, meta) {
-                            return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+            if (exportDirect === false){
+                tableOff = $('#datatable-offline').DataTable({
+                    "destroy": true,
+                    data: dataRows,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "bSortable": false,
+                            "searchable": false,
+                            "orderable": false,
+                            "className": 'dt-body-center',
+                            "render": function (data, type, row, meta) {
+                                return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                            }
+                        },
+                        {"targets": 1,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['1'] + "</div>";
+                            }
+                        },
+                        {"targets": 2,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['2'] + "</div>";
+                            }
+                        },
+                        {"targets": 3,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['3'] + "</div>";
+                            }
+                        },
+                        {"targets": 4,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['4'] + "</div>";
+                            }
+                        },
+                        {"targets": 5,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['5'] + "</div>";
+                            }
+                        },
+                        {"targets": 6,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['6'] + "</div>";
+                            }
+                        },
+                        {"targets": 7,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['7'] + "</div>";
+                            }
                         }
-                    },
-                    {"targets": 1,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['1'] + "</div>";
-                        }
-                    },
-                    {"targets": 2,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['2'] + "</div>";
-                        }
-                    },
-                    {"targets": 3,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['3'] + "</div>";
-                        }
-                    },
-                    {"targets": 4,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['4'] + "</div>";
-                        }
-                    },
-                    {"targets": 5,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['5'] + "</div>";
-                        }
-                    },
-                    {"targets": 6,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['6'] + "</div>";
-                        }
-                    },
-                    {"targets": 7,
-                        "render": function (data, type, row, meta) {
-                            return "<div>" + row['7'] + "</div>";
-                        }
+                    ],
+                    "responsive": true
+                });
+            }else{
+                if (isSelected){
+                    if (modeExport === 'csv'){
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
+                    }else if(modeExport === 'json'){
+                        downloadTextFile(JSON.stringify(dataRows), 'Export Marketing SmartPoke.json');
+                    }else{
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
                     }
-                ],
-                "responsive": true
-            });
+                }else{
+                    $("#littleProgressBox").show();
+                    exportData = dataRows;
+                }
+            }
+            $("#littleProgressBox").hide();
             seSmartPokeOff.close();
             NProgress.done();
+        }
+    }
+}
+
+function goToExport(type){
+    if(type === 'csv' || type === 'json'){
+        modeExport = type;
+    }else{
+        modeExport = 'csv';
+    }
+    isSelected = true;
+    $("#myModal").hide();
+    if(exportData.length !== 0){
+        if (modeExport === 'csv'){
+            downloadTextFile(convertToCSVFile(exportData), 'Export Marketing SmartPoke.csv');
+        }else if(modeExport === 'json'){
+            downloadTextFile(JSON.stringify(exportData), 'Export Marketing SmartPoke.json');
+        }else{
+            downloadTextFile(convertToCSVFile(exportData), 'Export Marketing SmartPoke.csv');
         }
     }
 }
