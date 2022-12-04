@@ -16,6 +16,11 @@ let mobile = '';
 let pin = '';
 let message = '';
 
+let isSelected = false;
+let modeExport = 'csv';
+let exportData = [];
+let exportDirect = false;
+
 $(document).ready( function() {
 
     getCountryList();
@@ -687,6 +692,123 @@ $(document).ready(function() {
         $('#daterange_right').data('daterangepicker').remove();
     });
 
+    tableOn = $('#datatable-online').DataTable({
+        "destroy": true,
+        "columnDefs": [
+            {
+                "targets": 0,
+                "bSortable": false,
+                "searchable": false,
+                "orderable": false,
+                "className": 'dt-body-center',
+                "render": function (data, type, row, meta) {
+                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                }
+            },
+            {
+                "targets": 1,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['1'] + "</div>";
+                }
+            },
+            {
+                "targets": 2,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['2'] + "</div>";
+                }
+            },
+            {
+                "targets": 3,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['3'] + "</div>";
+                }
+            },
+            {
+                "targets": 4,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['4'] + "</div>";
+                }
+            },
+            {
+                "targets": 5,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['5'] + "</div>";
+                }
+            },
+            {
+                "targets": 6,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['6'] + "</div>";
+                }
+            },
+            {
+                "targets": 7,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['7'] + "</div>";
+                }
+            }
+        ],
+        "responsive": true
+    });
+    tableOff = $('#datatable-offline').DataTable({
+        "destroy": true,
+        "columnDefs": [
+            {
+                "targets": 0,
+                "bSortable": false,
+                "searchable": false,
+                "orderable": false,
+                "className": 'dt-body-center',
+                "render": function (data, type, row, meta) {
+                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                }
+            },
+            {
+                "targets": 1,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['1'] + "</div>";
+                }
+            },
+            {
+                "targets": 2,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['2'] + "</div>";
+                }
+            },
+            {
+                "targets": 3,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['3'] + "</div>";
+                }
+            },
+            {
+                "targets": 4,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['4'] + "</div>";
+                }
+            },
+            {
+                "targets": 5,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['5'] + "</div>";
+                }
+            },
+            {
+                "targets": 6,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['6'] + "</div>";
+                }
+            },
+            {
+                "targets": 7,
+                "render": function (data, type, row, meta) {
+                    return "<div>" + row['7'] + "</div>";
+                }
+            }
+        ],
+        "responsive": true
+    });
+    $("#littleProgressBox").hide();
 });
 
 $(document).ready(function () {
@@ -860,8 +982,30 @@ function getInfoUsers(country, state, city, zipcode, spot, ageS, ageE, sex, zipc
         })
 }
 
+function downloadTextFile(text, name) {
+    const a = document.createElement('a');
+    const type = name.split(".").pop();
+    a.href = URL.createObjectURL( new Blob([text], { type:`text/${type === "txt" ? "plain" : type}` }) );
+    a.download = name;
+    a.click();
+}
+function convertToCSVFile(data){
+    let csv = '"First Name","Last Name","Mobile Phone","Email","Username","Sensor","Spot"';
+    csv += "\n";
+    for(let i = 0; i < data.length; i++){
+        csv += '"' + data[i][0] + '"';
+        csv += ',"' + data[i][1] + '"';
+        csv += ',"' + data[i][2] + '"';
+        csv += ',"' + data[i][3] + '"';
+        csv += ',"' + data[i][4] + '"';
+        csv += ',"' + data[i][5] + '"';
+        csv += ',"' + data[i][6] + '"' + "\n";
+    }
+    return csv;
+}
 function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                          zipcodes, member, userTZ, group) {
+    let dataRows = [];
 
     let seSmartPokeOn = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/find?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
@@ -869,73 +1013,32 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zoneId="+zone+"%26ssid="+hotspot+"%26isConnected="+connected+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
-
-    tableOn = $('#datatable-online').DataTable({
-        "destroy": true,
-        "columnDefs": [
-            {
-                "targets": 0,
-                "bSortable": false,
-                "searchable": false,
-                "orderable": false,
-                "className": 'dt-body-center',
-                "render": function (data, type, row, meta) {
-                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
-                }
-            },
-            {"targets": 1,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['1'] + "</div>";
-                }
-            },
-            {"targets": 2,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['2'] + "</div>";
-                }
-            },
-            {"targets": 3,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['3'] + "</div>";
-                }
-            },
-            {"targets": 4,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['4'] + "</div>";
-                }
-            },
-            {"targets": 5,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['5'] + "</div>";
-                }
-            },
-            {"targets": 6,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['6'] + "</div>";
-                }
-            },
-            {"targets": 7,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['7'] + "</div>";
-                }
-            }
-        ],
-        "responsive": true
-    });
-
+    
     NProgress.start();
     NProgress.set(0,4);
     tableOn.clear();
+    tableOn.draw(true);
+    isSelected = false;
+    exportData = [];
+    exportDirect = false;
+    $("#littleProgressBox").show();
+    $("#littleProgress").text("Searching ...");
 
-    seSmartPokeOn.onmessage = function (event) {
+    seSmartPokeOn.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
         let flag = 0;
+        if (dataRows.length >= 80000 && isSelected === false && exportDirect === false){
+            $("#myModal").show();
+            exportDirect = true;
+        }
+        $("#littleProgress").text("receiving " + dataRows.length + " ...");
         if (!last) {
             // let pos = userInfo['username'].indexOf(eventData.userName);
             let userName = eventData.userName;
             let obj = userInfo.find(o => o.username === userName);
             if (obj != null) {
-                tableOn.row.add(
+                dataRows.push(
                     [
                         '',
                         obj['firstname'],
@@ -945,13 +1048,81 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
                         eventData.userName,
                         eventData.spot,
                         eventData.sensor
-                    ]).draw(false);
+                    ]);
             }
             flag = 1;
         } else {
             if (flag == 0) {
                 tableOn.clear();
             }
+            if (exportDirect === false){
+                tableOn = $('#datatable-online').DataTable({
+                    "destroy": true,
+                    data: dataRows,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "bSortable": false,
+                            "searchable": false,
+                            "orderable": false,
+                            "className": 'dt-body-center',
+                            "render": function (data, type, row, meta) {
+                                return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                            }
+                        },
+                        {"targets": 1,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['1'] + "</div>";
+                            }
+                        },
+                        {"targets": 2,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['2'] + "</div>";
+                            }
+                        },
+                        {"targets": 3,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['3'] + "</div>";
+                            }
+                        },
+                        {"targets": 4,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['4'] + "</div>";
+                            }
+                        },
+                        {"targets": 5,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['5'] + "</div>";
+                            }
+                        },
+                        {"targets": 6,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['6'] + "</div>";
+                            }
+                        },
+                        {"targets": 7,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['7'] + "</div>";
+                            }
+                        }
+                    ],
+                    "responsive": true
+                });
+            }else{
+                if (isSelected){
+                    if (modeExport === 'csv'){
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
+                    }else if(modeExport === 'json'){
+                        downloadTextFile(JSON.stringify(dataRows), 'Export Marketing SmartPoke.json');
+                    }else{
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
+                    }
+                }else{
+                    $("#littleProgressBox").show();
+                    exportData = dataRows;
+                }
+            }
+            $("#littleProgressBox").hide();
             seSmartPokeOn.close();
             NProgress.done();
         }
@@ -960,6 +1131,7 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
 
 function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, state, city, zipcode, spot, sensor, zone, hotspot, connected, inDevices, exDevices, brands, status, presence, ageS, ageE, sex,
                           zipcodes, member, userTZ, group) {
+    let dataRows = [];
 
     let seSmartPokeOff = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/smartpoke/v2/find-offline?"+
         "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+"%26startDate2="+dateS2+"%26endDate2="+dateE2+
@@ -968,71 +1140,30 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy="+group);
 
-    tableOff = $('#datatable-offline').DataTable({
-        "destroy": true,
-        "columnDefs": [
-            {
-                "targets": 0,
-                "bSortable": false,
-                "searchable": false,
-                "orderable": false,
-                "className": 'dt-body-center',
-                "render": function (data, type, row, meta) {
-                    return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
-                }
-            },
-            {"targets": 1,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['1'] + "</div>";
-                }
-            },
-            {"targets": 2,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['2'] + "</div>";
-                }
-            },
-            {"targets": 3,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['3'] + "</div>";
-                }
-            },
-            {"targets": 4,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['4'] + "</div>";
-                }
-            },
-            {"targets": 5,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['5'] + "</div>";
-                }
-            },
-            {"targets": 6,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['6'] + "</div>";
-                }
-            },
-            {"targets": 7,
-                "render": function (data, type, row, meta) {
-                    return "<div>" + row['7'] + "</div>";
-                }
-            }
-        ],
-        "responsive": true
-    });
-
     NProgress.start();
     NProgress.set(0,4);
     tableOff.clear();
+    tableOff.draw(true);
+    isSelected = false;
+    exportData = [];
+    exportDirect = false;
+    $("#littleProgressBox").show();
+    $("#littleProgress").text("Searching ...");
 
-    seSmartPokeOff.onmessage = function (event) {
+    seSmartPokeOff.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
+        if (dataRows.length >= 80000 && isSelected === false && exportDirect === false){
+            $("#myModal").show();
+            exportDirect = true;
+        }
+        $("#littleProgress").text("receiving " + dataRows.length + " ...");
         if (!last) {
             // let pos = userInfo['username'].indexOf(eventData.userName);
             let userName = eventData.userName;
             let obj = userInfo.find(o => o.username === userName);
             if (obj != null) {
-                tableOff.row.add(
+                dataRows.push(
                     [
                         '',
                         obj['firstname'],
@@ -1042,11 +1173,98 @@ function smartpokeOffline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, s
                         eventData.userName,
                         eventData.spot,
                         eventData.sensor
-                    ]).draw(false);
+                    ]);
             }
         } else {
+            if (exportDirect === false){
+                tableOff = $('#datatable-offline').DataTable({
+                    "destroy": true,
+                    data: dataRows,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "bSortable": false,
+                            "searchable": false,
+                            "orderable": false,
+                            "className": 'dt-body-center',
+                            "render": function (data, type, row, meta) {
+                                return '<input type="checkbox" name="id[]" value="' + row['3'] + '-' + row['1'] + '/' + row['5'] + '|' + row['4'] + '">';
+                            }
+                        },
+                        {"targets": 1,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['1'] + "</div>";
+                            }
+                        },
+                        {"targets": 2,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['2'] + "</div>";
+                            }
+                        },
+                        {"targets": 3,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['3'] + "</div>";
+                            }
+                        },
+                        {"targets": 4,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['4'] + "</div>";
+                            }
+                        },
+                        {"targets": 5,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['5'] + "</div>";
+                            }
+                        },
+                        {"targets": 6,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['6'] + "</div>";
+                            }
+                        },
+                        {"targets": 7,
+                            "render": function (data, type, row, meta) {
+                                return "<div>" + row['7'] + "</div>";
+                            }
+                        }
+                    ],
+                    "responsive": true
+                });
+            }else{
+                if (isSelected){
+                    if (modeExport === 'csv'){
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
+                    }else if(modeExport === 'json'){
+                        downloadTextFile(JSON.stringify(dataRows), 'Export Marketing SmartPoke.json');
+                    }else{
+                        downloadTextFile(convertToCSVFile(dataRows), 'Export Marketing SmartPoke.csv');
+                    }
+                }else{
+                    $("#littleProgressBox").show();
+                    exportData = dataRows;
+                }
+            }
+            $("#littleProgressBox").hide();
             seSmartPokeOff.close();
             NProgress.done();
+        }
+    }
+}
+
+function goToExport(type){
+    if(type === 'csv' || type === 'json'){
+        modeExport = type;
+    }else{
+        modeExport = 'csv';
+    }
+    isSelected = true;
+    $("#myModal").hide();
+    if(exportData.length !== 0){
+        if (modeExport === 'csv'){
+            downloadTextFile(convertToCSVFile(exportData), 'Export Marketing SmartPoke.csv');
+        }else if(modeExport === 'json'){
+            downloadTextFile(JSON.stringify(exportData), 'Export Marketing SmartPoke.json');
+        }else{
+            downloadTextFile(convertToCSVFile(exportData), 'Export Marketing SmartPoke.csv');
         }
     }
 }
