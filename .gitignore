@@ -623,6 +623,7 @@ modules.xml
 /joomla.xml
 /*.txt
 /robots.txt.dist
+/*.zip
 
 ### Linux ###
 *~

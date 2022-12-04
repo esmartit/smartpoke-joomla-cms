@@ -7,7 +7,37 @@ let outAct = [];
 let deviceAct = [];
 let axisAct = [];
 
+let dateS = new Date();
+let dateE = new Date();
+let newDay = new Date();
 
+// function nameDate(theDay) {
+//     var a = new Date(theDay);
+//     var days = new Array(7);
+//     days[0] = "Sun";
+//     days[1] = "Mon";
+//     days[2] = "Tue";
+//     days[3] = "Wed";
+//     days[4] = "Thu";
+//     days[5] = "Fri";
+//     days[6] = "Sat";
+//     var r = days[a.getDay()];
+//     return r;
+// }
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 $(document).ready( function() {
     let theme = {
@@ -133,7 +163,9 @@ $(document).ready( function() {
             }
         },
         legend: {
-            data:['TOTAL', 'IN', 'LIMIT', 'OUT']
+            data:['TOTAL', 'IN', 'LIMIT', 'OUT'],
+            selected:{'TOTAL':true, 'IN':false,'LIMIT':false, 'OUT': false},
+
         },
         toolbox: {
             show: true,
@@ -164,7 +196,9 @@ $(document).ready( function() {
         xAxis: [
             {
                 type: 'category',
-                boundaryGap: false,
+                name: 'Days',
+                min: 0,
+                boundaryGap: [1, 1],
                 data: axisAct
             }
         ],
@@ -180,7 +214,7 @@ $(document).ready( function() {
         series: [
             {
                 name: 'TOTAL',
-                type: 'line',
+                type: 'bar',
                 smooth: true,
                 itemStyle: {
                     normal: {
@@ -198,7 +232,7 @@ $(document).ready( function() {
             },
             {
                 name: 'IN',
-                type: 'line',
+                type: 'bar',
                 smooth: true,
                 itemStyle: {
                     normal: {
@@ -211,7 +245,7 @@ $(document).ready( function() {
             },
             {
                 name: 'LIMIT',
-                type: 'line',
+                type: 'bar',
                 smooth: true,
                 itemStyle: {
                     normal: {
@@ -224,7 +258,7 @@ $(document).ready( function() {
             },
             {
                 name: 'OUT',
-                type: 'line',
+                type: 'bar',
                 smooth: true,
                 itemStyle: {
                     normal: {
@@ -240,23 +274,74 @@ $(document).ready( function() {
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
     let brands = encodeURIComponent("Apple,Huawei,LG,Motorola,Oppo,BQ,Samsung,Sony Ericsson,Xiaomi,ZTE,MAC Dynamic");
+    // let dateWeek = $('#datestart').val();
+
+    dateS.setDate(dateE.getDate() - 7);
+    
+    let d1 = new Date(dateS);
+    let d2 = new Date(dateE);
+    let days = Math.round((d2 - d1) / (1000 * 3600 * 24));
+    for (let i=0; i<=days; i++) {
+        let month = '' + (d1.getMonth() + 1);
+        let day = '' + d1.getDate();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day =  '0' + day;
+        axisAct[i] = [month, day].join('-');
+        inAct[i] = 0;
+        limitAct[i] = 0;
+        outAct[i] = 0;
+        deviceAct[i] = 0;
+        d1 = new Date(d1.setDate(d1.getDate() + 1));
+
+    }
+
+    dateS = formatDate(dateS);
+    dateE = formatDate(dateE);
 
     spChartAct = echarts.init(document.getElementById('echart_activity_date'), theme);
-    seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/now-detected?timezone="+userTimeZone+"%26brands="+encodeURIComponent(brands));
+    spChartAct.setOption(option);
+    // seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/now-detected?timezone="+userTimeZone+"%26brands="+encodeURIComponent(brands));
+    seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/v2/find-bigdata?"+
+    "timezone="+userTimeZone+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime=%26endTime="+
+    "%26countryId=%26stateId=%26cityId=%26zipcodeId="+
+    "%26spotId=%26sensorId=%26zone=%26includedDevices=%26excludedDevices="+
+    "%26brands="+encodeURIComponent(brands)+"%26status=%26presence="+
+    "%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=%26groupBy=BY_DAY");
 
     seActivityDate.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let len = eventData.length;
+        let axis_Act = '';
+        let group_x = eventData.group;
+        let last = eventData.isLast;
+        let in_Act = eventData.inCount;
+        let limit_Act = eventData.limitCount;
+        let out_Act = eventData.outCount;
+        axis_Act = group_x.substr(group_x.length -5,group_x.length);
+        
+        if (!last) {
 
-        for (let i=0; i < len; i++) {
-            let axisTime = (new Date(eventData[i]['time'])).toTimeString();
-            let xTime = axisTime.substring(0,5);
-            inAct[i] = eventData[i]['inCount'];
-            limitAct[i] = eventData[i]['limitCount'];
-            outAct[i] = eventData[i]['outCount'];
-            deviceAct[i] = inAct[i] + limitAct[i] + outAct[i];
-            axisAct[i] = xTime;
+            pos = axisAct.indexOf(axis_Act);
+
+            inAct[pos] = in_Act;
+            limitAct[pos] = limit_Act;
+            outAct[pos] = out_Act;
+            deviceAct[pos] = in_Act + limit_Act + out_Act;
+
+        } else {
+            seActivityDate.close();
+
         }
+
+        // for (let i=0; i < len; i++) {
+        //     let axisTime = (new Date(eventData[i]['time'])).toTimeString();
+        //     let xTime = axisTime.substring(0,5);
+        //     inAct[i] = eventData[i]['inCount'];
+        //     limitAct[i] = eventData[i]['limitCount'];
+        //     outAct[i] = eventData[i]['outCount'];
+        //     deviceAct[i] = inAct[i] + limitAct[i] + outAct[i];
+        //     axisAct[i] = xTime;
+        // }
 
         spChartAct.setOption(option);
         // console.log(hoursArr, deviceArr, inArr, limitArr, outArr);

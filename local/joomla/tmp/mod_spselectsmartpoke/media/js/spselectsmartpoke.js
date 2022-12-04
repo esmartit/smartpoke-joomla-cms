@@ -1027,6 +1027,7 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
     seSmartPokeOn.onmessage = (event) => {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
+        let flag = 0;
         if (dataRows.length >= 80000 && isSelected === false && exportDirect === false){
             $("#myModal").show();
             exportDirect = true;
@@ -1049,7 +1050,11 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
                         eventData.sensor
                     ]);
             }
+            flag = 1;
         } else {
+            if (flag == 0) {
+                tableOn.clear();
+            }
             if (exportDirect === false){
                 tableOn = $('#datatable-online').DataTable({
                     "destroy": true,

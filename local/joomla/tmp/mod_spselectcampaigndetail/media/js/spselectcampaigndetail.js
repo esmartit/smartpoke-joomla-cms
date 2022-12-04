@@ -194,7 +194,7 @@ function getCampaigns(smsemailValue = '1'){
             let len = object.length;
 
             $("#selCampaign").empty();
-            $("#selCampaign").append("<option value='' selected disabled>Select Campaign</option>");
+            $("#selCampaign").append("<option value='' selected>All Campaigns</option>");
             for (let i = 0; i<len; i++) {
                 let id = object[i][0];
                 let name = object[i][1];
@@ -220,8 +220,8 @@ function getDatesCampaign() {
         .success(function(response){
             let object = response.data;
 
-            $('#datestart').val(object[0].sent);
-            $('#dateend').val(object[0].validdate);
+            // $('#datestart').val(object[0].sent);
+            // $('#dateend').val(object[0].validdate);
 
         });
 }

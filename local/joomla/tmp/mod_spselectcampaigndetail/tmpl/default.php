@@ -62,13 +62,19 @@ $dateend = date("Y-m-d", strtotime($currDate));
                 <div class="x_content">
                     <form id="campaigndetail_select_form" class="form-horizontal form-label-left" method="POST">
                         <!-- select -->
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-md-3 col-sm-3 col-xs-12">
+                        <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                        <i class="glyphicon glyphicon-th fa fa-calendar"></i>
+                                        <span>October 24, 1971 - October 24, 1971</span><b class="caret"></b>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
                                 <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                                 <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="col-md-3 col-sm-3 col-xs-12">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -130,9 +136,20 @@ $dateend = date("Y-m-d", strtotime($currDate));
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <select id="selCampaign" class="form-control" name="campaign">
-                                        <option value="" selected><?php echo JText::_('Select Campaign'); ?></option>
+                                        <option value="" selected><?php echo JText::_('All Campaigns'); ?></option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div id="daterange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                                        <i class="glyphicon glyphicon-th fa fa-calendar"></i>
+                                        <span>October 24, 1971 - October 24, 1971</span><b class="caret"></b>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
+                                <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
+                                <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
                             </div>
                         </div>
                         <!-- /filters -->
