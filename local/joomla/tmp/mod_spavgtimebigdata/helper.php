@@ -24,40 +24,42 @@ class ModSPAvgTimeBigDataHelper
 
     function time2strAjax() {
 
-        $str = "";				// initialize variable
+        $str = "";                // initialize variable
         $time = $_REQUEST['data'];
         $time = floor($time);
 
         if (!$time)
-            return "0 s";
+            return "00:00:00";
 
-        $d = $time/86400;
+        $d = $time / 86400;
         $d = floor($d);
 
         if ($d) {
-            $str .= "$d d, ";
+            $str .= "$d d ";
             $time = $time % 86400;
         }
 
-        $h = $time/3600;
+        $h = $time / 3600;
         $h = floor($h);
         if ($h) {
-            $str .= "$h h, ";
+            $str .= substr("0$h:", -3);
             $time = $time % 3600;
-        }
+        } else $str .= "00:";
 
-        $m = $time/60;
+        $m = $time / 60;
         $m = floor($m);
 
         if ($m) {
-            $str .= "$m m, ";
+            $str .= substr("0$m:", -3);
             $time = $time % 60;
-        }
+        } else $str .= "00:";
 
         if ($time)
-            $str .= "$time s, ";
+            $str .= substr("0$time", -2);
+        else $str .= "00:";
 
-        $str = preg_replace("/, $/",'',$str);
+
+        $str = preg_replace("/, $/", '', $str);
         return $str;
     }
 

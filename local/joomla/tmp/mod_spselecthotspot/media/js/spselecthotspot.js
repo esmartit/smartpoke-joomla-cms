@@ -1,6 +1,24 @@
+let dateS = new Date();
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
 $(document).ready( function() {
 
     getCountryList();
+    //getHotSpotList();
 
     if (typeof ($.fn.ionRangeSlider) === 'undefined') { return; }
     console.log('init_IonRangeSlider');
@@ -20,8 +38,33 @@ $(document).ready( function() {
         }
     });
 
-    document.getElementById("timestart").value = '00:00:00';
     document.getElementById("timeend").value = '23:59:59';
+
+    function showTimeStart(time) {
+        document.getElementById("timestart").value = time;
+    }
+
+    function objTimer() {
+
+        ActualDateTime = new Date();
+        Actualhour = ActualDateTime.getHours();
+        Actualminute = ActualDateTime.getMinutes();
+        Actualsecond = ActualDateTime.getSeconds();
+
+        var strTime = "";
+        h = '0' + Actualhour;
+        m = '0' + Actualminute;
+        s = '0' + Actualsecond;
+        strTime += h.substring(h.length - 2, h.length) + ':' + m.substring(m.length - 2, m.length) + ':'+ s.substring(s.length - 2, s.length);
+
+        var checksec = (Actualsecond / 1);
+        if (checksec % 1 == 0) {
+            showTimeStart(strTime);
+        }
+    }
+
+    setInterval(objTimer, 1000);
+    objTimer();
 
 });
 
@@ -49,6 +92,8 @@ function getCountryList() {
                 $("#selCountryS").append("<option value='"+id+"'>"+name+"</option>");
             }
             getStateList();
+            getCityList();
+            getZipCodeList();
         });
 
 }
@@ -78,6 +123,8 @@ function getStateList() {
 
                 $("#selStateS").append("<option value='"+id+"'>"+name+"</option>");
             }
+            getCityList();
+            getZipCodeList();
             getSpotList();
         });
 
@@ -109,7 +156,8 @@ function getCityList() {
 
                 $("#selCityS").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getHotSpotList();
+            getZipCodeList();
+            getSpotList();
         });
 
 }
@@ -173,6 +221,7 @@ function getSpotList() {
 
                 $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
+            getHotSpotList();
             // showTableColumns();
         });
 }
@@ -195,12 +244,12 @@ function getHotSpotList() {
             let len = object.length;
 
             $("#selHotSpot").empty();
-            $("#selHotSpot").append("<option value=''>All HotSpots</option>");
+            //$("#selHotSpot").append("<option value='' selected>All HotSpots</option>");
             for (let i = 0; i<len; i++) {
                 let id = object[i][1];
                 let name = object[i][1];
 
-                $("#selHotSpot").append("<option value='"+id+"'>"+name+"</option>");
+                $("#selHotSpot").append("<option value='"+id+"' selected>"+name+"</option>");
             }
         });
 }
@@ -302,6 +351,8 @@ function filters() {
 }
 
 function sendForm() {
+    let t_sTime = $('#starttime').val();
+    let t_currDate = formatDate(dateS);
     let t_dateS = $('#datestart').val();
     let t_dateE = $('#dateend').val();
     let t_timeS = $('#timestart').val();
@@ -320,7 +371,7 @@ function sendForm() {
     let userTimeZone = document.getElementById('userTimeZone').innerText;
     let t_groupBy = 'BY_DAY';
     let t_isConnected = 1;
-    t_hotspot = t_hotspot.split(' ').join('%7F');
+    //t_hotspot = t_hotspot.split(' ').join('%7F');
 
     if (document.getElementById("checkFilter").checked) {
         t_ageS = $('#from_value').val();
@@ -330,24 +381,38 @@ function sendForm() {
         t_member = $('#selMembership').val();
     }
 
-    evtSourceConnectOnline(
-        t_dateS, t_dateE, t_timeS, t_timeE,
+    evtSourceConnectedDate(
+        t_currDate, t_currDate, t_sTime, t_timeE,
         t_country, t_state, t_city, t_zipcode,
-        t_spot, t_hotspot,
+        t_spot, encodeURIComponent(t_hotspot),
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, t_groupBy, t_isConnected
+    );
+    evtSourceConnectedNow(
+        t_currDate, t_currDate, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, encodeURIComponent(t_hotspot),
+        t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone, 'BY_HOUR', t_isConnected
+    );
+    evtSourceConnectOnline(
+        t_dateS, t_dateE, t_sTime, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, encodeURIComponent(t_hotspot),
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone, t_groupBy, t_isConnected
     );
     evtSourceTrafficHotSpot(
-        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_dateS, t_dateE, t_sTime, t_timeE,
         t_country, t_state, t_city, t_zipcode,
-        t_spot, t_hotspot,
+        t_spot, encodeURIComponent(t_hotspot),
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone, t_groupBy, t_isConnected
     );
     evtSourceConnectTime(
-        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_dateS, t_dateE, t_sTime, t_timeE,
         t_country, t_state, t_city, t_zipcode,
-        t_spot, t_hotspot,
+        t_spot, encodeURIComponent(t_hotspot),
         t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
         userTimeZone, t_groupBy, t_isConnected
     );

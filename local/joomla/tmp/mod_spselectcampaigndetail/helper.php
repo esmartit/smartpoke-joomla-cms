@@ -114,7 +114,10 @@ class ModSPSelectCampaignDetailHelper
         $query->join('LEFT', $db->quoteName('#__spspot_spot', 's') . ' ON ' . $db->quoteName('s.spot_id'). ' = ' . $db->quoteName('spot'));
         $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) >= ". $db->quote($dStart));
         $query->where("TIMESTAMP(senddate + INTERVAL ". $db->quote($timeOffset). " SECOND) <= ". $db->quote($dEnd));
-        $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
+
+        if (!empty($campaignId)) {
+            $query->where($db->quoteName('campaign_id'). " = ". $db->quote($campaignId));
+        }
 
         if (!empty($countryId)) {
             $query->where($db->quoteName('country'). " = " .$db->quote($countryId));

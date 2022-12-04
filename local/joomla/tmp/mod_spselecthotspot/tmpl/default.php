@@ -61,6 +61,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                                     <span>October 24, 1971 - October 24, 1971</span> <b class="caret"></b>
                                 </div>
                             </div>
+                            <input id="starttime" type="hidden" name="starttime" class="form-control" value='00:00:00'/>
                             <input type="hidden" name="datestart" id="datestart" value='<?php echo $datestart; ?>'/>
                             <input type="hidden" name="dateend" id="dateend" value='<?php echo $dateend; ?>'/>
                             <div id="userTimeZone" style="display:none"><b><?php echo $usertimezone; ?></b></div>
@@ -102,7 +103,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selZipCodeS" class="form-control" name="zipcodeS" multiple="multiple" onblur="getHotSpotList()">
+                                <select id="selZipCodeS" class="form-control" name="zipcodeS" multiple="multiple" onblur="getSpotList()">
                                     <option value="" selected>All ZipCodes</option>
                                 </select>
                             </div>
@@ -120,7 +121,7 @@ $dateend = date("Y-m-d", strtotime($currDate));
                         <div class="col-md-2 col-sm-2 col-xs-12">
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <br/>
-                                <select id="selHotSpot" class="form-control" name="zone">
+                                <select id="selHotSpot" class="form-control" name="hotspot" multiple="multiple">
                                     <option value="" selected><?php echo JText::_('All HotSpots'); ?></option>
                                 </select>
                             </div>

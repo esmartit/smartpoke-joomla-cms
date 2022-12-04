@@ -929,6 +929,7 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
     seSmartPokeOn.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
         let last = eventData.isLast;
+        let flag = 0;
         if (!last) {
             // let pos = userInfo['username'].indexOf(eventData.userName);
             let userName = eventData.userName;
@@ -946,7 +947,11 @@ function smartpokeOnline(dateS, dateE, timeS, timeE, dateS2, dateE2, country, st
                         eventData.sensor
                     ]).draw(false);
             }
+            flag = 1;
         } else {
+            if (flag == 0) {
+                tableOn.clear();
+            }
             seSmartPokeOn.close();
             NProgress.done();
         }
