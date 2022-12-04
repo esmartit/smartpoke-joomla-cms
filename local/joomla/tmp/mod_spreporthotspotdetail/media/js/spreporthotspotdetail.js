@@ -285,6 +285,7 @@ $(document).ready(() => {
         $('#daterange').data('daterangepicker').remove();
     });
 
+    tableDetail.clear();
     tableDetail = $('#datatable-buttons').DataTable({
         "destroy": true,
         "column": [
