@@ -355,7 +355,6 @@ $(document).ready(() => {
         $('#daterange').data('daterangepicker').remove();
     });
 
-    tableDetailDaily.clear();
     tableDetailDaily = $('#datatable-buttons').DataTable({
         "destroy": true,
         "column": [
@@ -390,6 +389,7 @@ $(document).ready(() => {
         "responsive": true
     });
     $("#littleProgressBox").hide();
+    tableDetailDaily.destroy();
 });
 
 function sendForm() {
