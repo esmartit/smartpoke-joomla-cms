@@ -92,8 +92,8 @@ function getCountryList() {
                 $("#selCountryS").append("<option value='"+id+"'>"+name+"</option>");
             }
             getStateList();
-            getCityList();
-            getZipCodeList();
+            // getCityList();
+            // getZipCodeList();
         });
 
 }
@@ -123,8 +123,8 @@ function getStateList() {
 
                 $("#selStateS").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getCityList();
-            getZipCodeList();
+            // getCityList();
+            // getZipCodeList();
             getSpotList();
         });
 
@@ -156,8 +156,9 @@ function getCityList() {
 
                 $("#selCityS").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getZipCodeList();
-            getSpotList();
+            // getZipCodeList();
+            // getSpotList();
+            getHotSpotList();
         });
 
 }
@@ -221,7 +222,6 @@ function getSpotList() {
 
                 $("#selSpot").append("<option value='"+id+"'>"+name+"</option>");
             }
-            getHotSpotList();
             // showTableColumns();
         });
 }

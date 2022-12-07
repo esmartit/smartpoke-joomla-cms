@@ -333,11 +333,31 @@ function filters() {
     }
 }
 
+function formatDate(date) {
+
+    var hoy = new Date(date),
+        year = hoy.getFullYear(),
+        month = '' + (hoy.getMonth() + 1),
+        day = '' + hoy.getDate();
+
+    console.log(date);
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 function sendForm() {
     getDeviceInList();
     getDeviceExList();
-    let t_dateS = $('#timestart').val();
-    let t_dateE = $('#timeend').val();
+    //let t_dateS = $('#datestart').val();
+    //let t_dateE = $('#dateend').val();
+    let t_dateS = formatDate(Date.now());
+    let t_dateE = formatDate(Date.now());
+    let t_timeS = $('#timestart').val();
+    let t_timeE = $('#timeend').val();
     let t_country = $('#selCountryS').val();
     let t_state = $('#selStateS').val();
     let t_city = $('#selCityS').val();
@@ -354,7 +374,8 @@ function sendForm() {
     let t_sex = '';
     let t_zipcodes = '';
     let t_member = '';
-    let userTimeZone = document.getElementById('userTimeZone').innerText;
+    // let userTimeZone = document.getElementById('userTimeZone').innerText;
+    let userTimeZone = 'UTC';
 
     switch (t_type) {
         case '0':
@@ -379,7 +400,7 @@ function sendForm() {
 
     evtSourceActivityOnline
     (
-        t_dateS, t_dateE,
+        t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
         t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
         encodeURIComponent(t_brands), t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
@@ -388,7 +409,16 @@ function sendForm() {
 
     evtSourceActivityHotSpot
     (
-        t_dateS, t_dateE,
+        t_dateS, t_dateE, t_timeS, t_timeE,
+        t_country, t_state, t_city, t_zipcode,
+        t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
+        encodeURIComponent(t_brands), t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
+        userTimeZone
+    );
+
+    evtSourceAvgTimeBigData
+    (
+        t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
         t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
         encodeURIComponent(t_brands), t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,
@@ -397,7 +427,7 @@ function sendForm() {
 
     evtSourceQualifiedVisits
     (
-        t_dateS, t_dateE,
+        t_dateS, t_dateE, t_timeS, t_timeE,
         t_country, t_state, t_city, t_zipcode,
         t_spot, t_sensor, t_zone, t_devicesIn, t_devicesEx,
         encodeURIComponent(t_brands), t_status, t_ageS, t_ageE, t_sex, t_zipcodes, t_member,

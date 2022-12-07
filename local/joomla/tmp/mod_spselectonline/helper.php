@@ -120,7 +120,7 @@ class ModSPSelectOnlineHelper
         }
 
         if (!empty($cityId)) {
-            $query->where($db->quoteName('city'). " = " .$db->quote($cityId));
+            $query->where($db->quoteName('city_id'). " = " .$db->quote($cityId));
         }
         $query->group($db->quoteName('a.zipcode'));
 
