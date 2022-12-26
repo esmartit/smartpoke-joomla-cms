@@ -39,12 +39,17 @@ $(document).ready( function() {
 
     if (flag == 0) {
 
-        // seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?timezone="+userTimeZone+"&brands="+brands);
         seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/v2/find-bigdata?"+
-            "timezone="+userTimeZone+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime=00:00:00%26endTime=23:59:59"+
+            "startDate="+dateS+"%26endDate="+dateE+"%26startTime=00:00:00%26endTime=23:59:59"+
             "%26countryId=%26stateId=%26cityId=%26zipcodeId="+
             "%26spotId=%26sensorId=%26zone=%26includedDevices=%26excludedDevices="+
             "%26brands="+encodeURIComponent(brands)+"%26status=%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=%26groupBy=BY_DAY");
+            
+        // seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/v2/find-bigdata?"+
+        //     "timezone="+userTimeZone+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime=00:00:00%26endTime=23:59:59"+
+        //     "%26countryId=%26stateId=%26cityId=%26zipcodeId="+
+        //     "%26spotId=%26sensorId=%26zone=%26includedDevices=%26excludedDevices="+
+        //     "%26brands="+encodeURIComponent(brands)+"%26status=%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=%26groupBy=BY_DAY");
 
         seQualifiedVisits.onmessage = function (event) {
             let eventData = JSON.parse(event.data);
@@ -82,19 +87,19 @@ function evtSourceQualifiedVisits(dateS, dateE, timeS, timeE, country, state, ci
     }
     document.getElementById("title").innerHTML = "Qualified Visits";
 
-    // seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-detected?"+
+    // seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/today-detected?"+
     //     "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
     //     "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
     //     "%26spotId="+spot+"%26sensorId="+sensor+"%26zone="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
     //     "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
 
     seQualifiedVisits = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/today-detected?"+
-        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zone="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+encodeURIComponent(brands)+"%26status="+status+"%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member);
 
-    visitTotal = 0;
+        visitTotal = 0;
     visitIn = 0;
     visitLimit = 0;
     visitOut = 0;

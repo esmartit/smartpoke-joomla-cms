@@ -510,11 +510,18 @@ function evtSourceDetailBigDataDaily(dateS, dateE, timeS, timeE, country, state,
     let dataRows = [];
 
     let seActivityBigDataDaily = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/v2/list?"+
-        "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+        "startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
         "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
         "%26spotId="+spot+"%26sensorId="+sensor+"%26zone="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
         "%26brands="+brands+"%26status="+status+"%26presence="+presence+
         "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_DAY");
+
+    // let seActivityBigDataDaily = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/reports/v2/list?"+
+    //     "timezone="+userTZ+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime="+timeS+"%26endTime="+timeE+
+    //     "%26countryId="+country+"%26stateId="+state+"%26cityId="+city+"%26zipcodeId="+zipcode+
+    //     "%26spotId="+spot+"%26sensorId="+sensor+"%26zone="+zone+"%26includedDevices="+inDevices+"%26excludedDevices="+exDevices+
+    //     "%26brands="+brands+"%26status="+status+"%26presence="+presence+
+    //     "%26ageStart="+ageS+"%26ageEnd="+ageE+"%26gender="+sex+"%26zipCode="+zipcodes+"%26memberShip="+member+"%26groupBy=BY_DAY");
 
     NProgress.start();
     NProgress.set(0,4);

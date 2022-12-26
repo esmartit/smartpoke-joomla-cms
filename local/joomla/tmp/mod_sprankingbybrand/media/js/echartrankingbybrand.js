@@ -1,6 +1,23 @@
 let seRankingBrand = '';
 let deviceBrand = [];
 
+function formatDate(date) {
+
+    var hoy = new Date(date),
+        year = hoy.getFullYear(),
+        month = '' + (hoy.getMonth() + 1),
+        day = '' + hoy.getDate();
+
+    console.log(date);
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
 $(document).ready( function() {
 
     let theme = {
@@ -24,7 +41,13 @@ $(document).ready( function() {
     };
 
     let userTimeZone = document.getElementById('userTimeZone').innerText;
-    seRankingBrand = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/today-brands?timezone="+userTimeZone);
+    //let dateS = $('#datestart').val();
+    //let dateE = $('#dateend').val();
+    let dateS = formatDate(Date.now());
+    let dateE = formatDate(Date.now());
+    
+    seRankingBrand = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/today-brands?startDate="+dateS+"%26endDate="+dateE);
+    // seRankingBrand = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/today-brands?timezone="+userTimeZone+"%26startDate="+dateS+"%26endDate="+dateE);
     let spChart = echarts.init(document.getElementById('echart_rankingby_brand'), theme);
 
     function echartBrands(brands) {
@@ -68,10 +91,7 @@ $(document).ready( function() {
         deviceBrand = JSON.parse(event.data);
 
         deviceBrand.sort(compareValues('value', 'desc'));
-        const index = deviceBrand.findIndex(brand => brand.name === 'Others' );
-        deviceBrand.splice(index, 1)
         echartBrands(deviceBrand)
-        // console.log(hoursArr, deviceArr, inArr, limitArr, outArr);
     }
 });
 
