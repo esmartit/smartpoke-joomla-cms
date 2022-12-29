@@ -301,8 +301,15 @@ $(document).ready( function() {
     spChartAct = echarts.init(document.getElementById('echart_activity_date'), theme);
     spChartAct.setOption(option);
     // seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/sensor-activity/v2/now-detected?timezone="+userTimeZone+"%26brands="+encodeURIComponent(brands));
+    // seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/v2/find-bigdata?"+
+    // "timezone="+userTimeZone+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime=%26endTime="+
+    // "%26countryId=%26stateId=%26cityId=%26zipcodeId="+
+    // "%26spotId=%26sensorId=%26zone=%26includedDevices=%26excludedDevices="+
+    // "%26brands="+encodeURIComponent(brands)+"%26status=%26presence="+
+    // "%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=%26groupBy=BY_DAY");
+
     seActivityDate = new EventSource("/index.php?option=com_spserverevent&format=json&base_url=ms_data&resource_path=/bigdata/v2/find-bigdata?"+
-    "timezone="+userTimeZone+"%26startDate="+dateS+"%26endDate="+dateE+"%26startTime=%26endTime="+
+    "startDate="+dateS+"%26endDate="+dateE+"%26startTime=%26endTime="+
     "%26countryId=%26stateId=%26cityId=%26zipcodeId="+
     "%26spotId=%26sensorId=%26zone=%26includedDevices=%26excludedDevices="+
     "%26brands="+encodeURIComponent(brands)+"%26status=%26presence="+
