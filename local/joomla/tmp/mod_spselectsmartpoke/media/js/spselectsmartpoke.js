@@ -195,14 +195,17 @@ function getZipCodeList() {
         .success(function(response){
             let object = response.data;
             let len = object.length;
-
+            
             $("#selZipCodeS").empty();
-            $("#selZipCodeS").append("<option value='' selected>All ZipCodes</option>");
-            for (let i = 0; i<len; i++) {
-                let id = object[i][0];
-                let name = object[i][1];
-
-                $("#selZipCodeS").append("<option value='"+id+"'>"+id+" - "+name+"</option>");
+            if (cityId == '') {
+                $("#selZipCodeS").append("<option value='' selected>All ZipCodes</option>");
+            } else {
+                for (let i = 0; i<len; i++) {
+                    let id = object[i][0];
+                    let name = object[i][1];
+    
+                    $("#selZipCodeS").append("<option value='"+id+"'>"+id+" - "+name+"</option>");
+                }    
             }
         });
 }
@@ -320,12 +323,15 @@ function getHotSpotList() {
             let len = object.length;
 
             $("#selHotSpot").empty();
-            $("#selHotSpot").append("<option value=''>All HotSpots</option>");
-            for (let i = 0; i<len; i++) {
-                let id = object[i][1];
-                let name = object[i][1];
-
-                $("#selHotSpot").append("<option value='"+id+"'>"+name+"</option>");
+            if (spotid == '') {
+                $("#selHotSpot").append("<option value='' selected>All HotSpots</option>");
+            } else {
+                for (let i = 0; i<len; i++) {
+                    let id = object[i][1];
+                    let name = object[i][1];
+    
+                    $("#selHotSpot").append("<option value='"+id+"' selected>"+name+"</option>");
+                }    
             }
         });
 }
