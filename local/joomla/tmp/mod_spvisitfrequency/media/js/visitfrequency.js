@@ -55,7 +55,7 @@ $(document).ready( function() {
     "timezone="+userTimeZone+"%26startDate="+formatDate(firstDay)+"%26endDate="+formatDate(lastDay)+"%26startTime=00:00:00%26endTime=23:59:59"+
     "%26countryId=%26stateId=%26cityId=%26zipcodeId="+
     "%26spotId=%26sensorId=%26zone=%26includedDevices=%26excludedDevices="+
-    "%26brands="+encodeURIComponent(brands)+"%26status=IN%26presence=2%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=%26groupBy=BY_DAY");
+    "%26brands="+encodeURIComponent(brands)+"%26status=IN%26presence=%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=%26groupBy=BY_DAY");
 
     seVisitsQualified.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
@@ -97,7 +97,7 @@ $(document).ready( function() {
     "timezone="+userTimeZone+"%26startDate="+formatDate(firstDay)+"%26endDate="+formatDate(lastDay)+"%26startTime=00:00:00%26endTime=23:59:59"+
     "%26countryId=%26stateId=%26cityId=%26zipcodeId="+
     "%26spotId=%26sensorId=%26zone=%26includedDevices=%26excludedDevices="+
-    "%26brands="+encodeURIComponent(brands)+"%26status=IN%26presence=2%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=");
+    "%26brands="+encodeURIComponent(brands)+"%26status=IN%26presence=%26ageStart=%26ageEnd=%26gender=%26zipCode=%26memberShip=");
 
     seUniqueDevices.onmessage = function (event) {
         let eventData = JSON.parse(event.data);
